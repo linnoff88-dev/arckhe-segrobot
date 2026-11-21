@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="es">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Módulo 3.6 - Proyecciones 2027-2030 y posicionamiento | segROBOT</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            primary: '#FACC15',
+            dark: { 900: '#111827', 800: '#1f2937', 700: '#374151', 600: '#4b5563' }
+          }
+        }
+      }
+    }
+  </script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<style>
+    body { font-family: 'Inter', sans-serif; }
+    .dark body { background-color: #111827; }
+    .topic-explanation { display: none; }
+    .topic-explanation.active { display: block; }
+
+    /* Light mode overrides */
+    html:not(.dark) body { background-color: #f8fafc; }
+    html:not(.dark) .bg-dark-900 { background-color: #ffffff; }
+    html:not(.dark) .bg-dark-800 { background-color: #f9fafb; }
+    html:not(.dark) .bg-dark-700 { background-color: #f3f4f6; }
+    html:not(.dark) .bg-dark-600 { background-color: #e5e7eb; }
+    html:not(.dark) .text-neutral-100 { color: #111827; }
+    html:not(.dark) .text-neutral-300 { color: #4b5563; }
+    html:not(.dark) .text-neutral-400 { color: #6b7280; }
+    html:not(.dark) .text-neutral-500 { color: #9ca3af; }
+    html:not(.dark) .border-dark-600 { border-color: #d1d5db; }
+    html:not(.dark) .border-dark-700 { border-color: #e5e7eb; }
+
+    /* Light mode - cores de acento (trilha purple) */
+    html:not(.dark) .text-purple-400 { color: #7c3aed; }
+    html:not(.dark) .bg-purple-500\/20 { background-color: rgba(124, 58, 237, 0.12); }
+    html:not(.dark) .bg-purple-500\/10 { background-color: rgba(124, 58, 237, 0.08); }
+    html:not(.dark) .border-purple-500\/30 { border-color: rgba(124, 58, 237, 0.25); }
+    html:not(.dark) .hover\:bg-purple-500\/30:hover { background-color: rgba(124, 58, 237, 0.18); }
+    html:not(.dark) .hover\:text-purple-400:hover { color: #7c3aed; }
+    html:not(.dark) .hover\:bg-purple-500\/10:hover { background-color: rgba(124, 58, 237, 0.08); }
+
+    /* Light mode - outras trilhas no nav */
+    html:not(.dark) .hover\:text-emerald-400:hover { color: #059669; }
+    html:not(.dark) .hover\:bg-emerald-500\/10:hover { background-color: rgba(5, 150, 105, 0.08); }
+    html:not(.dark) .hover\:text-blue-400:hover { color: #2563eb; }
+    html:not(.dark) .hover\:bg-blue-500\/10:hover { background-color: rgba(37, 99, 235, 0.08); }
+
+    /* Light mode - remove gradientes */
+    html:not(.dark) [class*="bg-gradient-to"] { background-image: none !important; }
+
+    /* Light mode - cores especiais */
+    html:not(.dark) .text-primary { color: #a16207; }
+    html:not(.dark) .bg-primary\/10 { background-color: rgba(161, 98, 7, 0.08); }
+    html:not(.dark) .border-primary\/40 { border-color: rgba(161, 98, 7, 0.25); }
+    html:not(.dark) .text-sky-400 { color: #0369a1; }
+    html:not(.dark) .text-yellow-400 { color: #a16207; }
+    html:not(.dark) .hover\:text-sky-300:hover { color: #0284c7; }
+    html:not(.dark) .hover\:text-yellow-300:hover { color: #854d0e; }
+
+    /* Light mode - nav */
+    html:not(.dark) .bg-dark-900\/95 { background-color: rgba(255, 255, 255, 0.95); }
+
+    /* Dark mode - bordas suaves */
+    .dark .border-dark-600 { border-color: #374151; }
+    .dark .divide-dark-600 > :not([hidden]) ~ :not([hidden]) { border-color: #374151; }
+
+    @keyframes wf-pulse { 0%,100% { opacity:.55 } 50% { opacity:1 } }
+    @media (prefers-reduced-motion: no-preference) {
+      .wf-a { animation: wf-pulse 2.6s ease-in-out infinite; }
+      .wf-a:nth-child(2){animation-delay:.25s} .wf-a:nth-child(3){animation-delay:.5s}
+      .wf-a:nth-child(4){animation-delay:.75s} .wf-a:nth-child(5){animation-delay:1s}
+    }
+  </style>
+<link href="https://inematds.github.io/segrobot/curso/trilha3/modulo-3-6.html" hreflang="pt-BR" rel="alternate"/><link href="https://inematds.github.io/segrobot/en/curso/trilha3/modulo-3-6.html" hreflang="en" rel="alternate"/><link href="https://inematds.github.io/segrobot/es/curso/trilha3/modulo-3-6.html" hreflang="es" rel="alternate"/></head>
+<body class="bg-dark-900 text-neutral-100 min-h-screen"><div class="inema-lang" style="position:fixed;right:14px;bottom:14px;z-index:9999;display:flex;gap:2px;padding:4px;border-radius:10px;background:rgba(12,12,16,.82);border:1px solid rgba(226,162,59,.45);font:600 12px/1 Sora,Inter,system-ui,sans-serif;backdrop-filter:blur(8px)" translate="no"><a href="../../../curso/trilha3/modulo-3-6.html" hreflang="pt-BR" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">PT</a><a href="../../../en/curso/trilha3/modulo-3-6.html" hreflang="en" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">EN</a><a href="modulo-3-6.html" hreflang="es" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#1a1206;background:#E2A23B">ES</a></div>
+<!-- NAVIGATION -->
+<nav class="sticky top-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-600">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="flex justify-between items-center h-14">
+<div class="flex items-center space-x-4">
+<a class="flex items-center space-x-2 text-yellow-400 hover:text-yellow-300" href="../../index.html">
+<span class="text-2xl">🤖</span>
+<span class="font-bold text-lg hidden sm:inline">segROBOT</span>
+</a>
+<span class="text-neutral-600">|</span>
+<a class="text-sky-400 hover:text-sky-300 text-sm font-medium" href="https://inema.club" target="_blank">INEMA.CLUB</a>
+</div>
+<div class="flex items-center space-x-1 sm:space-x-2">
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-emerald-400 hover:bg-emerald-500/10 transition-colors" href="../trilha1/index.html">
+<span class="sm:hidden">T1</span>
+<span class="hidden sm:inline">Fundamentos</span>
+</a>
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-blue-400 hover:bg-blue-500/10 transition-colors" href="../trilha2/index.html">
+<span class="sm:hidden">T2</span>
+<span class="hidden sm:inline">Acción</span>
+</a>
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-purple-400 bg-purple-500/10" href="index.html">
+<span class="sm:hidden">T3</span>
+<span class="hidden sm:inline">Estratégico</span>
+</a>
+<button class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors ml-2" id="theme-toggle">
+<svg class="hidden w-5 h-5 text-neutral-300" fill="currentColor" id="theme-toggle-dark-icon" viewbox="0 0 20 20">
+<path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+</svg>
+<svg class="hidden w-5 h-5 text-neutral-300" fill="currentColor" id="theme-toggle-light-icon" viewbox="0 0 20 20">
+<path clip-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd"></path>
+</svg>
+</button>
+</div>
+</div>
+</div>
+</nav>
+<!-- BREADCRUMB -->
+<nav class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+<div class="flex items-center space-x-2 text-sm text-neutral-400">
+<a class="hover:text-purple-400" href="../../index.html">Inicio</a>
+<span>/</span>
+<a class="hover:text-purple-400" href="index.html">Ruta 3</a>
+<span>/</span>
+<span class="text-purple-400">Módulo 3.6</span>
+</div>
+</nav>
+<!-- HEADER -->
+<header class="bg-gradient-to-br from-purple-900/30 via-dark-800 to-dark-800 py-12 border-b border-dark-600">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+<span class="inline-block px-3 py-1 bg-purple-500/20 text-purple-400 text-xs font-semibold rounded-full mb-4">MÓDULO 3.6</span>
+<h1 class="text-3xl sm:text-4xl font-bold mb-4">🔮 Proyecciones 2027-2030 y posicionamiento</h1>
+<p class="text-lg text-neutral-400 max-w-3xl">
+        Anticipar tendencias y posicionarse estratégicamente en el mercado de recalificación. El módulo de cierre del curso: donde los datos sobre el futuro se encuentran con la tesis central de segROBOT.
+      </p>
+<!-- Hero SVG: linha do tempo de projecoes 2027 -> 2030 -->
+<div class="rounded-2xl border border-purple-500/30 bg-dark-900/40 p-3 sm:p-4 mt-8 overflow-hidden">
+<svg aria-label="Línea de tiempo de proyecciones de 2027 a 2030: humanoides en producción, regulación HRC más estricta, VR/AR como estándar y ventana de reconversión profesional de 120 millones que converge en la transformación humana" class="w-full h-auto" role="img" viewbox="0 0 1000 240">
+<defs>
+<lineargradient id="m36-grad" x1="0" x2="1" y1="0" y2="1">
+<stop offset="0" stop-color="#c084fc"></stop><stop offset="1" stop-color="#a855f7"></stop>
+</lineargradient>
+<filter height="180%" id="m36-glow" width="180%" x="-40%" y="-40%">
+<fegaussianblur result="b" stddeviation="3"></fegaussianblur><femerge><femergenode in="b"></femergenode><femergenode in="SourceGraphic"></femergenode></femerge>
+</filter>
+<pattern height="32" id="m36-grid" patternunits="userSpaceOnUse" width="32">
+<circle cx="1.3" cy="1.3" fill="#a855f7" opacity="0.12" r="1.3"></circle>
+</pattern>
+<marker id="m36-ah" markerheight="9" markerwidth="9" orient="auto" refx="6.5" refy="4.5"><path d="M0,0 L8,4.5 L0,9 L2.4,4.5 Z" fill="#c084fc"></path></marker>
+<marker id="m36-ahc" markerheight="9" markerwidth="9" orient="auto" refx="6.5" refy="4.5"><path d="M0,0 L8,4.5 L0,9 L2.4,4.5 Z" fill="#38bdf8"></path></marker>
+</defs>
+<rect fill="url(#m36-grid)" height="240" width="1000" x="0" y="0"></rect>
+<!-- Eixo temporal -->
+<path d="M60,200 L900,200" fill="none" marker-end="url(#m36-ah)" opacity="0.7" stroke="#c084fc" stroke-width="2.5"></path>
+<g fill="#c084fc" font-family="Inter,sans-serif" font-size="13" font-weight="700">
+<text text-anchor="middle" x="120" y="225">2027</text>
+<text text-anchor="middle" x="360" y="225">2028</text>
+<text text-anchor="middle" x="600" y="225">2029</text>
+<text text-anchor="middle" x="840" y="225">2030</text>
+</g>
+<!-- Marcos (ciano), pulsando -->
+<g font-family="Inter,sans-serif" font-size="12" font-weight="600">
+<line opacity="0.5" stroke="#38bdf8" stroke-width="1.5" x1="120" x2="120" y1="200" y2="150"></line>
+<g class="wf-a"><rect fill="#0e1b26" height="48" rx="10" stroke="#38bdf8" stroke-width="2" width="144" x="48" y="100"></rect><text fill="#bfe6ff" text-anchor="middle" x="120" y="122">Humanoides</text><text fill="#9ad6ff" font-size="11" text-anchor="middle" x="120" y="139">en producción</text></g>
+<line opacity="0.5" stroke="#38bdf8" stroke-width="1.5" x1="360" x2="360" y1="200" y2="150"></line>
+<g class="wf-a"><rect fill="#0e1b26" height="48" rx="10" stroke="#38bdf8" stroke-width="2" width="144" x="288" y="68"></rect><text fill="#bfe6ff" text-anchor="middle" x="360" y="90">Regulación HRC</text><text fill="#9ad6ff" font-size="11" text-anchor="middle" x="360" y="107">nacional/rígida</text></g>
+<line opacity="0.5" stroke="#38bdf8" stroke-width="1.5" x1="600" x2="600" y1="200" y2="150"></line>
+<g class="wf-a"><rect fill="#0e1b26" height="48" rx="10" stroke="#38bdf8" stroke-width="2" width="144" x="528" y="100"></rect><text fill="#bfe6ff" text-anchor="middle" x="600" y="122">Estándar de VR/AR</text><text fill="#9ad6ff" font-size="11" text-anchor="middle" x="600" y="139">38% + rápido</text></g>
+<line opacity="0.5" stroke="#38bdf8" stroke-width="1.5" x1="840" x2="840" y1="200" y2="150"></line>
+</g>
+<!-- Destino: transformacao humana (cor da trilha, glow) -->
+<g filter="url(#m36-glow)"><rect fill="#1a1230" height="64" rx="14" stroke="url(#m36-grad)" stroke-width="2.5" width="160" x="772" y="56"></rect></g>
+<text fill="#c084fc" font-family="Inter,sans-serif" font-size="15" font-weight="700" text-anchor="middle" x="852" y="82">Transformación</text>
+<text fill="#d8b4fe" font-family="Inter,sans-serif" font-size="12" text-anchor="middle" x="852" y="102">humana</text>
+</svg>
+</div>
+<!-- Stats -->
+<div class="grid grid-cols-4 gap-4 mt-8 max-w-2xl">
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+<div class="text-xl font-bold text-purple-400">6</div>
+<div class="text-xs text-neutral-400">Temas</div>
+</div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+<div class="text-xl font-bold text-purple-400">45</div>
+<div class="text-xs text-neutral-400">Minutos</div>
+</div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+<div class="text-xl font-bold text-purple-400">Avanzado</div>
+<div class="text-xs text-neutral-400">Nivel</div>
+</div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+<div class="text-xl font-bold text-purple-400">Estrategia</div>
+<div class="text-xs text-neutral-400">Tipo</div>
+</div>
+</div>
+</div>
+</header>
+<main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+<!-- TOPICO 1 -->
+<section class="mb-16" id="topico-1">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">1</span>
+<h2 class="text-2xl font-bold">🦾 Humanoides en producción</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed">
+        Robots humanoides de <strong class="text-purple-400">Figure</strong>, <strong class="text-purple-400">Boston Dynamics</strong> e <strong class="text-purple-400">UBTECH</strong> están pasando de la fase piloto a la producción en volumen en fábricas como BMW y BYD. Ese es el salto que cambia por completo la dinámica de capacitación: los humanoides operan en el espacio de las personas y requieren nuevas competencias de convivencia.
+      </p>
+<div class="bg-gradient-to-br from-purple-900/30 to-dark-800 rounded-xl border border-purple-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-purple-400 mb-4 flex items-center">
+<span class="mr-2">🤖</span> Por qué el humanoide es diferente
+        </h3>
+<p class="text-neutral-300 mb-4">Un brazo robótico está en una celda aislada. Un humanoide camina por el piso de la fábrica y comparte pasillos y bancos de trabajo con el trabajador. El entrenamiento deja de ser «cómo operar la máquina» y pasa a ser «cómo coexistir con un colega artificial».</p>
+<ul class="space-y-2 text-neutral-300">
+<li class="flex items-start space-x-2"><span class="text-purple-400 mt-1">•</span><span><strong>Figure 02</strong> — humanoide de propósito general en pruebas de producción automotriz.</span></li>
+<li class="flex items-start space-x-2"><span class="text-purple-400 mt-1">•</span><span><strong>Boston Dynamics</strong> — Atlas eléctrico que pasa de demo a tarea industrial.</span></li>
+<li class="flex items-start space-x-2"><span class="text-purple-400 mt-1">•</span><span><strong>UBTECH Walker S2</strong> — despliegue en una línea de montaje en China.</span></li>
+</ul>
+</div>
+<div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-blue-400 mb-4 flex items-center">
+<span class="mr-2">📊</span> Señales del mercado
+        </h3>
+<ul class="space-y-2 text-neutral-300">
+<li><strong>BMW y BYD</strong> — primeras fábricas en recibir humanoides fuera de la fase piloto.</li>
+<li><strong>Capacitación en un espacio de trabajo compartido</strong> — nueva categoría de capacitación: humano y humanoide en la misma área.</li>
+<li><strong>Volumen</strong> — la transición «del piloto a la producción» es el detonante que genera demanda de recapacitación a gran escala.</li>
+</ul>
+</div>
+<div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
+<span class="mr-2">💡</span> Consejo práctico
+        </h3>
+<p class="text-neutral-300">No esperes a que llegue el humanoide para crear la capacitación. Quien prepara las competencias para convivir <strong>antes</strong> del despliegue se convierte en proveedor preferencial cuando la fábrica necesita capacitar al equipo con urgencia.</p>
+</div>
+<h3 class="text-lg font-semibold mb-4">Conceptos clave</h3>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-purple-400 font-bold mb-1">Figure 02</div><div class="text-xs text-neutral-400">Humanoide de propósito general</div></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-purple-400 font-bold mb-1">Boston Dynamics</div><div class="text-xs text-neutral-400">Atlas eléctrico industrial</div></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-purple-400 font-bold mb-1">UBTECH Walker S2</div><div class="text-xs text-neutral-400">Implementación en línea</div></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-purple-400 font-bold mb-1">Espacio de trabajo compartido</div><div class="text-xs text-neutral-400">Capacitar para la convivencia</div></div>
+</div>
+</section>
+<!-- TOPICO 2 -->
+<section class="mb-16" id="topico-2">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">2</span>
+<h2 class="text-2xl font-bold">📏 Regulación HRC más estricta</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed">
+        Los países están creando <strong class="text-purple-400">equivalentes nacionales de la ISO 10218:2025</strong>, con requisitos locales adicionales. La regulación de la colaboración humano-robot (HRC) es más estricta y está más fragmentada por región. Para quienes operan en varios países, esto significa capacitación adaptada a cada jurisdicción, y la complejidad genera demanda de especialistas.
+      </p>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+<div class="bg-emerald-900/20 rounded-xl border border-emerald-500/30 p-6">
+<h4 class="font-bold text-emerald-400 mb-4">✓ Cómo posicionarte</h4>
+<ul class="space-y-3 text-neutral-300">
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Mapear los requisitos locales por jurisdicción donde opera el cliente.</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Ofrecer capacitación modular adaptable según el país.</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Tratar el cumplimiento normativo en múltiples jurisdicciones como un diferencial prémium.</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Mantener la base sobre la norma ISO 10218 y agregar capas nacionales.</span></li>
+</ul>
+</div>
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+<h4 class="font-bold text-red-400 mb-4">✗ Qué evitar</h4>
+<ul class="space-y-3 text-neutral-300">
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Asumir que una sola capacitación sirve para todos los países.</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Ignorar los requisitos locales adicionales hasta el final del despliegue.</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Tratar la fragmentación como un problema y no como una oportunidad.</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Vender el cumplimiento normativo como un artículo de bajo valor (commodity).</span></li>
+</ul>
+</div>
+</div>
+<div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
+<span class="mr-2">💡</span> Consejo práctico
+        </h3>
+<p class="text-neutral-300">La fragmentación regulatoria parece un obstáculo, pero es precisamente lo que crea valor para un especialista local. Donde la regla es simple y global, cualquiera puede capacitar. Donde es compleja y regional, puedes cobrar una tarifa premium.</p>
+</div>
+<h3 class="text-lg font-semibold mb-4">Conceptos clave</h3>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-purple-400 font-bold mb-1">ISO 10218 nacional</div><div class="text-xs text-neutral-400">Equivalentes locales</div></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-purple-400 font-bold mb-1">Fragmentación</div><div class="text-xs text-neutral-400">Regulación por región</div></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-purple-400 font-bold mb-1">Multijurisdiccional</div><div class="text-xs text-neutral-400">Compliance por país</div></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-purple-400 font-bold mb-1">Especialista local</div><div class="text-xs text-neutral-400">Demanda creciente</div></div>
+</div>
+</section>
+<!-- TOPICO 3 -->
+<section class="mb-16" id="topico-3">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">3</span>
+<h2 class="text-2xl font-bold">🥽 VR/AR como estándar</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed">
+        VR/AR se está convirtiendo en el <strong class="text-purple-400">estándar de onboarding</strong> para entornos robotizados. El argumento es doble: <strong class="text-purple-400">38% de reducción en el tiempo de capacitación</strong> más la eliminación del riesgo durante el aprendizaje. Quien ofrece capacitación sin VR/AR será percibido como obsoleto: la tecnología deja de ser una ventaja competitiva y se convierte en el estándar.
+      </p>
+<div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-blue-400 mb-4 flex items-center">
+<span class="mr-2">📊</span> Datos de investigación
+        </h3>
+<ul class="space-y-2 text-neutral-300">
+<li><strong>38% más rápido</strong> — reducción del tiempo de capacitación con onboarding de VR.</li>
+<li><strong>Riesgo cero</strong> — aprendizaje sin exposición al robot físico durante la curva inicial.</li>
+<li><strong>Gemelo digital</strong> — réplica virtual del entorno real para practicar de forma segura.</li>
+</ul>
+</div>
+<div class="bg-gradient-to-br from-purple-900/30 to-dark-800 rounded-xl border border-purple-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-purple-400 mb-4 flex items-center">
+<span class="mr-2">🎯</span> De diferenciador a baseline
+        </h3>
+<p class="text-neutral-300 mb-4">Toda tecnología sigue la misma curva: comienza como una ventaja competitiva y termina como una expectativa mínima. La VR/AR en la capacitación en robótica ya pasó ese punto. En 2027-2030, ofrecer capacitación sin VR/AR será como vender capacitación «solo con manual en papel».</p>
+<ul class="space-y-2 text-neutral-300">
+<li class="flex items-start space-x-2"><span class="text-purple-400 mt-1">•</span><span><strong>AR asistida</strong> — instrucciones superpuestas en el campo visual del operador.</span></li>
+<li class="flex items-start space-x-2"><span class="text-purple-400 mt-1">•</span><span><strong>Incorporación con VR</strong> — primera exposición al entorno sin riesgo físico.</span></li>
+<li class="flex items-start space-x-2"><span class="text-purple-400 mt-1">•</span><span><strong>Capacitación sin riesgos</strong> — un error en lo virtual no lesiona ni al trabajador.</span></li>
+</ul>
+</div>
+<h3 class="text-lg font-semibold mb-4">Conceptos clave</h3>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-purple-400 font-bold mb-1">Incorporación con VR</div><div class="text-xs text-neutral-400">Primera exposición segura</div></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-purple-400 font-bold mb-1">AR asistida</div><div class="text-xs text-neutral-400">Instrucción en el campo de visión</div></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-purple-400 font-bold mb-1">Gemelo digital</div><div class="text-xs text-neutral-400">Réplica para ensayo</div></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-purple-400 font-bold mb-1">38% faster</div><div class="text-xs text-neutral-400">Capacitación más rápida</div></div>
+</div>
+</section>
+<!-- TOPICO 4 -->
+<section class="mb-16" id="topico-4">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">4</span>
+<h2 class="text-2xl font-bold">🌐 120M en riesgo</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed">
+        El Foro Económico Mundial (WEF) estima <strong class="text-purple-400">120 millones de trabajadores globales en riesgo</strong> de redundancia por automatización. De estos, <strong class="text-purple-400">11 de cada 100 serán imposibles de recapacitar</strong> por la velocidad del cambio. La ventana de recapacitación se está cerrando: quien no empiece ahora no tendrá tiempo para capacitar al volumen necesario hasta 2030.
+      </p>
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-red-400 mb-3 flex items-center">
+<span class="mr-2">⚠️</span> Urgencia temporal
+        </h3>
+<p class="text-neutral-300">Recapacitar a gran escala lleva años: crear contenido, formar formadores, impartir cursos, medir resultados. Si la redundancia llega antes que la capacitación, los <strong>11% imposibles de recapacitar</strong> dejan de ser estadísticas y se convierten en personas sin rumbo. La ventana es estrecha por diseño.</p>
+</div>
+<!-- Timeline: fechamento da janela de requalificacao -->
+<div class="space-y-6 mb-6">
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-12 h-12 rounded-full bg-purple-500/20 flex items-center justify-center"><span class="text-purple-400 font-bold">1</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+<h4 class="font-semibold text-white mb-2">Ahora — ventana abierta</h4>
+<p class="text-sm text-neutral-400 mb-3">2026-2027</p>
+<p class="text-neutral-300 text-sm">Demanda emergente, pocos proveedores maduros. Quien empiece ahora generará volumen y se posicionará antes que la competencia.</p>
+</div>
+</div>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-12 h-12 rounded-full bg-purple-500/20 flex items-center justify-center"><span class="text-purple-400 font-bold">2</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+<h4 class="font-semibold text-white mb-2">Pico — plazo ajustado</h4>
+<p class="text-sm text-neutral-400 mb-3">2028-2029</p>
+<p class="text-neutral-300 text-sm">La redundancia se acelera con humanoides en producción. La demanda se dispara, pero formar formadores lleva tiempo: el cuello de botella no es el dinero, sino la capacidad de enseñanza.</p>
+</div>
+</div>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-12 h-12 rounded-full bg-purple-500/20 flex items-center justify-center"><span class="text-purple-400 font-bold">3</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+<h4 class="font-semibold text-white mb-2">Límite: 11% sin camino</h4>
+<p class="text-sm text-neutral-400 mb-3">2030</p>
+<p class="text-neutral-300 text-sm">Para 11 de cada 100, la velocidad del cambio hizo inviable la recalificación. El costo social define la magnitud de la responsabilidad —y de la oportunidad— de quienes trabajan en este mercado.</p>
+</div>
+</div>
+</div>
+<h3 class="text-lg font-semibold mb-4">Conceptos clave</h3>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-purple-400 font-bold mb-1">120M at risk</div><div class="text-xs text-neutral-400">Estimación del WEF</div></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-purple-400 font-bold mb-1">11% unreskillable</div><div class="text-xs text-neutral-400">Imposible recapacitar</div></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-purple-400 font-bold mb-1">Ventana</div><div class="text-xs text-neutral-400">Oportunidad en cierre</div></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-purple-400 font-bold mb-1">Urgencia</div><div class="text-xs text-neutral-400">El tiempo es el cuello de botella</div></div>
+</div>
+</section>
+<!-- TOPICO 5 -->
+<section class="mb-16" id="topico-5">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">5</span>
+<h2 class="text-2xl font-bold">💡 La tesis central</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed">
+        La tesis que sustenta todo el curso: <strong class="text-purple-400">"capacitar para convivir, supervisar y decidir en sistemas automatizados"</strong>. No se trata de operar robots — se trata de coexistir con ellos. El futuro no es "humano vs. robot", sino "humano con robot". La competencia central es saber convivir, supervisar y tomar decisiones en el sistema híbrido.
+      </p>
+<div class="bg-gradient-to-br from-purple-900/30 to-dark-800 rounded-xl border border-purple-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-purple-400 mb-4 flex items-center">
+<span class="mr-2">🧭</span> Convivir, supervisar, decidir
+        </h3>
+<p class="text-neutral-300 mb-4">Tres verbos definen la competencia humana en el sistema híbrido. Sustituyen al antiguo «operar», que presupone que la máquina es una herramienta pasiva. En el sistema automatizado, la máquina actúa; el humano convive, supervisa y decide.</p>
+<ul class="space-y-2 text-neutral-300">
+<li class="flex items-start space-x-2"><span class="text-purple-400 mt-1">•</span><span><strong>Convivir</strong> — compartir espacio y ritmo con el robot de forma segura y confiable.</span></li>
+<li class="flex items-start space-x-2"><span class="text-purple-400 mt-1">•</span><span><strong>Supervisar</strong> — monitorear el sistema, leer señales e intervenir en el momento adecuado.</span></li>
+<li class="flex items-start space-x-2"><span class="text-purple-400 mt-1">•</span><span><strong>Decidir</strong> — asumir el juicio que la automatización no puede ejercer: contexto, ética, excepciones.</span></li>
+</ul>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+<div class="bg-emerald-900/20 rounded-xl border border-emerald-500/30 p-6">
+<h4 class="font-bold text-emerald-400 mb-4">✓ Humano con robot</h4>
+<ul class="space-y-3 text-neutral-300">
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Sistema híbrido en el que cada parte hace lo que mejor sabe hacer.</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>La persona aporta criterio, contexto y toma de decisiones.</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>La coexistencia entre humanos y robots (human-robot coexistence) como competencia entrenable.</span></li>
+</ul>
+</div>
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+<h4 class="font-bold text-red-400 mb-4">✗ Humano vs. robot</h4>
+<ul class="space-y-3 text-neutral-300">
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Plantearlo como una disputa por quién conservará el empleo.</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Reducir al ser humano a operador de botones de la máquina.</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Capacitar en una tarea aislada e ignorar la convivencia dentro del sistema.</span></li>
+</ul>
+</div>
+</div>
+<div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
+<span class="mr-2">💡</span> Consejo práctico
+        </h3>
+<p class="text-neutral-300">Siempre que describas una capacitación, cambia el verbo «operar» por «convivir, supervisar y decidir». El cambio de lenguaje comunica de inmediato que vendes una transformación de capacidades, no instrucciones de uso.</p>
+</div>
+<h3 class="text-lg font-semibold mb-4">Conceptos clave</h3>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-purple-400 font-bold mb-1">Convivir</div><div class="text-xs text-neutral-400">Compartir espacio</div></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-purple-400 font-bold mb-1">Supervisar</div><div class="text-xs text-neutral-400">Monitorear e intervenir</div></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-purple-400 font-bold mb-1">Decidir</div><div class="text-xs text-neutral-400">Juicio humano</div></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-purple-400 font-bold mb-1">Sistema híbrido</div><div class="text-xs text-neutral-400">Coexistencia humano-robot</div></div>
+</div>
+</section>
+<!-- TOPICO 6 -->
+<section class="mb-16" id="topico-6">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">6</span>
+<h2 class="text-2xl font-bold">🎯 Posicionamiento</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed">
+        El posicionamiento que cierra el curso: ser una <strong class="text-purple-400">empresa de transformación de la capacidad humana</strong>, no de capacitación operativa. La diferencia está en la profundidad, no en la tarea. La capacitación operativa es un commodity; la transformación de las capacidades humanas es premium. El mercado necesita lo segundo, pero solo encuentra lo primero: esa es la brecha.
+      </p>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+<div class="bg-emerald-900/20 rounded-xl border border-emerald-500/30 p-6">
+<h4 class="font-bold text-emerald-400 mb-4">✓ Transformación (premium)</h4>
+<ul class="space-y-3 text-neutral-300">
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Desarrolla la capacidad de convivir, supervisar y tomar decisiones.</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Mide el cambio de comportamiento, no las horas de clase.</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>La profundidad es una relación continua con el cliente.</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Difícil de copiar, alto valor percibido.</span></li>
+</ul>
+</div>
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+<h4 class="font-bold text-red-400 mb-4">✗ Operacional (commodity)</h4>
+<ul class="space-y-3 text-neutral-300">
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Enseña únicamente a ejecutar la tarea del día.</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Se vende por hora o por persona; el precio está bajo presión.</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Intercambiable: cualquier proveedor ofrece lo mismo.</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Relación puntual, sin diferenciación.</span></li>
+</ul>
+</div>
+</div>
+<div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-blue-400 mb-4 flex items-center">
+<span class="mr-2">📊</span> La brecha del mercado
+        </h3>
+<ul class="space-y-2 text-neutral-300">
+<li><strong>Demanda</strong> — el mercado necesita una transformación de las capacidades humanas.</li>
+<li><strong>Oferta</strong> — encuentra principalmente capacitación operativa (commodity).</li>
+<li><strong>Brecha</strong> — quien cierre esa brecha ocupará la posición prémium casi sin competencia.</li>
+</ul>
+</div>
+<div class="bg-gradient-to-br from-purple-900/30 to-dark-800 rounded-xl border border-purple-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-purple-400 mb-4 flex items-center">
+<span class="mr-2">🚀</span> La jugada estratégica
+        </h3>
+<p class="text-neutral-300">Combina las proyecciones: humanoides en producción, regulación fragmentada, VR/AR como estándar, 120M en riesgo y la ventana que se cierra. Suma la tesis central. El resultado es una única postura defendible: <strong class="text-purple-400">transformación de la capacidad humana para convivir con robots</strong> — prémium, urgente y difícil de copiar.</p>
+</div>
+<h3 class="text-lg font-semibold mb-4">Conceptos clave</h3>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-purple-400 font-bold mb-1">Capacidad humana</div><div class="text-xs text-neutral-400">Transformación, no tarea</div></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-purple-400 font-bold mb-1">Posicionamiento premium</div><div class="text-xs text-neutral-400">La profundidad como valor</div></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-purple-400 font-bold mb-1">Commodity vs. transf.</div><div class="text-xs text-neutral-400">Operacional frente a capacidad</div></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-purple-400 font-bold mb-1">Market gap</div><div class="text-xs text-neutral-400">Demanda sin oferta</div></div>
+</div>
+</section>
+<!-- CONCLUSAO DO CURSO -->
+<section class="mb-12">
+<div class="bg-gradient-to-br from-purple-900/40 via-dark-800 to-dark-800 rounded-xl border border-purple-500/30 p-8">
+<h2 class="text-2xl font-bold mb-2 flex items-center">
+<span class="mr-3">🏁</span> Conclusión del curso
+        </h2>
+<p class="text-neutral-400 mb-6">Recorriste el camino completo: Fundamentos, Acción y Estrategia. Esto es lo que ya dominas.</p>
+<div class="space-y-4 mb-8">
+<div class="flex items-start space-x-3"><span class="text-purple-400 mt-1">✓</span><div><strong class="text-white">Ruta 1 - Fundamentos</strong><span class="text-neutral-400"> - El contexto de la automatización, la seguridad en entornos robotizados y la base para coexistir con máquinas.</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-purple-400 mt-1">✓</span><div><strong class="text-white">Ruta 2 - Acción</strong><span class="text-neutral-400"> - Llevar a la práctica: operar, intervenir y actuar con seguridad en la planta de producción automatizada.</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-purple-400 mt-1">✓</span><div><strong class="text-white">Ruta 3 - Estratégica</strong><span class="text-neutral-400"> - Liderazgo, gestión del cambio, business case, certificaciones, formación de formadores y proyecciones de mercado.</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-purple-400 mt-1">✓</span><div><strong class="text-white">Proyecciones 2027-2030</strong><span class="text-neutral-400"> - Humanoides en producción, regulación HRC más estricta, VR/AR como estándar y la ventana de 120M en riesgo.</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-purple-400 mt-1">✓</span><div><strong class="text-white">La tesis central</strong><span class="text-neutral-400"> - Capacitar para convivir, supervisar y decidir en sistemas automatizados.</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-purple-400 mt-1">✓</span><div><strong class="text-white">Posicionamiento</strong><span class="text-neutral-400"> - Transformación de la capacidad humana (premium), no capacitación operativa (commodity).</span></div></div>
+</div>
+<div class="bg-dark-800/50 rounded-lg p-6 mb-8 border border-purple-500/30">
+<h3 class="text-lg font-semibold text-purple-400 mb-2 flex items-center"><span class="mr-2">🎓</span> Completaste segROBOT</h3>
+<p class="text-neutral-300">Desde los fundamentos hasta la estrategia, ahora entiendes la reconversión humana para entornos robotizados como lo que es: una transformación de capacidades, urgente y de gran valor. El futuro no es humano vs. robot — es humano <strong>con</strong> robot. Y tú estás listo para liderar esta convivencia.</p>
+</div>
+<div class="flex flex-col sm:flex-row gap-4">
+<a class="flex-1 text-center px-6 py-3 bg-dark-700 text-neutral-300 rounded-lg font-semibold hover:bg-dark-600 transition-colors" href="index.html">← Volver a la ruta</a>
+<a class="flex-1 text-center px-6 py-3 bg-purple-600 text-white rounded-lg font-semibold hover:bg-purple-500 transition-colors" href="../index.html">Volver al curso →</a>
+</div>
+</div>
+</section>
+</main>
+<!-- FOOTER -->
+<footer class="border-t border-dark-600 py-8 mt-16">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-neutral-500 text-sm">
+<p>segROBOT — INEMA.CLUB — 2026</p>
+</div>
+</footer>
+<!-- SCRIPTS -->
+<script>
+    const themeToggle = document.getElementById('theme-toggle');
+    const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
+    const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
+    const html = document.documentElement;
+    if (localStorage.getItem('theme') === 'light' || (!localStorage.getItem('theme') && !html.classList.contains('dark'))) {
+      themeToggleDarkIcon.classList.remove('hidden');
+      html.classList.remove('dark');
+    } else {
+      themeToggleLightIcon.classList.remove('hidden');
+    }
+    themeToggle.addEventListener('click', () => {
+      themeToggleDarkIcon.classList.toggle('hidden');
+      themeToggleLightIcon.classList.toggle('hidden');
+      html.classList.toggle('dark');
+      localStorage.setItem('theme', html.classList.contains('dark') ? 'dark' : 'light');
+    });
+  </script>
+</body>
+</html>

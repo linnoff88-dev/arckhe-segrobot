@@ -1,0 +1,1186 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Track 2 - Action | segROBOT</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            primary: '#FACC15',
+            dark: { 900: '#111827', 800: '#1f2937', 700: '#374151', 600: '#4b5563' }
+          }
+        }
+      }
+    }
+  </script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<style>
+    body { font-family: 'Inter', sans-serif; }
+    .dark body { background-color: #111827; }
+    .topic-explanation { display: none; }
+    .topic-explanation.active { display: block; }
+
+    @keyframes wf-pulse { 0%,100% { opacity:.55 } 50% { opacity:1 } }
+    @media (prefers-reduced-motion: no-preference) {
+      .wf-a { animation: wf-pulse 2.6s ease-in-out infinite; }
+      .wf-a:nth-child(2){animation-delay:.25s} .wf-a:nth-child(3){animation-delay:.5s}
+      .wf-a:nth-child(4){animation-delay:.75s} .wf-a:nth-child(5){animation-delay:1s}
+    }
+
+    /* Light mode overrides - OBRIGATORIO */
+    html:not(.dark) body { background-color: #f8fafc; }
+    html:not(.dark) .bg-dark-900 { background-color: #ffffff; }
+    html:not(.dark) .bg-dark-800 { background-color: #f9fafb; }
+    html:not(.dark) .bg-dark-700 { background-color: #f3f4f6; }
+    html:not(.dark) .bg-dark-600 { background-color: #e5e7eb; }
+    html:not(.dark) .text-neutral-100 { color: #111827; }
+    html:not(.dark) .text-neutral-300 { color: #4b5563; }
+    html:not(.dark) .text-neutral-400 { color: #6b7280; }
+    html:not(.dark) .text-neutral-500 { color: #9ca3af; }
+    html:not(.dark) .border-dark-600 { border-color: #d1d5db; }
+    html:not(.dark) .border-dark-700 { border-color: #e5e7eb; }
+
+    /* Light mode - cores de acento (trilha blue) */
+    html:not(.dark) .text-blue-400 { color: #2563eb; }
+    html:not(.dark) .bg-blue-500\/20 { background-color: rgba(37, 99, 235, 0.12); }
+    html:not(.dark) .bg-blue-500\/10 { background-color: rgba(37, 99, 235, 0.08); }
+    html:not(.dark) .border-blue-500\/30 { border-color: rgba(37, 99, 235, 0.25); }
+    html:not(.dark) .hover\:bg-blue-500\/30:hover { background-color: rgba(37, 99, 235, 0.18); }
+    html:not(.dark) .hover\:bg-blue-500\/10:hover { background-color: rgba(37, 99, 235, 0.08); }
+    html:not(.dark) .hover\:text-blue-400:hover { color: #2563eb; }
+    html:not(.dark) .hover\:border-blue-500\/30:hover { border-color: rgba(37, 99, 235, 0.25); }
+    html:not(.dark) .group:hover .group-hover\:text-blue-400 { color: #2563eb; }
+
+    /* Light mode - outras trilhas no nav */
+    html:not(.dark) .hover\:text-emerald-400:hover { color: #059669; }
+    html:not(.dark) .hover\:bg-emerald-500\/10:hover { background-color: rgba(5, 150, 105, 0.08); }
+    html:not(.dark) .hover\:text-purple-400:hover { color: #7c3aed; }
+    html:not(.dark) .hover\:bg-purple-500\/10:hover { background-color: rgba(124, 58, 237, 0.08); }
+
+    /* Light mode - remove gradientes (fundo uniforme) */
+    html:not(.dark) [class*="bg-gradient-to"] { background-image: none !important; }
+
+    /* Light mode - cores especiais */
+    html:not(.dark) .text-primary { color: #a16207; }
+    html:not(.dark) .bg-primary\/10 { background-color: rgba(161, 98, 7, 0.08); }
+    html:not(.dark) .border-primary\/40 { border-color: rgba(161, 98, 7, 0.25); }
+    html:not(.dark) .text-sky-400 { color: #0369a1; }
+    html:not(.dark) .text-yellow-400 { color: #a16207; }
+    html:not(.dark) .hover\:text-sky-300:hover { color: #0284c7; }
+    html:not(.dark) .hover\:text-yellow-300:hover { color: #854d0e; }
+
+    /* Light mode - nav */
+    html:not(.dark) .bg-dark-900\/95 { background-color: rgba(255, 255, 255, 0.95); }
+
+    /* Dark mode - bordas e linhas divisorias mais suaves */
+    .dark .border-dark-600 { border-color: #374151; }
+    .dark .divide-dark-600 > :not([hidden]) ~ :not([hidden]) { border-color: #374151; }
+  </style>
+<link href="https://inematds.github.io/segrobot/curso/trilha2/" hreflang="pt-BR" rel="alternate"/><link href="https://inematds.github.io/segrobot/en/curso/trilha2/" hreflang="en" rel="alternate"/><link href="https://inematds.github.io/segrobot/es/curso/trilha2/" hreflang="es" rel="alternate"/></head>
+<body class="bg-dark-900 text-neutral-100 min-h-screen"><div class="inema-lang" style="position:fixed;right:14px;bottom:14px;z-index:9999;display:flex;gap:2px;padding:4px;border-radius:10px;background:rgba(12,12,16,.82);border:1px solid rgba(226,162,59,.45);font:600 12px/1 Sora,Inter,system-ui,sans-serif;backdrop-filter:blur(8px)" translate="no"><a href="../../../curso/trilha2/" hreflang="pt-BR" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">PT</a><a href="./" hreflang="en" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#1a1206;background:#E2A23B">EN</a><a href="../../../es/curso/trilha2/" hreflang="es" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">ES</a></div>
+<!-- NAVIGATION -->
+<nav class="sticky top-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-600">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="flex justify-between items-center h-14">
+<div class="flex items-center space-x-4">
+<a class="flex items-center space-x-2 text-yellow-400 hover:text-yellow-300" href="../">
+<span class="text-2xl">🤖</span>
+<span class="font-bold text-lg hidden sm:inline">segROBOT</span>
+</a>
+<span class="text-neutral-600">|</span>
+<a class="text-sky-400 hover:text-sky-300 text-sm font-medium" href="https://inema.club" target="_blank">INEMA.CLUB</a>
+</div>
+<div class="flex items-center space-x-1 sm:space-x-2">
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-emerald-400 hover:bg-emerald-500/10 transition-colors" href="../trilha1/">
+<span class="sm:hidden">T1</span>
+<span class="hidden sm:inline">Fundamentals</span>
+</a>
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-blue-400 bg-blue-500/10" href="./">
+<span class="sm:hidden">T2</span>
+<span class="hidden sm:inline">Action</span>
+</a>
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-purple-400 hover:bg-purple-500/10 transition-colors" href="../trilha3/">
+<span class="sm:hidden">T3</span>
+<span class="hidden sm:inline">Strategic</span>
+</a>
+<button class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors ml-2" id="theme-toggle">
+<svg class="hidden w-5 h-5 text-neutral-300" fill="currentColor" id="theme-toggle-dark-icon" viewbox="0 0 20 20">
+<path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+</svg>
+<svg class="hidden w-5 h-5 text-neutral-300" fill="currentColor" id="theme-toggle-light-icon" viewbox="0 0 20 20">
+<path clip-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd"></path>
+</svg>
+</button>
+</div>
+</div>
+</div>
+</nav>
+<!-- HEADER -->
+<header class="bg-gradient-to-br from-blue-900/30 via-dark-800 to-dark-800 py-12 border-b border-dark-600">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+<span class="inline-block px-3 py-1 bg-blue-500/20 text-blue-400 text-xs font-semibold rounded-full mb-4">TRACK 2</span>
+<h1 class="text-3xl sm:text-4xl font-bold mb-4">🎯 Action: Application by Sector</h1>
+<p class="text-lg text-neutral-400 max-w-3xl">
+        From theory to practice. Supervising autonomous systems, human-robot safety protocols, VR simulators, and industry applications in healthcare, logistics, and agriculture.
+      </p>
+<!-- Hero SVG -->
+<div class="rounded-2xl border border-blue-500/30 bg-dark-900/40 p-3 sm:p-4 mt-8 overflow-hidden">
+<svg aria-label="Diagram showing Track 2—from training to sector-specific action: supervision, safety, simulation, and vertical sectors" class="w-full h-auto" role="img" viewbox="0 0 1000 260">
+<defs>
+<lineargradient id="t2i-grad" x1="0" x2="1" y1="0" y2="1">
+<stop offset="0" stop-color="#60a5fa"></stop><stop offset="1" stop-color="#3b82f6"></stop>
+</lineargradient>
+<filter height="180%" id="t2i-glow" width="180%" x="-40%" y="-40%">
+<fegaussianblur result="b" stddeviation="3"></fegaussianblur><femerge><femergenode in="b"></femergenode><femergenode in="SourceGraphic"></femergenode></femerge>
+</filter>
+<pattern height="32" id="t2i-grid" patternunits="userSpaceOnUse" width="32">
+<circle cx="1.3" cy="1.3" fill="#3b82f6" opacity="0.12" r="1.3"></circle>
+</pattern>
+<marker id="t2i-ah" markerheight="9" markerwidth="9" orient="auto" refx="6.5" refy="4.5"><path d="M0,0 L8,4.5 L0,9 L2.4,4.5 Z" fill="#60a5fa"></path></marker>
+<marker id="t2i-ahc" markerheight="9" markerwidth="9" orient="auto" refx="6.5" refy="4.5"><path d="M0,0 L8,4.5 L0,9 L2.4,4.5 Z" fill="#38bdf8"></path></marker>
+</defs>
+<rect fill="url(#t2i-grid)" height="260" width="1000" x="0" y="0"></rect>
+<!-- Central hub -->
+<g filter="url(#t2i-glow)"><rect fill="#0e1622" height="80" rx="14" stroke="url(#t2i-grad)" stroke-width="2.5" width="170" x="30" y="90"></rect></g>
+<text fill="#60a5fa" font-family="Inter,sans-serif" font-size="16" font-weight="700" text-anchor="middle" x="115" y="122">TRACK 2</text>
+<text fill="#93bbfc" font-family="Inter,sans-serif" font-size="12" text-anchor="middle" x="115" y="148">Industry action</text>
+<!-- Arrows to sectors -->
+<g fill="none" opacity="0.65" stroke="#60a5fa" stroke-width="2">
+<path d="M200,110 C300,110 310,50 370,50" marker-end="url(#t2i-ah)"></path>
+<path d="M200,130 C300,130 310,130 370,130" marker-end="url(#t2i-ah)"></path>
+<path d="M200,150 C300,150 310,210 370,210" marker-end="url(#t2i-ah)"></path>
+</g>
+<!-- Core pillars -->
+<g font-family="Inter,sans-serif" font-size="13" font-weight="600">
+<g class="wf-a"><rect fill="#0e1622" height="40" rx="9" stroke="#60a5fa" stroke-width="2" width="160" x="370" y="30"></rect><text fill="#93bbfc" text-anchor="middle" x="450" y="55">Supervision</text></g>
+<g class="wf-a"><rect fill="#0e1622" height="40" rx="9" stroke="#60a5fa" stroke-width="2" width="160" x="370" y="110"></rect><text fill="#93bbfc" text-anchor="middle" x="450" y="135">Safety + VR</text></g>
+<g class="wf-a"><rect fill="#0e1622" height="40" rx="9" stroke="#60a5fa" stroke-width="2" width="160" x="370" y="190"></rect><text fill="#93bbfc" text-anchor="middle" x="450" y="215">Protocols</text></g>
+</g>
+<!-- Arrows to verticals -->
+<g fill="none" opacity="0.55" stroke="#38bdf8" stroke-width="2">
+<path d="M530,50 C600,50 610,50 650,50" marker-end="url(#t2i-ahc)"></path>
+<path d="M530,130 C600,130 610,90 650,90" marker-end="url(#t2i-ahc)"></path>
+<path d="M530,130 C600,130 610,130 650,130" marker-end="url(#t2i-ahc)"></path>
+<path d="M530,130 C600,130 610,170 650,170" marker-end="url(#t2i-ahc)"></path>
+<path d="M530,210 C600,210 610,210 650,210" marker-end="url(#t2i-ahc)"></path>
+</g>
+<!-- Sector verticals -->
+<g font-family="Inter,sans-serif" font-size="12" font-weight="600">
+<rect fill="#0e1b26" height="36" rx="8" stroke="#38bdf8" stroke-width="1.5" width="140" x="650" y="32"></rect><text fill="#bfe6ff" text-anchor="middle" x="720" y="55">Health</text>
+<rect fill="#0e1b26" height="36" rx="8" stroke="#38bdf8" stroke-width="1.5" width="140" x="650" y="72"></rect><text fill="#bfe6ff" text-anchor="middle" x="720" y="95">Logistics</text>
+<rect fill="#0e1b26" height="36" rx="8" stroke="#38bdf8" stroke-width="1.5" width="140" x="650" y="112"></rect><text fill="#bfe6ff" text-anchor="middle" x="720" y="135">Agriculture</text>
+<rect fill="#0e1b26" height="36" rx="8" stroke="#38bdf8" stroke-width="1.5" width="140" x="650" y="152"></rect><text fill="#bfe6ff" text-anchor="middle" x="720" y="175">Safety</text>
+<rect fill="#0e1b26" height="36" rx="8" stroke="#38bdf8" stroke-width="1.5" width="140" x="650" y="192"></rect><text fill="#bfe6ff" text-anchor="middle" x="720" y="215">Manufacturing</text>
+</g>
+<!-- Final convergence -->
+<g fill="none" opacity="0.45" stroke="#38bdf8" stroke-width="1.5">
+<path d="M790,50 C840,50 850,130 870,130" marker-end="url(#t2i-ahc)"></path>
+<path d="M790,90 C840,90 850,130 870,130" marker-end="url(#t2i-ahc)"></path>
+<path d="M790,130 L870,130" marker-end="url(#t2i-ahc)"></path>
+<path d="M790,170 C840,170 850,130 870,130" marker-end="url(#t2i-ahc)"></path>
+<path d="M790,210 C840,210 850,130 870,130" marker-end="url(#t2i-ahc)"></path>
+</g>
+<g filter="url(#t2i-glow)"><rect fill="#0e1622" height="60" rx="12" stroke="url(#t2i-grad)" stroke-width="2.5" width="110" x="870" y="100"></rect></g>
+<text fill="#60a5fa" font-family="Inter,sans-serif" font-size="14" font-weight="700" text-anchor="middle" x="925" y="126">Professional</text>
+<text fill="#93bbfc" font-family="Inter,sans-serif" font-size="11" text-anchor="middle" x="925" y="146">Reskilled</text>
+</svg>
+</div>
+<!-- Stats Grid -->
+<div class="grid grid-cols-4 gap-4 mt-8 max-w-2xl">
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+<div class="text-xl font-bold text-blue-400">8</div>
+<div class="text-xs text-neutral-400">Modules</div>
+</div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+<div class="text-xl font-bold text-blue-400">48</div>
+<div class="text-xs text-neutral-400">Topics</div>
+</div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+<div class="text-xl font-bold text-blue-400">~4h</div>
+<div class="text-xs text-neutral-400">Duration</div>
+</div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+<div class="text-xl font-bold text-blue-400">Intermediate.</div>
+<div class="text-xs text-neutral-400">Level</div>
+</div>
+</div>
+</div>
+</header>
+<main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+<!-- Mapa da trilha -->
+<section class="mb-12">
+<h2 class="text-2xl font-bold mb-6">Course roadmap</h2>
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+<a class="group bg-dark-800 rounded-xl border border-dark-600 hover:border-blue-500/30 p-5 transition-all" href="#modulo-2-1">
+<div class="flex items-center justify-between mb-2">
+<span class="text-blue-400 font-bold text-sm">2.1</span>
+<span class="text-xs text-neutral-500">~35 min</span>
+</div>
+<h3 class="font-semibold mb-1 group-hover:text-blue-400 transition-colors">🧠 Autonomous Systems Supervision</h3>
+<p class="text-xs text-neutral-400">Judgment, not obedience</p>
+</a>
+<a class="group bg-dark-800 rounded-xl border border-dark-600 hover:border-blue-500/30 p-5 transition-all" href="#modulo-2-2">
+<div class="flex items-center justify-between mb-2">
+<span class="text-blue-400 font-bold text-sm">2.2</span>
+<span class="text-xs text-neutral-500">~35 min</span>
+</div>
+<h3 class="font-semibold mb-1 group-hover:text-blue-400 transition-colors">🛡️ Human-Robot Protocols</h3>
+<p class="text-xs text-neutral-400">ISO + LOTO + near-miss</p>
+</a>
+<a class="group bg-dark-800 rounded-xl border border-dark-600 hover:border-blue-500/30 p-5 transition-all" href="#modulo-2-3">
+<div class="flex items-center justify-between mb-2">
+<span class="text-blue-400 font-bold text-sm">2.3</span>
+<span class="text-xs text-neutral-500">~30 min</span>
+</div>
+<h3 class="font-semibold mb-1 group-hover:text-blue-400 transition-colors">🥽 Simulators and Digital Twins</h3>
+<p class="text-xs text-neutral-400">USD 2.1bn to 28.7bn</p>
+</a>
+<a class="group bg-dark-800 rounded-xl border border-dark-600 hover:border-blue-500/30 p-5 transition-all" href="#modulo-2-4">
+<div class="flex items-center justify-between mb-2">
+<span class="text-blue-400 font-bold text-sm">2.4</span>
+<span class="text-xs text-neutral-500">~30 min</span>
+</div>
+<h3 class="font-semibold mb-1 group-hover:text-blue-400 transition-colors">🏥 Healthcare and Hospital Robots</h3>
+<p class="text-xs text-neutral-400">78% of nurses approve</p>
+</a>
+<a class="group bg-dark-800 rounded-xl border border-dark-600 hover:border-blue-500/30 p-5 transition-all" href="#modulo-2-5">
+<div class="flex items-center justify-between mb-2">
+<span class="text-blue-400 font-bold text-sm">2.5</span>
+<span class="text-xs text-neutral-500">~30 min</span>
+</div>
+<h3 class="font-semibold mb-1 group-hover:text-blue-400 transition-colors">📦 Logistics and AMR Fleets</h3>
+<p class="text-xs text-neutral-400">1M robots at Amazon</p>
+</a>
+<a class="group bg-dark-800 rounded-xl border border-dark-600 hover:border-blue-500/30 p-5 transition-all" href="#modulo-2-6">
+<div class="flex items-center justify-between mb-2">
+<span class="text-blue-400 font-bold text-sm">2.6</span>
+<span class="text-xs text-neutral-500">~30 min</span>
+</div>
+<h3 class="font-semibold mb-1 group-hover:text-blue-400 transition-colors">🌾 Agriculture, Safety, and Verticals</h3>
+<p class="text-xs text-neutral-400">USD 14.7bn to 48bn</p>
+</a>
+<a class="group bg-dark-800 rounded-xl border border-dark-600 hover:border-blue-500/30 p-5 transition-all" href="#modulo-2-7">
+<div class="flex items-center justify-between mb-2">
+<span class="text-blue-400 font-bold text-sm">2.7</span>
+<span class="text-xs text-neutral-500">~45 min</span>
+</div>
+<h3 class="font-semibold mb-1 group-hover:text-blue-400 transition-colors">🗣️ VLA: Vision-Language-Action</h3>
+<p class="text-xs text-neutral-400">Robot obeys spoken command</p>
+</a>
+<a class="group bg-dark-800 rounded-xl border border-dark-600 hover:border-blue-500/30 p-5 transition-all" href="#modulo-2-8">
+<div class="flex items-center justify-between mb-2">
+<span class="text-blue-400 font-bold text-sm">2.8</span>
+<span class="text-xs text-neutral-500">~50 min</span>
+</div>
+<h3 class="font-semibold mb-1 group-hover:text-blue-400 transition-colors">💻 How to Program Robots</h3>
+<p class="text-xs text-neutral-400">From teach pendant to code</p>
+</a>
+</div>
+</section>
+<!-- Conteudo detalhado -->
+<h2 class="text-2xl font-bold mb-6">Detailed content</h2>
+<!-- MODULO 2.1 -->
+<div class="bg-dark-800 rounded-xl border border-dark-600 mb-6" id="modulo-2-1">
+<div class="p-6 border-b border-dark-600">
+<div class="flex items-center justify-between mb-2">
+<span class="text-blue-400 font-bold">2.1</span>
+<span class="text-xs text-neutral-500">~35 min</span>
+</div>
+<h3 class="text-2xl font-bold mb-2">🧠 Supervising Autonomous Systems: Teaching Judgment</h3>
+<p class="text-neutral-400 text-sm">Technical and cognitive skills for supervising autonomous robots with critical judgment, not blind obedience.</p>
+</div>
+<div class="divide-y divide-dark-600">
+<div class="topic-item">
+<button class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-blue-500/20 text-blue-400 text-sm font-bold flex items-center justify-center flex-shrink-0">1</span>
+<span class="text-lg">📊</span>
+<div><span class="font-medium">Technical Skills</span><span class="text-neutral-500 text-sm ml-2">- Telemetry, dashboards, and failure patterns</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4">
+<div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-blue-400 font-semibold">What it is:</span><p class="text-neutral-300 text-sm">Skill set for interpreting real-time data from robotic systems: telemetry dashboards, reading failure patterns, and understanding the machine’s operating envelope.</p></div>
+<div><span class="text-blue-400 font-semibold">Why learn:</span><p class="text-neutral-300 text-sm">Without technical competence, the supervisor responds to alarms without understanding the root cause. The difference between stopping the line as a precaution and stopping it in a panic is USD 50k per hour in lost production.</p></div>
+<div><span class="text-blue-400 font-semibold">Key concepts:</span><p class="text-neutral-300 text-sm">Torque and temperature telemetry, SCADA/HMI dashboards, recognizing normal deviations versus anomalies, operating envelope (maximum load, speed, reach).</p></div>
+</div>
+</div>
+</div>
+<div class="topic-item">
+<button class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-blue-500/20 text-blue-400 text-sm font-bold flex items-center justify-center flex-shrink-0">2</span>
+<span class="text-lg">🎯</span>
+<div><span class="font-medium">Cognitive Skills</span><span class="text-neutral-500 text-sm ml-2">- Trust calibration and situational awareness</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4">
+<div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-blue-400 font-semibold">What it is:</span><p class="text-neutral-300 text-sm">Mental skills for supervising autonomous systems: calibrating trust in the robot, maintaining situational awareness during monotony, and tolerating ambiguity when the system is in a gray area.</p></div>
+<div><span class="text-blue-400 font-semibold">Why learn:</span><p class="text-neutral-300 text-sm">Automation complacency kills. When everything works 99.9% of the time, the human brain switches off during the critical 0.1%. Trust calibration is the antidote.</p></div>
+<div><span class="text-blue-400 font-semibold">Key concepts:</span><p class="text-neutral-300 text-sm">Trust calibration (Lee &amp; See 2004), situational awareness (Endsley), tolerance for ambiguity, active vs. passive monotony.</p></div>
+</div>
+</div>
+</div>
+<div class="topic-item">
+<button class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-blue-500/20 text-blue-400 text-sm font-bold flex items-center justify-center flex-shrink-0">3</span>
+<span class="text-lg">🚨</span>
+<div><span class="font-medium">Escalation Protocols</span><span class="text-neutral-500 text-sm ml-2">- When to call an engineer and when to stop</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4">
+<div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-blue-400 font-semibold">What it is:</span><p class="text-neutral-300 text-sm">A clear decision tree: what the supervisor handles independently, what gets escalated to a maintenance engineer, and what requires an immediate production shutdown.</p></div>
+<div><span class="text-blue-400 font-semibold">Why learn:</span><p class="text-neutral-300 text-sm">Escalating too much paralyzes operations. Escalating too little causes accidents. The right protocol balances safety with productivity.</p></div>
+<div><span class="text-blue-400 font-semibold">Key concepts:</span><p class="text-neutral-300 text-sm">Alert levels (green/yellow/red), response time for each level, pre-escalation checklist, line-stop authority.</p></div>
+</div>
+</div>
+</div>
+<div class="topic-item">
+<button class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-blue-500/20 text-blue-400 text-sm font-bold flex items-center justify-center flex-shrink-0">4</span>
+<span class="text-lg">⚠️</span>
+<div><span class="font-medium">Risk #1: Automation Complacency</span><span class="text-neutral-500 text-sm ml-2">- The overconfidence trap</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4">
+<div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-blue-400 font-semibold">What it is:</span><p class="text-neutral-300 text-sm">A documented phenomenon in which operators overtrust automation, stop actively monitoring it, and lose the ability to intervene when the system fails.</p></div>
+<div><span class="text-blue-400 font-semibold">Why learn:</span><p class="text-neutral-300 text-sm">Real cases: Air France 447, Tesla Autopilot, Uber ATG. All involved excessive human trust in autonomous systems. The pattern repeats in factories.</p></div>
+<div><span class="text-blue-400 font-semibold">Key concepts:</span><p class="text-neutral-300 text-sm">Ironies of automation (Bainbridge 1983), out-of-the-loop unfamiliarity, skill degradation, alarm fatigue.</p></div>
+</div>
+</div>
+</div>
+<div class="topic-item">
+<button class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-blue-500/20 text-blue-400 text-sm font-bold flex items-center justify-center flex-shrink-0">5</span>
+<span class="text-lg">📐</span>
+<div><span class="font-medium">OHRCS Framework</span><span class="text-neutral-500 text-sm ml-2">- MERL Research 2024</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4">
+<div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-blue-400 font-semibold">What it is:</span><p class="text-neutral-300 text-sm">MERL Research's systematic framework for mapping human competencies in robot collaboration contexts: Operational, Human-Centered, Relational, Cognitive, Systemic.</p></div>
+<div><span class="text-blue-400 font-semibold">Why learn:</span><p class="text-neutral-300 text-sm">Provides a standardized language for defining training curricula. Companies that use structured frameworks reduce onboarding time by 40%.</p></div>
+<div><span class="text-blue-400 font-semibold">Key concepts:</span><p class="text-neutral-300 text-sm">5 OHRCS domains, gap mapping, integration with ISO 10218, application in corporate certification programs.</p></div>
+</div>
+</div>
+</div>
+<div class="topic-item">
+<button class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-blue-500/20 text-blue-400 text-sm font-bold flex items-center justify-center flex-shrink-0">6</span>
+<span class="text-lg">🔬</span>
+<div><span class="font-medium">NSF Essential Competencies</span><span class="text-neutral-500 text-sm ml-2">- Mapping for HRC</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4">
+<div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-blue-400 font-semibold">What it is:</span><p class="text-neutral-300 text-sm">National Science Foundation mapping of the essential competencies for Human-Robot Collaboration: technical, social, adaptive, and ethical.</p></div>
+<div><span class="text-blue-400 font-semibold">Why learn:</span><p class="text-neutral-300 text-sm">The NSF influences university curricula and funding programs. Knowing the mapping helps anticipate what future certifications will require.</p></div>
+<div><span class="text-blue-400 font-semibold">Key concepts:</span><p class="text-neutral-300 text-sm">4 NSF pillars (technical, social, adaptive, ethical), alignment with ABET, gap analysis by role (operator, supervisor, engineer).</p></div>
+</div>
+</div>
+</div>
+</div>
+<div class="px-6 py-4 border-t border-dark-600"><h4 class="text-sm font-semibold text-blue-400 mb-2 flex items-center"><span class="mr-2">🔧</span>In practice</h4><ul class="space-y-1.5 text-sm text-neutral-300">
+<li class="flex items-start space-x-2"><span class="text-blue-400 mt-0.5">✓</span><span>Read the telemetry (torque, temperature) and learn the operating envelope before taking over the shift</span></li>
+<li class="flex items-start space-x-2"><span class="text-blue-400 mt-0.5">✓</span><span>Combat complacency: perform active checks even when everything seems normal</span></li>
+<li class="flex items-start space-x-2"><span class="text-blue-400 mt-0.5">✓</span><span>Follow the escalation tree (green/yellow/red) and know when to stop the line</span></li>
+<li class="flex items-start space-x-2"><span class="text-blue-400 mt-0.5">✓</span><span>Calibrate your trust in the system — neither blindly nor paranoically</span></li>
+</ul></div>
+<div class="p-4 bg-dark-700/30 flex justify-start space-x-3">
+<button class="px-4 py-2 text-sm bg-dark-600 hover:bg-dark-500 rounded-lg transition-colors" onclick="openModal('modal-2-1')">View in Modal</button>
+<a class="px-4 py-2 text-sm bg-blue-600 hover:bg-blue-500 text-white rounded-lg transition-colors" href="modulo-2-1.html">View Full Version</a>
+</div>
+</div>
+<!-- MODULO 2.2 -->
+<div class="bg-dark-800 rounded-xl border border-dark-600 mb-6" id="modulo-2-2">
+<div class="p-6 border-b border-dark-600">
+<div class="flex items-center justify-between mb-2">
+<span class="text-blue-400 font-bold">2.2</span>
+<span class="text-xs text-neutral-500">~35 min</span>
+</div>
+<h3 class="text-2xl font-bold mb-2">🛡️ Human-Robot Safety Protocols</h3>
+<p class="text-neutral-400 text-sm">From pre-commissioning risk assessment to incident response. ISO standards, adapted LOTO, and a near-miss culture.</p>
+</div>
+<div class="divide-y divide-dark-600">
+<div class="topic-item">
+<button class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-blue-500/20 text-blue-400 text-sm font-bold flex items-center justify-center flex-shrink-0">1</span>
+<span class="text-lg">📋</span>
+<div><span class="font-medium">Pre-Commissioning Risk Assessment</span><span class="text-neutral-500 text-sm ml-2">- Required by regulation</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-blue-400 font-semibold">What it is:</span><p class="text-neutral-300 text-sm">A systematic process for identifying hazards and assessing risks that MUST be carried out before any robot enters operation. ISO 12100 and ISO 10218 require it.</p></div>
+<div><span class="text-blue-400 font-semibold">Why learn:</span><p class="text-neutral-300 text-sm">Without a documented risk assessment, the company operates out of compliance. Beyond the legal risk, it's the basis for defining safety zones, speeds, and contact forces.</p></div>
+<div><span class="text-blue-400 font-semibold">Key concepts:</span><p class="text-neutral-300 text-sm">ISO 12100 (general principles), HIRA (Hazard Identification and Risk Assessment), severity × probability matrix, mandatory documentation.</p></div>
+</div></div>
+</div>
+<div class="topic-item">
+<button class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-blue-500/20 text-blue-400 text-sm font-bold flex items-center justify-center flex-shrink-0">2</span>
+<span class="text-lg">💪</span>
+<div><span class="font-medium">Contact Force Validation</span><span class="text-neutral-500 text-sm ml-2">- Real measurement, not theoretical</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-blue-400 font-semibold">What it is:</span><p class="text-neutral-300 text-sm">Physical measurement of the contact forces applied by a collaborative robot, validated against the biomechanical limits defined in ISO/TS 15066.</p></div>
+<div><span class="text-blue-400 font-semibold">Why learn:</span><p class="text-neutral-300 text-sm">Manufacturers publish rated forces. In practice, with tools and attached parts, the actual force can exceed the limits. In-situ validation is mandatory.</p></div>
+<div><span class="text-blue-400 font-semibold">Key concepts:</span><p class="text-neutral-300 text-sm">ISO/TS 15066, limits by body region, transient vs. quasi-static contact, measurement devices (CBSF), recalibration frequency.</p></div>
+</div></div>
+</div>
+<div class="topic-item">
+<button class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-blue-500/20 text-blue-400 text-sm font-bold flex items-center justify-center flex-shrink-0">3</span>
+<span class="text-lg">🔄</span>
+<div><span class="font-medium">SSM/PFL and Collaborative Modes</span><span class="text-neutral-500 text-sm ml-2">- 4 safe operating modes</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-blue-400 font-semibold">What it is:</span><p class="text-neutral-300 text-sm">The 4 collaborative operation modes defined by ISO 10218-2: Safety-rated Monitored Stop, Hand Guiding, Speed and Separation Monitoring (SSM), Power and Force Limiting (PFL).</p></div>
+<div><span class="text-blue-400 font-semibold">Why learn:</span><p class="text-neutral-300 text-sm">Each application requires a specific mode. Using the wrong mode is as dangerous as having no protection at all. PFL does not mean "safe in every situation."</p></div>
+<div><span class="text-blue-400 font-semibold">Key concepts:</span><p class="text-neutral-300 text-sm">4 ISO modes, when to use each one, combining modes, industrial vs. collaborative mode, transitions between modes.</p></div>
+</div></div>
+</div>
+<div class="topic-item">
+<button class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-blue-500/20 text-blue-400 text-sm font-bold flex items-center justify-center flex-shrink-0">4</span>
+<span class="text-lg">🔒</span>
+<div><span class="font-medium">LOTO Adapted for Robots</span><span class="text-neutral-500 text-sm ml-2">- Lock-Out Tag-Out in robotic cells</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-blue-400 font-semibold">What it is:</span><p class="text-neutral-300 text-sm">Adaptation of the classic Lock-Out Tag-Out procedure for robotic cells, accounting for stored energy, gravity on vertical axes, and the controller’s safety modes.</p></div>
+<div><span class="text-blue-400 font-semibold">Why learn:</span><p class="text-neutral-300 text-sm">Robots have gravitational potential energy in their axes. Cutting the power does not mean the arm will not fall. LOTO for robots requires additional procedures that traditional LOTO does not cover.</p></div>
+<div><span class="text-blue-400 font-semibold">Key concepts:</span><p class="text-neutral-300 text-sm">Classical vs. robotic LOTO, residual energy, mechanical brakes, zero-energy verification procedure, tag specific to teaching mode.</p></div>
+</div></div>
+</div>
+<div class="topic-item">
+<button class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-blue-500/20 text-blue-400 text-sm font-bold flex items-center justify-center flex-shrink-0">5</span>
+<span class="text-lg">🚑</span>
+<div><span class="font-medium">Incident Response</span><span class="text-neutral-500 text-sm ml-2">- A robot touches a worker: now what?</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-blue-400 font-semibold">What it is:</span><p class="text-neutral-300 text-sm">A standardized sequence of actions when unplanned contact occurs between a robot and a worker: emergency stop, assistance, evidence preservation, notification.</p></div>
+<div><span class="text-blue-400 font-semibold">Why learn:</span><p class="text-neutral-300 text-sm">The first 60 seconds after an incident determine everything: injury severity, preservation of evidence for investigation, and legal liability.</p></div>
+<div><span class="text-blue-400 font-semibold">Key concepts:</span><p class="text-neutral-300 text-sm">Response chain (E-stop, assist, isolate, document), log preservation, mandatory notification (CIPA/SESMT), root cause investigation.</p></div>
+</div></div>
+</div>
+<div class="topic-item">
+<button class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-blue-500/20 text-blue-400 text-sm font-bold flex items-center justify-center flex-shrink-0">6</span>
+<span class="text-lg">📝</span>
+<div><span class="font-medium">Near-Miss Culture</span><span class="text-neutral-500 text-sm ml-2">- Erratic behavior and reporting</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-blue-400 font-semibold">What it is:</span><p class="text-neutral-300 text-sm">A no-blame near-miss reporting system, including simulation of erratic human behavior (Springer 2024) as a robustness testing tool.</p></div>
+<div><span class="text-blue-400 font-semibold">Why learn:</span><p class="text-neutral-300 text-sm">For every serious accident, there are ~300 unreported near misses (Heinrich's pyramid). Capturing near misses prevents accidents before they happen.</p></div>
+<div><span class="text-blue-400 font-semibold">Key concepts:</span><p class="text-neutral-300 text-sm">Heinrich's pyramid, anonymous reporting, near-miss classification, simulation of erratic human behavior, trend analysis.</p></div>
+</div></div>
+</div>
+</div>
+<div class="px-6 py-4 border-t border-dark-600"><h4 class="text-sm font-semibold text-blue-400 mb-2 flex items-center"><span class="mr-2">🔧</span>In practice</h4><ul class="space-y-1.5 text-sm text-neutral-300">
+<li class="flex items-start space-x-2"><span class="text-blue-400 mt-0.5">✓</span><span>Complete the documented risk assessment (ISO 12100/10218) before turning on the robot</span></li>
+<li class="flex items-start space-x-2"><span class="text-blue-400 mt-0.5">✓</span><span>Measure contact force in situ and validate the 4 collaborative modes (SSM/PFL)</span></li>
+<li class="flex items-start space-x-2"><span class="text-blue-400 mt-0.5">✓</span><span>Test the e-stop and apply adapted LOTO, accounting for the gravitational energy of the axes</span></li>
+<li class="flex items-start space-x-2"><span class="text-blue-400 mt-0.5">✓</span><span>Record every near miss without punishment—for every accident, there are ~300 near misses</span></li>
+</ul></div>
+<div class="p-4 bg-dark-700/30 flex justify-start space-x-3">
+<button class="px-4 py-2 text-sm bg-dark-600 hover:bg-dark-500 rounded-lg transition-colors" onclick="openModal('modal-2-2')">View in Modal</button>
+<a class="px-4 py-2 text-sm bg-blue-600 hover:bg-blue-500 text-white rounded-lg transition-colors" href="modulo-2-2.html">View Full Version</a>
+</div>
+</div>
+<!-- MODULO 2.3 -->
+<div class="bg-dark-800 rounded-xl border border-dark-600 mb-6" id="modulo-2-3">
+<div class="p-6 border-b border-dark-600">
+<div class="flex items-center justify-between mb-2">
+<span class="text-blue-400 font-bold">2.3</span>
+<span class="text-xs text-neutral-500">~30 min</span>
+</div>
+<h3 class="text-2xl font-bold mb-2">🥽 Simulators, VR, and Digital Twins for Training</h3>
+<p class="text-neutral-400 text-sm">Market: USD 2.1B to 28.7B. VR reduces execution time by 38%. Platforms, physiology, and emergency scenarios.</p>
+</div>
+<div class="divide-y divide-dark-600">
+<div class="topic-item">
+<button class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-blue-500/20 text-blue-400 text-sm font-bold flex items-center justify-center flex-shrink-0">1</span>
+<span class="text-lg">📈</span>
+<div><span class="font-medium">Automotive digital twins market</span><span class="text-neutral-500 text-sm ml-2">- USD 2.1bn to 28.7bn, CAGR 30%</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-blue-400 font-semibold">What it is:</span><p class="text-neutral-300 text-sm">A digital twin is a virtual replica of a physical asset that synchronizes data in real time. In automotive, the market is growing from USD 2.1 billion to 28.7 billion by 2030 (CAGR 30%).</p></div>
+<div><span class="text-blue-400 font-semibold">Why learn:</span><p class="text-neutral-300 text-sm">Digital twin training lets you make mistakes without physical consequences. Professionals can practice rare scenarios (catastrophic failure, multiple robots) that they would never encounter in practice until it was too late.</p></div>
+<div><span class="text-blue-400 font-semibold">Key concepts:</span><p class="text-neutral-300 text-sm">Digital twin vs. simulation, two-way synchronization, acceptable latency (&lt;100ms), model fidelity, virtual training ROI.</p></div>
+</div></div>
+</div>
+<div class="topic-item">
+<button class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-blue-500/20 text-blue-400 text-sm font-bold flex items-center justify-center flex-shrink-0">2</span>
+<span class="text-lg">🕶️</span>
+<div><span class="font-medium">VR Reduces Execution Time by 38%</span><span class="text-neutral-500 text-sm ml-2">- Empirical evidence</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-blue-400 font-semibold">What it is:</span><p class="text-neutral-300 text-sm">Research shows that immersive VR training reduces the time needed to perform robotic tasks by up to 38% compared with conventional classroom training.</p></div>
+<div><span class="text-blue-400 font-semibold">Why learn:</span><p class="text-neutral-300 text-sm">Each hour of VR training is equivalent to ~2.5 hours of in-person training in terms of retention and application. The investment pays for itself in months, not years.</p></div>
+<div><span class="text-blue-400 font-semibold">Key concepts:</span><p class="text-neutral-300 text-sm">Motor learning, haptic feedback, VR-to-real skill transfer, learning curve, VR evaluation metrics.</p></div>
+</div></div>
+</div>
+<div class="topic-item">
+<button class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-blue-500/20 text-blue-400 text-sm font-bold flex items-center justify-center flex-shrink-0">3</span>
+<span class="text-lg">🏫</span>
+<div><span class="font-medium">Virginia Tech 2025</span><span class="text-neutral-500 text-sm ml-2">- Integrated digital twins + VR</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-blue-400 font-semibold">What it is:</span><p class="text-neutral-300 text-sm">Virginia Tech study (2025) demonstrating the integration of digital twins with VR for industrial robot operator training, with effectiveness measured through biometrics.</p></div>
+<div><span class="text-blue-400 font-semibold">Why learn:</span><p class="text-neutral-300 text-sm">Leading academic reference validating the hybrid training model (digital twin + VR + biometrics). Directly applicable to corporate programs.</p></div>
+<div><span class="text-blue-400 font-semibold">Key concepts:</span><p class="text-neutral-300 text-sm">Twin-VR integration, biometric effectiveness metrics, evaluation protocol, transfer to a real-world environment, cost vs. benefit.</p></div>
+</div></div>
+</div>
+<div class="topic-item">
+<button class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-blue-500/20 text-blue-400 text-sm font-bold flex items-center justify-center flex-shrink-0">4</span>
+<span class="text-lg">❤️</span>
+<div><span class="font-medium">Physiological Monitoring in VR</span><span class="text-neutral-500 text-sm ml-2">- Heart rate, posture, gaze</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-blue-400 font-semibold">What it is:</span><p class="text-neutral-300 text-sm">Use physiological sensors during VR training to measure stress (heart rate variability), attention (eye tracking), posture, and fatigue in real time.</p></div>
+<div><span class="text-blue-400 font-semibold">Why learn:</span><p class="text-neutral-300 text-sm">Physiological data reveals what the trainee can’t put into words: hidden stress, distraction, cognitive fatigue. It’s objective, not subjective, feedback.</p></div>
+<div><span class="text-blue-400 font-semibold">Key concepts:</span><p class="text-neutral-300 text-sm">HRV (heart rate variability), eye-tracking (fixation vs. saccade), GSR (galvanic skin response), posture analysis, cybersickness limits.</p></div>
+</div></div>
+</div>
+<div class="topic-item">
+<button class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-blue-500/20 text-blue-400 text-sm font-bold flex items-center justify-center flex-shrink-0">5</span>
+<span class="text-lg">🚨</span>
+<div><span class="font-medium">Emergency Evacuation with Robots</span><span class="text-neutral-500 text-sm ml-2">- Simulated critical scenarios</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-blue-400 font-semibold">What it is:</span><p class="text-neutral-300 text-sm">VR simulation of evacuation scenarios in environments with active robots: fire in a robotic cell, communication failure, robot blocking an escape route.</p></div>
+<div><span class="text-blue-400 font-semibold">Why learn:</span><p class="text-neutral-300 text-sm">No one trains for evacuations with real robots in motion. VR is the only safe way to practice scenarios where robots interact with panicked humans.</p></div>
+<div><span class="text-blue-400 font-semibold">Key concepts:</span><p class="text-neutral-300 text-sm">Escape routes vs. robotic zones, E-stop accessibility, emergency communication, area shutdown, cascade scenarios.</p></div>
+</div></div>
+</div>
+<div class="topic-item">
+<button class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-blue-500/20 text-blue-400 text-sm font-bold flex items-center justify-center flex-shrink-0">6</span>
+<span class="text-lg">🛠️</span>
+<div><span class="font-medium">Commercial Platforms</span><span class="text-neutral-500 text-sm ml-2">- Siemens, PTC, Scope AR, RoboDK</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-blue-400 font-semibold">What it is:</span><p class="text-neutral-300 text-sm">Commercial tools for creating and operating digital twins and VR training: Siemens Xcelerator, PTC Vuforia, Scope AR (AR instructions), RoboDK (robot simulation).</p></div>
+<div><span class="text-blue-400 font-semibold">Why learn:</span><p class="text-neutral-300 text-sm">Know which platform to use for each case: Siemens for complete lines, PTC for AR maintenance, RoboDK for offline programming, Scope AR for step-by-step instructions.</p></div>
+<div><span class="text-blue-400 font-semibold">Key concepts:</span><p class="text-neutral-300 text-sm">Siemens Xcelerator (enterprise), PTC Vuforia (AR+IoT), Scope AR (step-by-step), RoboDK (offline programming), selection criteria, cost per license.</p></div>
+</div></div>
+</div>
+</div>
+<div class="px-6 py-4 border-t border-dark-600"><h4 class="text-sm font-semibold text-blue-400 mb-2 flex items-center"><span class="mr-2">🔧</span>In practice</h4><ul class="space-y-1.5 text-sm text-neutral-300">
+<li class="flex items-start space-x-2"><span class="text-blue-400 mt-0.5">✓</span><span>Practice rare scenarios (catastrophic failure, multiple robots) in the digital twin before encountering them on the production line</span></li>
+<li class="flex items-start space-x-2"><span class="text-blue-400 mt-0.5">✓</span><span>Practice emergency evacuation in VR — robot blocking the route, communication failure</span></li>
+<li class="flex items-start space-x-2"><span class="text-blue-400 mt-0.5">✓</span><span>Use physiological data (HRV, eye tracking) as objective feedback on stress and attention</span></li>
+<li class="flex items-start space-x-2"><span class="text-blue-400 mt-0.5">✓</span><span>Choose the platform based on the use case: Siemens (production line), RoboDK (offline), Scope AR (step-by-step)</span></li>
+</ul></div>
+<div class="p-4 bg-dark-700/30 flex justify-start space-x-3">
+<button class="px-4 py-2 text-sm bg-dark-600 hover:bg-dark-500 rounded-lg transition-colors" onclick="openModal('modal-2-3')">View in Modal</button>
+<a class="px-4 py-2 text-sm bg-blue-600 hover:bg-blue-500 text-white rounded-lg transition-colors" href="modulo-2-3.html">View Full Version</a>
+</div>
+</div>
+<!-- MODULO 2.4 -->
+<div class="bg-dark-800 rounded-xl border border-dark-600 mb-6" id="modulo-2-4">
+<div class="p-6 border-b border-dark-600">
+<div class="flex items-center justify-between mb-2">
+<span class="text-blue-400 font-bold">2.4</span>
+<span class="text-xs text-neutral-500">~30 min</span>
+</div>
+<h3 class="text-2xl font-bold mb-2">🏥 Healthcare: Nurses and Hospital Teams with Robots</h3>
+<p class="text-neutral-400 text-sm">Market: USD 16B to 45+B. Hospital AMRs; 78% of nurses report improved workflow. HARMONY multi-robot coordination.</p>
+</div>
+<div class="divide-y divide-dark-600">
+<div class="topic-item">
+<button class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-blue-500/20 text-blue-400 text-sm font-bold flex items-center justify-center flex-shrink-0">1</span>
+<span class="text-lg">📊</span>
+<div><span class="font-medium">Market: USD 16B to 45+B</span><span class="text-neutral-500 text-sm ml-2">- Explosive growth through 2030</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-blue-400 font-semibold">What it is:</span><p class="text-neutral-300 text-sm">The healthcare robotics market grows from USD 16 billion to more than 45 billion by 2030, driven by a shortage of professionals and demand for efficiency.</p></div>
+<div><span class="text-blue-400 font-semibold">Why learn:</span><p class="text-neutral-300 text-sm">Healthcare professionals who understand hospital robots will have a competitive advantage in a market that will triple in 5 years.</p></div>
+<div><span class="text-blue-400 font-semibold">Key concepts:</span><p class="text-neutral-300 text-sm">Segments (surgical, logistics, rehabilitation, disinfection), growth drivers, adoption barriers, FDA/ANVISA regulations.</p></div>
+</div></div>
+</div>
+<div class="topic-item">
+<button class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-blue-500/20 text-blue-400 text-sm font-bold flex items-center justify-center flex-shrink-0">2</span>
+<span class="text-lg">🤖</span>
+<div><span class="font-medium">Hospital AMRs</span><span class="text-neutral-500 text-sm ml-2">- Medication, instruments, and waste</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-blue-400 font-semibold">What it is:</span><p class="text-neutral-300 text-sm">Autonomous mobile robots that transport medications, sterile instruments, and hospital waste, operating 24/7 in corridors shared with staff and patients.</p></div>
+<div><span class="text-blue-400 font-semibold">Why learn:</span><p class="text-neutral-300 text-sm">Nurses spend up to 30% of their shift on logistical tasks. AMRs free up that time for direct patient care.</p></div>
+<div><span class="text-blue-400 font-semibold">Key concepts:</span><p class="text-neutral-300 text-sm">TUG/Moxi/Aethon, elevator integration, sanitation protocol, cargo traceability, navigation in dynamic environments.</p></div>
+</div></div>
+</div>
+<div class="topic-item">
+<button class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-blue-500/20 text-blue-400 text-sm font-bold flex items-center justify-center flex-shrink-0">3</span>
+<span class="text-lg">👩‍⚕️</span>
+<div><span class="font-medium">78% of Nurses Approve</span><span class="text-neutral-500 text-sm ml-2">- Satisfaction data</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-blue-400 font-semibold">What it is:</span><p class="text-neutral-300 text-sm">Research indicates that 78% of nurses who work with AMRs report improved daily workflow, with reduced physical fatigue and more time with patients.</p></div>
+<div><span class="text-blue-400 font-semibold">Why learn:</span><p class="text-neutral-300 text-sm">Acceptance isn’t automatic. The 22% who are dissatisfied point to real problems: a confusing interface, lack of training, and a robot that "gets in the way" during emergencies. Understanding both sides is critical.</p></div>
+<div><span class="text-blue-400 font-semibold">Key concepts:</span><p class="text-neutral-300 text-sm">Internal NPS, satisfaction factors, rejection factors, adoption curve by profile (early adopter vs. resistant), feedback loops.</p></div>
+</div></div>
+</div>
+<div class="topic-item">
+<button class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-blue-500/20 text-blue-400 text-sm font-bold flex items-center justify-center flex-shrink-0">4</span>
+<span class="text-lg">📚</span>
+<div><span class="font-medium">What to Learn</span><span class="text-neutral-500 text-sm ml-2">- Navigation, calling, trust</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-blue-400 font-semibold">What it is:</span><p class="text-neutral-300 text-sm">Practical skills hospital teams need: understanding robot navigation, how to call/cancel deliveries, and when NOT to trust the system (e.g., a rush shipment that can’t wait in the queue).</p></div>
+<div><span class="text-blue-400 font-semibold">Why learn:</span><p class="text-neutral-300 text-sm">Most problems with hospital robots are not technical; they are about how they are used. Poorly trained staff underuse or misuse the system.</p></div>
+<div><span class="text-blue-400 font-semibold">Key concepts:</span><p class="text-neutral-300 text-sm">Call interface, delivery prioritization, manual bypass, first-level maintenance, escalation to technical support.</p></div>
+</div></div>
+</div>
+<div class="topic-item">
+<button class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-blue-500/20 text-blue-400 text-sm font-bold flex items-center justify-center flex-shrink-0">5</span>
+<span class="text-lg">🧬</span>
+<div><span class="font-medium">Robot Adjusts Trajectory in Response to Urgency</span><span class="text-neutral-500 text-sm ml-2">- Science Robotics 2023</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-blue-400 font-semibold">What it is:</span><p class="text-neutral-300 text-sm">Research published in Science Robotics (2023) on robots that adjust their trajectory and speed based on urgency signals in a hospital environment (alarms, staff movement).</p></div>
+<div><span class="text-blue-400 font-semibold">Why learn:</span><p class="text-neutral-300 text-sm">Robots that “understand” urgency reduce conflicts with the team. An AMR that stops in the hallway during a code blue is a problem. One that detours and waits is an ally.</p></div>
+<div><span class="text-blue-400 font-semibold">Key concepts:</span><p class="text-neutral-300 text-sm">Context-aware navigation, social cues, dynamic prioritization, integration with the hospital information system (HIS), machine learning of urgency patterns.</p></div>
+</div></div>
+</div>
+<div class="topic-item">
+<button class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-blue-500/20 text-blue-400 text-sm font-bold flex items-center justify-center flex-shrink-0">6</span>
+<span class="text-lg">🔗</span>
+<div><span class="font-medium">EU HARMONY and Critical Failure</span><span class="text-neutral-500 text-sm ml-2">- Multi-robot and handoff protocol</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-blue-400 font-semibold">What it is:</span><p class="text-neutral-300 text-sm">European HARMONY project for coordinating multiple robots in a hospital environment, and response protocol when a critical delivery (blood, organ) fails in transit.</p></div>
+<div><span class="text-blue-400 font-semibold">Why learn:</span><p class="text-neutral-300 text-sm">Multi-robot hospital operations require orchestration. If two AMRs collide in the hallway while carrying critical loads, who has priority? The protocol defines this before it happens.</p></div>
+<div><span class="text-blue-400 font-semibold">Key concepts:</span><p class="text-neutral-300 text-sm">HARMONY (EU H2020), hospital fleet management, load prioritization, manual fallback, critical delivery failure protocol, chain of custody.</p></div>
+</div></div>
+</div>
+</div>
+<div class="px-6 py-4 border-t border-dark-600"><h4 class="text-sm font-semibold text-blue-400 mb-2 flex items-center"><span class="mr-2">🔧</span>In practice</h4><ul class="space-y-1.5 text-sm text-neutral-300">
+<li class="flex items-start space-x-2"><span class="text-blue-400 mt-0.5">✓</span><span>Learn how to request, cancel, and prioritize AMR deliveries through the interface before your shift</span></li>
+<li class="flex items-start space-x-2"><span class="text-blue-400 mt-0.5">✓</span><span>Know the manual bypass for an urgent load that can’t wait in the queue (e.g., code blue)</span></li>
+<li class="flex items-start space-x-2"><span class="text-blue-400 mt-0.5">✓</span><span>Follow the sterilization and sterile-load traceability protocol at every cycle</span></li>
+<li class="flex items-start space-x-2"><span class="text-blue-400 mt-0.5">✓</span><span>Learn about the failed critical delivery protocol (blood/organ) and escalation for support</span></li>
+</ul></div>
+<div class="p-4 bg-dark-700/30 flex justify-start space-x-3">
+<button class="px-4 py-2 text-sm bg-dark-600 hover:bg-dark-500 rounded-lg transition-colors" onclick="openModal('modal-2-4')">View in Modal</button>
+<a class="px-4 py-2 text-sm bg-blue-600 hover:bg-blue-500 text-white rounded-lg transition-colors" href="modulo-2-4.html">View Full Version</a>
+</div>
+</div>
+<!-- MODULO 2.5 -->
+<div class="bg-dark-800 rounded-xl border border-dark-600 mb-6" id="modulo-2-5">
+<div class="p-6 border-b border-dark-600">
+<div class="flex items-center justify-between mb-2">
+<span class="text-blue-400 font-bold">2.5</span>
+<span class="text-xs text-neutral-500">~30 min</span>
+</div>
+<h3 class="text-2xl font-bold mb-2">📦 Logistics: Autonomous Warehouses and AMR Fleets</h3>
+<p class="text-neutral-400 text-sm">Amazon with 1M robots and DeepFleet AI. USD 1.2bi in reskilling. New roles and fleet operations KPIs.</p>
+</div>
+<div class="divide-y divide-dark-600">
+<div class="topic-item">
+<button class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-blue-500/20 text-blue-400 text-sm font-bold flex items-center justify-center flex-shrink-0">1</span>
+<span class="text-lg">🏭</span>
+<div><span class="font-medium">Amazon 1M Robots DeepFleet</span><span class="text-neutral-500 text-sm ml-2">- AI coordination</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-blue-400 font-semibold">What it is:</span><p class="text-neutral-300 text-sm">Amazon operates more than 1 million robots in its distribution centers, coordinated by DeepFleet AI, an artificial intelligence system that optimizes routes and allocation in real time.</p></div>
+<div><span class="text-blue-400 font-semibold">Why learn:</span><p class="text-neutral-300 text-sm">Amazon sets the industry standard. What it does today, the rest of the market will do in 3-5 years. Understanding DeepFleet means understanding the future of logistics.</p></div>
+<div><span class="text-blue-400 font-semibold">Key concepts:</span><p class="text-neutral-300 text-sm">DeepFleet AI, Robin/Sparrow/Proteus, multi-robot coordination, real-time route optimization, fleet scaling.</p></div>
+</div></div>
+</div>
+<div class="topic-item">
+<button class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-blue-500/20 text-blue-400 text-sm font-bold flex items-center justify-center flex-shrink-0">2</span>
+<span class="text-lg">🔄</span>
+<div><span class="font-medium">Before/After Automation</span><span class="text-neutral-500 text-sm ml-2">- From pick-and-pack to fleet supervisor</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-blue-400 font-semibold">What it is:</span><p class="text-neutral-300 text-sm">Transformation of the warehouse role: from manual pick-pack to robotic fleet supervision, exception resolution, and kitting complex materials.</p></div>
+<div><span class="text-blue-400 font-semibold">Why learn:</span><p class="text-neutral-300 text-sm">Jobs don’t disappear; their nature changes. Those who understand the transformation reposition themselves. Those who don’t fall behind.</p></div>
+<div><span class="text-blue-400 font-semibold">Key concepts:</span><p class="text-neutral-300 text-sm">Manual pick-pack-ship, fleet supervision, exception handling, kitting, human-added value vs. automation.</p></div>
+</div></div>
+</div>
+<div class="topic-item">
+<button class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-blue-500/20 text-blue-400 text-sm font-bold flex items-center justify-center flex-shrink-0">3</span>
+<span class="text-lg">🎓</span>
+<div><span class="font-medium">Amazon Upskilling USD 1.2bi</span><span class="text-neutral-500 text-sm ml-2">- Technical Academy and Associate2Tech 90d</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-blue-400 font-semibold">What it is:</span><p class="text-neutral-300 text-sm">Amazon's USD 1.2 billion program to retrain employees: Technical Academy (9 months to become a maintenance technician) and Associate2Tech (90 days for mid-level technical roles).</p></div>
+<div><span class="text-blue-400 font-semibold">Why learn:</span><p class="text-neutral-300 text-sm">It is the world's largest corporate robotics reskilling program. Amazon's models and metrics serve as a benchmark for any company that wants to do the same.</p></div>
+<div><span class="text-blue-400 font-semibold">Key concepts:</span><p class="text-neutral-300 text-sm">Technical Academy (9mo), Associate2Tech (90d), conversion metrics, cost per requalified worker, post-program retention, partnership with community colleges.</p></div>
+</div></div>
+</div>
+<div class="topic-item">
+<button class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-blue-500/20 text-blue-400 text-sm font-bold flex items-center justify-center flex-shrink-0">4</span>
+<span class="text-lg">💼</span>
+<div><span class="font-medium">New Roles</span><span class="text-neutral-500 text-sm ml-2">- Fleet Coordinator, AMR Maintenance Tech</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-blue-400 font-semibold">What it is:</span><p class="text-neutral-300 text-sm">Roles that didn't exist 5 years ago: Robot Fleet Coordinator (manages a fleet of AMRs), AMR Maintenance Tech (specialized maintenance), Exception Handler (resolves problems robots can't).</p></div>
+<div><span class="text-blue-400 font-semibold">Why learn:</span><p class="text-neutral-300 text-sm">These are careers with salaries 30-60% higher than traditional warehouse roles and growing demand. The supply of qualified professionals isn’t keeping up.</p></div>
+<div><span class="text-blue-400 font-semibold">Key concepts:</span><p class="text-neutral-300 text-sm">Robot Fleet Coordinator, AMR Maintenance Tech, Exception Handler, AI Training Associate, salary range, recommended certifications.</p></div>
+</div></div>
+</div>
+<div class="topic-item">
+<button class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-blue-500/20 text-blue-400 text-sm font-bold flex items-center justify-center flex-shrink-0">5</span>
+<span class="text-lg">📊</span>
+<div><span class="font-medium">Fleet Operations KPIs</span><span class="text-neutral-500 text-sm ml-2">- Throughput, Exception Rate, MTTR</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-blue-400 font-semibold">What it is:</span><p class="text-neutral-300 text-sm">Key metrics for operating robotic fleets: System Throughput (units/hour), Exception Rate (% of tasks requiring human intervention), MTTR (Mean Time to Resolve).</p></div>
+<div><span class="text-blue-400 font-semibold">Why learn:</span><p class="text-neutral-300 text-sm">You can't manage what you don't measure. These KPIs show whether automation is working or creating more problems than it solves.</p></div>
+<div><span class="text-blue-400 font-semibold">Key concepts:</span><p class="text-neutral-300 text-sm">System Throughput, Exception Rate, MTTR, robotic OEE, fleet dashboards, industry benchmarks.</p></div>
+</div></div>
+</div>
+<div class="topic-item">
+<button class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-blue-500/20 text-blue-400 text-sm font-bold flex items-center justify-center flex-shrink-0">6</span>
+<span class="text-lg">🦿</span>
+<div><span class="font-medium">Agility Robotics Digit at GXO</span><span class="text-neutral-500 text-sm ml-2">- Humanoids in warehouses since 2024</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-blue-400 font-semibold">What it is:</span><p class="text-neutral-300 text-sm">Digit, Agility Robotics' humanoid robot, has been operating in GXO Logistics warehouses since 2024. It is bipedal, handles boxes, and navigates environments designed for people.</p></div>
+<div><span class="text-blue-400 font-semibold">Why learn:</span><p class="text-neutral-300 text-sm">Humanoids in warehouses are the next frontier. Unlike AMRs, they operate in existing infrastructure without modification. This changes the skills workers need.</p></div>
+<div><span class="text-blue-400 font-semibold">Key concepts:</span><p class="text-neutral-300 text-sm">Digit (biped), GXO deployment, box handling, human-scale navigation, humanoid vs. AMR comparison, workforce implications.</p></div>
+</div></div>
+</div>
+</div>
+<div class="px-6 py-4 border-t border-dark-600"><h4 class="text-sm font-semibold text-blue-400 mb-2 flex items-center"><span class="mr-2">🔧</span>In practice</h4><ul class="space-y-1.5 text-sm text-neutral-300">
+<li class="flex items-start space-x-2"><span class="text-blue-400 mt-0.5">✓</span><span>Track fleet KPIs: Throughput, Exception Rate, and MTTR on the dashboard</span></li>
+<li class="flex items-start space-x-2"><span class="text-blue-400 mt-0.5">✓</span><span>Master exception handling—you solve what the robot can't</span></li>
+<li class="flex items-start space-x-2"><span class="text-blue-400 mt-0.5">✓</span><span>Map the career path (Fleet Coordinator, AMR Maintenance Tech) and certifications</span></li>
+<li class="flex items-start space-x-2"><span class="text-blue-400 mt-0.5">✓</span><span>Prepare for humanoids (Digit/GXO) operating in human infrastructure without modification</span></li>
+</ul></div>
+<div class="p-4 bg-dark-700/30 flex justify-start space-x-3">
+<button class="px-4 py-2 text-sm bg-dark-600 hover:bg-dark-500 rounded-lg transition-colors" onclick="openModal('modal-2-5')">View in Modal</button>
+<a class="px-4 py-2 text-sm bg-blue-600 hover:bg-blue-500 text-white rounded-lg transition-colors" href="modulo-2-5.html">View Full Version</a>
+</div>
+</div>
+<!-- MODULO 2.6 -->
+<div class="bg-dark-800 rounded-xl border border-dark-600 mb-6" id="modulo-2-6">
+<div class="p-6 border-b border-dark-600">
+<div class="flex items-center justify-between mb-2">
+<span class="text-blue-400 font-bold">2.6</span>
+<span class="text-xs text-neutral-500">~30 min</span>
+</div>
+<h3 class="text-2xl font-bold mb-2">🌾 Agriculture, Safety, and Other Verticals</h3>
+<p class="text-neutral-400 text-sm">Agriculture USD 14.7bi to 48bi. 2nd-generation autonomous John Deere. Knightscope K5, Spot, Figure 02 at BMW. LGPD and human-robot coordination in a crisis.</p>
+</div>
+<div class="divide-y divide-dark-600">
+<div class="topic-item">
+<button class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-blue-500/20 text-blue-400 text-sm font-bold flex items-center justify-center flex-shrink-0">1</span>
+<span class="text-lg">🚜</span>
+<div><span class="font-medium">Agriculture USD 14.7bi to 48bi</span><span class="text-neutral-500 text-sm ml-2">- 2nd-gen autonomous John Deere</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-blue-400 font-semibold">What it is:</span><p class="text-neutral-300 text-sm">The agricultural robotics market is growing from USD 14.7 billion to 48 billion. John Deere leads with second-generation autonomous tractors, spraying drones, and AI-powered sensing.</p></div>
+<div><span class="text-blue-400 font-semibold">Why learn:</span><p class="text-neutral-300 text-sm">Agriculture has the biggest labor gap (average age 58 in the U.S.). Robotics isn’t optional; it’s essential to keeping food production going.</p></div>
+<div><span class="text-blue-400 font-semibold">Key concepts:</span><p class="text-neutral-300 text-sm">John Deere autonomous, drones + tractors + sensors, precision agriculture, age gap, startup ecosystem (Blue River, Bear Flag).</p></div>
+</div></div>
+</div>
+<div class="topic-item">
+<button class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-blue-500/20 text-blue-400 text-sm font-bold flex items-center justify-center flex-shrink-0">2</span>
+<span class="text-lg">🛡️</span>
+<div><span class="font-medium">Physical Security</span><span class="text-neutral-500 text-sm ml-2">- Knightscope K5 and Boston Dynamics Spot</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-blue-400 font-semibold">What it is:</span><p class="text-neutral-300 text-sm">Autonomous patrol robots: Knightscope K5 (shopping mall/campus patrol) and Boston Dynamics Spot (industrial inspection, perimeter security). Two models, two paradigms.</p></div>
+<div><span class="text-blue-400 font-semibold">Why learn:</span><p class="text-neutral-300 text-sm">Property security with robots is real and growing, but the failures are just as instructive as the successes (NYPD K5 case).</p></div>
+<div><span class="text-blue-400 font-semibold">Key concepts:</span><p class="text-neutral-300 text-sm">K5 (autonomous patrol), Spot (versatile quadruped), sensors (LiDAR, cameras, thermal), integration with a security center, operational limitations.</p></div>
+</div></div>
+</div>
+<div class="topic-item">
+<button class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-blue-500/20 text-blue-400 text-sm font-bold flex items-center justify-center flex-shrink-0">3</span>
+<span class="text-lg">⚠️</span>
+<div><span class="font-medium">NYPD K5 and Spot in Massachusetts</span><span class="text-neutral-500 text-sm ml-2">- Operational failure lessons</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-blue-400 font-semibold">What it is:</span><p class="text-neutral-300 text-sm">NYPD removed the K5 due to an operational procedure failure (not a robot failure). Spot was shot during a police operation in Massachusetts (2024) and kept working. Two opposite cases.</p></div>
+<div><span class="text-blue-400 font-semibold">Why learn:</span><p class="text-neutral-300 text-sm">The NYPD case shows that technology without operational protocols fails. The Spot case shows mechanical resilience. The lesson: the problem is rarely the hardware.</p></div>
+<div><span class="text-blue-400 font-semibold">Key concepts:</span><p class="text-neutral-300 text-sm">Process failure vs. product failure, operating protocol, public acceptance, physical resilience, robotic safety ROI.</p></div>
+</div></div>
+</div>
+<div class="topic-item">
+<button class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-blue-500/20 text-blue-400 text-sm font-bold flex items-center justify-center flex-shrink-0">4</span>
+<span class="text-lg">🏭</span>
+<div><span class="font-medium">Figure 02 at BMW</span><span class="text-neutral-500 text-sm ml-2">- Humanoids in manufacturing</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-blue-400 font-semibold">What it is:</span><p class="text-neutral-300 text-sm">Figure 02, Figure AI's second-generation humanoid robot, in pilot operation at the BMW factory. Performs assembly tasks requiring manual dexterity in spaces designed for humans.</p></div>
+<div><span class="text-blue-400 font-semibold">Why learn:</span><p class="text-neutral-300 text-sm">BMW is the first automaker to integrate humanoids into production. The model will be replicated. Manufacturing workers need to know how to coexist with humanoids.</p></div>
+<div><span class="text-blue-400 font-semibold">Key concepts:</span><p class="text-neutral-300 text-sm">Figure 02, bimanual manipulation, workspace sharing, training by demonstration, impact on assembly roles.</p></div>
+</div></div>
+</div>
+<div class="topic-item">
+<button class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-blue-500/20 text-blue-400 text-sm font-bold flex items-center justify-center flex-shrink-0">5</span>
+<span class="text-lg">⚖️</span>
+<div><span class="font-medium">Legal Protocols and LGPD</span><span class="text-neutral-500 text-sm ml-2">- Data, cameras, and privacy</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-blue-400 font-semibold">What it is:</span><p class="text-neutral-300 text-sm">Legal implications of robots that collect data: cameras, biometric sensors, worker tracking. Brazil’s LGPD and Europe’s GDPR directly affect deployment.</p></div>
+<div><span class="text-blue-400 font-semibold">Why learn:</span><p class="text-neutral-300 text-sm">A security robot with a facial camera and no consent violates LGPD. Fines can reach 2% of revenue. Operators need to know what the robot collects and why.</p></div>
+<div><span class="text-blue-400 font-semibold">Key concepts:</span><p class="text-neutral-300 text-sm">LGPD Art. 7 (legal basis), GDPR, consent, data minimization, DPO, image retention, anonymization, audit trail.</p></div>
+</div></div>
+</div>
+<div class="topic-item">
+<button class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-blue-500/20 text-blue-400 text-sm font-bold flex items-center justify-center flex-shrink-0">6</span>
+<span class="text-lg">🚨</span>
+<div><span class="font-medium">Human-Robot Coordination in a Crisis</span><span class="text-neutral-500 text-sm ml-2">- Cross-industry emergency protocols</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-blue-400 font-semibold">What it is:</span><p class="text-neutral-300 text-sm">Protocols for coordinating humans and robots during crisis situations: fire, natural disaster, intruder, power failure. Applicable to all verticals.</p></div>
+<div><span class="text-blue-400 font-semibold">Why learn:</span><p class="text-neutral-300 text-sm">In an emergency, robots can help (reconnaissance, transport) or get in the way (blocking exits, continuing to operate). The protocol defines which behavior takes precedence.</p></div>
+<div><span class="text-blue-400 font-semibold">Key concepts:</span><p class="text-neutral-300 text-sm">Emergency behavior modes (halt, retreat, assist), human-robot communication under stress, safe harbor zones, recovery sequence, lessons learned framework.</p></div>
+</div></div>
+</div>
+</div>
+<div class="px-6 py-4 border-t border-dark-600"><h4 class="text-sm font-semibold text-blue-400 mb-2 flex items-center"><span class="mr-2">🔧</span>In practice</h4><ul class="space-y-1.5 text-sm text-neutral-300">
+<li class="flex items-start space-x-2"><span class="text-blue-400 mt-0.5">✓</span><span>In agriculture, integrate autonomous tractors, drones, and sensors with remote supervision</span></li>
+<li class="flex items-start space-x-2"><span class="text-blue-400 mt-0.5">✓</span><span>Remember that most failures are process-related, not hardware-related — define an operating protocol (NYPD K5 lesson)</span></li>
+<li class="flex items-start space-x-2"><span class="text-blue-400 mt-0.5">✓</span><span>Ensure LGPD compliance: legal basis, data minimization, and retention of camera footage</span></li>
+<li class="flex items-start space-x-2"><span class="text-blue-400 mt-0.5">✓</span><span>Define the emergency modes (halt/retreat/assist) and safe harbor zones before a crisis</span></li>
+</ul></div>
+<div class="p-4 bg-dark-700/30 flex justify-start space-x-3">
+<button class="px-4 py-2 text-sm bg-dark-600 hover:bg-dark-500 rounded-lg transition-colors" onclick="openModal('modal-2-6')">View in Modal</button>
+<a class="px-4 py-2 text-sm bg-blue-600 hover:bg-blue-500 text-white rounded-lg transition-colors" href="modulo-2-6.html">View Full Version</a>
+</div>
+</div>
+<!-- MODULO 2.7 -->
+<div class="bg-dark-800 rounded-xl border border-dark-600 mb-6" id="modulo-2-7">
+<div class="p-6 border-b border-dark-600">
+<div class="flex items-center justify-between mb-2">
+<span class="text-blue-400 font-bold">2.7</span>
+<span class="text-xs text-neutral-500">~45 min</span>
+</div>
+<h3 class="text-2xl font-bold mb-2">🗣️ VLA: Vision-Language-Action Models</h3>
+<p class="text-neutral-400 text-sm">Foundation models that control robots through vision + natural language. RT-2, OpenVLA, π0, Helix, Gemini Robotics. The worker becomes an instructor, not a programmer.</p>
+</div>
+<div class="divide-y divide-dark-600">
+<div class="topic-item">
+<button class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-blue-500/20 text-blue-400 text-sm font-bold flex items-center justify-center flex-shrink-0">1</span>
+<span class="text-lg">🧩</span>
+<div><span class="font-medium">What Is a VLA Model</span><span class="text-neutral-500 text-sm ml-2">- Vision + language + action in a single model</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-blue-400 font-semibold">What it is:</span><p class="text-neutral-300 text-sm">A foundation model class that receives camera images + a natural language instruction and directly generates motor actions (action tokens), end to end, combining perception, reasoning, and control.</p></div>
+<div><span class="text-blue-400 font-semibold">Why learn:</span><p class="text-neutral-300 text-sm">Changes how you "program" a robot—from rigid code to spoken instructions; the worker becomes the instructor.</p></div>
+<div><span class="text-blue-400 font-semibold">Key concepts:</span><p class="text-neutral-300 text-sm">End-to-end, action tokens, zero-shot generalization, transfer between tasks, foundation model.</p></div>
+</div></div>
+</div>
+<div class="topic-item">
+<button class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-blue-500/20 text-blue-400 text-sm font-bold flex items-center justify-center flex-shrink-0">2</span>
+<span class="text-lg">🤖</span>
+<div><span class="font-medium">Reference models</span><span class="text-neutral-500 text-sm ml-2">- RT-2, OpenVLA, π0, Helix, Gemini</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-blue-400 font-semibold">What it is:</span><p class="text-neutral-300 text-sm">Google RT-2/RT-X (2023, web→robot), OpenVLA (2024, ~7B open-source), π0 by Physical Intelligence (2024, flow matching), Figure Helix (2025, real-time humanoid), Google Gemini Robotics (2025, reasoning+action).</p></div>
+<div><span class="text-blue-400 font-semibold">Why learn:</span><p class="text-neutral-300 text-sm">Knowing what is available helps you avoid buying into promises; maturity and licensing (open vs. closed) vary.</p></div>
+<div><span class="text-blue-400 font-semibold">Key concepts:</span><p class="text-neutral-300 text-sm">RT-2, OpenVLA 7B, π0, Helix, Gemini Robotics.</p></div>
+</div></div>
+</div>
+<div class="topic-item">
+<button class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-blue-500/20 text-blue-400 text-sm font-bold flex items-center justify-center flex-shrink-0">3</span>
+<span class="text-lg">🗣️</span>
+<div><span class="font-medium">Operate using natural language</span><span class="text-neutral-500 text-sm ml-2">- Show it once and the robot generalizes</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-blue-400 font-semibold">What it is:</span><p class="text-neutral-300 text-sm">Instead of using a teach pendant, the operator describes the task in natural language and makes corrections through demonstrations and feedback.</p></div>
+<div><span class="text-blue-400 font-semibold">Why learn:</span><p class="text-neutral-300 text-sm">It is the interface of the near future on the factory floor; the new skill is "task prompting" and curating examples.</p></div>
+<div><span class="text-blue-400 font-semibold">Key concepts:</span><p class="text-neutral-300 text-sm">Task prompting, demonstration/teleoperation, online correction, language grounding.</p></div>
+</div></div>
+</div>
+<div class="topic-item">
+<button class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-blue-500/20 text-blue-400 text-sm font-bold flex items-center justify-center flex-shrink-0">4</span>
+<span class="text-lg">🎓</span>
+<div><span class="font-medium">Train and adjust</span><span class="text-neutral-500 text-sm ml-2">- Data, demonstrations, and fine-tuning</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-blue-400 font-semibold">What it is:</span><p class="text-neutral-300 text-sm">VLAs learn from large datasets (Open X-Embodiment) + fine-tuning with local demonstrations; human-in-the-loop processes collect and validate data.</p></div>
+<div><span class="text-blue-400 font-semibold">Why learn:</span><p class="text-neutral-300 text-sm">The bottleneck is quality data; that’s the work of the AI Training Associate.</p></div>
+<div><span class="text-blue-400 font-semibold">Key concepts:</span><p class="text-neutral-300 text-sm">Open X-Embodiment, imitation learning, data curation, edge cases.</p></div>
+</div></div>
+</div>
+<div class="topic-item">
+<button class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-blue-500/20 text-blue-400 text-sm font-bold flex items-center justify-center flex-shrink-0">5</span>
+<span class="text-lg">⚠️</span>
+<div><span class="font-medium">Limits and Risks</span><span class="text-neutral-500 text-sm ml-2">- Motor hallucinations and safety</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-blue-400 font-semibold">What it is:</span><p class="text-neutral-300 text-sm">VLAs fail outside the distribution and may confidently execute the wrong action ("motor hallucination"); they require safety layers (force limits, e-stop, supervision).</p></div>
+<div><span class="text-blue-400 font-semibold">Why learn:</span><p class="text-neutral-300 text-sm">Blind trust is dangerous; ISO 10218 and human-in-the-loop remain mandatory.</p></div>
+<div><span class="text-blue-400 font-semibold">Key concepts:</span><p class="text-neutral-300 text-sm">Out-of-distribution, action hallucination, safety envelope, human supervision.</p></div>
+</div></div>
+</div>
+<div class="topic-item">
+<button class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-blue-500/20 text-blue-400 text-sm font-bold flex items-center justify-center flex-shrink-0">6</span>
+<span class="text-lg">🔮</span>
+<div><span class="font-medium">What Changes at Work</span><span class="text-neutral-500 text-sm ml-2">- From programmer to robot instructor</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-blue-400 font-semibold">What it is:</span><p class="text-neutral-300 text-sm">Shifts the key skill from “coding movement” to “teaching and supervising behavior”; the role of robot instructor / physical AI operator emerges.</p></div>
+<div><span class="text-blue-400 font-semibold">Why learn:</span><p class="text-neutral-300 text-sm">Defines the reskilling curriculum.</p></div>
+<div><span class="text-blue-400 font-semibold">Key concepts:</span><p class="text-neutral-300 text-sm">Robot instructor, Physical AI, fleet supervision with VLA, upskilling.</p></div>
+</div></div>
+</div>
+</div>
+<div class="px-6 py-4 border-t border-dark-600"><h4 class="text-sm font-semibold text-blue-400 mb-2 flex items-center"><span class="mr-2">🔧</span>In practice</h4><ul class="space-y-1.5 text-sm text-neutral-300">
+<li class="flex items-start space-x-2"><span class="text-blue-400 mt-0.5">✓</span><span>Write the “task prompt” in clear language and test the behavior before releasing it to production</span></li>
+<li class="flex items-start space-x-2"><span class="text-blue-400 mt-0.5">✓</span><span>Collect and curate local demonstrations (teleop) for fine-tuning—data quality matters more than volume</span></li>
+<li class="flex items-start space-x-2"><span class="text-blue-400 mt-0.5">✓</span><span>Map cases outside the distribution and cover them with a safety envelope (force limit + accessible e-stop)</span></li>
+<li class="flex items-start space-x-2"><span class="text-blue-400 mt-0.5">✓</span><span>Keep a human in the loop: never blindly trust the action generated by the model</span></li>
+</ul></div>
+<div class="p-4 bg-dark-700/30 flex justify-start space-x-3">
+<button class="px-4 py-2 text-sm bg-dark-600 hover:bg-dark-500 rounded-lg transition-colors" onclick="openModal('modal-2-7')">View in Modal</button>
+<a class="px-4 py-2 text-sm bg-blue-600 hover:bg-blue-500 text-white rounded-lg transition-colors" href="modulo-2-7.html">View Full Version</a>
+</div>
+</div>
+<!-- MODULO 2.8 -->
+<div class="bg-dark-800 rounded-xl border border-dark-600 mb-6" id="modulo-2-8">
+<div class="p-6 border-b border-dark-600">
+<div class="flex items-center justify-between mb-2">
+<span class="text-blue-400 font-bold">2.8</span>
+<span class="text-xs text-neutral-500">~50 min</span>
+</div>
+<h3 class="text-2xl font-bold mb-2">💻 How to Program Robots: From the Teach Pendant to Code</h3>
+<p class="text-neutral-400 text-sm">From the traditional approach (teach pendant) to code (Python, ROS 2) and the new frontier of programming with natural language. A pathway by profile for the reskilled worker.</p>
+</div>
+<div class="divide-y divide-dark-600">
+<div class="topic-item">
+<button class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-blue-500/20 text-blue-400 text-sm font-bold flex items-center justify-center flex-shrink-0">1</span>
+<span class="text-lg">🕹️</span>
+<div><span class="font-medium">Teach pendant and lead-through</span><span class="text-neutral-500 text-sm ml-2">- The traditional way</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-blue-400 font-semibold">What it is:</span><p class="text-neutral-300 text-sm">Program using a console (teach pendant) and by guiding the arm by hand (lead-through) while recording positions; the foundation of cobots (UR, FANUC CRX).</p></div>
+<div><span class="text-blue-400 font-semibold">Why learn:</span><p class="text-neutral-300 text-sm">The dominant method today and the entry point for anyone who has never coded.</p></div>
+<div><span class="text-blue-400 font-semibold">Key concepts:</span><p class="text-neutral-300 text-sm">Waypoints, pose, base/tool frames, speed/acceleration, manual jog.</p></div>
+</div></div>
+</div>
+<div class="topic-item">
+<button class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-blue-500/20 text-blue-400 text-sm font-bold flex items-center justify-center flex-shrink-0">2</span>
+<span class="text-lg">🧱</span>
+<div><span class="font-medium">No-code and blocks/flow</span><span class="text-neutral-500 text-sm ml-2">- Program without writing code</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-blue-400 font-semibold">What it is:</span><p class="text-neutral-300 text-sm">Visual interfaces (Blockly-style blocks, flowcharts, UR PolyScope drag-and-drop) build logic without text.</p></div>
+<div><span class="text-blue-400 font-semibold">Why learn:</span><p class="text-neutral-300 text-sm">Lets operators without a technical background automate simple tasks; democratizes access.</p></div>
+<div><span class="text-blue-400 font-semibold">Key concepts:</span><p class="text-neutral-300 text-sm">if/loop/wait blocks, action nodes, sensor-based conditionals, templates.</p></div>
+</div></div>
+</div>
+<div class="topic-item">
+<button class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-blue-500/20 text-blue-400 text-sm font-bold flex items-center justify-center flex-shrink-0">3</span>
+<span class="text-lg">🐍</span>
+<div><span class="font-medium">Python is the frontier of code</span><span class="text-neutral-500 text-sm ml-2">- The shared language of robotics, computer vision, and AI</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-blue-400 font-semibold">What it is:</span><p class="text-neutral-300 text-sm">The most widely used language in robotics/AI; controls cobots via SDK (e.g., ur_rtde), processes vision, and integrates AI.</p></div>
+<div><span class="text-blue-400 font-semibold">Why learn:</span><p class="text-neutral-300 text-sm">Moving beyond no-code opens the door to complex tasks and better pay.</p></div>
+<div><span class="text-blue-400 font-semibold">Key concepts:</span><p class="text-neutral-300 text-sm">Manufacturer SDK, control loop, sensor readings, vision integration, reusable scripts.</p></div>
+<pre class="bg-dark-900 rounded-lg p-3 mt-2 overflow-x-auto"><code class="font-mono text-xs text-neutral-300">from rtde_control import RTDEControlInterface as RTDEControl
+robo = RTDEControl("192.168.0.10")
+pose = [-0.14, -0.40, 0.20, 0, 3.14, 0]  # x, y, z + rotacao
+robo.moveL(pose, speed=0.25, acceleration=0.5)
+robo.setStandardDigitalOut(0, True)  # fecha a garra</code></pre>
+</div></div>
+</div>
+<div class="topic-item">
+<button class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-blue-500/20 text-blue-400 text-sm font-bold flex items-center justify-center flex-shrink-0">4</span>
+<span class="text-lg">🤖</span>
+<div><span class="font-medium">ROS 2</span><span class="text-neutral-500 text-sm ml-2">- The standard middleware for robots</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-blue-400 font-semibold">What it is:</span><p class="text-neutral-300 text-sm">ROS 2 is the standard middleware (it isn’t a real OS): nodes, topics (publish/subscribe), messages, services; Nav2, MoveIt 2, Gazebo.</p></div>
+<div><span class="text-blue-400 font-semibold">Why learn:</span><p class="text-neutral-300 text-sm">AMRs, humanoids, and research run ROS 2; it is a prerequisite for technical roles.</p></div>
+<div><span class="text-blue-400 font-semibold">Key concepts:</span><p class="text-neutral-300 text-sm">Nodes, topics, messages, Nav2, MoveIt 2, simulation.</p></div>
+</div></div>
+</div>
+<div class="topic-item">
+<button class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-blue-500/20 text-blue-400 text-sm font-bold flex items-center justify-center flex-shrink-0">5</span>
+<span class="text-lg">🗣️</span>
+<div><span class="font-medium">Program using natural language</span><span class="text-neutral-500 text-sm ml-2">- LLM and VLA write the routine</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-blue-400 font-semibold">What it is:</span><p class="text-neutral-300 text-sm">Describe the task in Portuguese and the robot generates/executes it (connects to 2.7 VLA); “code-as-policies” = an LLM writes the code, a human reviews it.</p></div>
+<div><span class="text-blue-400 font-semibold">Why learn:</span><p class="text-neutral-300 text-sm">Industry direction; the skill becomes specifying the task well and reviewing what AI generated.</p></div>
+<div><span class="text-blue-400 font-semibold">Key concepts:</span><p class="text-neutral-300 text-sm">Code-as-policies, task prompt, VLA, human review, safety of self-generated code.</p></div>
+</div></div>
+</div>
+<div class="topic-item">
+<button class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-blue-500/20 text-blue-400 text-sm font-bold flex items-center justify-center flex-shrink-0">6</span>
+<span class="text-lg">🧭</span>
+<div><span class="font-medium">Which path to follow</span><span class="text-neutral-500 text-sm ml-2">- Learning path by profile</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-blue-400 font-semibold">What it is:</span><p class="text-neutral-300 text-sm">Operator (teach pendant→no-code), technician (no-code→Python), engineer (Python→ROS 2→VLA).</p></div>
+<div><span class="text-blue-400 font-semibold">Why learn:</span><p class="text-neutral-300 text-sm">Knowing the sequence prevents skipping steps; each level opens up a salary tier and connects to certifications (module 3.4).</p></div>
+<div><span class="text-blue-400 font-semibold">Key concepts:</span><p class="text-neutral-300 text-sm">Track by role, from simple to complex, project portfolio, continuous learning.</p></div>
+</div></div>
+</div>
+</div>
+<div class="px-6 py-4 border-t border-dark-600"><h4 class="text-sm font-semibold text-blue-400 mb-2 flex items-center"><span class="mr-2">🔧</span>In practice</h4><ul class="space-y-1.5 text-sm text-neutral-300">
+<li class="flex items-start space-x-2"><span class="text-blue-400 mt-0.5">✓</span><span>Start by recording waypoints on the teach pendant and validate poses, speed, and base/tool frames</span></li>
+<li class="flex items-start space-x-2"><span class="text-blue-400 mt-0.5">✓</span><span>Build your first no-code routine (PolyScope/blocks) with if/loop and a sensor-based conditional</span></li>
+<li class="flex items-start space-x-2"><span class="text-blue-400 mt-0.5">✓</span><span>Rewrite this routine in Python via the SDK (e.g., ur_rtde) to gain fine-grained control and reuse</span></li>
+<li class="flex items-start space-x-2"><span class="text-blue-400 mt-0.5">✓</span><span>Follow the path for your role (operator→technician→engineer) and always review code generated by an LLM/VLA</span></li>
+</ul></div>
+<div class="p-4 bg-dark-700/30 flex justify-start space-x-3">
+<button class="px-4 py-2 text-sm bg-dark-600 hover:bg-dark-500 rounded-lg transition-colors" onclick="openModal('modal-2-8')">View in Modal</button>
+<a class="px-4 py-2 text-sm bg-blue-600 hover:bg-blue-500 text-white rounded-lg transition-colors" href="modulo-2-8.html">View Full Version</a>
+</div>
+</div>
+<!-- Navegacao -->
+<div class="flex flex-col sm:flex-row gap-4 mt-12">
+<a class="flex-1 text-center px-6 py-3 bg-dark-700 text-neutral-300 rounded-lg font-semibold hover:bg-dark-600 transition-colors" href="../trilha1/">Track 1 - Fundamentals</a>
+<a class="flex-1 text-center px-6 py-3 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-500 transition-colors" href="../trilha3/">Track 3 - Strategic</a>
+</div>
+</main>
+<!-- Modals -->
+<div class="modal hidden fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-black/80" id="modal-2-1" onclick="if(event.target === this) closeModal()">
+<div class="bg-dark-800 rounded-xl w-full max-w-6xl h-[95vh] flex flex-col border border-dark-600">
+<div class="p-4 border-b border-dark-600 flex justify-between items-center flex-shrink-0">
+<div class="flex items-center space-x-3"><span class="text-blue-400 font-bold">2.1</span><span class="font-semibold">Autonomous Systems Supervision</span></div>
+<button class="text-neutral-400 hover:text-white text-2xl leading-none" onclick="closeModal()">×</button>
+</div>
+<iframe class="flex-1 w-full rounded-b-xl" src="modulo-2-1.html"></iframe>
+</div>
+</div>
+<div class="modal hidden fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-black/80" id="modal-2-2" onclick="if(event.target === this) closeModal()">
+<div class="bg-dark-800 rounded-xl w-full max-w-6xl h-[95vh] flex flex-col border border-dark-600">
+<div class="p-4 border-b border-dark-600 flex justify-between items-center flex-shrink-0">
+<div class="flex items-center space-x-3"><span class="text-blue-400 font-bold">2.2</span><span class="font-semibold">Human-Robot Safety Protocols</span></div>
+<button class="text-neutral-400 hover:text-white text-2xl leading-none" onclick="closeModal()">×</button>
+</div>
+<iframe class="flex-1 w-full rounded-b-xl" src="modulo-2-2.html"></iframe>
+</div>
+</div>
+<div class="modal hidden fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-black/80" id="modal-2-3" onclick="if(event.target === this) closeModal()">
+<div class="bg-dark-800 rounded-xl w-full max-w-6xl h-[95vh] flex flex-col border border-dark-600">
+<div class="p-4 border-b border-dark-600 flex justify-between items-center flex-shrink-0">
+<div class="flex items-center space-x-3"><span class="text-blue-400 font-bold">2.3</span><span class="font-semibold">Simulators, VR, and Digital Twins</span></div>
+<button class="text-neutral-400 hover:text-white text-2xl leading-none" onclick="closeModal()">×</button>
+</div>
+<iframe class="flex-1 w-full rounded-b-xl" src="modulo-2-3.html"></iframe>
+</div>
+</div>
+<div class="modal hidden fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-black/80" id="modal-2-4" onclick="if(event.target === this) closeModal()">
+<div class="bg-dark-800 rounded-xl w-full max-w-6xl h-[95vh] flex flex-col border border-dark-600">
+<div class="p-4 border-b border-dark-600 flex justify-between items-center flex-shrink-0">
+<div class="flex items-center space-x-3"><span class="text-blue-400 font-bold">2.4</span><span class="font-semibold">Healthcare: Nurses and Hospital Teams</span></div>
+<button class="text-neutral-400 hover:text-white text-2xl leading-none" onclick="closeModal()">×</button>
+</div>
+<iframe class="flex-1 w-full rounded-b-xl" src="modulo-2-4.html"></iframe>
+</div>
+</div>
+<div class="modal hidden fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-black/80" id="modal-2-5" onclick="if(event.target === this) closeModal()">
+<div class="bg-dark-800 rounded-xl w-full max-w-6xl h-[95vh] flex flex-col border border-dark-600">
+<div class="p-4 border-b border-dark-600 flex justify-between items-center flex-shrink-0">
+<div class="flex items-center space-x-3"><span class="text-blue-400 font-bold">2.5</span><span class="font-semibold">Logistics: Autonomous Warehouses</span></div>
+<button class="text-neutral-400 hover:text-white text-2xl leading-none" onclick="closeModal()">×</button>
+</div>
+<iframe class="flex-1 w-full rounded-b-xl" src="modulo-2-5.html"></iframe>
+</div>
+</div>
+<div class="modal hidden fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-black/80" id="modal-2-6" onclick="if(event.target === this) closeModal()">
+<div class="bg-dark-800 rounded-xl w-full max-w-6xl h-[95vh] flex flex-col border border-dark-600">
+<div class="p-4 border-b border-dark-600 flex justify-between items-center flex-shrink-0">
+<div class="flex items-center space-x-3"><span class="text-blue-400 font-bold">2.6</span><span class="font-semibold">Agriculture, Security, and Other Verticals</span></div>
+<button class="text-neutral-400 hover:text-white text-2xl leading-none" onclick="closeModal()">×</button>
+</div>
+<iframe class="flex-1 w-full rounded-b-xl" src="modulo-2-6.html"></iframe>
+</div>
+</div>
+<div class="modal hidden fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-black/80" id="modal-2-7" onclick="if(event.target === this) closeModal()">
+<div class="bg-dark-800 rounded-xl w-full max-w-6xl h-[95vh] flex flex-col border border-dark-600">
+<div class="p-4 border-b border-dark-600 flex justify-between items-center flex-shrink-0">
+<div class="flex items-center space-x-3"><span class="text-blue-400 font-bold">2.7</span><span class="font-semibold">VLA: Vision-Language-Action</span></div>
+<button class="text-neutral-400 hover:text-white text-2xl leading-none" onclick="closeModal()">×</button>
+</div>
+<iframe class="flex-1 w-full rounded-b-xl" src="modulo-2-7.html"></iframe>
+</div>
+</div>
+<div class="modal hidden fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-black/80" id="modal-2-8" onclick="if(event.target === this) closeModal()">
+<div class="bg-dark-800 rounded-xl w-full max-w-6xl h-[95vh] flex flex-col border border-dark-600">
+<div class="p-4 border-b border-dark-600 flex justify-between items-center flex-shrink-0">
+<div class="flex items-center space-x-3"><span class="text-blue-400 font-bold">2.8</span><span class="font-semibold">How to Program Robots</span></div>
+<button class="text-neutral-400 hover:text-white text-2xl leading-none" onclick="closeModal()">×</button>
+</div>
+<iframe class="flex-1 w-full rounded-b-xl" src="modulo-2-8.html"></iframe>
+</div>
+</div>
+<!-- FOOTER -->
+<footer class="border-t border-dark-600 py-8 mt-16">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-neutral-500 text-sm">
+<p>segROBOT - 2026</p>
+</div>
+</footer>
+<script>
+    function toggleTopic(button) {
+      const topicItem = button.closest('.topic-item');
+      const explanation = topicItem.querySelector('.topic-explanation');
+      const moduleCard = button.closest('.bg-dark-800');
+      moduleCard.querySelectorAll('.topic-explanation.active').forEach(exp => {
+        if (exp !== explanation) exp.classList.remove('active');
+      });
+      explanation.classList.toggle('active');
+    }
+
+    function openModal(modalId) {
+      const modal = document.getElementById(modalId);
+      if (modal) { modal.classList.remove('hidden'); document.body.style.overflow = 'hidden'; }
+    }
+
+    function closeModal() {
+      document.querySelectorAll('.modal').forEach(modal => modal.classList.add('hidden'));
+      document.body.style.overflow = 'auto';
+    }
+
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeModal(); });
+
+    const themeToggle = document.getElementById('theme-toggle');
+    const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
+    const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
+    const html = document.documentElement;
+    if (localStorage.getItem('theme') === 'light' || (!localStorage.getItem('theme') && !html.classList.contains('dark'))) {
+      themeToggleDarkIcon.classList.remove('hidden'); html.classList.remove('dark');
+    } else { themeToggleLightIcon.classList.remove('hidden'); }
+    themeToggle.addEventListener('click', () => {
+      themeToggleDarkIcon.classList.toggle('hidden'); themeToggleLightIcon.classList.toggle('hidden');
+      html.classList.toggle('dark'); localStorage.setItem('theme', html.classList.contains('dark') ? 'dark' : 'light');
+    });
+  </script>
+</body>
+</html>

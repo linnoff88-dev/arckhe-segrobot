@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Module 3.1 - Change Management | segROBOT</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            primary: '#FACC15',
+            dark: { 900: '#111827', 800: '#1f2937', 700: '#374151', 600: '#4b5563' }
+          }
+        }
+      }
+    }
+  </script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<style>
+    body { font-family: 'Inter', sans-serif; }
+    .dark body { background-color: #111827; }
+    .topic-explanation { display: none; }
+    .topic-explanation.active { display: block; }
+
+    /* Light mode overrides */
+    html:not(.dark) body { background-color: #f8fafc; }
+    html:not(.dark) .bg-dark-900 { background-color: #ffffff; }
+    html:not(.dark) .bg-dark-800 { background-color: #f9fafb; }
+    html:not(.dark) .bg-dark-700 { background-color: #f3f4f6; }
+    html:not(.dark) .bg-dark-600 { background-color: #e5e7eb; }
+    html:not(.dark) .text-neutral-100 { color: #111827; }
+    html:not(.dark) .text-neutral-300 { color: #4b5563; }
+    html:not(.dark) .text-neutral-400 { color: #6b7280; }
+    html:not(.dark) .text-neutral-500 { color: #9ca3af; }
+    html:not(.dark) .border-dark-600 { border-color: #d1d5db; }
+    html:not(.dark) .border-dark-700 { border-color: #e5e7eb; }
+
+    /* Light mode - cores de acento (trilha purple) */
+    html:not(.dark) .text-purple-400 { color: #7c3aed; }
+    html:not(.dark) .bg-purple-500\/20 { background-color: rgba(124, 58, 237, 0.12); }
+    html:not(.dark) .bg-purple-500\/10 { background-color: rgba(124, 58, 237, 0.08); }
+    html:not(.dark) .border-purple-500\/30 { border-color: rgba(124, 58, 237, 0.25); }
+    html:not(.dark) .hover\:bg-purple-500\/30:hover { background-color: rgba(124, 58, 237, 0.18); }
+    html:not(.dark) .hover\:text-purple-400:hover { color: #7c3aed; }
+    html:not(.dark) .hover\:bg-purple-500\/10:hover { background-color: rgba(124, 58, 237, 0.08); }
+
+    /* Light mode - outras trilhas no nav */
+    html:not(.dark) .hover\:text-emerald-400:hover { color: #059669; }
+    html:not(.dark) .hover\:bg-emerald-500\/10:hover { background-color: rgba(5, 150, 105, 0.08); }
+    html:not(.dark) .hover\:text-blue-400:hover { color: #2563eb; }
+    html:not(.dark) .hover\:bg-blue-500\/10:hover { background-color: rgba(37, 99, 235, 0.08); }
+
+    /* Light mode - remove gradientes */
+    html:not(.dark) [class*="bg-gradient-to"] { background-image: none !important; }
+
+    /* Light mode - cores especiais */
+    html:not(.dark) .text-primary { color: #a16207; }
+    html:not(.dark) .bg-primary\/10 { background-color: rgba(161, 98, 7, 0.08); }
+    html:not(.dark) .border-primary\/40 { border-color: rgba(161, 98, 7, 0.25); }
+    html:not(.dark) .text-sky-400 { color: #0369a1; }
+    html:not(.dark) .text-yellow-400 { color: #a16207; }
+    html:not(.dark) .hover\:text-sky-300:hover { color: #0284c7; }
+    html:not(.dark) .hover\:text-yellow-300:hover { color: #854d0e; }
+
+    /* Light mode - nav */
+    html:not(.dark) .bg-dark-900\/95 { background-color: rgba(255, 255, 255, 0.95); }
+
+    /* Dark mode - bordas suaves */
+    .dark .border-dark-600 { border-color: #374151; }
+    .dark .divide-dark-600 > :not([hidden]) ~ :not([hidden]) { border-color: #374151; }
+
+    @keyframes wf-pulse { 0%,100% { opacity:.55 } 50% { opacity:1 } }
+    @media (prefers-reduced-motion: no-preference) {
+      .wf-a { animation: wf-pulse 2.6s ease-in-out infinite; }
+      .wf-a:nth-child(2){animation-delay:.25s} .wf-a:nth-child(3){animation-delay:.5s}
+      .wf-a:nth-child(4){animation-delay:.75s} .wf-a:nth-child(5){animation-delay:1s}
+    }
+  </style>
+<link href="https://inematds.github.io/segrobot/curso/trilha3/modulo-3-1.html" hreflang="pt-BR" rel="alternate"/><link href="https://inematds.github.io/segrobot/en/curso/trilha3/modulo-3-1.html" hreflang="en" rel="alternate"/><link href="https://inematds.github.io/segrobot/es/curso/trilha3/modulo-3-1.html" hreflang="es" rel="alternate"/></head>
+<body class="bg-dark-900 text-neutral-100 min-h-screen"><div class="inema-lang" style="position:fixed;right:14px;bottom:14px;z-index:9999;display:flex;gap:2px;padding:4px;border-radius:10px;background:rgba(12,12,16,.82);border:1px solid rgba(226,162,59,.45);font:600 12px/1 Sora,Inter,system-ui,sans-serif;backdrop-filter:blur(8px)" translate="no"><a href="../../../curso/trilha3/modulo-3-1.html" hreflang="pt-BR" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">PT</a><a href="modulo-3-1.html" hreflang="en" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#1a1206;background:#E2A23B">EN</a><a href="../../../es/curso/trilha3/modulo-3-1.html" hreflang="es" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">ES</a></div>
+<!-- NAVIGATION -->
+<nav class="sticky top-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-600">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="flex justify-between items-center h-14">
+<div class="flex items-center space-x-4">
+<a class="flex items-center space-x-2 text-yellow-400 hover:text-yellow-300" href="../../index.html">
+<span class="text-2xl">🤖</span>
+<span class="font-bold text-lg hidden sm:inline">segROBOT</span>
+</a>
+<span class="text-neutral-600">|</span>
+<a class="text-sky-400 hover:text-sky-300 text-sm font-medium" href="https://inema.club" target="_blank">INEMA.CLUB</a>
+</div>
+<div class="flex items-center space-x-1 sm:space-x-2">
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-emerald-400 hover:bg-emerald-500/10 transition-colors" href="../trilha1/index.html">
+<span class="sm:hidden">T1</span>
+<span class="hidden sm:inline">Fundamentals</span>
+</a>
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-blue-400 hover:bg-blue-500/10 transition-colors" href="../trilha2/index.html">
+<span class="sm:hidden">T2</span>
+<span class="hidden sm:inline">Action</span>
+</a>
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-purple-400 bg-purple-500/10" href="index.html">
+<span class="sm:hidden">T3</span>
+<span class="hidden sm:inline">Strategic</span>
+</a>
+<button class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors ml-2" id="theme-toggle">
+<svg class="hidden w-5 h-5 text-neutral-300" fill="currentColor" id="theme-toggle-dark-icon" viewbox="0 0 20 20">
+<path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+</svg>
+<svg class="hidden w-5 h-5 text-neutral-300" fill="currentColor" id="theme-toggle-light-icon" viewbox="0 0 20 20">
+<path clip-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd"></path>
+</svg>
+</button>
+</div>
+</div>
+</div>
+</nav>
+<!-- BREADCRUMB -->
+<nav class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+<div class="flex items-center space-x-2 text-sm text-neutral-400">
+<a class="hover:text-purple-400" href="../../index.html">Start</a>
+<span>/</span>
+<a class="hover:text-purple-400" href="index.html">Track 3</a>
+<span>/</span>
+<span class="text-purple-400">Module 3.1</span>
+</div>
+</nav>
+<!-- HEADER -->
+<header class="bg-gradient-to-br from-purple-900/30 via-dark-800 to-dark-800 py-12 border-b border-dark-600">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+<span class="inline-block px-3 py-1 bg-purple-500/20 text-purple-400 text-xs font-semibold rounded-full mb-4">MODULE 3.1</span>
+<h1 class="text-3xl sm:text-4xl font-bold mb-4">🔄 Change Management: Framework for Robot Adoption</h1>
+<p class="text-lg text-neutral-400 max-w-3xl">
+        Lead the organizational adoption of robots without chaos, resistance, or lost productivity. A three-phase framework for turning fear into buy-in and technology into a sustainable competitive advantage.
+      </p>
+<!-- SVG futurista: framework de mudanca em 3 fases -->
+<div class="rounded-2xl border border-purple-500/30 bg-dark-900/40 p-3 sm:p-4 mt-8 overflow-hidden">
+<svg aria-label="Three-phase change management framework: Pre-implementation feeds into Pilot, which feeds into Scale, converging on Consolidated Adoption, with the threats Leadership, Resistance, and Alignment acting in parallel" class="w-full h-auto" role="img" viewbox="0 0 1000 250">
+<defs>
+<lineargradient id="m31-grad" x1="0" x2="1" y1="0" y2="1">
+<stop offset="0" stop-color="#c084fc"></stop><stop offset="1" stop-color="#a855f7"></stop>
+</lineargradient>
+<filter height="180%" id="m31-glow" width="180%" x="-40%" y="-40%">
+<fegaussianblur result="b" stddeviation="3"></fegaussianblur><femerge><femergenode in="b"></femergenode><femergenode in="SourceGraphic"></femergenode></femerge>
+</filter>
+<pattern height="32" id="m31-grid" patternunits="userSpaceOnUse" width="32">
+<circle cx="1.3" cy="1.3" fill="#a855f7" opacity="0.12" r="1.3"></circle>
+</pattern>
+<marker id="m31-ah" markerheight="9" markerwidth="9" orient="auto" refx="6.5" refy="4.5"><path d="M0,0 L8,4.5 L0,9 L2.4,4.5 Z" fill="#c084fc"></path></marker>
+<marker id="m31-ahc" markerheight="9" markerwidth="9" orient="auto" refx="6.5" refy="4.5"><path d="M0,0 L8,4.5 L0,9 L2.4,4.5 Z" fill="#38bdf8"></path></marker>
+</defs>
+<rect fill="url(#m31-grid)" height="250" width="1000" x="0" y="0"></rect>
+<!-- Linha de progressao entre fases -->
+<g fill="none" opacity="0.7" stroke="#c084fc" stroke-width="2.5">
+<path d="M196,70 L300,70" marker-end="url(#m31-ah)"></path>
+<path d="M496,70 L600,70" marker-end="url(#m31-ah)"></path>
+<path d="M796,70 C860,70 880,110 880,150" marker-end="url(#m31-ah)"></path>
+</g>
+<!-- Fase 1 -->
+<g filter="url(#m31-glow)"><rect fill="#1a1230" height="56" rx="14" stroke="url(#m31-grad)" stroke-width="2.5" width="156" x="40" y="42"></rect></g>
+<text fill="#c084fc" font-family="Inter,sans-serif" font-size="16" font-weight="700" text-anchor="middle" x="118" y="68">Phase 1</text>
+<text fill="#d8b4fe" font-family="Inter,sans-serif" font-size="11.5" text-anchor="middle" x="118" y="87">Pre-implementation</text>
+<!-- Fase 2 -->
+<g filter="url(#m31-glow)"><rect fill="#1a1230" height="56" rx="14" stroke="url(#m31-grad)" stroke-width="2.5" width="156" x="340" y="42"></rect></g>
+<text fill="#c084fc" font-family="Inter,sans-serif" font-size="16" font-weight="700" text-anchor="middle" x="418" y="68">Phase 2</text>
+<text fill="#d8b4fe" font-family="Inter,sans-serif" font-size="11.5" text-anchor="middle" x="418" y="87">Pilot</text>
+<!-- Fase 3 -->
+<g filter="url(#m31-glow)"><rect fill="#1a1230" height="56" rx="14" stroke="url(#m31-grad)" stroke-width="2.5" width="156" x="640" y="42"></rect></g>
+<text fill="#c084fc" font-family="Inter,sans-serif" font-size="16" font-weight="700" text-anchor="middle" x="718" y="68">Phase 3</text>
+<text fill="#d8b4fe" font-family="Inter,sans-serif" font-size="11.5" text-anchor="middle" x="718" y="87">Scale</text>
+<!-- Ameacas paralelas (ciano) que cada fase deve mitigar -->
+<g fill="none" opacity="0.5" stroke="#38bdf8" stroke-dasharray="6 5" stroke-width="2">
+<path d="M118,150 L118,98"></path>
+<path d="M418,150 L418,98"></path>
+<path d="M718,150 L718,98"></path>
+</g>
+<g font-family="Inter,sans-serif" font-size="12" font-weight="600">
+<g class="wf-a"><rect fill="#0e1b26" height="30" rx="9" stroke="#38bdf8" stroke-width="2" width="148" x="44" y="150"></rect><text fill="#bfe6ff" text-anchor="middle" x="118" y="170">Leadership 33%</text></g>
+<g class="wf-a"><rect fill="#0e1b26" height="30" rx="9" stroke="#38bdf8" stroke-width="2" width="148" x="344" y="150"></rect><text fill="#bfe6ff" text-anchor="middle" x="418" y="170">39% resistance</text></g>
+<g class="wf-a"><rect fill="#0e1b26" height="30" rx="9" stroke="#38bdf8" stroke-width="2" width="148" x="644" y="150"></rect><text fill="#bfe6ff" text-anchor="middle" x="718" y="170">14% alignment</text></g>
+</g>
+<!-- Resultado: Adocao -->
+<g filter="url(#m31-glow)"><rect fill="#1a1230" height="56" rx="14" stroke="url(#m31-grad)" stroke-width="2.5" width="160" x="800" y="178"></rect></g>
+<text fill="#c084fc" font-family="Inter,sans-serif" font-size="16" font-weight="700" text-anchor="middle" x="880" y="204">Adoption</text>
+<text fill="#d8b4fe" font-family="Inter,sans-serif" font-size="11.5" text-anchor="middle" x="880" y="222">established</text>
+</svg>
+</div>
+<!-- Stats Grid -->
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-4 mt-8 max-w-2xl">
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+<div class="text-xl font-bold text-purple-400">6</div>
+<div class="text-xs text-neutral-400">Topics</div>
+</div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+<div class="text-xl font-bold text-purple-400">50</div>
+<div class="text-xs text-neutral-400">Minutes</div>
+</div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+<div class="text-xl font-bold text-purple-400">Advanced</div>
+<div class="text-xs text-neutral-400">Level</div>
+</div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+<div class="text-xl font-bold text-purple-400">Strategy</div>
+<div class="text-xs text-neutral-400">Type</div>
+</div>
+</div>
+</div>
+</header>
+<main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+<!-- TOPICO 1 -->
+<section class="mb-16" id="topico-1">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">1</span>
+<h2 class="text-2xl font-bold">📣 Phase 1: Pre-Implementation</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed">
+        Phase 1 takes place <strong class="text-purple-400">6 to 12 months earlier</strong> any robot entering the factory floor. It is the most overlooked and most decisive phase: it prepares people before the technology arrives. Those who jump straight to installation pay dearly in resistance, rework, and lost productivity.
+      </p>
+<div class="bg-gradient-to-br from-purple-900/30 to-dark-800 rounded-xl border border-purple-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-purple-400 mb-4 flex items-center">
+<span class="mr-2">🧭</span> What Is Phase 1
+        </h3>
+<p class="text-neutral-300 mb-4">
+          Organizational preparation phase before the robots arrive. Four levers work together to reduce perceived threat and build buy-in before the physical change happens:
+        </p>
+<ul class="space-y-2 text-neutral-300">
+<li class="flex items-start space-x-2"><span class="text-purple-400 mt-1">•</span><span><strong>Transparent communication</strong> — anticipate the “why,” the “when,” and “what changes for you.”</span></li>
+<li class="flex items-start space-x-2"><span class="text-purple-400 mt-1">•</span><span><strong>Co-design with employees</strong> — the people operating it help design the new workflow.</span></li>
+<li class="flex items-start space-x-2"><span class="text-purple-400 mt-1">•</span><span><strong>Fear mapping by role</strong> — map the specific fears associated with each job.</span></li>
+<li class="flex items-start space-x-2"><span class="text-purple-400 mt-1">•</span><span><strong>Cascade training</strong> — train leaders first, before the team.</span></li>
+</ul>
+</div>
+<div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
+<span class="mr-2">💡</span> Why learn
+        </h3>
+<p class="text-neutral-300">
+<strong>33% of transformations fail due to a lack of leadership support.</strong> Preparing people before introducing technology is the critical success factor. Investing in communication and co-design in Phase 1 costs a fraction of what it takes to reverse entrenched resistance after installation.
+        </p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+<div class="bg-emerald-900/20 rounded-xl border border-emerald-500/30 p-6">
+<h4 class="font-bold text-emerald-400 mb-4">✓ What to DO in Phase 1</h4>
+<ul class="space-y-3 text-neutral-300 text-sm">
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Communicate the "why" before the "how" — 6 to 12 months in advance.</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Involve operators in co-designing the new workflow.</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Map fears role by role and address each one specifically.</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Train leaders first: they’ll be the voice of change.</span></li>
+</ul>
+</div>
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+<h4 class="font-bold text-red-400 mb-4">✗ What NOT to do</h4>
+<ul class="space-y-3 text-neutral-300 text-sm">
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Announce the robots’ arrival along with the installation date.</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Decide on the new office workflow without listening to the people who operate it.</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Treating all fears as one generic block.</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Expect leadership to learn alongside the team.</span></li>
+</ul>
+</div>
+</div>
+<h3 class="text-lg font-semibold text-purple-400 mb-3">Key concepts</h3>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-purple-400 font-semibold text-sm mb-1">Communication</div><div class="text-xs text-neutral-400">Advance Notice and Transparency</div></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-purple-400 font-semibold text-sm mb-1">Co-design</div><div class="text-xs text-neutral-400">Participatory, with operators</div></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-purple-400 font-semibold text-sm mb-1">Fear mapping</div><div class="text-xs text-neutral-400">Job-specific fears</div></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-purple-400 font-semibold text-sm mb-1">Cascade training</div><div class="text-xs text-neutral-400">Leaders First</div></div>
+</div>
+</section>
+<!-- TOPICO 2 -->
+<section class="mb-16" id="topico-2">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">2</span>
+<h2 class="text-2xl font-bold">🧪 Phase 2: Pilot</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed">
+        Phase 2 is the controlled test with a <strong class="text-purple-400">volunteer team</strong>. The pilot isn’t just for validating the technology—it’s for creating the first internal champions. Well-supported volunteers become living proof that the change works, and that social proof makes scaling easier.
+      </p>
+<div class="bg-gradient-to-br from-purple-900/30 to-dark-800 rounded-xl border border-purple-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-purple-400 mb-4 flex items-center">
+<span class="mr-2">🔬</span> What Is Phase 2
+        </h3>
+<p class="text-neutral-300 mb-4">
+          Controlled testing phase with a volunteer team, supported by regular feedback checkpoints, transparent metrics for everyone, and a safe channel for reporting problems without retaliation. The goal is to iterate quickly and publicly.
+        </p>
+<ul class="space-y-2 text-neutral-300">
+<li class="flex items-start space-x-2"><span class="text-purple-400 mt-1">•</span><span><strong>Volunteer team</strong> — opting in drives engagement; imposing it does not.</span></li>
+<li class="flex items-start space-x-2"><span class="text-purple-400 mt-1">•</span><span><strong>Feedback loops</strong> — regular checkpoints to adjust the course.</span></li>
+<li class="flex items-start space-x-2"><span class="text-purple-400 mt-1">•</span><span><strong>Shared metrics</strong> — everyone sees the same numbers.</span></li>
+<li class="flex items-start space-x-2"><span class="text-purple-400 mt-1">•</span><span><strong>Psychologically safe channel</strong> — reporting a problem does not lead to punishment.</span></li>
+</ul>
+</div>
+<!-- Timeline do piloto -->
+<div class="space-y-6 mb-6">
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-12 h-12 rounded-full bg-purple-500/20 flex items-center justify-center"><span class="text-purple-400 font-bold">1</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+<h4 class="font-semibold text-white mb-2">Volunteer selection</h4>
+<p class="text-sm text-neutral-400 mb-3">Pilot launch</p>
+<p class="text-neutral-300 text-sm">Recruit a team that chooses to participate. Voluntary participation reduces resistance and creates the first ambassadors for change.</p>
+</div>
+</div>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-12 h-12 rounded-full bg-purple-500/20 flex items-center justify-center"><span class="text-purple-400 font-bold">2</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+<h4 class="font-semibold text-white mb-2">Feedback loops and metrics</h4>
+<p class="text-sm text-neutral-400 mb-3">During the pilot</p>
+<p class="text-neutral-300 text-sm">Regular checkpoints with transparent metrics. The safe channel ensures real problems surface early, before they turn into a crisis.</p>
+</div>
+</div>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-12 h-12 rounded-full bg-purple-500/20 flex items-center justify-center"><span class="text-purple-400 font-bold">3</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+<h4 class="font-semibold text-white mb-2">Rapid iteration</h4>
+<p class="text-sm text-neutral-400 mb-3">Before Scaling</p>
+<p class="text-neutral-300 text-sm">Adjust workflows, training, and ergonomics based on feedback. Come out of the pilot with a validated model and ready ambassadors.</p>
+</div>
+</div>
+</div>
+<div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
+<span class="mr-2">💡</span> Why learn
+        </h3>
+<p class="text-neutral-300">
+<strong>39% of transformations fail due to employee resistance.</strong> Well-run pilots create internal champions who make scaling easier. The social proof from coworkers who have already adopted it is worth more than any executive presentation.
+        </p>
+</div>
+<h3 class="text-lg font-semibold text-purple-400 mb-3">Key concepts</h3>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-purple-400 font-semibold text-sm mb-1">Volunteers</div><div class="text-xs text-neutral-400">Voluntary participation</div></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-purple-400 font-semibold text-sm mb-1">Feedback loops</div><div class="text-xs text-neutral-400">Continuous adjustment</div></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-purple-400 font-semibold text-sm mb-1">Metrics</div><div class="text-xs text-neutral-400">Shared</div></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-purple-400 font-semibold text-sm mb-1">Safe channel</div><div class="text-xs text-neutral-400">Without retaliation</div></div>
+</div>
+</section>
+<!-- TOPICO 3 -->
+<section class="mb-16" id="topico-3">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">3</span>
+<h2 class="text-2xl font-bold">🚀 Phase 3: Scale</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed">
+        Phase 3 expands adoption to <strong class="text-purple-400">the entire organization</strong>. This is where most companies lose momentum: the pilot worked, but the company fails to consolidate the gains. Recognizing pioneers, reviewing KPIs, updating job descriptions, and creating peer mentoring keep the energy alive during expansion.
+      </p>
+<div class="bg-gradient-to-br from-purple-900/30 to-dark-800 rounded-xl border border-purple-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-purple-400 mb-4 flex items-center">
+<span class="mr-2">📈</span> What Is Phase 3
+        </h3>
+<p class="text-neutral-300 mb-4">
+          Adoption expansion phase with four consolidation mechanisms that turn a successful pilot into an organizational routine:
+        </p>
+<ul class="space-y-2 text-neutral-300">
+<li class="flex items-start space-x-2"><span class="text-purple-400 mt-1">•</span><span><strong>Recognition of pioneers</strong> — publicly celebrate the early adopters.</span></li>
+<li class="flex items-start space-x-2"><span class="text-purple-400 mt-1">•</span><span><strong>KPI revision</strong> — recalibrate targets for the new productivity level.</span></li>
+<li class="flex items-start space-x-2"><span class="text-purple-400 mt-1">•</span><span><strong>Job description update</strong> — formalize the new responsibilities in job descriptions.</span></li>
+<li class="flex items-start space-x-2"><span class="text-purple-400 mt-1">•</span><span><strong>Mentorship program</strong> — peers teaching peers, scaling knowledge.</span></li>
+</ul>
+</div>
+<div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-blue-400 mb-4 flex items-center">
+<span class="mr-2">📊</span> Research Data
+        </h3>
+<ul class="space-y-2 text-neutral-300">
+<li><strong>14%</strong> - of organizations align workforce, technology, and business goals (the "alignment trifecta").</li>
+<li><strong>33%</strong> - of transformations fail due to a lack of leadership support.</li>
+<li><strong>39%</strong> - of transformations fail due to employee resistance.</li>
+</ul>
+</div>
+<div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
+<span class="mr-2">💡</span> Why learn
+        </h3>
+<p class="text-neutral-300">
+          Only <strong>14% of organizations</strong> align the workforce, technology, and business goals. The scaling phase is where most lose momentum — maintaining pace requires recognition, goal reviews, and structured mentoring.
+        </p>
+</div>
+<h3 class="text-lg font-semibold text-purple-400 mb-3">Key concepts</h3>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-purple-400 font-semibold text-sm mb-1">Recognition</div><div class="text-xs text-neutral-400">Visible pioneers</div></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-purple-400 font-semibold text-sm mb-1">KPI revision</div><div class="text-xs text-neutral-400">Recalibrated goals</div></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-purple-400 font-semibold text-sm mb-1">Job description</div><div class="text-xs text-neutral-400">Updated roles</div></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-purple-400 font-semibold text-sm mb-1">Mentorship</div><div class="text-xs text-neutral-400">Peers teach peers</div></div>
+</div>
+</section>
+<!-- TOPICO 4 -->
+<section class="mb-16" id="topico-4">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">4</span>
+<h2 class="text-2xl font-bold">⚠️ Leadership failure — 33% of failures</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed">
+        One-third of robotic transformations fail specifically because of <strong class="text-purple-400">lack of active commitment from senior leadership</strong>. Approving the budget isn’t enough: the executive sponsor must be visible, engaged, and consistent in what they say and do.
+      </p>
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-red-400 mb-3 flex items-center">
+<span class="mr-2">🚨</span> The risk of absent leadership
+        </h3>
+<p class="text-neutral-300">
+          Leadership that delegates transformation without actively getting involved sabotages the project. The team reads the signal: if the boss doesn't prioritize it, I don't need to either. The result is superficial adoption and ROI that never materializes.
+        </p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+<div class="bg-emerald-900/20 rounded-xl border border-emerald-500/30 p-6">
+<h4 class="font-bold text-emerald-400 mb-4">✓ Leadership that works</h4>
+<ul class="space-y-3 text-neutral-300 text-sm">
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Visible and present executive sponsor at checkpoints.</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>"Walk the talk": the leader uses and advocates for the change.</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Cascade of commitment — each level takes responsibility for its part.</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Difficult decisions made in time, without pushing them down the line.</span></li>
+</ul>
+</div>
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+<h4 class="font-bold text-red-400 mb-4">✗ Leadership that undermines</h4>
+<ul class="space-y-3 text-neutral-300 text-sm">
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Delegate the transformation and disappear from view.</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Preach change while keeping old habits.</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Approve the budget without committing to the outcome.</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Delay critical decisions and stall the project.</span></li>
+</ul>
+</div>
+</div>
+<h3 class="text-lg font-semibold text-purple-400 mb-3">Key concepts</h3>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-purple-400 font-semibold text-sm mb-1">Sponsorship</div><div class="text-xs text-neutral-400">Active executive</div></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-purple-400 font-semibold text-sm mb-1">Visible</div><div class="text-xs text-neutral-400">Visible Leadership</div></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-purple-400 font-semibold text-sm mb-1">Walk the talk</div><div class="text-xs text-neutral-400">Example consistency</div></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-purple-400 font-semibold text-sm mb-1">Cascade</div><div class="text-xs text-neutral-400">Commitment</div></div>
+</div>
+</section>
+<!-- TOPICO 5 -->
+<section class="mb-16" id="topico-5">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">5</span>
+<h2 class="text-2xl font-bold">🚫 Employee resistance — 39% of failures</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed">
+        Resistance and <strong class="text-purple-400">largest single cause of failure</strong> in robotic transformations. It manifests actively (sabotage, refusal) and passively (avoidance, underuse). Importantly, resistance isn’t irrational—it’s a response to a perceived threat.
+      </p>
+<div class="bg-gradient-to-br from-purple-900/30 to-dark-800 rounded-xl border border-purple-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-purple-400 mb-4 flex items-center">
+<span class="mr-2">🧠</span> Active vs. passive resistance
+        </h3>
+<p class="text-neutral-300 mb-4">
+          Understanding the type of resistance determines the intervention. Active resistance is visible and calls for direct confrontation; passive resistance is silent and erodes ROI without warning. Both stem from the same root: a perceived threat to one’s job, status, or competence.
+        </p>
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+<div class="bg-dark-800/60 rounded-lg p-4 border border-dark-600">
+<div class="text-purple-400 font-semibold mb-1">Active resistance</div>
+<p class="text-sm text-neutral-300">Sabotage, explicit refusal, open complaints. Visible — requires a direct and clear response.</p>
+</div>
+<div class="bg-dark-800/60 rounded-lg p-4 border border-dark-600">
+<div class="text-purple-400 font-semibold mb-1">Passive resistance</div>
+<p class="text-sm text-neutral-300">Avoidance, underuse, “forgetting” the new process. Silent—it destroys ROI without setting off an alarm.</p>
+</div>
+</div>
+</div>
+<div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
+<span class="mr-2">💡</span> Practical Tip
+        </h3>
+<p class="text-neutral-300">
+          Resistance isn’t irrational—it’s a response to a perceived threat. Instead of fighting the behavior, identify the threat behind it (fear of losing a job, loss of status, feeling incompetent). One <strong>listening channel</strong> e a <strong>early intervention</strong> resolve issues before they escalate.
+        </p>
+</div>
+<h3 class="text-lg font-semibold text-purple-400 mb-3">Key concepts</h3>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-purple-400 font-semibold text-sm mb-1">Active vs. passive</div><div class="text-xs text-neutral-400">Two types</div></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-purple-400 font-semibold text-sm mb-1">Perceived Threat</div><div class="text-xs text-neutral-400">The true root</div></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-purple-400 font-semibold text-sm mb-1">Early intervention</div><div class="text-xs text-neutral-400">Before scaling</div></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-purple-400 font-semibold text-sm mb-1">Listening channel</div><div class="text-xs text-neutral-400">Confident voice</div></div>
+</div>
+</section>
+<!-- TOPICO 6 -->
+<section class="mb-16" id="topico-6">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">6</span>
+<h2 class="text-2xl font-bold">🎯 Three-Way Alignment — only 14% achieve it</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed">
+        O <strong class="text-purple-400">alignment trifecta</strong> and the simultaneous convergence of workforce, technology, and business goals. Only 14% of organizations achieve this integration in robotization projects — and this alignment is exactly what separates a polished pilot from a transformation that delivers value.
+      </p>
+<div class="bg-gradient-to-br from-purple-900/30 to-dark-800 rounded-xl border border-purple-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-purple-400 mb-4 flex items-center">
+<span class="mr-2">🔗</span> The three points of alignment
+        </h3>
+<p class="text-neutral-300 mb-4">
+          Without alignment, each department pulls in a different direction: technology buys robots, HR provides generic training, and the business demands results—and no one integrates. The trifecta requires all three vertices to move forward together.
+        </p>
+<div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+<div class="bg-dark-800/60 rounded-lg p-4 border border-dark-600"><div class="text-purple-400 font-semibold mb-1">Workforce strategy</div><p class="text-sm text-neutral-300">The right people, reskilled for the new roles.</p></div>
+<div class="bg-dark-800/60 rounded-lg p-4 border border-dark-600"><div class="text-purple-400 font-semibold mb-1">Tech roadmap</div><p class="text-sm text-neutral-300">Technology phased in and integrated into the actual workflow.</p></div>
+<div class="bg-dark-800/60 rounded-lg p-4 border border-dark-600"><div class="text-purple-400 font-semibold mb-1">Business objectives</div><p class="text-sm text-neutral-300">Clear goals that connect adoption to results.</p></div>
+</div>
+</div>
+<div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
+<span class="mr-2">💡</span> Practical Tip
+        </h3>
+<p class="text-neutral-300">
+          Create a <strong>cross-functional governance</strong> with representatives from HR, IT/engineering, and business in the same room, working toward the same goal. Integration doesn't happen by chance — it needs a forum where all three groups align week after week.
+        </p>
+</div>
+<h3 class="text-lg font-semibold text-purple-400 mb-3">Key concepts</h3>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-purple-400 font-semibold text-sm mb-1">Trifecta</div><div class="text-xs text-neutral-400">Three vertices together</div></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-purple-400 font-semibold text-sm mb-1">Workforce</div><div class="text-xs text-neutral-400">People strategy</div></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-purple-400 font-semibold text-sm mb-1">Tech roadmap</div><div class="text-xs text-neutral-400">Phased technology</div></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-purple-400 font-semibold text-sm mb-1">Cross-functional</div><div class="text-xs text-neutral-400">Real integration</div></div>
+</div>
+</section>
+<!-- RESUMO -->
+<section class="mb-12">
+<div class="bg-gradient-to-br from-purple-900/40 via-dark-800 to-dark-800 rounded-xl border border-purple-500/30 p-8">
+<h2 class="text-2xl font-bold mb-6 flex items-center">
+<span class="mr-3">✅</span> Module Summary
+        </h2>
+<div class="space-y-4 mb-8">
+<div class="flex items-start space-x-3"><span class="text-purple-400 mt-1">✓</span><div><strong class="text-white">3-phase framework</strong><span class="text-neutral-400"> - Pre-implementation, Pilot, and Scale guide adoption without chaos.</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-purple-400 mt-1">✓</span><div><strong class="text-white">Phase 1 prepares the human groundwork</strong><span class="text-neutral-400"> - Communication, co-design, fear mapping, and cascade training 6-12 months in advance.</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-purple-400 mt-1">✓</span><div><strong class="text-white">Phase 2 creates ambassadors</strong><span class="text-neutral-400"> - voluntary pilot with feedback loops and a secure channel.</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-purple-400 mt-1">✓</span><div><strong class="text-white">Phase 3 consolidates the gains</strong><span class="text-neutral-400"> - recognition, KPI review, job description, and mentoring.</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-purple-400 mt-1">✓</span><div><strong class="text-white">Three key threats</strong><span class="text-neutral-400"> - leadership (33%), resistance (39%), and misalignment (only 14% are aligned).</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-purple-400 mt-1">✓</span><div><strong class="text-white">Three-Way Alignment and the Differentiator</strong><span class="text-neutral-400"> - workforce, technology, and business advancing together.</span></div></div>
+</div>
+<div class="bg-dark-800/50 rounded-lg p-4 mb-8">
+<h3 class="font-semibold text-purple-400 mb-2">Next Module:</h3>
+<p class="text-neutral-300">3.2 - Continuation of the Strategic learning path</p>
+</div>
+<div class="flex flex-col sm:flex-row gap-4">
+<a class="flex-1 text-center px-6 py-3 bg-dark-700 text-neutral-300 rounded-lg font-semibold hover:bg-dark-600 transition-colors" href="index.html">
+            ← Back to Track
+          </a>
+<a class="flex-1 text-center px-6 py-3 bg-purple-600 text-white rounded-lg font-semibold hover:bg-purple-500 transition-colors" href="modulo-3-2.html">
+            Next Module →
+          </a>
+</div>
+</div>
+</section>
+</main>
+<!-- FOOTER -->
+<footer class="border-t border-dark-600 py-8 mt-16">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-neutral-500 text-sm">
+<p>segROBOT — INEMA.CLUB — 2026</p>
+</div>
+</footer>
+<!-- SCRIPTS -->
+<script>
+    const themeToggle = document.getElementById('theme-toggle');
+    const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
+    const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
+    const html = document.documentElement;
+
+    if (localStorage.getItem('theme') === 'light' || (!localStorage.getItem('theme') && !html.classList.contains('dark'))) {
+      themeToggleDarkIcon.classList.remove('hidden');
+      html.classList.remove('dark');
+    } else {
+      themeToggleLightIcon.classList.remove('hidden');
+    }
+
+    themeToggle.addEventListener('click', () => {
+      themeToggleDarkIcon.classList.toggle('hidden');
+      themeToggleLightIcon.classList.toggle('hidden');
+      html.classList.toggle('dark');
+      localStorage.setItem('theme', html.classList.contains('dark') ? 'dark' : 'light');
+    });
+  </script>
+</body>
+</html>

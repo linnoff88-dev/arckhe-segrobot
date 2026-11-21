@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Module 2.4 - Healthcare: Nurses and Hospital Teams with Robots | segROBOT</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            primary: '#FACC15',
+            dark: { 900: '#111827', 800: '#1f2937', 700: '#374151', 600: '#4b5563' }
+          }
+        }
+      }
+    }
+  </script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<style>
+    body { font-family: 'Inter', sans-serif; }
+    .dark body { background-color: #111827; }
+    .topic-explanation { display: none; }
+    .topic-explanation.active { display: block; }
+
+    @keyframes wf-pulse { 0%,100% { opacity:.55 } 50% { opacity:1 } }
+    @media (prefers-reduced-motion: no-preference) {
+      .wf-a { animation: wf-pulse 2.6s ease-in-out infinite; }
+      .wf-a:nth-child(2){animation-delay:.25s} .wf-a:nth-child(3){animation-delay:.5s}
+      .wf-a:nth-child(4){animation-delay:.75s} .wf-a:nth-child(5){animation-delay:1s}
+    }
+
+    /* Light mode overrides - OBRIGATORIO */
+    html:not(.dark) body { background-color: #f8fafc; }
+    html:not(.dark) .bg-dark-900 { background-color: #ffffff; }
+    html:not(.dark) .bg-dark-800 { background-color: #f9fafb; }
+    html:not(.dark) .bg-dark-700 { background-color: #f3f4f6; }
+    html:not(.dark) .bg-dark-600 { background-color: #e5e7eb; }
+    html:not(.dark) .text-neutral-100 { color: #111827; }
+    html:not(.dark) .text-neutral-300 { color: #4b5563; }
+    html:not(.dark) .text-neutral-400 { color: #6b7280; }
+    html:not(.dark) .text-neutral-500 { color: #9ca3af; }
+    html:not(.dark) .border-dark-600 { border-color: #d1d5db; }
+    html:not(.dark) .border-dark-700 { border-color: #e5e7eb; }
+
+    /* Light mode - cores de acento (trilha blue) */
+    html:not(.dark) .text-blue-400 { color: #2563eb; }
+    html:not(.dark) .bg-blue-500\/20 { background-color: rgba(37, 99, 235, 0.12); }
+    html:not(.dark) .bg-blue-500\/10 { background-color: rgba(37, 99, 235, 0.08); }
+    html:not(.dark) .border-blue-500\/30 { border-color: rgba(37, 99, 235, 0.25); }
+    html:not(.dark) .hover\:bg-blue-500\/30:hover { background-color: rgba(37, 99, 235, 0.18); }
+    html:not(.dark) .hover\:bg-blue-500\/10:hover { background-color: rgba(37, 99, 235, 0.08); }
+    html:not(.dark) .hover\:text-blue-400:hover { color: #2563eb; }
+    html:not(.dark) .hover\:border-blue-500\/30:hover { border-color: rgba(37, 99, 235, 0.25); }
+    html:not(.dark) .group:hover .group-hover\:text-blue-400 { color: #2563eb; }
+
+    /* Light mode - outras trilhas no nav */
+    html:not(.dark) .hover\:text-emerald-400:hover { color: #059669; }
+    html:not(.dark) .hover\:bg-emerald-500\/10:hover { background-color: rgba(5, 150, 105, 0.08); }
+    html:not(.dark) .hover\:text-purple-400:hover { color: #7c3aed; }
+    html:not(.dark) .hover\:bg-purple-500\/10:hover { background-color: rgba(124, 58, 237, 0.08); }
+
+    /* Light mode - remove gradientes (fundo uniforme) */
+    html:not(.dark) [class*="bg-gradient-to"] { background-image: none !important; }
+
+    /* Light mode - cores especiais */
+    html:not(.dark) .text-primary { color: #a16207; }
+    html:not(.dark) .bg-primary\/10 { background-color: rgba(161, 98, 7, 0.08); }
+    html:not(.dark) .border-primary\/40 { border-color: rgba(161, 98, 7, 0.25); }
+    html:not(.dark) .text-sky-400 { color: #0369a1; }
+    html:not(.dark) .text-yellow-400 { color: #a16207; }
+    html:not(.dark) .hover\:text-sky-300:hover { color: #0284c7; }
+    html:not(.dark) .hover\:text-yellow-300:hover { color: #854d0e; }
+
+    /* Light mode - nav */
+    html:not(.dark) .bg-dark-900\/95 { background-color: rgba(255, 255, 255, 0.95); }
+
+    /* Dark mode - bordas e linhas divisorias mais suaves */
+    .dark .border-dark-600 { border-color: #374151; }
+    .dark .divide-dark-600 > :not([hidden]) ~ :not([hidden]) { border-color: #374151; }
+  </style>
+<link href="https://inematds.github.io/segrobot/curso/trilha2/modulo-2-4.html" hreflang="pt-BR" rel="alternate"/><link href="https://inematds.github.io/segrobot/en/curso/trilha2/modulo-2-4.html" hreflang="en" rel="alternate"/><link href="https://inematds.github.io/segrobot/es/curso/trilha2/modulo-2-4.html" hreflang="es" rel="alternate"/></head>
+<body class="bg-dark-900 text-neutral-100 min-h-screen"><div class="inema-lang" style="position:fixed;right:14px;bottom:14px;z-index:9999;display:flex;gap:2px;padding:4px;border-radius:10px;background:rgba(12,12,16,.82);border:1px solid rgba(226,162,59,.45);font:600 12px/1 Sora,Inter,system-ui,sans-serif;backdrop-filter:blur(8px)" translate="no"><a href="../../../curso/trilha2/modulo-2-4.html" hreflang="pt-BR" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">PT</a><a href="modulo-2-4.html" hreflang="en" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#1a1206;background:#E2A23B">EN</a><a href="../../../es/curso/trilha2/modulo-2-4.html" hreflang="es" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">ES</a></div>
+<!-- NAVIGATION -->
+<nav class="sticky top-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-600">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="flex justify-between items-center h-14">
+<div class="flex items-center space-x-4">
+<a class="flex items-center space-x-2 text-yellow-400 hover:text-yellow-300" href="../../index.html">
+<span class="text-2xl">🤖</span>
+<span class="font-bold text-lg hidden sm:inline">segROBOT</span>
+</a>
+<span class="text-neutral-600">|</span>
+<a class="text-sky-400 hover:text-sky-300 text-sm font-medium" href="https://inema.club" target="_blank">INEMA.CLUB</a>
+</div>
+<div class="flex items-center space-x-1 sm:space-x-2">
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-emerald-400 hover:bg-emerald-500/10 transition-colors" href="../trilha1/index.html">
+<span class="sm:hidden">T1</span>
+<span class="hidden sm:inline">Fundamentals</span>
+</a>
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-blue-400 bg-blue-500/10" href="index.html">
+<span class="sm:hidden">T2</span>
+<span class="hidden sm:inline">Action</span>
+</a>
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-purple-400 hover:bg-purple-500/10 transition-colors" href="../trilha3/index.html">
+<span class="sm:hidden">T3</span>
+<span class="hidden sm:inline">Strategic</span>
+</a>
+<button class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors ml-2" id="theme-toggle">
+<svg class="hidden w-5 h-5 text-neutral-300" fill="currentColor" id="theme-toggle-dark-icon" viewbox="0 0 20 20">
+<path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+</svg>
+<svg class="hidden w-5 h-5 text-neutral-300" fill="currentColor" id="theme-toggle-light-icon" viewbox="0 0 20 20">
+<path clip-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd"></path>
+</svg>
+</button>
+</div>
+</div>
+</div>
+</nav>
+<!-- BREADCRUMB -->
+<nav class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+<div class="flex items-center space-x-2 text-sm text-neutral-400">
+<a class="hover:text-blue-400" href="../../index.html">Start</a>
+<span>/</span>
+<a class="hover:text-blue-400" href="index.html">Track 2</a>
+<span>/</span>
+<span class="text-blue-400">Module 2.4</span>
+</div>
+</nav>
+<!-- HEADER -->
+<header class="bg-gradient-to-br from-blue-900/30 via-dark-800 to-dark-800 py-12 border-b border-dark-600">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+<span class="inline-block px-3 py-1 bg-blue-500/20 text-blue-400 text-xs font-semibold rounded-full mb-4">
+        MODULE 2.4
+      </span>
+<h1 class="text-3xl sm:text-4xl font-bold mb-4">🏥 Healthcare: Nurses and Hospital Teams with Robots</h1>
+<p class="text-lg text-neutral-400 max-w-3xl">
+        The healthcare robotics market jumps from <strong class="text-blue-400">USD 16bn to more than 45bn</strong> by 2030.
+        Hospital AMRs already transport medications, instruments, and waste 24/7 — and <strong class="text-blue-400">78% of nurses</strong>
+        report workflow improvements. This module covers what changes on the hospital floor and the HARMONY project's multi-robot coordination.
+      </p>
+<!-- Stats Banner -->
+<div class="grid grid-cols-4 gap-4 mt-8 max-w-2xl">
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+<div class="text-xl font-bold text-blue-400">6</div>
+<div class="text-xs text-neutral-400">Topics</div>
+</div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+<div class="text-xl font-bold text-blue-400">50</div>
+<div class="text-xs text-neutral-400">Minutes</div>
+</div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+<div class="text-xl font-bold text-blue-400">Intermediate</div>
+<div class="text-xs text-neutral-400">Level</div>
+</div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+<div class="text-xl font-bold text-blue-400">Practice</div>
+<div class="text-xs text-neutral-400">Type</div>
+</div>
+</div>
+</div>
+</header>
+<!-- CONTEUDO -->
+<main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+<!-- SVG FUTURISTA - fluxo hospitalar humano + robo -->
+<div class="rounded-2xl border border-blue-500/30 bg-dark-900/40 p-3 sm:p-4 mb-12 overflow-hidden">
+<svg aria-label="Hospital workflow: a nurse calls an AMR that picks up medication from the pharmacy, navigates the hallway, and delivers it to the bedside, freeing the nurse to provide direct patient care" class="w-full h-auto" role="img" viewbox="0 0 1000 260">
+<defs>
+<lineargradient id="m24-grad" x1="0" x2="1" y1="0" y2="1">
+<stop offset="0" stop-color="#60a5fa"></stop><stop offset="1" stop-color="#3b82f6"></stop>
+</lineargradient>
+<filter height="180%" id="m24-glow" width="180%" x="-40%" y="-40%">
+<fegaussianblur result="b" stddeviation="3"></fegaussianblur><femerge><femergenode in="b"></femergenode><femergenode in="SourceGraphic"></femergenode></femerge>
+</filter>
+<pattern height="32" id="m24-grid" patternunits="userSpaceOnUse" width="32">
+<circle cx="1.3" cy="1.3" fill="#3b82f6" opacity="0.12" r="1.3"></circle>
+</pattern>
+<marker id="m24-ah" markerheight="9" markerwidth="9" orient="auto" refx="6.5" refy="4.5"><path d="M0,0 L8,4.5 L0,9 L2.4,4.5 Z" fill="#60a5fa"></path></marker>
+<marker id="m24-ahc" markerheight="9" markerwidth="9" orient="auto" refx="6.5" refy="4.5"><path d="M0,0 L8,4.5 L0,9 L2.4,4.5 Z" fill="#38bdf8"></path></marker>
+</defs>
+<rect fill="url(#m24-grid)" height="260" width="1000" x="0" y="0"></rect>
+<!-- linha: enfermeiro -> robo -->
+<g fill="none" opacity="0.7" stroke="#60a5fa" stroke-width="2">
+<path d="M186,130 L292,130" marker-end="url(#m24-ah)"></path>
+</g>
+<!-- linhas ciano: rota do robo (farmacia -> corredor -> leito) -->
+<g fill="none" opacity="0.6" stroke="#38bdf8" stroke-width="2">
+<path d="M428,130 L520,130" marker-end="url(#m24-ahc)"></path>
+<path d="M656,130 L748,130" marker-end="url(#m24-ahc)"></path>
+</g>
+<!-- fluxo de volta tracejado: robo libera enfermeiro pro paciente -->
+<g fill="none" opacity="0.55" stroke="#60a5fa" stroke-dasharray="7 7" stroke-width="2">
+<path d="M884,164 C884,228 116,228 110,168" marker-end="url(#m24-ah)"></path>
+</g>
+<text fill="#7fa9d8" font-family="Inter,sans-serif" font-size="12" text-anchor="middle" x="497" y="248">nurses’ time returns to direct patient care</text>
+<!-- nó: enfermeiro -->
+<g filter="url(#m24-glow)"><rect fill="#0e1622" height="64" rx="14" stroke="url(#m24-grad)" stroke-width="2.5" width="156" x="30" y="98"></rect></g>
+<text fill="#60a5fa" font-family="Inter,sans-serif" font-size="18" font-weight="700" text-anchor="middle" x="108" y="124">👩‍⚕️ Nurse</text>
+<text fill="#bcd6f5" font-family="Inter,sans-serif" font-size="12" text-anchor="middle" x="108" y="144">triggers the delivery</text>
+<!-- nó ciano: AMR -->
+<g class="wf-a"><rect fill="#0e1b26" height="52" rx="10" stroke="#38bdf8" stroke-width="2" width="136" x="292" y="104"></rect><text fill="#bfe6ff" font-family="Inter,sans-serif" font-size="13" font-weight="600" text-anchor="middle" x="360" y="127">🤖 AMR</text><text fill="#9ad6ff" font-family="Inter,sans-serif" font-size="11" text-anchor="middle" x="360" y="145">receives a task</text></g>
+<!-- nó ciano: farmacia -->
+<g class="wf-a"><rect fill="#0e1b26" height="52" rx="10" stroke="#38bdf8" stroke-width="2" width="136" x="520" y="104"></rect><text fill="#bfe6ff" font-family="Inter,sans-serif" font-size="13" font-weight="600" text-anchor="middle" x="588" y="127">💊 Pharmacy</text><text fill="#9ad6ff" font-family="Inter,sans-serif" font-size="11" text-anchor="middle" x="588" y="145">load + tracking</text></g>
+<!-- nó: leito / paciente -->
+<g filter="url(#m24-glow)"><rect fill="#0e1622" height="64" rx="14" stroke="url(#m24-grad)" stroke-width="2.5" width="156" x="748" y="98"></rect></g>
+<text fill="#60a5fa" font-family="Inter,sans-serif" font-size="18" font-weight="700" text-anchor="middle" x="826" y="124">🛏️ Hospital bed</text>
+<text fill="#bcd6f5" font-family="Inter,sans-serif" font-size="12" text-anchor="middle" x="826" y="144">delivers + confirms</text>
+</svg>
+<p class="text-xs text-neutral-500 text-center mt-2">Illustrative diagram — division of tasks between humans and robots in the hospital delivery workflow.</p>
+</div>
+<!-- ========== TOPICO 1 ========== -->
+<section class="mb-16" id="topico-1">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">1</span>
+<h2 class="text-2xl font-bold">📊 Market: USD 16B to 45+B</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed">
+        The healthcare robotics market grows from <strong class="text-blue-400">USD 16 billion</strong> for <strong class="text-blue-400">more than 45 billion</strong> by 2030,
+        driven by a shortage of professionals and demand for efficiency. For healthcare professionals, this means that working alongside robots
+        is no longer hypothetical — it's become a job requirement.
+      </p>
+<div class="bg-gradient-to-br from-blue-900/30 to-dark-800 rounded-xl border border-blue-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-blue-400 mb-4 flex items-center">
+<span class="mr-2">🧭</span> Core concept: four segments, one common ground
+        </h3>
+<p class="text-neutral-300 mb-4">Growth isn’t uniform. It spans segments with distinct dynamics, but they all reach the same hospital floor:</p>
+<ul class="space-y-2 text-neutral-300">
+<li class="flex items-start space-x-2"><span class="text-blue-400 mt-1">•</span><span><strong>Surgical</strong> — assistance with procedures, high precision.</span></li>
+<li class="flex items-start space-x-2"><span class="text-blue-400 mt-1">•</span><span><strong>Logistics</strong> — Medication, instruments, and waste AMRs (this module's focus).</span></li>
+<li class="flex items-start space-x-2"><span class="text-blue-400 mt-1">•</span><span><strong>Rehabilitation</strong> — exoskeletons and assisted therapy.</span></li>
+<li class="flex items-start space-x-2"><span class="text-blue-400 mt-1">•</span><span><strong>Disinfection</strong> — UV-C robots and environmental decontamination.</span></li>
+</ul>
+</div>
+<div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-blue-400 mb-4 flex items-center">
+<span class="mr-2">📈</span> Market data
+        </h3>
+<ul class="space-y-2 text-neutral-300">
+<li><strong>USD 16bn → 45+bn</strong> - healthcare robot market size by 2030.</li>
+<li><strong>~3x</strong> - the market nearly triples in 5 years.</li>
+<li><strong>Drivers</strong> - Professional shortages, pressure to improve efficiency, aging population.</li>
+<li><strong>Barrier</strong> - Cost of adoption and integration with existing infrastructure.</li>
+</ul>
+</div>
+<div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
+<span class="mr-2">💡</span> Practical tip
+        </h3>
+<p class="text-neutral-300">
+          Professionals who understand hospital robots have a competitive advantage in a market that will triple in 5 years. Keep up with regulations
+          <strong class="text-primary">FDA / ANVISA</strong>: it defines which robots can operate and under what conditions—knowing the regulatory framework makes you a go-to person on the team.
+        </p>
+</div>
+<h3 class="text-lg font-semibold mb-4">Key concepts</h3>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+<div class="bg-dark-800 rounded-lg border border-dark-600 p-4"><span class="text-blue-400 font-semibold text-sm">Segments</span><p class="text-xs text-neutral-400 mt-1">Surgical, logistics, rehabilitation, disinfection.</p></div>
+<div class="bg-dark-800 rounded-lg border border-dark-600 p-4"><span class="text-blue-400 font-semibold text-sm">Drivers</span><p class="text-xs text-neutral-400 mt-1">Labor shortage and efficiency.</p></div>
+<div class="bg-dark-800 rounded-lg border border-dark-600 p-4"><span class="text-blue-400 font-semibold text-sm">Barrier</span><p class="text-xs text-neutral-400 mt-1">Cost and adoption integration.</p></div>
+<div class="bg-dark-800 rounded-lg border border-dark-600 p-4"><span class="text-blue-400 font-semibold text-sm">Regulation</span><p class="text-xs text-neutral-400 mt-1">FDA / ANVISA define operations.</p></div>
+</div>
+</section>
+<!-- ========== TOPICO 2 ========== -->
+<section class="mb-16" id="topico-2">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">2</span>
+<h2 class="text-2xl font-bold">🤖 Hospital AMRs</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed">
+        Autonomous mobile robots (<strong class="text-blue-400">AMRs</strong>) transport medications, sterile instruments, and hospital waste,
+        operating <strong class="text-blue-400">24/7</strong> in corridors shared with staff and patients. Nurses spend up to <strong class="text-blue-400">30% of the shift</strong>
+        on logistics tasks—and the AMR frees up that time for direct care.
+      </p>
+<div class="bg-gradient-to-br from-blue-900/30 to-dark-800 rounded-xl border border-blue-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-blue-400 mb-4 flex items-center">
+<span class="mr-2">⚙️</span> What a Hospital AMR Needs to Master
+        </h3>
+<ul class="space-y-2 text-neutral-300">
+<li class="flex items-start space-x-2"><span class="text-blue-400 mt-1">•</span><span><strong>Elevator integration</strong> — call, get in, and ride between floors on its own.</span></li>
+<li class="flex items-start space-x-2"><span class="text-blue-400 mt-1">•</span><span><strong>Sanitation Protocol</strong> — sterile cargo must not be contaminated in transit.</span></li>
+<li class="flex items-start space-x-2"><span class="text-blue-400 mt-1">•</span><span><strong>Cargo traceability</strong> — who sent it, what it carries, who received it.</span></li>
+<li class="flex items-start space-x-2"><span class="text-blue-400 mt-1">•</span><span><strong>Navigation in a dynamic environment</strong> — crowded corridors, stretchers, visitors.</span></li>
+</ul>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+<div class="bg-emerald-900/20 rounded-xl border border-emerald-500/30 p-6">
+<h4 class="font-bold text-emerald-400 mb-4">✓ What the AMR solves</h4>
+<ul class="space-y-3 text-neutral-300">
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Repetitive transport of medication and instruments.</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Collecting waste on a fixed route without exposing the team to risk.</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>24/7 operation without fatigue, including overnight.</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Gives nurses up to 30% of their shift back for patient care.</span></li>
+</ul>
+</div>
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+<h4 class="font-bold text-red-400 mb-4">✗ What the AMR does NOT do</h4>
+<ul class="space-y-3 text-neutral-300">
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Clinical decision or patient triage.</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Replace the judgment about load urgency.</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Cutting the line on your own during an emergency.</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Operate without a defined sanitation protocol.</span></li>
+</ul>
+</div>
+</div>
+<h3 class="text-lg font-semibold mb-4">Key concepts</h3>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+<div class="bg-dark-800 rounded-lg border border-dark-600 p-4"><span class="text-blue-400 font-semibold text-sm">Platforms</span><p class="text-xs text-neutral-400 mt-1">TUG, Moxi, Aethon.</p></div>
+<div class="bg-dark-800 rounded-lg border border-dark-600 p-4"><span class="text-blue-400 font-semibold text-sm">Elevator</span><p class="text-xs text-neutral-400 mt-1">Integration between floors.</p></div>
+<div class="bg-dark-800 rounded-lg border border-dark-600 p-4"><span class="text-blue-400 font-semibold text-sm">Tracking</span><p class="text-xs text-neutral-400 mt-1">Cargo traceability.</p></div>
+<div class="bg-dark-800 rounded-lg border border-dark-600 p-4"><span class="text-blue-400 font-semibold text-sm">Navigation</span><p class="text-xs text-neutral-400 mt-1">Dynamic 24/7 Environment.</p></div>
+</div>
+</section>
+<!-- ========== TOPICO 3 ========== -->
+<section class="mb-16" id="topico-3">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">3</span>
+<h2 class="text-2xl font-bold">👩‍⚕️ 78% of Nurses Approve</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed">
+        Research indicates that <strong class="text-blue-400">78% of nurses</strong> that work with AMRs report improvements in their daily workflow,
+        with reduced physical fatigue and more time with patients. But acceptance is not automatic — the <strong class="text-red-400">22% dissatisfied</strong> point to real problems.
+      </p>
+<div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-blue-400 mb-4 flex items-center">
+<span class="mr-2">📊</span> Satisfaction data
+        </h3>
+<ul class="space-y-2 text-neutral-300">
+<li><strong>78%</strong> - report improvements in their daily workflow.</li>
+<li><strong>22%</strong> - dissatisfied, with concrete, actionable complaints.</li>
+<li><strong>Benefits</strong> - less physical fatigue, more time for direct care.</li>
+<li><strong>Metric</strong> - Internal NPS is how you measure adoption over time.</li>
+</ul>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+<div class="bg-emerald-900/20 rounded-xl border border-emerald-500/30 p-6">
+<h4 class="font-bold text-emerald-400 mb-4">✓ Satisfaction factors</h4>
+<ul class="space-y-3 text-neutral-300">
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Less physical strain from transportation.</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>More time with the patient.</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Adequate training during onboarding.</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Clear and predictable interface.</span></li>
+</ul>
+</div>
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+<h4 class="font-bold text-red-400 mb-4">✗ Rejection factors (the 22%)</h4>
+<ul class="space-y-3 text-neutral-300">
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Confusing call interface.</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Lack of training.</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>A robot that “gets in the way” during emergencies.</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Without a feedback loop for reporting problems.</span></li>
+</ul>
+</div>
+</div>
+<div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
+<span class="mr-2">💡</span> Practical tip
+        </h3>
+<p class="text-neutral-300">
+          The adoption curve varies by profile: <strong class="text-primary">early adopters</strong> embrace the robot early, <strong class="text-primary">resistant</strong> need proof.
+          Anyone who understands both sides — and takes the 22% seriously — becomes a bridge between the team and management during implementation.
+        </p>
+</div>
+<h3 class="text-lg font-semibold mb-4">Key concepts</h3>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+<div class="bg-dark-800 rounded-lg border border-dark-600 p-4"><span class="text-blue-400 font-semibold text-sm">Internal NPS</span><p class="text-xs text-neutral-400 mt-1">Measures adoption over time.</p></div>
+<div class="bg-dark-800 rounded-lg border border-dark-600 p-4"><span class="text-blue-400 font-semibold text-sm">Satisfaction</span><p class="text-xs text-neutral-400 mt-1">Training, interface, time.</p></div>
+<div class="bg-dark-800 rounded-lg border border-dark-600 p-4"><span class="text-blue-400 font-semibold text-sm">Rejection</span><p class="text-xs text-neutral-400 mt-1">Confusion and emergency.</p></div>
+<div class="bg-dark-800 rounded-lg border border-dark-600 p-4"><span class="text-blue-400 font-semibold text-sm">Curve</span><p class="text-xs text-neutral-400 mt-1">Early adopter vs. resistant.</p></div>
+</div>
+</section>
+<!-- ========== TOPICO 4 ========== -->
+<section class="mb-16" id="topico-4">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">4</span>
+<h2 class="text-2xl font-bold">📚 What to Learn</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed">
+        The practical skills hospital teams need: understanding the <strong class="text-blue-400">navigation</strong> of the robot, such as
+        <strong class="text-blue-400">call and cancel</strong> deliveries, and—crucially—when <strong class="text-red-400">DO NOT trust</strong> in the system.
+        Most problems with hospital robots aren't technical: they're about use.
+      </p>
+<div class="bg-gradient-to-br from-blue-900/30 to-dark-800 rounded-xl border border-blue-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-blue-400 mb-4 flex items-center">
+<span class="mr-2">🎓</span> The competency pathway
+        </h3>
+<p class="text-neutral-300">
+          Poorly trained professionals underuse the system (leave the robot idle and do everything by hand) or overuse it (send everything to the robot, including urgent loads that cannot wait in a queue). The key is to master the full cycle: call → prioritize → bypass when needed → escalate.
+        </p>
+</div>
+<!-- Timeline -->
+<div class="space-y-6 mb-6">
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-12 h-12 rounded-full bg-blue-500/20 flex items-center justify-center"><span class="text-blue-400 font-bold">1</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+<h4 class="font-semibold text-white mb-2">Call interface</h4>
+<p class="text-sm text-neutral-400 mb-3">Basic operation</p>
+<p class="text-neutral-300 text-sm">Knowing how to call and cancel a delivery in the interface — the entry point for all AMR use.</p>
+</div>
+</div>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-12 h-12 rounded-full bg-blue-500/20 flex items-center justify-center"><span class="text-blue-400 font-bold">2</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+<h4 class="font-semibold text-white mb-2">Delivery prioritization</h4>
+<p class="text-sm text-neutral-400 mb-3">Judgment</p>
+<p class="text-neutral-300 text-sm">Decide what goes to the robot and what is handled manually, based on the urgency of the load.</p>
+</div>
+</div>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-12 h-12 rounded-full bg-blue-500/20 flex items-center justify-center"><span class="text-blue-400 font-bold">3</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+<h4 class="font-semibold text-white mb-2">Manual bypass</h4>
+<p class="text-sm text-neutral-400 mb-3">When NOT to trust</p>
+<p class="text-neutral-300 text-sm">Urgent loads that cannot wait for the robot's queue should be carried by hand — recognizing this case is a skill, not a failure.</p>
+</div>
+</div>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-12 h-12 rounded-full bg-blue-500/20 flex items-center justify-center"><span class="text-blue-400 font-bold">4</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+<h4 class="font-semibold text-white mb-2">Maintenance and escalation</h4>
+<p class="text-sm text-neutral-400 mb-3">First level</p>
+<p class="text-neutral-300 text-sm">Resolve small problems (first-level maintenance) and escalate to technical support when the case is beyond your reach.</p>
+</div>
+</div>
+</div>
+<h3 class="text-lg font-semibold mb-4">Key concepts</h3>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+<div class="bg-dark-800 rounded-lg border border-dark-600 p-4"><span class="text-blue-400 font-semibold text-sm">Call</span><p class="text-xs text-neutral-400 mt-1">Call/cancel interface.</p></div>
+<div class="bg-dark-800 rounded-lg border border-dark-600 p-4"><span class="text-blue-400 font-semibold text-sm">Prioritization</span><p class="text-xs text-neutral-400 mt-1">What Goes to the Robot.</p></div>
+<div class="bg-dark-800 rounded-lg border border-dark-600 p-4"><span class="text-blue-400 font-semibold text-sm">Bypass</span><p class="text-xs text-neutral-400 mt-1">When to use manual control.</p></div>
+<div class="bg-dark-800 rounded-lg border border-dark-600 p-4"><span class="text-blue-400 font-semibold text-sm">Escalation</span><p class="text-xs text-neutral-400 mt-1">Maintenance and support.</p></div>
+</div>
+</section>
+<!-- ========== TOPICO 5 ========== -->
+<section class="mb-16" id="topico-5">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">5</span>
+<h2 class="text-2xl font-bold">🧬 Robot Adjusts Trajectory Based on Urgency</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed">
+        Research published in <strong class="text-blue-400">Science Robotics (2023)</strong> describes robots that adjust their route and speed based on
+        urgency signals in the hospital environment — alarms, staff movement. Robots that "understand" urgency reduce conflicts with staff.
+      </p>
+<div class="bg-gradient-to-br from-blue-900/30 to-dark-800 rounded-xl border border-blue-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-blue-400 mb-4 flex items-center">
+<span class="mr-2">🧠</span> Context-aware navigation
+        </h3>
+<p class="text-neutral-300 mb-4">
+          The practical difference is enormous: an AMR that stops in the hallway during a <strong class="text-blue-400">blue code</strong> is a problem.
+          One that yields and waits is an ally. Research shows that reading the context changes the robot from an obstacle into a partner.
+        </p>
+<ul class="space-y-2 text-neutral-300">
+<li class="flex items-start space-x-2"><span class="text-blue-400 mt-1">•</span><span><strong>Social cues</strong> — the robot reads the team's social cues as they work.</span></li>
+<li class="flex items-start space-x-2"><span class="text-blue-400 mt-1">•</span><span><strong>Dynamic prioritization</strong> — recalculates the route as urgency changes.</span></li>
+<li class="flex items-start space-x-2"><span class="text-blue-400 mt-1">•</span><span><strong>HIS integration</strong> — connects to the hospital information system.</span></li>
+</ul>
+</div>
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-red-400 mb-3 flex items-center">
+<span class="mr-2">⚠️</span> Attention: the blue code case
+        </h3>
+<p class="text-neutral-300">
+          A robot that can’t read urgency can literally block the corridor while the team rushes to respond. Context-aware navigation
+          isn’t a luxury—it’s patient safety. Evaluate this criterion when assessing any hospital AMR.
+        </p>
+</div>
+<div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
+<span class="mr-2">💡</span> Practical tip
+        </h3>
+<p class="text-neutral-300">
+          The system learns urgency patterns through <strong class="text-primary">machine learning</strong>. The more the team reports situations
+          (ignored alarm, wrong detour), the better the robot gets. Human feedback is the fuel for intelligent navigation.
+        </p>
+</div>
+<h3 class="text-lg font-semibold mb-4">Key concepts</h3>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+<div class="bg-dark-800 rounded-lg border border-dark-600 p-4"><span class="text-blue-400 font-semibold text-sm">Context-aware</span><p class="text-xs text-neutral-400 mt-1">Context-based navigation.</p></div>
+<div class="bg-dark-800 rounded-lg border border-dark-600 p-4"><span class="text-blue-400 font-semibold text-sm">Social cues</span><p class="text-xs text-neutral-400 mt-1">Read the team's signals.</p></div>
+<div class="bg-dark-800 rounded-lg border border-dark-600 p-4"><span class="text-blue-400 font-semibold text-sm">HIS</span><p class="text-xs text-neutral-400 mt-1">Hospital integration.</p></div>
+<div class="bg-dark-800 rounded-lg border border-dark-600 p-4"><span class="text-blue-400 font-semibold text-sm">Emergency ML</span><p class="text-xs text-neutral-400 mt-1">Learns patterns.</p></div>
+</div>
+</section>
+<!-- ========== TOPICO 6 ========== -->
+<section class="mb-16" id="topico-6">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">6</span>
+<h2 class="text-2xl font-bold">🔗 EU HARMONY and Critical Failure</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed">
+        The European project <strong class="text-blue-400">HARMONY (EU H2020)</strong> coordinates multiple robots in a hospital environment — and defines the
+        response protocol when a <strong class="text-red-400">critical delivery</strong> (blood, organs) fails in transit. Hospital multi-robot systems require orchestration.
+      </p>
+<div class="bg-gradient-to-br from-blue-900/30 to-dark-800 rounded-xl border border-blue-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-blue-400 mb-4 flex items-center">
+<span class="mr-2">🚦</span> The corridor priority problem
+        </h3>
+<p class="text-neutral-300">
+          If two AMRs cross paths in the aisle, both carrying critical loads, who has priority? The HARMONY protocol defines that <strong class="text-blue-400">before</strong>
+          to happen — hospital fleet management and load priority are decided in the project, not improvised.
+        </p>
+</div>
+<!-- Timeline: protocolo de entrega critica falha -->
+<div class="space-y-6 mb-6">
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-12 h-12 rounded-full bg-blue-500/20 flex items-center justify-center"><span class="text-blue-400 font-bold">1</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+<h4 class="font-semibold text-white mb-2">Failure detected in transit</h4>
+<p class="text-sm text-neutral-400 mb-3">Critical delivery (blood/organ)</p>
+<p class="text-neutral-300 text-sm">The system detects that the AMR is stuck or has lost its route with critical cargo on board.</p>
+</div>
+</div>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-12 h-12 rounded-full bg-blue-500/20 flex items-center justify-center"><span class="text-blue-400 font-bold">2</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+<h4 class="font-semibold text-white mb-2">Manual fallback activated</h4>
+<p class="text-sm text-neutral-400 mb-3">Human takes over</p>
+<p class="text-neutral-300 text-sm">The team is alerted and takes over the task manually—the robot is never the sole point of failure for a critical load.</p>
+</div>
+</div>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-12 h-12 rounded-full bg-blue-500/20 flex items-center justify-center"><span class="text-blue-400 font-bold">3</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+<h4 class="font-semibold text-white mb-2">Chain of custody preserved</h4>
+<p class="text-sm text-neutral-400 mb-3">Traceability</p>
+<p class="text-neutral-300 text-sm">The cargo chain of custody (who had possession, and when) is maintained from the robot to the human, with no break in traceability.</p>
+</div>
+</div>
+</div>
+<div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
+<span class="mr-2">💡</span> Practical tip
+        </h3>
+<p class="text-neutral-300">
+          The professional who knows the <strong class="text-primary">critical handoff protocol fails</strong> is who keeps the hospital running when the
+          robot stalls. Knowing how to activate the manual fallback and preserve the chain of custody is a safety skill, not a technical detail.
+        </p>
+</div>
+<h3 class="text-lg font-semibold mb-4">Key concepts</h3>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+<div class="bg-dark-800 rounded-lg border border-dark-600 p-4"><span class="text-blue-400 font-semibold text-sm">HARMONY</span><p class="text-xs text-neutral-400 mt-1">EU H2020 project.</p></div>
+<div class="bg-dark-800 rounded-lg border border-dark-600 p-4"><span class="text-blue-400 font-semibold text-sm">Fleet management</span><p class="text-xs text-neutral-400 mt-1">Load priority.</p></div>
+<div class="bg-dark-800 rounded-lg border border-dark-600 p-4"><span class="text-blue-400 font-semibold text-sm">Fallback</span><p class="text-xs text-neutral-400 mt-1">Human takes over delivery.</p></div>
+<div class="bg-dark-800 rounded-lg border border-dark-600 p-4"><span class="text-blue-400 font-semibold text-sm">Custody</span><p class="text-xs text-neutral-400 mt-1">Chain of custody.</p></div>
+</div>
+</section>
+<!-- ========== RESUMO ========== -->
+<section class="mb-12">
+<div class="bg-gradient-to-br from-blue-900/40 via-dark-800 to-dark-800 rounded-xl border border-blue-500/30 p-8">
+<h2 class="text-2xl font-bold mb-6 flex items-center">
+<span class="mr-3">🏥</span> Module Summary
+        </h2>
+<div class="space-y-4 mb-8">
+<div class="flex items-start space-x-3">
+<span class="text-blue-400 mt-1">✓</span>
+<div><strong class="text-white">Market triples</strong><span class="text-neutral-400"> - USD 16bn to 45+bn by 2030, across four segments.</span></div>
+</div>
+<div class="flex items-start space-x-3">
+<span class="text-blue-400 mt-1">✓</span>
+<div><strong class="text-white">AMRs 24/7</strong><span class="text-neutral-400"> - free up to 30% of a nurse's shift for direct care.</span></div>
+</div>
+<div class="flex items-start space-x-3">
+<span class="text-blue-400 mt-1">✓</span>
+<div><strong class="text-white">78% approve, 22% don't</strong><span class="text-neutral-400"> - taking both sides seriously is what makes adoption work.</span></div>
+</div>
+<div class="flex items-start space-x-3">
+<span class="text-blue-400 mt-1">✓</span>
+<div><strong class="text-white">Usage skill</strong><span class="text-neutral-400"> - Call, prioritize, bypass, and escalate.</span></div>
+</div>
+<div class="flex items-start space-x-3">
+<span class="text-blue-400 mt-1">✓</span>
+<div><strong class="text-white">Context-aware navigation</strong><span class="text-neutral-400"> - Science Robotics 2023: a robot that reads urgency and patient safety.</span></div>
+</div>
+<div class="flex items-start space-x-3">
+<span class="text-blue-400 mt-1">✓</span>
+<div><strong class="text-white">HARMONY and critical failure</strong><span class="text-neutral-400"> - multi-robot orchestration, manual fallback, and chain of custody.</span></div>
+</div>
+</div>
+<div class="bg-dark-800/50 rounded-lg p-4 mb-8">
+<h3 class="font-semibold text-blue-400 mb-2">Next Module:</h3>
+<p class="text-neutral-300">2.5 - 📦 Logistics: Autonomous Warehouses and AMR Fleets</p>
+</div>
+<div class="flex flex-col sm:flex-row gap-4">
+<a class="flex-1 text-center px-6 py-3 bg-dark-700 text-neutral-300 rounded-lg font-semibold hover:bg-dark-600 transition-colors" href="index.html">
+            ← Back to Track
+          </a>
+<a class="flex-1 text-center px-6 py-3 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-500 transition-colors" href="modulo-2-5.html">
+            Next Module →
+          </a>
+</div>
+</div>
+</section>
+</main>
+<!-- FOOTER -->
+<footer class="border-t border-dark-600 py-8 mt-16">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-neutral-500 text-sm">
+<p>segROBOT — INEMA.CLUB — 2026</p>
+</div>
+</footer>
+<!-- SCRIPTS -->
+<script>
+    // Theme toggle
+    const themeToggle = document.getElementById('theme-toggle');
+    const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
+    const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
+    const html = document.documentElement;
+
+    if (localStorage.getItem('theme') === 'light' || (!localStorage.getItem('theme') && !html.classList.contains('dark'))) {
+      themeToggleDarkIcon.classList.remove('hidden');
+      html.classList.remove('dark');
+    } else {
+      themeToggleLightIcon.classList.remove('hidden');
+    }
+
+    themeToggle.addEventListener('click', () => {
+      themeToggleDarkIcon.classList.toggle('hidden');
+      themeToggleLightIcon.classList.toggle('hidden');
+      html.classList.toggle('dark');
+      localStorage.setItem('theme', html.classList.contains('dark') ? 'dark' : 'light');
+    });
+  </script>
+</body>
+</html>

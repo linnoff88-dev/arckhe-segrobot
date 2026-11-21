@@ -1,0 +1,906 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="pt-BR">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Trilha 1 — Fundamentos | segROBOT</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            primary: '#FACC15',
+            dark: { 900: '#111827', 800: '#1f2937', 700: '#374151', 600: '#4b5563' }
+          }
+        }
+      }
+    }
+  </script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<style>
+    body { font-family: 'Inter', sans-serif; }
+    .dark body { background-color: #111827; }
+    .topic-explanation { display: none; }
+    .topic-explanation.active { display: block; }
+
+    /* Light mode overrides */
+    html:not(.dark) body { background-color: #f8fafc; }
+    html:not(.dark) .bg-dark-900 { background-color: #ffffff; }
+    html:not(.dark) .bg-dark-800 { background-color: #f9fafb; }
+    html:not(.dark) .bg-dark-700 { background-color: #f3f4f6; }
+    html:not(.dark) .bg-dark-600 { background-color: #e5e7eb; }
+    html:not(.dark) .text-neutral-100 { color: #111827; }
+    html:not(.dark) .text-neutral-300 { color: #4b5563; }
+    html:not(.dark) .text-neutral-400 { color: #6b7280; }
+    html:not(.dark) .text-neutral-500 { color: #9ca3af; }
+    html:not(.dark) .border-dark-600 { border-color: #d1d5db; }
+    html:not(.dark) .border-dark-700 { border-color: #e5e7eb; }
+
+    /* Light mode - cores de acento (trilha emerald) */
+    html:not(.dark) .text-emerald-400 { color: #059669; }
+    html:not(.dark) .bg-emerald-500\/20 { background-color: rgba(5, 150, 105, 0.12); }
+    html:not(.dark) .bg-emerald-500\/10 { background-color: rgba(5, 150, 105, 0.08); }
+    html:not(.dark) .border-emerald-500\/30 { border-color: rgba(5, 150, 105, 0.25); }
+    html:not(.dark) .hover\:bg-emerald-500\/30:hover { background-color: rgba(5, 150, 105, 0.18); }
+    html:not(.dark) .hover\:border-emerald-500\/30:hover { border-color: rgba(5, 150, 105, 0.25); }
+    html:not(.dark) .hover\:text-emerald-400:hover { color: #059669; }
+    html:not(.dark) .group:hover .group-hover\:text-emerald-400 { color: #059669; }
+
+    /* Light mode - remove gradientes */
+    html:not(.dark) [class*="bg-gradient-to"] { background-image: none !important; }
+
+    /* Light mode - cores especiais */
+    html:not(.dark) .text-primary { color: #a16207; }
+    html:not(.dark) .bg-primary\/10 { background-color: rgba(161, 98, 7, 0.08); }
+    html:not(.dark) .border-primary\/40 { border-color: rgba(161, 98, 7, 0.25); }
+    html:not(.dark) .text-sky-400 { color: #0369a1; }
+    html:not(.dark) .text-yellow-400 { color: #a16207; }
+    html:not(.dark) .hover\:text-sky-300:hover { color: #0284c7; }
+    html:not(.dark) .hover\:text-yellow-300:hover { color: #854d0e; }
+
+    /* Light mode - nav */
+    html:not(.dark) .bg-dark-900\/95 { background-color: rgba(255, 255, 255, 0.95); }
+
+    /* Dark mode - bordas suaves */
+    .dark .border-dark-600 { border-color: #374151; }
+    .dark .divide-dark-600 > :not([hidden]) ~ :not([hidden]) { border-color: #374151; }
+
+    /* SVG pulse */
+    @keyframes wf-pulse { 0%,100% { opacity:.55 } 50% { opacity:1 } }
+    @media (prefers-reduced-motion: no-preference) {
+      .wf-a { animation: wf-pulse 2.6s ease-in-out infinite; }
+      .wf-a:nth-child(2){animation-delay:.25s} .wf-a:nth-child(3){animation-delay:.5s}
+      .wf-a:nth-child(4){animation-delay:.75s} .wf-a:nth-child(5){animation-delay:1s}
+    }
+  </style>
+<link href="https://inematds.github.io/segrobot/curso/trilha1/" hreflang="pt-BR" rel="alternate"/><link href="https://inematds.github.io/segrobot/en/curso/trilha1/" hreflang="en" rel="alternate"/><link href="https://inematds.github.io/segrobot/es/curso/trilha1/" hreflang="es" rel="alternate"/></head>
+<body class="bg-dark-900 text-neutral-100 min-h-screen"><div class="inema-lang" style="position:fixed;right:14px;bottom:14px;z-index:9999;display:flex;gap:2px;padding:4px;border-radius:10px;background:rgba(12,12,16,.82);border:1px solid rgba(226,162,59,.45);font:600 12px/1 Sora,Inter,system-ui,sans-serif;backdrop-filter:blur(8px)" translate="no"><a href="./" hreflang="pt-BR" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#1a1206;background:#E2A23B">PT</a><a href="../../en/curso/trilha1/" hreflang="en" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">EN</a><a href="../../es/curso/trilha1/" hreflang="es" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">ES</a></div>
+<!-- NAVIGATION -->
+<nav class="sticky top-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-600">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="flex justify-between items-center h-14">
+<div class="flex items-center space-x-4">
+<a class="flex items-center space-x-2 text-yellow-400 hover:text-yellow-300" href="../">
+<span class="text-2xl">🤖</span>
+<span class="font-bold text-lg hidden sm:inline">segROBOT</span>
+</a>
+<span class="text-neutral-600">|</span>
+<a class="text-sky-400 hover:text-sky-300 text-sm font-medium" href="https://inema.club" target="_blank">INEMA.CLUB</a>
+</div>
+<div class="flex items-center space-x-1 sm:space-x-2">
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-emerald-400 bg-emerald-500/10" href="./">
+<span class="sm:hidden">T1</span>
+<span class="hidden sm:inline">Fundamentos</span>
+</a>
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-blue-400 hover:bg-blue-500/10 transition-colors" href="../trilha2/">
+<span class="sm:hidden">T2</span>
+<span class="hidden sm:inline">Acao</span>
+</a>
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-purple-400 hover:bg-purple-500/10 transition-colors" href="../trilha3/">
+<span class="sm:hidden">T3</span>
+<span class="hidden sm:inline">Estrategico</span>
+</a>
+<button class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors ml-2" id="theme-toggle">
+<svg class="hidden w-5 h-5 text-neutral-300" fill="currentColor" id="theme-toggle-dark-icon" viewbox="0 0 20 20">
+<path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+</svg>
+<svg class="hidden w-5 h-5 text-neutral-300" fill="currentColor" id="theme-toggle-light-icon" viewbox="0 0 20 20">
+<path clip-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd"></path>
+</svg>
+</button>
+</div>
+</div>
+</div>
+</nav>
+<!-- HEADER -->
+<header class="bg-gradient-to-br from-emerald-900/30 via-dark-800 to-dark-800 py-12 border-b border-dark-600">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+<span class="inline-block px-3 py-1 bg-emerald-500/20 text-emerald-400 text-xs font-semibold rounded-full mb-4">TRILHA 1</span>
+<h1 class="text-3xl sm:text-4xl font-bold mb-4">🏗️ Fundamentos</h1>
+<p class="text-lg text-neutral-400 max-w-3xl">
+        O cenario global da robotica, a taxonomia das maquinas, a norma ISO que muda tudo,
+        a psicologia da resistencia humana, o diagnostico do Brasil e os programas de referencia mundial.
+        Antes de agir, entenda o terreno.
+      </p>
+<!-- Hero SVG -->
+<div class="rounded-2xl border border-emerald-500/30 bg-dark-900/40 p-3 sm:p-4 mt-8 overflow-hidden">
+<svg aria-label="Fluxo dos 6 modulos de fundamentos: Cenario, Taxonomia, ISO, Psicologia, Brasil, Referencia" class="w-full h-auto" role="img" viewbox="0 0 1000 200">
+<defs>
+<lineargradient id="t1i-grad" x1="0" x2="1" y1="0" y2="1">
+<stop offset="0" stop-color="#34d399"></stop><stop offset="1" stop-color="#10b981"></stop>
+</lineargradient>
+<filter height="180%" id="t1i-glow" width="180%" x="-40%" y="-40%">
+<fegaussianblur result="b" stddeviation="3"></fegaussianblur><femerge><femergenode in="b"></femergenode><femergenode in="SourceGraphic"></femergenode></femerge>
+</filter>
+<pattern height="32" id="t1i-grid" patternunits="userSpaceOnUse" width="32">
+<circle cx="1.3" cy="1.3" fill="#34d399" opacity="0.12" r="1.3"></circle>
+</pattern>
+<marker id="t1i-ah" markerheight="9" markerwidth="9" orient="auto" refx="6.5" refy="4.5"><path d="M0,0 L8,4.5 L0,9 L2.4,4.5 Z" fill="#34d399"></path></marker>
+</defs>
+<rect fill="url(#t1i-grid)" height="200" width="1000" x="0" y="0"></rect>
+<!-- Module boxes -->
+<rect fill="#0e2018" filter="url(#t1i-glow)" height="90" rx="12" stroke="#34d399" stroke-width="1.5" width="130" x="20" y="55"></rect>
+<text fill="#34d399" font-family="Inter,sans-serif" font-size="11" font-weight="700" text-anchor="middle" x="85" y="90">1.1 Cenario</text>
+<text fill="#a7f3d0" font-family="Inter,sans-serif" font-size="9" text-anchor="middle" x="85" y="108">+170M empregos</text>
+<rect fill="#0e2018" filter="url(#t1i-glow)" height="90" rx="12" stroke="#34d399" stroke-width="1.5" width="130" x="185" y="55"></rect>
+<text fill="#34d399" font-family="Inter,sans-serif" font-size="11" font-weight="700" text-anchor="middle" x="250" y="90">1.2 Taxonomia</text>
+<text fill="#a7f3d0" font-family="Inter,sans-serif" font-size="9" text-anchor="middle" x="250" y="108">Cobots + AMRs</text>
+<rect fill="#0e2018" filter="url(#t1i-glow)" height="90" rx="12" stroke="#34d399" stroke-width="1.5" width="130" x="350" y="55"></rect>
+<text fill="#34d399" font-family="Inter,sans-serif" font-size="11" font-weight="700" text-anchor="middle" x="415" y="90">1.3 ISO 2025</text>
+<text fill="#a7f3d0" font-family="Inter,sans-serif" font-size="9" text-anchor="middle" x="415" y="108">HRC safety</text>
+<rect fill="#0e2018" filter="url(#t1i-glow)" height="90" rx="12" stroke="#34d399" stroke-width="1.5" width="130" x="515" y="55"></rect>
+<text fill="#34d399" font-family="Inter,sans-serif" font-size="11" font-weight="700" text-anchor="middle" x="580" y="90">1.4 Psicologia</text>
+<text fill="#a7f3d0" font-family="Inter,sans-serif" font-size="9" text-anchor="middle" x="580" y="108">Resistencia</text>
+<rect fill="#0e2018" filter="url(#t1i-glow)" height="90" rx="12" stroke="#34d399" stroke-width="1.5" width="130" x="680" y="55"></rect>
+<text fill="#34d399" font-family="Inter,sans-serif" font-size="11" font-weight="700" text-anchor="middle" x="745" y="90">1.5 Brasil</text>
+<text fill="#a7f3d0" font-family="Inter,sans-serif" font-size="9" text-anchor="middle" x="745" y="108">18 robos/10k</text>
+<rect fill="#0e2018" filter="url(#t1i-glow)" height="90" rx="12" stroke="#34d399" stroke-width="1.5" width="130" x="845" y="55"></rect>
+<text fill="#34d399" font-family="Inter,sans-serif" font-size="11" font-weight="700" text-anchor="middle" x="910" y="90">1.6 Referencia</text>
+<text fill="#a7f3d0" font-family="Inter,sans-serif" font-size="9" text-anchor="middle" x="910" y="108">Best practices</text>
+<!-- Connecting arrows -->
+<g fill="none" opacity="0.5" stroke="#34d399" stroke-width="1.5">
+<path d="M150,100 L185,100" marker-end="url(#t1i-ah)"></path>
+<path d="M315,100 L350,100" marker-end="url(#t1i-ah)"></path>
+<path d="M480,100 L515,100" marker-end="url(#t1i-ah)"></path>
+<path d="M645,100 L680,100" marker-end="url(#t1i-ah)"></path>
+<path d="M810,100 L845,100" marker-end="url(#t1i-ah)"></path>
+</g>
+<!-- Bottom label -->
+<text fill="#6ee7b7" font-family="Inter,sans-serif" font-size="12" font-weight="600" opacity="0.7" text-anchor="middle" x="500" y="180">TRILHA 1 — FUNDAMENTOS — 6 MODULOS — 36 TOPICOS</text>
+</svg>
+</div>
+<!-- Stats Grid -->
+<div class="grid grid-cols-4 gap-4 mt-8 max-w-2xl">
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+<div class="text-xl font-bold text-emerald-400">6</div>
+<div class="text-xs text-neutral-400">Modulos</div>
+</div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+<div class="text-xl font-bold text-emerald-400">36</div>
+<div class="text-xs text-neutral-400">Topicos</div>
+</div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+<div class="text-xl font-bold text-emerald-400">~5h</div>
+<div class="text-xs text-neutral-400">Duracao</div>
+</div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+<div class="text-xl font-bold text-emerald-400">Basico</div>
+<div class="text-xs text-neutral-400">Nivel</div>
+</div>
+</div>
+</div>
+</header>
+<!-- MAIN CONTENT -->
+<main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+<!-- Mapa da trilha -->
+<section class="mb-12">
+<h2 class="text-2xl font-bold mb-6">Mapa da trilha</h2>
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+<a class="group bg-dark-800 rounded-xl border border-dark-600 hover:border-emerald-500/30 p-5 transition-all" href="#modulo-1-1">
+<div class="flex items-center justify-between mb-2">
+<span class="text-emerald-400 font-bold text-sm">1.1</span>
+<span class="text-xs text-neutral-500">~50 min</span>
+</div>
+<h3 class="font-semibold mb-1 group-hover:text-emerald-400 transition-colors">🌍 O Grande Cenario</h3>
+<p class="text-xs text-neutral-400">+170M empregos, -92M velhos</p>
+</a>
+<a class="group bg-dark-800 rounded-xl border border-dark-600 hover:border-emerald-500/30 p-5 transition-all" href="#modulo-1-2">
+<div class="flex items-center justify-between mb-2">
+<span class="text-emerald-400 font-bold text-sm">1.2</span>
+<span class="text-xs text-neutral-500">~50 min</span>
+</div>
+<h3 class="font-semibold mb-1 group-hover:text-emerald-400 transition-colors">🦾 Taxonomia Robotica</h3>
+<p class="text-xs text-neutral-400">Cobots, AMRs, humanoides</p>
+</a>
+<a class="group bg-dark-800 rounded-xl border border-dark-600 hover:border-emerald-500/30 p-5 transition-all" href="#modulo-1-3">
+<div class="flex items-center justify-between mb-2">
+<span class="text-emerald-400 font-bold text-sm">1.3</span>
+<span class="text-xs text-neutral-500">~50 min</span>
+</div>
+<h3 class="font-semibold mb-1 group-hover:text-emerald-400 transition-colors">📋 ISO 10218:2025</h3>
+<p class="text-xs text-neutral-400">Nova era da seguranca HRC</p>
+</a>
+<a class="group bg-dark-800 rounded-xl border border-dark-600 hover:border-emerald-500/30 p-5 transition-all" href="#modulo-1-4">
+<div class="flex items-center justify-between mb-2">
+<span class="text-emerald-400 font-bold text-sm">1.4</span>
+<span class="text-xs text-neutral-500">~50 min</span>
+</div>
+<h3 class="font-semibold mb-1 group-hover:text-emerald-400 transition-colors">🧠 Psicologia da Resistencia</h3>
+<p class="text-xs text-neutral-400">Por que humanos rejeitam robos</p>
+</a>
+<a class="group bg-dark-800 rounded-xl border border-dark-600 hover:border-emerald-500/30 p-5 transition-all" href="#modulo-1-5">
+<div class="flex items-center justify-between mb-2">
+<span class="text-emerald-400 font-bold text-sm">1.5</span>
+<span class="text-xs text-neutral-500">~45 min</span>
+</div>
+<h3 class="font-semibold mb-1 group-hover:text-emerald-400 transition-colors">🇧🇷 Brasil 2026</h3>
+<p class="text-xs text-neutral-400">18 robos/10k, 8x gap</p>
+</a>
+<a class="group bg-dark-800 rounded-xl border border-dark-600 hover:border-emerald-500/30 p-5 transition-all" href="#modulo-1-6">
+<div class="flex items-center justify-between mb-2">
+<span class="text-emerald-400 font-bold text-sm">1.6</span>
+<span class="text-xs text-neutral-500">~45 min</span>
+</div>
+<h3 class="font-semibold mb-1 group-hover:text-emerald-400 transition-colors">🎓 Referencia Mundial</h3>
+<p class="text-xs text-neutral-400">Amazon, Ausbildung, CMU</p>
+</a>
+</div>
+</section>
+<!-- Conteudo detalhado -->
+<h2 class="text-2xl font-bold mb-6">Conteudo detalhado</h2>
+<!-- MODULO 1.1 -->
+<div class="bg-dark-800 rounded-xl border border-dark-600 mb-6" id="modulo-1-1">
+<div class="p-6 border-b border-dark-600">
+<div class="flex items-center justify-between mb-2">
+<span class="text-emerald-400 font-bold">1.1</span>
+<span class="text-xs text-neutral-500">~50 min</span>
+</div>
+<h3 class="text-2xl font-bold mb-2">🌍 O Grande Cenario: Robos, Empregos e Requalificacao</h3>
+<p class="text-neutral-400 text-sm">Numeros do WEF, paradoxo da automacao, mapa global de densidade robotica e os novos papeis profissionais que estao surgindo.</p>
+</div>
+<div class="divide-y divide-dark-600">
+<div class="topic-item">
+<button class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 text-sm font-bold flex items-center justify-center flex-shrink-0">1</span>
+<span class="text-lg">📊</span>
+<div><span class="font-medium">Projecoes WEF 2025</span><span class="text-neutral-500 text-sm ml-2">- +170M criados, -92M eliminados</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4">
+<div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-emerald-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">O relatorio Future of Jobs 2025 do World Economic Forum projeta criacao liquida de 78 milhoes de empregos ate 2030, resultado de +170M novos postos contra -92M deslocados por automacao e IA.</p></div>
+<div><span class="text-emerald-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Esses numeros fundamentam qualquer argumento de requalificacao. Quem nao conhece os dados nao consegue vender a necessidade de upskilling internamente.</p></div>
+<div><span class="text-emerald-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Net positive de 78M postos. 59% da forca de trabalho global precisa de reskilling. Tecnologia e principal driver, mas transicao verde e mudancas demograficas tambem pesam.</p></div>
+</div>
+</div>
+</div>
+<div class="topic-item">
+<button class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 text-sm font-bold flex items-center justify-center flex-shrink-0">2</span>
+<span class="text-lg">⚠️</span>
+<div><span class="font-medium">70% das falhas sao humanas</span><span class="text-neutral-500 text-sm ml-2">- BCG research</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4">
+<div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-emerald-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Pesquisa da Boston Consulting Group mostra que 70% dos projetos de transformacao digital falham por fatores humanos (resistencia, falta de skills, cultura), nao por limitacoes tecnologicas.</p></div>
+<div><span class="text-emerald-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Se 7 em cada 10 implementacoes de robos falham por gente e nao por maquina, o profissional de requalificacao humana e mais critico que o integrador tecnico.</p></div>
+<div><span class="text-emerald-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Change management como fator #1. Cultura organizacional vs tecnologia. ROI de treinamento pre-deploy vs correcao pos-falha (5x a 10x mais caro).</p></div>
+</div>
+</div>
+</div>
+<div class="topic-item">
+<button class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 text-sm font-bold flex items-center justify-center flex-shrink-0">3</span>
+<span class="text-lg">🔄</span>
+<div><span class="font-medium">Paradoxo: mais robos = mais empregos</span><span class="text-neutral-500 text-sm ml-2">- Mas diferentes</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4">
+<div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-emerald-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">A evidencia historica mostra que paises com maior densidade robotica (Coreia, Japao, Alemanha) tem taxas de desemprego iguais ou menores que paises com baixa automacao. Mais robos criam mais empregos, mas exigem skills diferentes.</p></div>
+<div><span class="text-emerald-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">O paradoxo derruba o argumento "robos roubam emprego". Sem esse dado, o profissional de requalificacao nao consegue construir narrativa convincente.</p></div>
+<div><span class="text-emerald-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Efeito de complementaridade homem-maquina. Produtividade gera crescimento gera novos postos. O gap e de transicao, nao de destino.</p></div>
+</div>
+</div>
+</div>
+<div class="topic-item">
+<button class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 text-sm font-bold flex items-center justify-center flex-shrink-0">4</span>
+<span class="text-lg">🗺️</span>
+<div><span class="font-medium">Mapa global de densidade robotica</span><span class="text-neutral-500 text-sm ml-2">- Korea 1012 vs Brasil 18</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4">
+<div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-emerald-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Ranking IFR de robos industriais por 10.000 trabalhadores: Coreia do Sul 1.012, Japao 399, Alemanha 397, China 392, media mundial 162, Brasil 18.</p></div>
+<div><span class="text-emerald-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">A distancia do Brasil (18) para a media mundial (162) expoe tanto a oportunidade de crescimento quanto a urgencia de preparacao da forca de trabalho.</p></div>
+<div><span class="text-emerald-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Densidade robotica como proxy de maturidade industrial. Gap de 8x entre Brasil e media global. Correlacao entre densidade e investimento em training.</p></div>
+</div>
+</div>
+</div>
+<div class="topic-item">
+<button class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 text-sm font-bold flex items-center justify-center flex-shrink-0">5</span>
+<span class="text-lg">👤</span>
+<div><span class="font-medium">Novos papeis emergentes</span><span class="text-neutral-500 text-sm ml-2">- Fleet Coordinator, Exception Handler</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4">
+<div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-emerald-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Funcoes que nao existiam ha 5 anos: Fleet Coordinator (gerencia frotas de AMRs), Exception Handler (resolve falhas de robos em tempo real), AI Training Associate (alimenta e valida modelos de IA industrial).</p></div>
+<div><span class="text-emerald-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Esses papeis sao os destinos concretos de programas de reskilling. Sem conhece-los, nao se desenha curriculo nem plano de carreira.</p></div>
+<div><span class="text-emerald-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Fleet Coordinator: supervisao de 20-50 AMRs. Exception Handler: resolucao de edge cases que IA nao cobre. AI Training Associate: human-in-the-loop para robos.</p></div>
+</div>
+</div>
+</div>
+<div class="topic-item">
+<button class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 text-sm font-bold flex items-center justify-center flex-shrink-0">6</span>
+<span class="text-lg">📈</span>
+<div><span class="font-medium">Timeline de ondas de adocao</span><span class="text-neutral-500 text-sm ml-2">- 1961 a 2030</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4">
+<div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-emerald-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">As ondas da robotica: 1961 Unimate (automotivo), 1990s expansao para eletronica, 2008 cobots comerciais, 2012 Amazon Kiva, 2020 pandemia acelera AMRs, 2025 humanoides entram em piloto.</p></div>
+<div><span class="text-emerald-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Entender as ondas mostra que cada ciclo exigiu novos skills. A onda atual (cobots + humanoides + IA) exige o maior reskilling da historia.</p></div>
+<div><span class="text-emerald-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">6 ondas em 64 anos. Cada onda dobrou o numero de humanos envolvidos. Onda 2025-2030: convergencia cobot + IA + humanoide = inflexao.</p></div>
+</div>
+</div>
+</div>
+</div>
+<div class="p-4 bg-dark-700/30 flex justify-start space-x-3">
+<button class="px-4 py-2 text-sm bg-dark-600 hover:bg-dark-500 rounded-lg transition-colors" onclick="openModal('modal-1-1')">Ver em Modal</button>
+<a class="px-4 py-2 text-sm bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg transition-colors" href="modulo-1-1.html">Ver Completo</a>
+</div>
+</div>
+<!-- MODULO 1.2 -->
+<div class="bg-dark-800 rounded-xl border border-dark-600 mb-6" id="modulo-1-2">
+<div class="p-6 border-b border-dark-600">
+<div class="flex items-center justify-between mb-2">
+<span class="text-emerald-400 font-bold">1.2</span>
+<span class="text-xs text-neutral-500">~50 min</span>
+</div>
+<h3 class="text-2xl font-bold mb-2">🦾 Cobots, AMRs e Humanoides: Taxonomia</h3>
+<p class="text-neutral-400 text-sm">Classificacao pratica de cobots, AMRs, humanoides e robos de servico. Numeros de mercado e cases reais.</p>
+</div>
+<div class="divide-y divide-dark-600">
+<div class="topic-item">
+<button class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 text-sm font-bold flex items-center justify-center flex-shrink-0">1</span>
+<span class="text-lg">🤝</span>
+<div><span class="font-medium">Cobots</span><span class="text-neutral-500 text-sm ml-2">- UR, FANUC CRX, ABB GoFa</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-emerald-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Robos colaborativos projetados para trabalhar lado a lado com humanos sem celula de seguranca. Principais fabricantes: Universal Robots (UR), FANUC (CRX), ABB (GoFa/SWIFTI).</p></div>
+<div><span class="text-emerald-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Cobots sao o tipo de robo que mais cresce e o mais proximo do trabalhador de chao de fabrica. Entender suas capacidades e limitacoes e fundamental para requalificacao.</p></div>
+<div><span class="text-emerald-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Payload de 3 a 25 kg. Velocidade reduzida em modo colaborativo. Sensores de forca/torque integrados. ROI tipico de 12-18 meses.</p></div>
+</div></div>
+</div>
+<div class="topic-item">
+<button class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 text-sm font-bold flex items-center justify-center flex-shrink-0">2</span>
+<span class="text-lg">🚗</span>
+<div><span class="font-medium">AMRs</span><span class="text-neutral-500 text-sm ml-2">- Amazon Proteus, Locus Robotics</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-emerald-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Autonomous Mobile Robots: veiculos que navegam sem trilhos fixos usando LiDAR, cameras e SLAM. Usados em logistica, intralogistica e hospitais.</p></div>
+<div><span class="text-emerald-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">AMRs estao substituindo empilhadeiras tripuladas e esteiras fixas. Amazon opera mais de 1 milhao de robos (jul 2025). O worker precisa aprender a co-navegar com eles.</p></div>
+<div><span class="text-emerald-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">SLAM (Simultaneous Localization and Mapping). Fleet Management System. Zonas de velocidade adaptativa. Handoff humano-AMR.</p></div>
+</div></div>
+</div>
+<div class="topic-item">
+<button class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 text-sm font-bold flex items-center justify-center flex-shrink-0">3</span>
+<span class="text-lg">🧍</span>
+<div><span class="font-medium">Humanoides</span><span class="text-neutral-500 text-sm ml-2">- Figure 02, Digit, Walker S2</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-emerald-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Robos com forma humana (bipedes, bracos, maos dextras) projetados para operar em ambientes feitos para pessoas. Figure 02 (BMW piloto), Digit (Amazon teste), UBTECH Walker S2.</p></div>
+<div><span class="text-emerald-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Humanoides sao a proxima onda. Goldman Sachs projeta mercado de USD 38bi ate 2035. Eles trabalham em espacos humanos sem adaptacao de layout.</p></div>
+<div><span class="text-emerald-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Destreza manipulativa. Navegacao bipede. Transferencia de aprendizado entre modelos. O "uncanny valley" no chao de fabrica.</p></div>
+</div></div>
+</div>
+<div class="topic-item">
+<button class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 text-sm font-bold flex items-center justify-center flex-shrink-0">4</span>
+<span class="text-lg">🏥</span>
+<div><span class="font-medium">Robos de servico</span><span class="text-neutral-500 text-sm ml-2">- UV, farm, seguranca</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-emerald-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Robos para tarefas nao-industriais: desinfeccao UV em hospitais, pulverizacao agricola, patrulha de seguranca, limpeza comercial.</p></div>
+<div><span class="text-emerald-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Segmento que mais cresce fora de manufatura. Trabalhadores de saude, agro e seguranca vao interagir com esses robos cada vez mais.</p></div>
+<div><span class="text-emerald-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Robos profissionais vs pessoais. Autonomia nivel 3-4. Regulamentacao fragmentada por setor. Treinamento do usuario final (nao do tecnico).</p></div>
+</div></div>
+</div>
+<div class="topic-item">
+<button class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 text-sm font-bold flex items-center justify-center flex-shrink-0">5</span>
+<span class="text-lg">💰</span>
+<div><span class="font-medium">Numeros de mercado</span><span class="text-neutral-500 text-sm ml-2">- USD 1.4bi a 32bi ate 2030</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-emerald-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Mercado de cobots: USD 1.4-3.4 bilhoes em 2025 com projecao de USD 7-32 bilhoes ate 2030 (varia por fonte). CAGR de 30-35%.</p></div>
+<div><span class="text-emerald-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Crescimento de mercado = demanda por profissionais. Se o mercado quintuplica em 5 anos, a demanda por treinamento cresce na mesma proporcao.</p></div>
+<div><span class="text-emerald-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">CAGR 30-35%. Cobots como porta de entrada para SMEs. Pay-per-use e RaaS (Robot-as-a-Service) acelerando adocao.</p></div>
+</div></div>
+</div>
+<div class="topic-item">
+<button class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 text-sm font-bold flex items-center justify-center flex-shrink-0">6</span>
+<span class="text-lg">📦</span>
+<div><span class="font-medium">Amazon: 1 milhao de robos</span><span class="text-neutral-500 text-sm ml-2">- Julho 2025</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-emerald-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Em julho de 2025 a Amazon atingiu 1 milhao de robos operando em seus centros de fulfillment, tornando-se a maior frota robotica privada do mundo.</p></div>
+<div><span class="text-emerald-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">O case Amazon demonstra escala real de coexistencia humano-robo: mais de 750 mil funcionarios trabalham junto com 1M de robos. E o laboratorio vivo de requalificacao.</p></div>
+<div><span class="text-emerald-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Proteus (primeiro AMR autonomo da Amazon). Sparrow (picking com IA). Career Choice program: USD 1.2bi investidos em upskilling de funcionarios.</p></div>
+</div></div>
+</div>
+</div>
+<div class="p-4 bg-dark-700/30 flex justify-start space-x-3">
+<button class="px-4 py-2 text-sm bg-dark-600 hover:bg-dark-500 rounded-lg transition-colors" onclick="openModal('modal-1-2')">Ver em Modal</button>
+<a class="px-4 py-2 text-sm bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg transition-colors" href="modulo-1-2.html">Ver Completo</a>
+</div>
+</div>
+<!-- MODULO 1.3 -->
+<div class="bg-dark-800 rounded-xl border border-dark-600 mb-6" id="modulo-1-3">
+<div class="p-6 border-b border-dark-600">
+<div class="flex items-center justify-between mb-2">
+<span class="text-emerald-400 font-bold">1.3</span>
+<span class="text-xs text-neutral-500">~50 min</span>
+</div>
+<h3 class="text-2xl font-bold mb-2">📋 ISO 10218:2025 — A Nova Era da Seguranca HRC</h3>
+<p class="text-neutral-400 text-sm">Primeira revisao desde 2011. O conceito de "robo colaborativo" como categoria desaparece. Cybersecurity vira requisito de seguranca fisica.</p>
+</div>
+<div class="divide-y divide-dark-600">
+<div class="topic-item">
+<button class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 text-sm font-bold flex items-center justify-center flex-shrink-0">1</span>
+<span class="text-lg">📅</span>
+<div><span class="font-medium">Primeira revisao desde 2011</span><span class="text-neutral-500 text-sm ml-2">- 14 anos de evolucao</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-emerald-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">A ISO 10218:2025 substitui a versao de 2011, incorporando 14 anos de avancos: cobots, AMRs, IA embarcada e ciberseguranca. Publicada em Q1 2025.</p></div>
+<div><span class="text-emerald-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Toda instalacao robotica colaborativa precisa compliance com esta norma. Profissionais de seguranca robotica sao escassos e altamente demandados.</p></div>
+<div><span class="text-emerald-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Absorcao do TS 15066 (forcas e pressoes). Eliminacao de "cobot" como categoria. Periodo de transicao de 3 anos para revalidacao.</p></div>
+</div></div>
+</div>
+<div class="topic-item">
+<button class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 text-sm font-bold flex items-center justify-center flex-shrink-0">2</span>
+<span class="text-lg">🚫</span>
+<div><span class="font-medium">"Robo colaborativo" eliminado como categoria</span><span class="text-neutral-500 text-sm ml-2">- Paradigma muda</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-emerald-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Na nova norma, nao existe mais "robo colaborativo" como tipo de robo. Qualquer robo pode operar colaborativamente se a aplicacao cumprir os requisitos de seguranca.</p></div>
+<div><span class="text-emerald-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Muda a forma como integradores especificam e como profissionais de seguranca avaliam. A analise de risco passa da maquina para a aplicacao.</p></div>
+<div><span class="text-emerald-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Operacao colaborativa (nao robo colaborativo). Risk assessment por aplicacao. Class I vs Class II robot systems.</p></div>
+</div></div>
+</div>
+<div class="topic-item">
+<button class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 text-sm font-bold flex items-center justify-center flex-shrink-0">3</span>
+<span class="text-lg">📐</span>
+<div><span class="font-medium">ISO/TS 15066 absorvido</span><span class="text-neutral-500 text-sm ml-2">- PFL e SSM integrados</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-emerald-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">O Technical Specification 15066 (limites de forca e pressao para colaboracao) foi absorvido na ISO 10218:2025, deixando de ser documento separado.</p></div>
+<div><span class="text-emerald-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Os modos PFL (Power and Force Limiting) e SSM (Speed and Separation Monitoring) agora tem requisitos normativos mais rigorosos e integrados.</p></div>
+<div><span class="text-emerald-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">4 modos colaborativos: Safety-rated Monitored Stop, Hand Guiding, Speed and Separation Monitoring, Power and Force Limiting.</p></div>
+</div></div>
+</div>
+<div class="topic-item">
+<button class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 text-sm font-bold flex items-center justify-center flex-shrink-0">4</span>
+<span class="text-lg">🔒</span>
+<div><span class="font-medium">Cybersecurity = seguranca fisica</span><span class="text-neutral-500 text-sm ml-2">- Requisito novo</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-emerald-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Pela primeira vez, ciberseguranca entra como requisito de seguranca fisica em norma de robotica. Um ataque cibernetico que altere parametros de forca de um cobot e um risco de seguranca fisica.</p></div>
+<div><span class="text-emerald-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Conecta dois mundos que antes eram separados: OT security e safety. Profissionais de seguranca robotica agora precisam entender de cyber.</p></div>
+<div><span class="text-emerald-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">IT/OT convergence. Ataques a parametros safety-rated. Defense-in-depth para celulas roboticas. IEC 62443 como referencia complementar.</p></div>
+</div></div>
+</div>
+<div class="topic-item">
+<button class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 text-sm font-bold flex items-center justify-center flex-shrink-0">5</span>
+<span class="text-lg">⚙️</span>
+<div><span class="font-medium">Class I vs Class II</span><span class="text-neutral-500 text-sm ml-2">- Nova classificacao</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-emerald-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Class I: sistemas roboticos com funcoes de seguranca inerentes (sensores de forca, limitacao de velocidade). Class II: sistemas que dependem de dispositivos de protecao externos para seguranca.</p></div>
+<div><span class="text-emerald-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">A classificacao determina quais requisitos de integracao se aplicam. Errar a classe pode significar compliance inadequado e risco juridico.</p></div>
+<div><span class="text-emerald-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Class I: seguranca built-in. Class II: seguranca add-on. Risk assessment diferente para cada classe. Impacto em custo de integracao.</p></div>
+</div></div>
+</div>
+<div class="topic-item">
+<button class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 text-sm font-bold flex items-center justify-center flex-shrink-0">6</span>
+<span class="text-lg">🔄</span>
+<div><span class="font-medium">Impacto na revalidacao</span><span class="text-neutral-500 text-sm ml-2">- Cobots existentes</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-emerald-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Cobots instalados sob a ISO 10218:2011 precisam ser revalidados contra a nova norma dentro do periodo de transicao. Nao basta manter o certificado antigo.</p></div>
+<div><span class="text-emerald-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Gera demanda massiva por profissionais de safety assessment. Cada instalacao existente precisa ser reavaliada, criando mercado de trabalho imediato.</p></div>
+<div><span class="text-emerald-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Periodo de transicao (3 anos). Gap analysis contra nova norma. Revalidacao de risk assessment. Custo estimado por celula: EUR 5-15k.</p></div>
+</div></div>
+</div>
+</div>
+<div class="p-4 bg-dark-700/30 flex justify-start space-x-3">
+<button class="px-4 py-2 text-sm bg-dark-600 hover:bg-dark-500 rounded-lg transition-colors" onclick="openModal('modal-1-3')">Ver em Modal</button>
+<a class="px-4 py-2 text-sm bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg transition-colors" href="modulo-1-3.html">Ver Completo</a>
+</div>
+</div>
+<!-- MODULO 1.4 -->
+<div class="bg-dark-800 rounded-xl border border-dark-600 mb-6" id="modulo-1-4">
+<div class="p-6 border-b border-dark-600">
+<div class="flex items-center justify-between mb-2">
+<span class="text-emerald-400 font-bold">1.4</span>
+<span class="text-xs text-neutral-500">~50 min</span>
+</div>
+<h3 class="text-2xl font-bold mb-2">🧠 Psicologia da Resistencia: Por Que Humanos Rejeitam Robos</h3>
+<p class="text-neutral-400 text-sm">Amigdala, technostress, comportamentos maladaptativos e o ciclo medo-incompetencia-resistencia. Como calibrar confianca.</p>
+</div>
+<div class="divide-y divide-dark-600">
+<div class="topic-item">
+<button class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 text-sm font-bold flex items-center justify-center flex-shrink-0">1</span>
+<span class="text-lg">🫀</span>
+<div><span class="font-medium">Amigdala e fight-or-flight</span><span class="text-neutral-500 text-sm ml-2">- Resposta a incerteza</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-emerald-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">A amigdala processa ameacas em milissegundos. Quando o cerebro percebe que um robo pode "substituir" o trabalhador, ativa a mesma resposta de luta-ou-fuga de uma ameaca fisica.</p></div>
+<div><span class="text-emerald-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Entender a biologia da resistencia permite desenhar intervencoes que desativam o alarme antes de apresentar o conteudo tecnico.</p></div>
+<div><span class="text-emerald-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Amygdala hijack. Cortisol e redução de capacidade cognitiva. "Emotional flooding" em contexto organizacional. Seguranca psicologica como pre-requisito.</p></div>
+</div></div>
+</div>
+<div class="topic-item">
+<button class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 text-sm font-bold flex items-center justify-center flex-shrink-0">2</span>
+<span class="text-lg">😰</span>
+<div><span class="font-medium">Technostress e contrato psicologico</span><span class="text-neutral-500 text-sm ml-2">- Violacao percebida</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-emerald-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Technostress e o estresse causado pela incapacidade de lidar com novas tecnologias. A introducao de robos viola o "contrato psicologico" implicito: "fiz meu trabalho direito, logo meu emprego e seguro".</p></div>
+<div><span class="text-emerald-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Technostress gera absenteismo, presenteismo e turnover. Ignorar esse fator custa mais que o investimento em robo.</p></div>
+<div><span class="text-emerald-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">5 criadores de technostress: techno-overload, techno-invasion, techno-complexity, techno-insecurity, techno-uncertainty.</p></div>
+</div></div>
+</div>
+<div class="topic-item">
+<button class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 text-sm font-bold flex items-center justify-center flex-shrink-0">3</span>
+<span class="text-lg">🔥</span>
+<div><span class="font-medium">Comportamentos maladaptativos (APA)</span><span class="text-neutral-500 text-sm ml-2">- Sabotagem, evitacao, somatizacao</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-emerald-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">A APA documenta tres padroes de resposta maladaptativa a automacao: sabotagem (danificar equipamento), evitacao (recusar interacao) e somatizacao (dores, insonia atribuidas ao robo).</p></div>
+<div><span class="text-emerald-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Reconhecer esses padroes permite intervencao precoce. Um supervisor que ve sabotagem como "vandalismo" perde a oportunidade de resolver a causa raiz.</p></div>
+<div><span class="text-emerald-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Sabotagem passiva vs ativa. Evitacao seletiva (usa o robo so quando vigiado). Somatizacao: correlacao com proximidade fisica ao robo.</p></div>
+</div></div>
+</div>
+<div class="topic-item">
+<button class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 text-sm font-bold flex items-center justify-center flex-shrink-0">4</span>
+<span class="text-lg">🔁</span>
+<div><span class="font-medium">Ciclo medo-incompetencia-resistencia</span><span class="text-neutral-500 text-sm ml-2">- Loop vicioso</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-emerald-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Medo do robo gera evitacao, evitacao impede aprendizagem, falta de aprendizagem gera incompetencia, incompetencia alimenta mais medo. Loop vicioso que se auto-reforça.</p></div>
+<div><span class="text-emerald-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">O ciclo so se quebra com intervencao deliberada. Entender cada elo permite atacar o ponto mais acessivel (geralmente: reduzir medo antes de exigir competencia).</p></div>
+<div><span class="text-emerald-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Ponto de entrada: seguranca psicologica. Exposicao gradual (proximity ladder). Quick wins para gerar senso de competencia. Depoimentos de pares (social proof).</p></div>
+</div></div>
+</div>
+<div class="topic-item">
+<button class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 text-sm font-bold flex items-center justify-center flex-shrink-0">5</span>
+<span class="text-lg">🛡️</span>
+<div><span class="font-medium">Seguranca fisica + psicologica (Brookings)</span><span class="text-neutral-500 text-sm ml-2">- Dual safety</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-emerald-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">O Brookings Institution argumenta que seguranca no trabalho com robos tem duas dimensoes: fisica (o robo nao pode machucar) e psicologica (o trabalhador nao pode sentir que sera substituido).</p></div>
+<div><span class="text-emerald-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Normas como ISO 10218 cobrem seguranca fisica. Seguranca psicologica nao tem norma. O profissional de requalificacao preenche esse gap.</p></div>
+<div><span class="text-emerald-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Dual safety framework. Seguranca psicologica como prerequisito de learning (Edmondson). Indicadores: turnover, absenteismo, NPS interno.</p></div>
+</div></div>
+</div>
+<div class="topic-item">
+<button class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 text-sm font-bold flex items-center justify-center flex-shrink-0">6</span>
+<span class="text-lg">⚖️</span>
+<div><span class="font-medium">Calibracao de confianca</span><span class="text-neutral-500 text-sm ml-2">- Over-trust vs under-trust</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-emerald-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Over-trust: confiar demais no robo (ignorar alarmes, pular verificacoes). Under-trust: nao confiar o suficiente (verificar tudo manualmente, anular decisoes do robo). Ambos sao perigosos.</p></div>
+<div><span class="text-emerald-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">A confianca ideal e calibrada: o humano sabe quando o robo e confiavel e quando precisa intervir. Treinamento inadequado gera um ou outro extremo.</p></div>
+<div><span class="text-emerald-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Trust calibration. Automation complacency (over-trust). Automation bias. Transparencia como ferramenta de calibracao. Feedback loops para ajuste continuo.</p></div>
+</div></div>
+</div>
+</div>
+<div class="p-4 bg-dark-700/30 flex justify-start space-x-3">
+<button class="px-4 py-2 text-sm bg-dark-600 hover:bg-dark-500 rounded-lg transition-colors" onclick="openModal('modal-1-4')">Ver em Modal</button>
+<a class="px-4 py-2 text-sm bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg transition-colors" href="modulo-1-4.html">Ver Completo</a>
+</div>
+</div>
+<!-- MODULO 1.5 -->
+<div class="bg-dark-800 rounded-xl border border-dark-600 mb-6" id="modulo-1-5">
+<div class="p-6 border-b border-dark-600">
+<div class="flex items-center justify-between mb-2">
+<span class="text-emerald-400 font-bold">1.5</span>
+<span class="text-xs text-neutral-500">~45 min</span>
+</div>
+<h3 class="text-2xl font-bold mb-2">🇧🇷 Brasil 2026: Diagnostico e Oportunidade</h3>
+<p class="text-neutral-400 text-sm">18 robos por 10 mil trabalhadores, 52% de crescimento em 2025, gaps estruturais e a oportunidade SENAI.</p>
+</div>
+<div class="divide-y divide-dark-600">
+<div class="topic-item">
+<button class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 text-sm font-bold flex items-center justify-center flex-shrink-0">1</span>
+<span class="text-lg">📉</span>
+<div><span class="font-medium">18 robos/10k trabalhadores</span><span class="text-neutral-500 text-sm ml-2">- Gap de 8x vs media global</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-emerald-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">O Brasil tem 18 robos industriais por 10 mil trabalhadores, contra media mundial de 162. O gap e de 8x. Coreia do Sul lidera com 1.012.</p></div>
+<div><span class="text-emerald-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">O gap significa que a onda de automacao no Brasil ainda esta por vir. Quem se preparar agora tera vantagem quando a curva de adocao acelerar.</p></div>
+<div><span class="text-emerald-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Densidade robotica IFR. Brasil em 53o lugar global. Concentracao em automotivo e metalmecanico. Interior do Brasil: densidade proxima de zero.</p></div>
+</div></div>
+</div>
+<div class="topic-item">
+<button class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 text-sm font-bold flex items-center justify-center flex-shrink-0">2</span>
+<span class="text-lg">📈</span>
+<div><span class="font-medium">52% de crescimento em 2025</span><span class="text-neutral-500 text-sm ml-2">- Aceleracao real</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-emerald-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Instalacoes de robos industriais no Brasil cresceram 52% em 2025, puxadas por automotivo (Stellantis, BYD Bahia), alimentos e farmaceutico.</p></div>
+<div><span class="text-emerald-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Crescimento de 52% gera demanda imediata por profissionais. O pipeline de treinamento nao acompanha: universidades formam engenheiros, nao integradores nem facilitadores de mudanca.</p></div>
+<div><span class="text-emerald-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">BYD Camaçari: planta 100% automatizada. Stellantis Betim: cobots em montagem. Nearshoring favorecendo Brasil. IPI reduzido para robos em 2025.</p></div>
+</div></div>
+</div>
+<div class="topic-item">
+<button class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 text-sm font-bold flex items-center justify-center flex-shrink-0">3</span>
+<span class="text-lg">🏭</span>
+<div><span class="font-medium">SENAI: 23 ISIs, 100k/ano</span><span class="text-neutral-500 text-sm ml-2">- Infraestrutura existente</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-emerald-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">O SENAI opera 23 Institutos SENAI de Inovacao (ISIs) com laboratorios de robotica e treina mais de 100 mil profissionais por ano em automacao e industria 4.0.</p></div>
+<div><span class="text-emerald-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">O SENAI e a maior rede de formacao tecnica do hemisferio sul. Qualquer estrategia de requalificacao em escala no Brasil passa por essa infraestrutura.</p></div>
+<div><span class="text-emerald-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">ISIs com robos FANUC, ABB, KUKA. Cursos de 40h a 400h. Robotec Maker 4.0: competicao nacional de robotica. Parcerias com Festo e Siemens.</p></div>
+</div></div>
+</div>
+<div class="topic-item">
+<button class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 text-sm font-bold flex items-center justify-center flex-shrink-0">4</span>
+<span class="text-lg">🏆</span>
+<div><span class="font-medium">Robotec Maker 4.0</span><span class="text-neutral-500 text-sm ml-2">- Competicao SESI/SENAI</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-emerald-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Competicao nacional SESI/SENAI de robotica industrial que leva estudantes e tecnicos a resolver desafios reais de automacao com robos colaborativos.</p></div>
+<div><span class="text-emerald-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">E o principal pipeline de talentos em robotica do Brasil. Participantes tem taxa de empregabilidade 3x maior em industria 4.0.</p></div>
+<div><span class="text-emerald-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Categorias: programacao, integracao, manutencao. Final nacional com 500+ equipes. Premiacoes WorldSkills. Parceria com fabricantes de robos.</p></div>
+</div></div>
+</div>
+<div class="topic-item">
+<button class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 text-sm font-bold flex items-center justify-center flex-shrink-0">5</span>
+<span class="text-lg">⚠️</span>
+<div><span class="font-medium">Gaps estruturais</span><span class="text-neutral-500 text-sm ml-2">- Supervisao, change mgmt, ISO, conteudo</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-emerald-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Quatro gaps criticos: supervisao autonoma de frotas, gestao de mudanca para automacao, certificacoes ISO 2025, conteudo vertical por setor (agro, pharma, food).</p></div>
+<div><span class="text-emerald-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Cada gap e uma oportunidade profissional. O mercado brasileiro nao tem oferta para nenhum desses quatro. Quem preencher primeiro captura o mercado.</p></div>
+<div><span class="text-emerald-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Zero cursos de "Fleet Supervision" no Brasil. Menos de 50 profissionais certificados ISO 10218 no pais. Conteudo importado dos EUA nao se aplica ao contexto brasileiro.</p></div>
+</div></div>
+</div>
+<div class="topic-item">
+<button class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 text-sm font-bold flex items-center justify-center flex-shrink-0">6</span>
+<span class="text-lg">💸</span>
+<div><span class="font-medium">Tarifas de importacao</span><span class="text-neutral-500 text-sm ml-2">- Custo dobrado</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-emerald-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Impostos de importacao (II + IPI + ICMS + PIS/COFINS) fazem um robo de USD 50k custar USD 90-100k no Brasil. Quase o dobro do preco internacional.</p></div>
+<div><span class="text-emerald-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Custo duplicado torna o ROI de automacao mais longo no Brasil. Mas tambem valoriza mais o profissional que otimiza a operacao e reduz o payback.</p></div>
+<div><span class="text-emerald-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Ex-tarifario como alternativa (reducao para 0-2%). PADIS para semicondutores. Regimes especiais por estado. Leasing internacional vs compra direta.</p></div>
+</div></div>
+</div>
+</div>
+<div class="p-4 bg-dark-700/30 flex justify-start space-x-3">
+<button class="px-4 py-2 text-sm bg-dark-600 hover:bg-dark-500 rounded-lg transition-colors" onclick="openModal('modal-1-5')">Ver em Modal</button>
+<a class="px-4 py-2 text-sm bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg transition-colors" href="modulo-1-5.html">Ver Completo</a>
+</div>
+</div>
+<!-- MODULO 1.6 -->
+<div class="bg-dark-800 rounded-xl border border-dark-600 mb-6" id="modulo-1-6">
+<div class="p-6 border-b border-dark-600">
+<div class="flex items-center justify-between mb-2">
+<span class="text-emerald-400 font-bold">1.6</span>
+<span class="text-xs text-neutral-500">~45 min</span>
+</div>
+<h3 class="text-2xl font-bold mb-2">🎓 Programas de Referencia Mundial</h3>
+<p class="text-neutral-400 text-sm">Amazon Upskilling, Ausbildung alemao, Apprenticeship 2000, academias de fabricantes e transferencia de conhecimento de aposentados.</p>
+</div>
+<div class="divide-y divide-dark-600">
+<div class="topic-item">
+<button class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 text-sm font-bold flex items-center justify-center flex-shrink-0">1</span>
+<span class="text-lg">📦</span>
+<div><span class="font-medium">Amazon Upskilling</span><span class="text-neutral-500 text-sm ml-2">- USD 1.2bi, 700k treinados</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-emerald-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Programa Career Choice da Amazon: USD 1.2 bilhoes investidos para requalificar 700 mil funcionarios em areas como robotica, cloud e healthcare ate 2025.</p></div>
+<div><span class="text-emerald-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">E o maior programa corporativo de upskilling do mundo. Demonstra que investir em pessoas ao lado de robos gera retorno (turnover caiu 25% nos participantes).</p></div>
+<div><span class="text-emerald-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Career Choice paga 95% da mensalidade. Mechatronics and Robotics Apprenticeship interno. AWS re/Start para cloud. Metricas: 700k treinados, 25% menos turnover.</p></div>
+</div></div>
+</div>
+<div class="topic-item">
+<button class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 text-sm font-bold flex items-center justify-center flex-shrink-0">2</span>
+<span class="text-lg">🇩🇪</span>
+<div><span class="font-medium">Ausbildung alemao</span><span class="text-neutral-500 text-sm ml-2">- 4 anos, 3800 EUR/mes</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-emerald-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Sistema dual alemao de formacao profissional: 4 anos combinando escola tecnica e pratica em empresa. Aprendiz recebe ~3.800 EUR/mes no 4o ano. 60% dos jovens alemaes passam pelo sistema.</p></div>
+<div><span class="text-emerald-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">O Ausbildung e o padrao-ouro de formacao tecnica. A Alemanha tem 397 robos/10k com desemprego de 3%. Nao e coincidencia.</p></div>
+<div><span class="text-emerald-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Dual system: 3-4 dias na empresa + 1-2 dias na escola. Meister (mestre artesao) como mentor. Certificacao reconhecida nacionalmente. Adaptacao pos-2020: robotica como modulo obrigatorio.</p></div>
+</div></div>
+</div>
+<div class="topic-item">
+<button class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 text-sm font-bold flex items-center justify-center flex-shrink-0">3</span>
+<span class="text-lg">🇺🇸</span>
+<div><span class="font-medium">Apprenticeship 2000</span><span class="text-neutral-500 text-sm ml-2">- Charlotte, NC</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-emerald-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Programa de aprendizado industrial em Charlotte, Carolina do Norte, inspirado no modelo alemao. 8000 horas de treinamento, 100% de empregabilidade pos-programa.</p></div>
+<div><span class="text-emerald-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Prova que o modelo dual funciona fora da Alemanha. Empresas como Blum, Daetwyler e Pfaff participam. Aprendizes ganham USD 13-22/h durante o programa.</p></div>
+<div><span class="text-emerald-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">4 anos. CNC, robotica, PLC como modulos centrais. Consorcio de empresas (custo compartilhado). Community college como parceiro academico.</p></div>
+</div></div>
+</div>
+<div class="topic-item">
+<button class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 text-sm font-bold flex items-center justify-center flex-shrink-0">4</span>
+<span class="text-lg">🏭</span>
+<div><span class="font-medium">Academias de fabricantes</span><span class="text-neutral-500 text-sm ml-2">- ABB, FANUC, KUKA, RoboDK</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-emerald-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Cada grande fabricante opera academias de treinamento: ABB Robotics Academy, FANUC Authorized Training, KUKA College, RoboDK University. Certificacoes proprias com validade global.</p></div>
+<div><span class="text-emerald-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Certificacoes de fabricante sao o padrao de contratacao no mercado. Um tecnico FANUC Certified ganha 20-40% mais que um sem certificacao.</p></div>
+<div><span class="text-emerald-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">ABB: IRB programming levels 1-3. FANUC: Handling Pro, Karel. KUKA: KRL fundamentals. RoboDK: simulacao offline multi-marca. Custo: USD 2-5k por certificacao.</p></div>
+</div></div>
+</div>
+<div class="topic-item">
+<button class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 text-sm font-bold flex items-center justify-center flex-shrink-0">5</span>
+<span class="text-lg">🎓</span>
+<div><span class="font-medium">CMU Robotics Academy</span><span class="text-neutral-500 text-sm ml-2">- Referencia academica</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-emerald-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">A Carnegie Mellon University Robotics Academy treina educadores e empresas em robotica aplicada. Curriculos STEM com robos reais, usados em 35 mil escolas e empresas.</p></div>
+<div><span class="text-emerald-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">CMU e a meca da robotica academica. Seus curriculos sao referencia para quem quer criar programas de treinamento de qualidade internacional.</p></div>
+<div><span class="text-emerald-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">CS2N (Computer Science Student Network). VEXcode VR. Curriculos STEM K-12 a professional. Train-the-trainer model. Licenca de curriculo por USD 500-5k/ano.</p></div>
+</div></div>
+</div>
+<div class="topic-item">
+<button class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 text-sm font-bold flex items-center justify-center flex-shrink-0">6</span>
+<span class="text-lg">🤖</span>
+<div><span class="font-medium">Siemens Industrial Copilot</span><span class="text-neutral-500 text-sm ml-2">- 2.5M aposentados, transferencia de conhecimento</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-emerald-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">O Siemens Industrial Copilot captura conhecimento de tecnicos experientes (muitos proximos da aposentadoria) e o transforma em assistente de IA para novos operadores. 2.5 milhoes de trabalhadores industriais se aposentam por ano na EU.</p></div>
+<div><span class="text-emerald-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">A crise demografica torna a transferencia de conhecimento urgente. IA como ponte entre geracao que sai e geracao que entra e um modelo replicavel.</p></div>
+<div><span class="text-emerald-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Knowledge capture via video + NLP. Assistente contextual no PLC. 2.5M aposentadorias/ano na EU industrial. "Silver tsunami" como driver de adocao de IA.</p></div>
+</div></div>
+</div>
+</div>
+<div class="p-4 bg-dark-700/30 flex justify-start space-x-3">
+<button class="px-4 py-2 text-sm bg-dark-600 hover:bg-dark-500 rounded-lg transition-colors" onclick="openModal('modal-1-6')">Ver em Modal</button>
+<a class="px-4 py-2 text-sm bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg transition-colors" href="modulo-1-6.html">Ver Completo</a>
+</div>
+</div>
+<!-- Navegacao inferior -->
+<div class="flex flex-col sm:flex-row gap-4 mt-12">
+<a class="flex-1 text-center px-6 py-3 bg-dark-700 text-neutral-300 rounded-lg font-semibold hover:bg-dark-600 transition-colors" href="../">
+        ← Voltar para Curso
+      </a>
+<a class="flex-1 text-center px-6 py-3 bg-emerald-600 text-white rounded-lg font-semibold hover:bg-emerald-500 transition-colors" href="../trilha2/">
+        Proxima: Trilha 2 — Acao →
+      </a>
+</div>
+</main>
+<!-- MODALS -->
+<div class="modal hidden fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-black/80" id="modal-1-1" onclick="if(event.target === this) closeModal()">
+<div class="bg-dark-800 rounded-xl w-full max-w-6xl h-[95vh] flex flex-col border border-dark-600">
+<div class="p-4 border-b border-dark-600 flex justify-between items-center flex-shrink-0">
+<div class="flex items-center space-x-3"><span class="text-emerald-400 font-bold">1.1</span><span class="font-semibold">O Grande Cenario</span></div>
+<button class="text-neutral-400 hover:text-white text-2xl leading-none" onclick="closeModal()">×</button>
+</div>
+<iframe class="flex-1 w-full rounded-b-xl" src="modulo-1-1.html"></iframe>
+</div>
+</div>
+<div class="modal hidden fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-black/80" id="modal-1-2" onclick="if(event.target === this) closeModal()">
+<div class="bg-dark-800 rounded-xl w-full max-w-6xl h-[95vh] flex flex-col border border-dark-600">
+<div class="p-4 border-b border-dark-600 flex justify-between items-center flex-shrink-0">
+<div class="flex items-center space-x-3"><span class="text-emerald-400 font-bold">1.2</span><span class="font-semibold">Taxonomia Robotica</span></div>
+<button class="text-neutral-400 hover:text-white text-2xl leading-none" onclick="closeModal()">×</button>
+</div>
+<iframe class="flex-1 w-full rounded-b-xl" src="modulo-1-2.html"></iframe>
+</div>
+</div>
+<div class="modal hidden fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-black/80" id="modal-1-3" onclick="if(event.target === this) closeModal()">
+<div class="bg-dark-800 rounded-xl w-full max-w-6xl h-[95vh] flex flex-col border border-dark-600">
+<div class="p-4 border-b border-dark-600 flex justify-between items-center flex-shrink-0">
+<div class="flex items-center space-x-3"><span class="text-emerald-400 font-bold">1.3</span><span class="font-semibold">ISO 10218:2025</span></div>
+<button class="text-neutral-400 hover:text-white text-2xl leading-none" onclick="closeModal()">×</button>
+</div>
+<iframe class="flex-1 w-full rounded-b-xl" src="modulo-1-3.html"></iframe>
+</div>
+</div>
+<div class="modal hidden fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-black/80" id="modal-1-4" onclick="if(event.target === this) closeModal()">
+<div class="bg-dark-800 rounded-xl w-full max-w-6xl h-[95vh] flex flex-col border border-dark-600">
+<div class="p-4 border-b border-dark-600 flex justify-between items-center flex-shrink-0">
+<div class="flex items-center space-x-3"><span class="text-emerald-400 font-bold">1.4</span><span class="font-semibold">Psicologia da Resistencia</span></div>
+<button class="text-neutral-400 hover:text-white text-2xl leading-none" onclick="closeModal()">×</button>
+</div>
+<iframe class="flex-1 w-full rounded-b-xl" src="modulo-1-4.html"></iframe>
+</div>
+</div>
+<div class="modal hidden fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-black/80" id="modal-1-5" onclick="if(event.target === this) closeModal()">
+<div class="bg-dark-800 rounded-xl w-full max-w-6xl h-[95vh] flex flex-col border border-dark-600">
+<div class="p-4 border-b border-dark-600 flex justify-between items-center flex-shrink-0">
+<div class="flex items-center space-x-3"><span class="text-emerald-400 font-bold">1.5</span><span class="font-semibold">Brasil 2026</span></div>
+<button class="text-neutral-400 hover:text-white text-2xl leading-none" onclick="closeModal()">×</button>
+</div>
+<iframe class="flex-1 w-full rounded-b-xl" src="modulo-1-5.html"></iframe>
+</div>
+</div>
+<div class="modal hidden fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-black/80" id="modal-1-6" onclick="if(event.target === this) closeModal()">
+<div class="bg-dark-800 rounded-xl w-full max-w-6xl h-[95vh] flex flex-col border border-dark-600">
+<div class="p-4 border-b border-dark-600 flex justify-between items-center flex-shrink-0">
+<div class="flex items-center space-x-3"><span class="text-emerald-400 font-bold">1.6</span><span class="font-semibold">Referencia Mundial</span></div>
+<button class="text-neutral-400 hover:text-white text-2xl leading-none" onclick="closeModal()">×</button>
+</div>
+<iframe class="flex-1 w-full rounded-b-xl" src="modulo-1-6.html"></iframe>
+</div>
+</div>
+<!-- FOOTER -->
+<footer class="border-t border-dark-600 py-8 mt-16">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-neutral-500 text-sm">
+<p>segROBOT — Requalificacao Humana para Ambientes Robotizados — 2026</p>
+</div>
+</footer>
+<script>
+    function toggleTopic(button) {
+      const topicItem = button.closest('.topic-item');
+      const explanation = topicItem.querySelector('.topic-explanation');
+      const moduleCard = button.closest('.bg-dark-800');
+      moduleCard.querySelectorAll('.topic-explanation.active').forEach(exp => {
+        if (exp !== explanation) exp.classList.remove('active');
+      });
+      explanation.classList.toggle('active');
+    }
+
+    function openModal(modalId) {
+      const modal = document.getElementById(modalId);
+      if (modal) { modal.classList.remove('hidden'); document.body.style.overflow = 'hidden'; }
+    }
+    function closeModal() {
+      document.querySelectorAll('.modal').forEach(m => m.classList.add('hidden'));
+      document.body.style.overflow = 'auto';
+    }
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeModal(); });
+
+    const themeToggle = document.getElementById('theme-toggle');
+    const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
+    const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
+    const html = document.documentElement;
+    if (localStorage.getItem('theme') === 'light') {
+      themeToggleDarkIcon.classList.remove('hidden'); html.classList.remove('dark');
+    } else { themeToggleLightIcon.classList.remove('hidden'); }
+    themeToggle.addEventListener('click', () => {
+      themeToggleDarkIcon.classList.toggle('hidden'); themeToggleLightIcon.classList.toggle('hidden');
+      html.classList.toggle('dark');
+      localStorage.setItem('theme', html.classList.contains('dark') ? 'dark' : 'light');
+    });
+  </script>
+</body>
+</html>

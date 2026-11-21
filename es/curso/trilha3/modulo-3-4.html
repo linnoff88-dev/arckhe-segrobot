@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="es">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Módulo 3.4 - Certificaciones y cumplimiento | segROBOT</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            primary: '#FACC15',
+            dark: { 900: '#111827', 800: '#1f2937', 700: '#374151', 600: '#4b5563' }
+          }
+        }
+      }
+    }
+  </script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<style>
+    body { font-family: 'Inter', sans-serif; }
+    .dark body { background-color: #111827; }
+    .topic-explanation { display: none; }
+    .topic-explanation.active { display: block; }
+
+    /* Light mode overrides */
+    html:not(.dark) body { background-color: #f8fafc; }
+    html:not(.dark) .bg-dark-900 { background-color: #ffffff; }
+    html:not(.dark) .bg-dark-800 { background-color: #f9fafb; }
+    html:not(.dark) .bg-dark-700 { background-color: #f3f4f6; }
+    html:not(.dark) .bg-dark-600 { background-color: #e5e7eb; }
+    html:not(.dark) .text-neutral-100 { color: #111827; }
+    html:not(.dark) .text-neutral-300 { color: #4b5563; }
+    html:not(.dark) .text-neutral-400 { color: #6b7280; }
+    html:not(.dark) .text-neutral-500 { color: #9ca3af; }
+    html:not(.dark) .border-dark-600 { border-color: #d1d5db; }
+    html:not(.dark) .border-dark-700 { border-color: #e5e7eb; }
+
+    /* Light mode - cores de acento (trilha purple) */
+    html:not(.dark) .text-purple-400 { color: #7c3aed; }
+    html:not(.dark) .bg-purple-500\/20 { background-color: rgba(124, 58, 237, 0.12); }
+    html:not(.dark) .bg-purple-500\/10 { background-color: rgba(124, 58, 237, 0.08); }
+    html:not(.dark) .border-purple-500\/30 { border-color: rgba(124, 58, 237, 0.25); }
+    html:not(.dark) .hover\:bg-purple-500\/30:hover { background-color: rgba(124, 58, 237, 0.18); }
+    html:not(.dark) .hover\:text-purple-400:hover { color: #7c3aed; }
+    html:not(.dark) .hover\:bg-purple-500\/10:hover { background-color: rgba(124, 58, 237, 0.08); }
+
+    /* Light mode - outras trilhas no nav */
+    html:not(.dark) .hover\:text-emerald-400:hover { color: #059669; }
+    html:not(.dark) .hover\:bg-emerald-500\/10:hover { background-color: rgba(5, 150, 105, 0.08); }
+    html:not(.dark) .hover\:text-blue-400:hover { color: #2563eb; }
+    html:not(.dark) .hover\:bg-blue-500\/10:hover { background-color: rgba(37, 99, 235, 0.08); }
+
+    /* Light mode - remove gradientes */
+    html:not(.dark) [class*="bg-gradient-to"] { background-image: none !important; }
+
+    /* Light mode - cores especiais */
+    html:not(.dark) .text-primary { color: #a16207; }
+    html:not(.dark) .bg-primary\/10 { background-color: rgba(161, 98, 7, 0.08); }
+    html:not(.dark) .border-primary\/40 { border-color: rgba(161, 98, 7, 0.25); }
+    html:not(.dark) .text-sky-400 { color: #0369a1; }
+    html:not(.dark) .text-yellow-400 { color: #a16207; }
+    html:not(.dark) .hover\:text-sky-300:hover { color: #0284c7; }
+    html:not(.dark) .hover\:text-yellow-300:hover { color: #854d0e; }
+
+    /* Light mode - nav */
+    html:not(.dark) .bg-dark-900\/95 { background-color: rgba(255, 255, 255, 0.95); }
+
+    /* Dark mode - bordas suaves */
+    .dark .border-dark-600 { border-color: #374151; }
+    .dark .divide-dark-600 > :not([hidden]) ~ :not([hidden]) { border-color: #374151; }
+
+    @keyframes wf-pulse { 0%,100% { opacity:.55 } 50% { opacity:1 } }
+    @media (prefers-reduced-motion: no-preference) {
+      .wf-a { animation: wf-pulse 2.6s ease-in-out infinite; }
+      .wf-a:nth-child(2){animation-delay:.25s} .wf-a:nth-child(3){animation-delay:.5s}
+      .wf-a:nth-child(4){animation-delay:.75s} .wf-a:nth-child(5){animation-delay:1s}
+    }
+  </style>
+<link href="https://inematds.github.io/segrobot/curso/trilha3/modulo-3-4.html" hreflang="pt-BR" rel="alternate"/><link href="https://inematds.github.io/segrobot/en/curso/trilha3/modulo-3-4.html" hreflang="en" rel="alternate"/><link href="https://inematds.github.io/segrobot/es/curso/trilha3/modulo-3-4.html" hreflang="es" rel="alternate"/></head>
+<body class="bg-dark-900 text-neutral-100 min-h-screen"><div class="inema-lang" style="position:fixed;right:14px;bottom:14px;z-index:9999;display:flex;gap:2px;padding:4px;border-radius:10px;background:rgba(12,12,16,.82);border:1px solid rgba(226,162,59,.45);font:600 12px/1 Sora,Inter,system-ui,sans-serif;backdrop-filter:blur(8px)" translate="no"><a href="../../../curso/trilha3/modulo-3-4.html" hreflang="pt-BR" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">PT</a><a href="../../../en/curso/trilha3/modulo-3-4.html" hreflang="en" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">EN</a><a href="modulo-3-4.html" hreflang="es" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#1a1206;background:#E2A23B">ES</a></div>
+<!-- NAVIGATION -->
+<nav class="sticky top-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-600">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="flex justify-between items-center h-14">
+<div class="flex items-center space-x-4">
+<a class="flex items-center space-x-2 text-yellow-400 hover:text-yellow-300" href="../../index.html">
+<span class="text-2xl">🤖</span>
+<span class="font-bold text-lg hidden sm:inline">segROBOT</span>
+</a>
+<span class="text-neutral-600">|</span>
+<a class="text-sky-400 hover:text-sky-300 text-sm font-medium" href="https://inema.club" target="_blank">INEMA.CLUB</a>
+</div>
+<div class="flex items-center space-x-1 sm:space-x-2">
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-emerald-400 hover:bg-emerald-500/10 transition-colors" href="../trilha1/index.html">
+<span class="sm:hidden">T1</span>
+<span class="hidden sm:inline">Fundamentos</span>
+</a>
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-blue-400 hover:bg-blue-500/10 transition-colors" href="../trilha2/index.html">
+<span class="sm:hidden">T2</span>
+<span class="hidden sm:inline">Acción</span>
+</a>
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-purple-400 bg-purple-500/10" href="index.html">
+<span class="sm:hidden">T3</span>
+<span class="hidden sm:inline">Estratégico</span>
+</a>
+<button class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors ml-2" id="theme-toggle">
+<svg class="hidden w-5 h-5 text-neutral-300" fill="currentColor" id="theme-toggle-dark-icon" viewbox="0 0 20 20">
+<path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+</svg>
+<svg class="hidden w-5 h-5 text-neutral-300" fill="currentColor" id="theme-toggle-light-icon" viewbox="0 0 20 20">
+<path clip-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd"></path>
+</svg>
+</button>
+</div>
+</div>
+</div>
+</nav>
+<!-- BREADCRUMB -->
+<nav class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+<div class="flex items-center space-x-2 text-sm text-neutral-400">
+<a class="hover:text-purple-400" href="../../index.html">Inicio</a>
+<span>/</span>
+<a class="hover:text-purple-400" href="index.html">Ruta 3</a>
+<span>/</span>
+<span class="text-purple-400">Módulo 3.4</span>
+</div>
+</nav>
+<!-- HEADER -->
+<header class="bg-gradient-to-br from-purple-900/30 via-dark-800 to-dark-800 py-12 border-b border-dark-600">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+<span class="inline-block px-3 py-1 bg-purple-500/20 text-purple-400 text-xs font-semibold rounded-full mb-4">
+        MÓDULO 3.4
+      </span>
+<h1 class="text-4xl sm:text-5xl font-bold mb-4">📜 Certificaciones y compliance</h1>
+<p class="text-lg text-neutral-400 max-w-3xl">
+        Identificar las certificaciones que ya existen para la robótica, entender cuáles ya se convirtieron en requisito de
+        contratación e identificar la brecha donde todavía no existe ninguna certificación, porque es exactamente
+        ahí donde está la mayor oportunidad estratégica.
+      </p>
+<!-- Stats Banner -->
+<div class="grid grid-cols-4 gap-4 mt-8 max-w-2xl">
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+<div class="text-xl font-bold text-purple-400">6</div>
+<div class="text-xs text-neutral-400">Temas</div>
+</div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+<div class="text-xl font-bold text-purple-400">45</div>
+<div class="text-xs text-neutral-400">Minutos</div>
+</div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+<div class="text-xl font-bold text-purple-400">Avanzado</div>
+<div class="text-xs text-neutral-400">Nivel</div>
+</div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+<div class="text-xl font-bold text-purple-400">Estrategia</div>
+<div class="text-xs text-neutral-400">Tipo</div>
+</div>
+</div>
+</div>
+</header>
+<!-- CONTEUDO -->
+<main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+<!-- SVG HERO: stack de certificacoes -->
+<div class="rounded-2xl border border-purple-500/30 bg-dark-900/40 p-3 sm:p-4 mb-12 overflow-hidden">
+<svg aria-label="Pila de certificaciones en robótica: desde la base de ingreso SME RMF y OSHA, pasando por certificaciones de fabricantes FANUC IPC NIMS, hasta la cima, donde no existe certificación para la supervisión de flotas; al lado, NR-12 como precedente de requisito legal" class="w-full h-auto" role="img" viewbox="0 0 1000 280">
+<defs>
+<lineargradient id="m34-grad" x1="0" x2="1" y1="0" y2="1">
+<stop offset="0" stop-color="#c084fc"></stop><stop offset="1" stop-color="#a855f7"></stop>
+</lineargradient>
+<filter height="180%" id="m34-glow" width="180%" x="-40%" y="-40%">
+<fegaussianblur result="b" stddeviation="3"></fegaussianblur><femerge><femergenode in="b"></femergenode><femergenode in="SourceGraphic"></femergenode></femerge>
+</filter>
+<pattern height="32" id="m34-grid" patternunits="userSpaceOnUse" width="32">
+<circle cx="1.3" cy="1.3" fill="#a855f7" opacity="0.12" r="1.3"></circle>
+</pattern>
+<marker id="m34-ah" markerheight="9" markerwidth="9" orient="auto" refx="6.5" refy="4.5"><path d="M0,0 L8,4.5 L0,9 L2.4,4.5 Z" fill="#c084fc"></path></marker>
+<marker id="m34-ahc" markerheight="9" markerwidth="9" orient="auto" refx="6.5" refy="4.5"><path d="M0,0 L8,4.5 L0,9 L2.4,4.5 Z" fill="#38bdf8"></path></marker>
+</defs>
+<rect fill="url(#m34-grid)" height="280" width="1000" x="0" y="0"></rect>
+<!-- eixo de progressao vertical -->
+<path d="M70,250 L70,40" fill="none" marker-end="url(#m34-ahc)" opacity="0.7" stroke="#38bdf8" stroke-dasharray="8 8" stroke-width="2.5"></path>
+<text fill="#9ad6ff" font-family="Inter,sans-serif" font-size="12" text-anchor="middle" transform="rotate(-90 46 150)" x="46" y="150">madurez profesional</text>
+<!-- Degrau 1 - base: entrada -->
+<rect fill="#0e1b26" height="56" rx="12" stroke="#38bdf8" stroke-width="2" width="230" x="130" y="196"></rect>
+<text fill="#bfe6ff" font-family="Inter,sans-serif" font-size="16" font-weight="700" text-anchor="middle" x="245" y="222">SME RMF + OSHA 10/30</text>
+<text fill="#9ad6ff" font-family="Inter,sans-serif" font-size="12" text-anchor="middle" x="245" y="240">entrada — fundamentos y seguridad</text>
+<!-- Degrau 2 - fabricante -->
+<rect fill="#0e1b26" height="56" rx="12" stroke="#38bdf8" stroke-width="2" width="230" x="310" y="128"></rect>
+<text fill="#bfe6ff" font-family="Inter,sans-serif" font-size="16" font-weight="700" text-anchor="middle" x="425" y="154">FANUC / IPC / NIMS</text>
+<text fill="#9ad6ff" font-family="Inter,sans-serif" font-size="12" text-anchor="middle" x="425" y="172">fabricante — ya se convierte en requisito del puesto</text>
+<!-- Degrau 3 - topo: gap (cor da trilha, glow) -->
+<g filter="url(#m34-glow)"><rect fill="#1a1230" height="60" rx="14" stroke="url(#m34-grad)" stroke-width="2.5" width="270" x="490" y="56"></rect></g>
+<text fill="#c084fc" font-family="Inter,sans-serif" font-size="17" font-weight="700" text-anchor="middle" x="625" y="82">BRECHA: supervisión de flota</text>
+<text fill="#e6cffb" font-family="Inter,sans-serif" font-size="12" text-anchor="middle" x="625" y="102">no existe ninguna certificación — una oportunidad</text>
+<!-- setas entre degraus -->
+<path d="M360,210 C405,210 425,190 425,184" fill="none" marker-end="url(#m34-ahc)" opacity="0.6" stroke="#38bdf8" stroke-width="2"></path>
+<path d="M540,142 C590,142 615,122 625,116" fill="none" marker-end="url(#m34-ah)" opacity="0.7" stroke="#c084fc" stroke-width="2"></path>
+<!-- destino: NR-12 como precedente -->
+<g filter="url(#m34-glow)"><rect fill="#1a1230" height="60" rx="14" stroke="url(#m34-grad)" stroke-width="2.5" width="160" x="800" y="56"></rect></g>
+<text fill="#c084fc" font-family="Inter,sans-serif" font-size="16" font-weight="700" text-anchor="middle" x="880" y="82">Como NR-12</text>
+<text fill="#e6cffb" font-family="Inter,sans-serif" font-size="12" text-anchor="middle" x="880" y="102">requisito legal previo</text>
+<path d="M760,86 L800,86" fill="none" marker-end="url(#m34-ah)" opacity="0.7" stroke="#c084fc" stroke-width="2"></path>
+</svg>
+<p class="text-xs text-neutral-500 mt-2 text-center">Diagrama ilustrativo: la pila de certificaciones en robótica: nivel básico de entrada, capa del fabricante y la cima vacía donde está la oportunidad.</p>
+</div>
+<!-- TOPICO 1 -->
+<section class="mb-16" id="topico-1">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">1</span>
+<h2 class="text-2xl font-bold">🏭 SME RMF — Robotics in Manufacturing</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed">
+        A <strong class="text-purple-400">SME RMF</strong> (Society of Manufacturing Engineers — Robotics in
+        Manufacturing Fundamentals) es la certificación inicial más reconocida de la industria. Cubre los
+        fundamentos de <strong class="text-purple-400">programación, seguridad e integración</strong> de robots
+        en manufactura. Es el primer sello que valida que sabes lo básico.
+      </p>
+<div class="bg-gradient-to-br from-purple-900/30 to-dark-800 rounded-xl border border-purple-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-purple-400 mb-4 flex items-center">
+<span class="mr-2">🎯</span> Concepto principal
+        </h3>
+<p class="text-neutral-300 mb-4">
+          La SME RMF funciona como la <strong>puerta de entrada</strong> del ecosistema de certificaciones: valida
+          conocimientos básicos y abre camino a las especializaciones de fabricante.
+        </p>
+<ul class="space-y-2 text-neutral-300">
+<li class="flex items-start space-x-2"><span class="text-purple-400 mt-1">•</span><span>Fundamentos de programación de robots industriales</span></li>
+<li class="flex items-start space-x-2"><span class="text-purple-400 mt-1">•</span><span>Principios de seguridad en una celda robotizada</span></li>
+<li class="flex items-start space-x-2"><span class="text-purple-400 mt-1">•</span><span>Integración de robots en la planta de producción</span></li>
+</ul>
+</div>
+<div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
+<span class="mr-2">💡</span> Consejo práctico
+        </h3>
+<p class="text-neutral-300">
+          Trata a la SME RMF como el <strong>primer elemento de tu hoja de ruta de certificación</strong>, no como el
+          último. Por sí sola no garantiza un puesto, pero es el requisito implícito que abre las puertas a
+          especializaciones que marcan la diferencia.
+        </p>
+</div>
+<!-- Conceitos-chave -->
+<div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+<div class="bg-dark-800 rounded-lg border border-dark-600 p-4"><div class="text-purple-400 font-bold text-sm mb-1">SME</div><p class="text-xs text-neutral-400">Sociedad que emite la certificación</p></div>
+<div class="bg-dark-800 rounded-lg border border-dark-600 p-4"><div class="text-purple-400 font-bold text-sm mb-1">RMF</div><p class="text-xs text-neutral-400">Robotics in Manufacturing</p></div>
+<div class="bg-dark-800 rounded-lg border border-dark-600 p-4"><div class="text-purple-400 font-bold text-sm mb-1">Entrada</div><p class="text-xs text-neutral-400">Certificación básica reconocida</p></div>
+<div class="bg-dark-800 rounded-lg border border-dark-600 p-4"><div class="text-purple-400 font-bold text-sm mb-1">Fundamentos</div><p class="text-xs text-neutral-400">Programación, seguridad, integración</p></div>
+</div>
+</section>
+<!-- TOPICO 2 -->
+<section class="mb-16" id="topico-2">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">2</span>
+<h2 class="text-2xl font-bold">🦺 OSHA 10/30 para robótica — Seguridad obligatoria</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed">
+        Las certificaciones <strong class="text-purple-400">OSHA 10h y OSHA 30h</strong> de seguridad laboral,
+        adaptadas a entornos con robots, cubren riesgos específicos de <strong class="text-purple-400">HRC
+        (colaboración humano-robot)</strong>. La OSHA es un requisito legal en EE. UU. y una referencia global: las versiones
+        adaptadas para robótica serán obligatorias a medida que se endurezca la regulación.
+      </p>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+<div class="bg-emerald-900/20 rounded-xl border border-emerald-500/30 p-6">
+<h4 class="font-bold text-emerald-400 mb-4">✓ Qué cubre la OSHA adaptada</h4>
+<ul class="space-y-3 text-neutral-300">
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Riesgos específicos de las celdas con robots</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Procedimientos de seguridad en HRC</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Compliance de seguridad exigible por ley</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Niveles de 10h (operador) y 30h (supervisor)</span></li>
+</ul>
+</div>
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+<h4 class="font-bold text-red-400 mb-4">✗ Errores de quien ignora</h4>
+<ul class="space-y-3 text-neutral-300">
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Tratar OSHA como burocracia opcional</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Usar lineamientos genéricos de OSHA en un entorno con robots</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Esperar a que la regulación lo haga obligatorio</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Confundir el nivel de supervisión de 10 h con el de 30 h</span></li>
+</ul>
+</div>
+</div>
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-red-400 mb-3 flex items-center">
+<span class="mr-2">⚠️</span> Alerta de riesgo jurídico
+        </h3>
+<p class="text-neutral-300">
+          OSHA y <strong>requisito legal en EE. UU.</strong>. Operar una celda robotizada sin la formación de
+          seguridad adecuada expone a la empresa a sanciones, paralización y responsabilidad civil en caso de
+          accidente. A medida que la regulación se endurece, la versión adaptada a la robótica deja de ser un
+          diferencial y se convierte en una condición para operar.
+        </p>
+</div>
+<!-- Conceitos-chave -->
+<div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+<div class="bg-dark-800 rounded-lg border border-dark-600 p-4"><div class="text-purple-400 font-bold text-sm mb-1">OSHA 10</div><p class="text-xs text-neutral-400">Nivel de operador (10h)</p></div>
+<div class="bg-dark-800 rounded-lg border border-dark-600 p-4"><div class="text-purple-400 font-bold text-sm mb-1">OSHA 30</div><p class="text-xs text-neutral-400">Nivel de supervisor (30h)</p></div>
+<div class="bg-dark-800 rounded-lg border border-dark-600 p-4"><div class="text-purple-400 font-bold text-sm mb-1">HRC</div><p class="text-xs text-neutral-400">Riesgos de la colaboración entre humanos y robots</p></div>
+<div class="bg-dark-800 rounded-lg border border-dark-600 p-4"><div class="text-purple-400 font-bold text-sm mb-1">Compliance</div><p class="text-xs text-neutral-400">Requisito legal y referencia global</p></div>
+</div>
+</section>
+<!-- TOPICO 3 -->
+<section class="mb-16" id="topico-3">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">3</span>
+<h2 class="text-2xl font-bold">🤖 FANUC NOCTI — Alianzas con universidades</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed">
+        El programa <strong class="text-purple-400">FANUC vía NOCTI</strong> (National Occupational Competency
+        Testing Institute) integra la certificación de fabricantes con facultades y escuelas técnicas. Es un modelo de
+        <strong class="text-purple-400">alianza entre industria y educación</strong> que amplía la formación: los alumnos salen
+        certificados por el propio fabricante, listos para el mercado.
+      </p>
+<div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-blue-400 mb-4 flex items-center">
+<span class="mr-2">📊</span> Cómo funciona el modelo de pipeline
+        </h3>
+<ul class="space-y-2 text-neutral-300">
+<li><strong>Fabricante (FANUC)</strong> — define las competencias y el estándar de evaluación</li>
+<li><strong>NOCTI</strong> — aplica la prueba nacional de competencia ocupacional</li>
+<li><strong>Facultad / escuela técnica</strong> — integra el programa en el currículo</li>
+<li><strong>Estudiante</strong> — obtiene una certificación del fabricante, listo para el mercado</li>
+</ul>
+</div>
+<!-- Timeline do pipeline -->
+<div class="space-y-6 mb-6">
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-12 h-12 rounded-full bg-purple-500/20 flex items-center justify-center"><span class="text-purple-400 font-bold">1</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+<h4 class="font-semibold text-white mb-2">Acuerdo entre la industria y la academia</h4>
+<p class="text-sm text-neutral-400 mb-3">FANUC + institución educativa</p>
+<p class="text-neutral-300 text-sm">El fabricante lleva equipos y estándares de competencia a la escuela técnica o la universidad.</p>
+</div>
+</div>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-12 h-12 rounded-full bg-purple-500/20 flex items-center justify-center"><span class="text-purple-400 font-bold">2</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+<h4 class="font-semibold text-white mb-2">Evaluación mediante NOCTI</h4>
+<p class="text-sm text-neutral-400 mb-3">Prueba nacional de competencia</p>
+<p class="text-neutral-300 text-sm">El estudiante es evaluado según un estándar reconocido a nivel nacional, no solo por la calificación interna del curso.</p>
+</div>
+</div>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-12 h-12 rounded-full bg-purple-500/20 flex items-center justify-center"><span class="text-purple-400 font-bold">3</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+<h4 class="font-semibold text-white mb-2">Pipeline de talento</h4>
+<p class="text-sm text-neutral-400 mb-3">Estudiante certificado → mercado</p>
+<p class="text-neutral-300 text-sm">La persona egresada llega al mercado laboral con la certificación del fabricante, lo que acorta el tiempo hasta alcanzar la productividad.</p>
+</div>
+</div>
+</div>
+<!-- Conceitos-chave -->
+<div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+<div class="bg-dark-800 rounded-lg border border-dark-600 p-4"><div class="text-purple-400 font-bold text-sm mb-1">FANUC</div><p class="text-xs text-neutral-400">Certificación del fabricante</p></div>
+<div class="bg-dark-800 rounded-lg border border-dark-600 p-4"><div class="text-purple-400 font-bold text-sm mb-1">NOCTI</div><p class="text-xs text-neutral-400">Prueba nacional de competencia</p></div>
+<div class="bg-dark-800 rounded-lg border border-dark-600 p-4"><div class="text-purple-400 font-bold text-sm mb-1">Alianza</div><p class="text-xs text-neutral-400">Industria + academia</p></div>
+<div class="bg-dark-800 rounded-lg border border-dark-600 p-4"><div class="text-purple-400 font-bold text-sm mb-1">Pipeline</div><p class="text-xs text-neutral-400">Talento listo para el mercado</p></div>
+</div>
+</section>
+<!-- TOPICO 4 -->
+<section class="mb-16" id="topico-4">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">4</span>
+<h2 class="text-2xl font-bold">📋 IPC / NIMS en vacantes — requisito de contratación</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed">
+        Las certificaciones <strong class="text-purple-400">IPC</strong> (electronics) y <strong class="text-purple-400">NIMS</strong>
+        (machining) ya aparecen como <strong class="text-purple-400">requisito en las descripciones de los puestos</strong>
+        relacionadas con la robótica y la automatización. La señal es clara: las certificaciones están pasando de ser un diferenciador a ser
+        un requisito previo; quien no las tiene queda fuera del proceso de contratación.
+      </p>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+<div class="bg-emerald-900/20 rounded-xl border border-emerald-500/30 p-6">
+<h4 class="font-bold text-emerald-400 mb-4">✓ El certificado entra en el embudo</h4>
+<ul class="space-y-3 text-neutral-300">
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Pasa por el filtro automático de selección</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Indica competencia validada por terceros</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Compite por puestos en robótica y automatización</span></li>
+</ul>
+</div>
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+<h4 class="font-bold text-red-400 mb-4">✗ Sin certificado, te rechazan</h4>
+<ul class="space-y-3 text-neutral-300">
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Filtrado antes de cualquier entrevista</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>La experiencia por sí sola no cumple el requisito</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Queda fuera del proceso de contratación</span></li>
+</ul>
+</div>
+</div>
+<div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
+<span class="mr-2">💡</span> Consejo práctico
+        </h3>
+<p class="text-neutral-300">
+          Lee ofertas de empleo como <strong>radar de tendencias</strong>: cuando una certificación pasa de
+          "deseable" a "obligatoria" en varias vacantes, es el momento de obtenerla, antes de que todo el mercado ya la tenga y se convierta en un requisito mínimo, no en una ventaja.
+        </p>
+</div>
+<!-- Conceitos-chave -->
+<div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+<div class="bg-dark-800 rounded-lg border border-dark-600 p-4"><div class="text-purple-400 font-bold text-sm mb-1">IPC</div><p class="text-xs text-neutral-400">Certificación de electrónica</p></div>
+<div class="bg-dark-800 rounded-lg border border-dark-600 p-4"><div class="text-purple-400 font-bold text-sm mb-1">NIMS</div><p class="text-xs text-neutral-400">Certificación de mecanizado</p></div>
+<div class="bg-dark-800 rounded-lg border border-dark-600 p-4"><div class="text-purple-400 font-bold text-sm mb-1">Filtro</div><p class="text-xs text-neutral-400">Certificación como filtro para una vacante</p></div>
+<div class="bg-dark-800 rounded-lg border border-dark-600 p-4"><div class="text-purple-400 font-bold text-sm mb-1">Empleabilidad</div><p class="text-xs text-neutral-400">Prerrequisito, no factor diferenciador</p></div>
+</div>
+</section>
+<!-- TOPICO 5 -->
+<section class="mb-16" id="topico-5">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">5</span>
+<h2 class="text-2xl font-bold">❓ Lo que NO existe: brechas de certificación</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed">
+        No existe certificación para <strong class="text-purple-400">supervisión de flota robótica</strong>,
+        <strong class="text-purple-400">gestión de equipos HRC</strong> o <strong class="text-purple-400">liderazgo
+        de transformación robótica</strong>. La brecha es enorme — y donde no existe certificación, existe
+        oportunidad: quien cree primero el estándar define el mercado.
+      </p>
+<div class="bg-gradient-to-br from-purple-900/30 to-dark-800 rounded-xl border border-purple-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-purple-400 mb-4 flex items-center">
+<span class="mr-2">🕳️</span> El mapa de los vacíos
+        </h3>
+<p class="text-neutral-300 mb-4">
+          Las certificaciones existentes cubren el <strong>operador</strong> e o <strong>integrador</strong>. Nadie
+          certifica las funciones de <strong>supervisión y liderazgo</strong> que la flota robótica va a exigir:
+        </p>
+<ul class="space-y-2 text-neutral-300">
+<li class="flex items-start space-x-2"><span class="text-purple-400 mt-1">•</span><span>Supervisión de flotas robóticas (varios robots, varios turnos)</span></li>
+<li class="flex items-start space-x-2"><span class="text-purple-400 mt-1">•</span><span>Gestión de equipos en un entorno HRC</span></li>
+<li class="flex items-start space-x-2"><span class="text-purple-400 mt-1">•</span><span>Liderazgo de la transformación robótica</span></li>
+</ul>
+</div>
+<div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
+<span class="mr-2">🚀</span> Donde no hay certificación, hay una oportunidad
+        </h3>
+<p class="text-neutral-300">
+          La brecha no es una falla — es una <strong>first-mover advantage</strong>. Quien estructure primero el
+          estándar de supervisión de flotas no solo se certifica: pasa a definir qué significa "competente"
+          para todo el mercado.
+        </p>
+</div>
+<!-- Conceitos-chave -->
+<div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+<div class="bg-dark-800 rounded-lg border border-dark-600 p-4"><div class="text-purple-400 font-bold text-sm mb-1">Brecha</div><p class="text-xs text-neutral-400">Certificación inexistente</p></div>
+<div class="bg-dark-800 rounded-lg border border-dark-600 p-4"><div class="text-purple-400 font-bold text-sm mb-1">Supervisión de flotas</div><p class="text-xs text-neutral-400">Función sin estándar definido</p></div>
+<div class="bg-dark-800 rounded-lg border border-dark-600 p-4"><div class="text-purple-400 font-bold text-sm mb-1">Gestión HRC</div><p class="text-xs text-neutral-400">Liderazgo de equipos humano-robot</p></div>
+<div class="bg-dark-800 rounded-lg border border-dark-600 p-4"><div class="text-purple-400 font-bold text-sm mb-1">First-mover</div><p class="text-xs text-neutral-400">Quien crea el estándar, gana</p></div>
+</div>
+</section>
+<!-- TOPICO 6 -->
+<section class="mb-16" id="topico-6">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">6</span>
+<h2 class="text-2xl font-bold">🚀 Oportunidad: crear la certificación — requisito previo como NR-12</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed">
+        La proyección estratégica es clara: la <strong class="text-purple-400">la certificación en robótica será
+        un requisito de contratación</strong>, así como la <strong class="text-purple-400">NR-12</strong> ya es
+        un requisito de seguridad para máquinas en Brasil. Crear la certificación estándar del mercado es la mayor
+        oportunidad estratégica de este módulo: quien llegue primero define las reglas.
+      </p>
+<div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-blue-400 mb-4 flex items-center">
+<span class="mr-2">📊</span> NR-12 como precedente regulatorio
+        </h3>
+<ul class="space-y-2 text-neutral-300">
+<li><strong>NR-12</strong> — norma brasileña de seguridad en máquinas y equipos</li>
+<li><strong>Trayectoria</strong> — comenzó como recomendación; hoy es un requisito legal para operar</li>
+<li><strong>Paralelo</strong> — la misma curva tiende a repetirse con la certificación en robótica</li>
+</ul>
+</div>
+<!-- Timeline da trajetoria regulatoria -->
+<div class="space-y-6 mb-6">
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-12 h-12 rounded-full bg-purple-500/20 flex items-center justify-center"><span class="text-purple-400 font-bold">1</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+<h4 class="font-semibold text-white mb-2">Hoy: diferencial</h4>
+<p class="text-sm text-neutral-400 mb-3">Certificación en robótica</p>
+<p class="text-neutral-300 text-sm">La certificación todavía se considera una ventaja competitiva opcional para el profesional.</p>
+</div>
+</div>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-12 h-12 rounded-full bg-purple-500/20 flex items-center justify-center"><span class="text-purple-400 font-bold">2</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+<h4 class="font-semibold text-white mb-2">En transición: requisito del puesto</h4>
+<p class="text-sm text-neutral-400 mb-3">Como IPC/NIMS ya son</p>
+<p class="text-neutral-300 text-sm">La certificación pasa de «deseable» a «obligatoria» en las descripciones de vacantes.</p>
+</div>
+</div>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-12 h-12 rounded-full bg-purple-500/20 flex items-center justify-center"><span class="text-purple-400 font-bold">3</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+<h4 class="font-semibold text-white mb-2">Futuro: requisito legal</h4>
+<p class="text-sm text-neutral-400 mb-3">Como la NR-12 ya es</p>
+<p class="text-neutral-300 text-sm">La certificación se convierte en una condición legal para operar: quien definió el estándar cosecha el mercado creado.</p>
+</div>
+</div>
+</div>
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-red-400 mb-3 flex items-center">
+<span class="mr-2">⚠️</span> Riesgo de llegar tarde
+        </h3>
+<p class="text-neutral-300">
+          La ventana de <strong>market creation</strong> y es breve. Cuando la regulación formalice el requisito previo
+          (como ocurrió con la NR-12), el estándar ya tendrá dueño. Quien espera a que exista la certificación para reaccionar
+          cambia la posición de quien <strong>define las reglas</strong> de quien solo <strong>cumple</strong> las reglas de los demás.
+        </p>
+</div>
+<!-- Conceitos-chave -->
+<div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+<div class="bg-dark-800 rounded-lg border border-dark-600 p-4"><div class="text-purple-400 font-bold text-sm mb-1">NR-12</div><p class="text-xs text-neutral-400">Precedente regulatorio brasileño</p></div>
+<div class="bg-dark-800 rounded-lg border border-dark-600 p-4"><div class="text-purple-400 font-bold text-sm mb-1">Estándar</div><p class="text-xs text-neutral-400">Certificación de referencia en el mercado</p></div>
+<div class="bg-dark-800 rounded-lg border border-dark-600 p-4"><div class="text-purple-400 font-bold text-sm mb-1">Market creation</div><p class="text-xs text-neutral-400">Crear el mercado, no solo competir</p></div>
+<div class="bg-dark-800 rounded-lg border border-dark-600 p-4"><div class="text-purple-400 font-bold text-sm mb-1">Trayectoria</div><p class="text-xs text-neutral-400">Diferencial → requisito → ley</p></div>
+</div>
+</section>
+<!-- RESUMO -->
+<section class="mb-12">
+<div class="bg-gradient-to-br from-purple-900/40 via-dark-800 to-dark-800 rounded-xl border border-purple-500/30 p-8">
+<h2 class="text-2xl font-bold mb-6 flex items-center">
+<span class="mr-3">✅</span> Resumen del módulo
+        </h2>
+<div class="space-y-4 mb-8">
+<div class="flex items-start space-x-3"><span class="text-purple-400 mt-1">✓</span><div><strong class="text-white">SME RMF</strong><span class="text-neutral-400"> - certificación de nivel inicial que valida los fundamentos de programación, seguridad e integración.</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-purple-400 mt-1">✓</span><div><strong class="text-white">OSHA 10/30 para robótica</strong><span class="text-neutral-400"> - seguridad obligatoria con riesgos específicos de HRC; requisito legal en EE. UU.</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-purple-400 mt-1">✓</span><div><strong class="text-white">FANUC NOCTI</strong><span class="text-neutral-400"> - alianza entre industria y academia que ofrece alumnos ya certificados por el fabricante.</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-purple-400 mt-1">✓</span><div><strong class="text-white">IPC / NIMS en ofertas de empleo</strong><span class="text-neutral-400"> - las certificaciones ya se han convertido en un filtro de contratación en robótica y automatización.</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-purple-400 mt-1">✓</span><div><strong class="text-white">Brechas de certificación</strong><span class="text-neutral-400"> - la supervisión de flotas, la gestión de HRC y el liderazgo no tienen un estándar: oportunidad de ser first-mover.</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-purple-400 mt-1">✓</span><div><strong class="text-white">Crear la certificación</strong><span class="text-neutral-400"> - tiende a convertirse en un requisito legal como la NR-12; quien llega primero define las reglas.</span></div></div>
+</div>
+<div class="bg-dark-800/50 rounded-lg p-4 mb-8">
+<h3 class="font-semibold text-purple-400 mb-2">Próximo módulo:</h3>
+<p class="text-neutral-300">3.5 - Continuación de la Ruta 3 (Estratégica)</p>
+</div>
+<div class="flex flex-col sm:flex-row gap-4">
+<a class="flex-1 text-center px-6 py-3 bg-dark-700 text-neutral-300 rounded-lg font-semibold hover:bg-dark-600 transition-colors" href="index.html">
+            ← Volver a la ruta
+          </a>
+<a class="flex-1 text-center px-6 py-3 bg-purple-600 text-white rounded-lg font-semibold hover:bg-purple-500 transition-colors" href="modulo-3-5.html">
+            Próximo módulo →
+          </a>
+</div>
+</div>
+</section>
+</main>
+<!-- FOOTER -->
+<footer class="border-t border-dark-600 py-8 mt-16">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-neutral-500 text-sm">
+<p>segROBOT — INEMA.CLUB — 2026</p>
+</div>
+</footer>
+<!-- SCRIPTS -->
+<script>
+    const themeToggle = document.getElementById('theme-toggle');
+    const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
+    const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
+    const html = document.documentElement;
+
+    if (localStorage.getItem('theme') === 'light' || (!localStorage.getItem('theme') && !html.classList.contains('dark'))) {
+      themeToggleDarkIcon.classList.remove('hidden');
+      html.classList.remove('dark');
+    } else {
+      themeToggleLightIcon.classList.remove('hidden');
+    }
+
+    themeToggle.addEventListener('click', () => {
+      themeToggleDarkIcon.classList.toggle('hidden');
+      themeToggleLightIcon.classList.toggle('hidden');
+      html.classList.toggle('dark');
+      localStorage.setItem('theme', html.classList.contains('dark') ? 'dark' : 'light');
+    });
+  </script>
+</body>
+</html>

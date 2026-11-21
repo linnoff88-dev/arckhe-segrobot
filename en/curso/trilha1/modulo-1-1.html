@@ -1,0 +1,713 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Module 1.1 — The Big Picture | segROBOT</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            primary: '#FACC15',
+            dark: { 900: '#111827', 800: '#1f2937', 700: '#374151', 600: '#4b5563' }
+          }
+        }
+      }
+    }
+  </script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<style>
+    body { font-family: 'Inter', sans-serif; }
+    .dark body { background-color: #111827; }
+    .topic-explanation { display: none; }
+    .topic-explanation.active { display: block; }
+
+    /* Light mode overrides */
+    html:not(.dark) body { background-color: #f8fafc; }
+    html:not(.dark) .bg-dark-900 { background-color: #ffffff; }
+    html:not(.dark) .bg-dark-800 { background-color: #f9fafb; }
+    html:not(.dark) .bg-dark-700 { background-color: #f3f4f6; }
+    html:not(.dark) .bg-dark-600 { background-color: #e5e7eb; }
+    html:not(.dark) .text-neutral-100 { color: #111827; }
+    html:not(.dark) .text-neutral-300 { color: #4b5563; }
+    html:not(.dark) .text-neutral-400 { color: #6b7280; }
+    html:not(.dark) .text-neutral-500 { color: #9ca3af; }
+    html:not(.dark) .border-dark-600 { border-color: #d1d5db; }
+    html:not(.dark) .border-dark-700 { border-color: #e5e7eb; }
+
+    /* Light mode - cores de acento (trilha emerald) */
+    html:not(.dark) .text-emerald-400 { color: #059669; }
+    html:not(.dark) .bg-emerald-500\/20 { background-color: rgba(5, 150, 105, 0.12); }
+    html:not(.dark) .bg-emerald-500\/10 { background-color: rgba(5, 150, 105, 0.08); }
+    html:not(.dark) .border-emerald-500\/30 { border-color: rgba(5, 150, 105, 0.25); }
+    html:not(.dark) .hover\:bg-emerald-500\/30:hover { background-color: rgba(5, 150, 105, 0.18); }
+    html:not(.dark) .hover\:border-emerald-500\/30:hover { border-color: rgba(5, 150, 105, 0.25); }
+    html:not(.dark) .hover\:text-emerald-400:hover { color: #059669; }
+    html:not(.dark) .group:hover .group-hover\:text-emerald-400 { color: #059669; }
+
+    /* Light mode - remove gradientes */
+    html:not(.dark) [class*="bg-gradient-to"] { background-image: none !important; }
+
+    /* Light mode - cores especiais */
+    html:not(.dark) .text-primary { color: #a16207; }
+    html:not(.dark) .bg-primary\/10 { background-color: rgba(161, 98, 7, 0.08); }
+    html:not(.dark) .border-primary\/40 { border-color: rgba(161, 98, 7, 0.25); }
+    html:not(.dark) .text-sky-400 { color: #0369a1; }
+    html:not(.dark) .text-yellow-400 { color: #a16207; }
+    html:not(.dark) .hover\:text-sky-300:hover { color: #0284c7; }
+    html:not(.dark) .hover\:text-yellow-300:hover { color: #854d0e; }
+
+    /* Light mode - nav */
+    html:not(.dark) .bg-dark-900\/95 { background-color: rgba(255, 255, 255, 0.95); }
+
+    /* Dark mode - bordas suaves */
+    .dark .border-dark-600 { border-color: #374151; }
+    .dark .divide-dark-600 > :not([hidden]) ~ :not([hidden]) { border-color: #374151; }
+
+    /* SVG pulse */
+    @keyframes wf-pulse { 0%,100% { opacity:.55 } 50% { opacity:1 } }
+    @media (prefers-reduced-motion: no-preference) {
+      .wf-a { animation: wf-pulse 2.6s ease-in-out infinite; }
+      .wf-a:nth-child(2){animation-delay:.25s} .wf-a:nth-child(3){animation-delay:.5s}
+      .wf-a:nth-child(4){animation-delay:.75s} .wf-a:nth-child(5){animation-delay:1s}
+    }
+  </style>
+<link href="https://inematds.github.io/segrobot/curso/trilha1/modulo-1-1.html" hreflang="pt-BR" rel="alternate"/><link href="https://inematds.github.io/segrobot/en/curso/trilha1/modulo-1-1.html" hreflang="en" rel="alternate"/><link href="https://inematds.github.io/segrobot/es/curso/trilha1/modulo-1-1.html" hreflang="es" rel="alternate"/></head>
+<body class="bg-dark-900 text-neutral-100 min-h-screen"><div class="inema-lang" style="position:fixed;right:14px;bottom:14px;z-index:9999;display:flex;gap:2px;padding:4px;border-radius:10px;background:rgba(12,12,16,.82);border:1px solid rgba(226,162,59,.45);font:600 12px/1 Sora,Inter,system-ui,sans-serif;backdrop-filter:blur(8px)" translate="no"><a href="../../../curso/trilha1/modulo-1-1.html" hreflang="pt-BR" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">PT</a><a href="modulo-1-1.html" hreflang="en" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#1a1206;background:#E2A23B">EN</a><a href="../../../es/curso/trilha1/modulo-1-1.html" hreflang="es" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">ES</a></div>
+<!-- NAVIGATION -->
+<nav class="sticky top-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-600">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="flex justify-between items-center h-14">
+<div class="flex items-center space-x-4">
+<a class="flex items-center space-x-2 text-yellow-400 hover:text-yellow-300" href="../../index.html">
+<span class="text-2xl">🤖</span>
+<span class="font-bold text-lg hidden sm:inline">segROBOT</span>
+</a>
+<span class="text-neutral-600">|</span>
+<a class="text-sky-400 hover:text-sky-300 text-sm font-medium" href="https://inema.club" target="_blank">INEMA.CLUB</a>
+</div>
+<div class="flex items-center space-x-1 sm:space-x-2">
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-emerald-400 bg-emerald-500/10" href="index.html">
+<span class="sm:hidden">T1</span>
+<span class="hidden sm:inline">Fundamentals</span>
+</a>
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-blue-400 hover:bg-blue-500/10 transition-colors" href="../trilha2/index.html">
+<span class="sm:hidden">T2</span>
+<span class="hidden sm:inline">Action</span>
+</a>
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-purple-400 hover:bg-purple-500/10 transition-colors" href="../trilha3/index.html">
+<span class="sm:hidden">T3</span>
+<span class="hidden sm:inline">Strategic</span>
+</a>
+<button class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors ml-2" id="theme-toggle">
+<svg class="hidden w-5 h-5 text-neutral-300" fill="currentColor" id="theme-toggle-dark-icon" viewbox="0 0 20 20">
+<path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+</svg>
+<svg class="hidden w-5 h-5 text-neutral-300" fill="currentColor" id="theme-toggle-light-icon" viewbox="0 0 20 20">
+<path clip-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd"></path>
+</svg>
+</button>
+</div>
+</div>
+</div>
+</nav>
+<!-- BREADCRUMB -->
+<nav class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+<div class="flex items-center space-x-2 text-sm text-neutral-400">
+<a class="hover:text-emerald-400" href="../../index.html">Start</a>
+<span>/</span>
+<a class="hover:text-emerald-400" href="index.html">Track 1</a>
+<span>/</span>
+<span class="text-emerald-400">Module 1.1</span>
+</div>
+</nav>
+<!-- HEADER -->
+<header class="bg-gradient-to-br from-emerald-900/30 via-dark-800 to-dark-800 py-12 border-b border-dark-600">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+<span class="inline-block px-3 py-1 bg-emerald-500/20 text-emerald-400 text-xs font-semibold rounded-full mb-4">MODULE 1.1</span>
+<h1 class="text-3xl sm:text-4xl font-bold mb-4">🌍 The Big Picture: Robots, Jobs, and Reskilling</h1>
+<p class="text-lg text-neutral-400 max-w-3xl">
+        WEF figures, the automation paradox, the global robot density map, and the new professional roles emerging. This module builds the data foundation that supports the entire argument for human reskilling in robotic environments.
+      </p>
+<!-- Stats Banner -->
+<div class="grid grid-cols-4 gap-4 mt-8 max-w-2xl">
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+<div class="text-xl font-bold text-emerald-400">6</div>
+<div class="text-xs text-neutral-400">Topics</div>
+</div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+<div class="text-xl font-bold text-emerald-400">50</div>
+<div class="text-xs text-neutral-400">Minutes</div>
+</div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+<div class="text-xl font-bold text-emerald-400">Basic</div>
+<div class="text-xs text-neutral-400">Level</div>
+</div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+<div class="text-xl font-bold text-emerald-400">Theory</div>
+<div class="text-xs text-neutral-400">Type</div>
+</div>
+</div>
+</div>
+</header>
+<!-- CONTEUDO -->
+<main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+<!-- DIAGRAMA SVG: o paradoxo da transicao -->
+<div class="rounded-2xl border border-emerald-500/30 bg-dark-900/40 p-3 sm:p-4 mb-12 overflow-hidden">
+<svg aria-label="Automation eliminates 92 million jobs but creates 170 million new ones, generating a net gain of 78 million; human reskilling is the bridge between the two sides" class="w-full h-auto" role="img" viewbox="0 0 1000 240">
+<defs>
+<lineargradient id="m11-grad" x1="0" x2="1" y1="0" y2="1">
+<stop offset="0" stop-color="#34d399"></stop><stop offset="1" stop-color="#10b981"></stop>
+</lineargradient>
+<filter height="180%" id="m11-glow" width="180%" x="-40%" y="-40%">
+<fegaussianblur result="b" stddeviation="3"></fegaussianblur><femerge><femergenode in="b"></femergenode><femergenode in="SourceGraphic"></femergenode></femerge>
+</filter>
+<pattern height="32" id="m11-grid" patternunits="userSpaceOnUse" width="32">
+<circle cx="1.3" cy="1.3" fill="#34d399" opacity="0.12" r="1.3"></circle>
+</pattern>
+<marker id="m11-ah" markerheight="9" markerwidth="9" orient="auto" refx="6.5" refy="4.5"><path d="M0,0 L8,4.5 L0,9 L2.4,4.5 Z" fill="#34d399"></path></marker>
+<marker id="m11-ahc" markerheight="9" markerwidth="9" orient="auto" refx="6.5" refy="4.5"><path d="M0,0 L8,4.5 L0,9 L2.4,4.5 Z" fill="#38bdf8"></path></marker>
+</defs>
+<rect fill="url(#m11-grid)" height="240" width="1000" x="0" y="0"></rect>
+<!-- Eliminados (esquerda, neutro) -->
+<g filter="url(#m11-glow)"><rect fill="#26201a" height="70" rx="14" stroke="#9ca3af" stroke-width="2.5" width="190" x="40" y="40"></rect></g>
+<text fill="#e5e7eb" font-family="Inter,sans-serif" font-size="18" font-weight="700" text-anchor="middle" x="135" y="70">-92M jobs</text>
+<text fill="#9ca3af" font-family="Inter,sans-serif" font-size="12" text-anchor="middle" x="135" y="92">displaced by 2030</text>
+<!-- Ponte: requalificacao (centro, emerald) -->
+<g fill="none" opacity="0.6" stroke="#9ca3af" stroke-width="2">
+<path d="M230,75 C320,75 350,120 430,120" marker-end="url(#m11-ah)"></path>
+</g>
+<g filter="url(#m11-glow)"><rect fill="#0e2018" height="72" rx="16" stroke="url(#m11-grad)" stroke-width="3" width="160" x="430" y="84"></rect></g>
+<text fill="#34d399" font-family="Inter,sans-serif" font-size="17" font-weight="700" text-anchor="middle" x="510" y="116">Reskilling</text>
+<text fill="#a7f3d0" font-family="Inter,sans-serif" font-size="12" text-anchor="middle" x="510" y="138">59% need reskilling</text>
+<!-- Criados (direita, ciano) -->
+<g fill="none" opacity="0.65" stroke="#38bdf8" stroke-width="2">
+<path d="M590,120 C680,120 700,75 770,75" marker-end="url(#m11-ahc)"></path>
+</g>
+<g filter="url(#m11-glow)"><rect fill="#0e1b26" height="70" rx="14" stroke="#38bdf8" stroke-width="2.5" width="190" x="770" y="40"></rect></g>
+<text fill="#bfe6ff" font-family="Inter,sans-serif" font-size="18" font-weight="700" text-anchor="middle" x="865" y="70">+170M jobs</text>
+<text fill="#9ad6ff" font-family="Inter,sans-serif" font-size="12" text-anchor="middle" x="865" y="92">new by 2030</text>
+<!-- Saldo liquido (base, emerald forte) -->
+<g class="wf-a"><rect fill="#0e2018" height="40" rx="12" stroke="#10b981" stroke-width="2" width="250" x="385" y="186"></rect></g>
+<text fill="#34d399" font-family="Inter,sans-serif" font-size="15" font-weight="700" text-anchor="middle" x="510" y="212">Net balance: +78M jobs</text>
+</svg>
+<p class="text-xs text-neutral-500 mt-2 text-center">Illustrative diagram — WEF Future of Jobs 2025 data.</p>
+</div>
+<!-- ========================= TOPICO 1 ========================= -->
+<section class="mb-16" id="topico-1">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-xl">1</span>
+<h2 class="text-2xl font-bold">📊 WEF 2025 Projections</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed">
+        The report <strong class="text-emerald-400">Future of Jobs 2025</strong> from the World Economic Forum and the reference document for any serious conversation about the future of work. It doesn't speculate: it aggregates responses from employers representing more than 14 million workers. The main takeaway is that automation doesn't eliminate work — it <em>recomposes</em>.
+      </p>
+<div class="bg-gradient-to-br from-emerald-900/30 to-dark-800 rounded-xl border border-emerald-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-emerald-400 mb-4 flex items-center">
+<span class="mr-2">🧭</span> Key concept: positive net balance
+        </h3>
+<p class="text-neutral-300 mb-4">
+          The WEF’s count through 2030 comes to a net creation of <strong>78 million</strong> of jobs. This figure is the
+          result of a subtraction, not simple growth — and understanding the subtraction changes the strategy.
+        </p>
+<ul class="space-y-2 text-neutral-300">
+<li class="flex items-start space-x-2"><span class="text-emerald-400 mt-1">•</span><span><strong>+170 million</strong> of new jobs created by technology, the green transition, and demographics.</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400 mt-1">•</span><span><strong>-92 million</strong> of jobs displaced by automation and AI.</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400 mt-1">•</span><span><strong>= 78 million</strong> net balance — but with a completely different skills profile.</span></li>
+</ul>
+</div>
+<div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-blue-400 mb-4 flex items-center">
+<span class="mr-2">🔬</span> Research Data
+        </h3>
+<ul class="space-y-2 text-neutral-300">
+<li><strong>78 million</strong> — projected net job creation through 2030.</li>
+<li><strong>59%</strong> — share of the global workforce that needs reskilling during this period.</li>
+<li><strong>+170M / -92M</strong> — jobs created versus jobs displaced.</li>
+<li><strong>Technology</strong> — main driver, followed by the green transition and demographic changes.</li>
+</ul>
+</div>
+<div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
+<span class="mr-2">💡</span> Practical Tip
+        </h3>
+<p class="text-neutral-300">
+          When presenting the need for upskilling internally, always start with the positive net balance (+78M).
+          This defuses the fear that "robots steal jobs" before you talk about the 92M displaced—the narrative order matters
+          as much as the data.
+        </p>
+</div>
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+<div class="bg-dark-800 rounded-lg border border-dark-600 p-4">
+<div class="text-emerald-400 font-bold text-lg mb-1">78M</div>
+<div class="text-sm text-neutral-400">Net job balance</div>
+</div>
+<div class="bg-dark-800 rounded-lg border border-dark-600 p-4">
+<div class="text-emerald-400 font-bold text-lg mb-1">59%</div>
+<div class="text-sm text-neutral-400">Workforce to be reskilled</div>
+</div>
+<div class="bg-dark-800 rounded-lg border border-dark-600 p-4">
+<div class="text-emerald-400 font-bold text-lg mb-1">+170M</div>
+<div class="text-sm text-neutral-400">Jobs created</div>
+</div>
+<div class="bg-dark-800 rounded-lg border border-dark-600 p-4">
+<div class="text-emerald-400 font-bold text-lg mb-1">-92M</div>
+<div class="text-sm text-neutral-400">Jobs displaced</div>
+</div>
+</div>
+</section>
+<!-- ========================= TOPICO 2 ========================= -->
+<section class="mb-16" id="topico-2">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-xl">2</span>
+<h2 class="text-2xl font-bold">⚠️ 70% of Failures Are Human</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed">
+        The research by <strong class="text-emerald-400">Boston Consulting Group</strong> reveals the most important data
+        for your profession: <strong>70% of digital transformation projects fail due to human factors</strong> —
+        resistance, lack of skills, culture—and not technological limitations. The machine is rarely the problem.
+        The people around it almost always are.
+      </p>
+<div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-blue-400 mb-4 flex items-center">
+<span class="mr-2">🔬</span> Research Data (BCG)
+        </h3>
+<ul class="space-y-2 text-neutral-300">
+<li><strong>70%</strong> — digital transformation projects that fail because of human factors.</li>
+<li><strong>5x a 10x</strong> — how much it costs to fix a post-deploy failure versus training beforehand.</li>
+<li><strong>Change management</strong> — cited as the #1 success factor, ahead of budget and technology.</li>
+</ul>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed">
+        If 7 out of every 10 robot implementations fail because of people, not machines, the human reskilling professional is
+        <strong class="text-emerald-400">human reskilling is more critical than the technical integrator</strong>. The grid
+        below separates what actually moves the needle from what tends to sabotage the project.
+      </p>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+<div class="bg-emerald-900/20 rounded-xl border border-emerald-500/30 p-6">
+<h4 class="font-bold text-emerald-400 mb-4">✓ What to DO</h4>
+<ul class="space-y-3 text-neutral-300">
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Invest in training <strong>before</strong> of the robot's deployment.</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Treat change management as a formal project, with an owner and metrics.</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Involve the factory floor in the design, not just the execution.</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Measure adoption and trust, not just machine uptime.</span></li>
+</ul>
+</div>
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+<h4 class="font-bold text-red-400 mb-4">✗ What NOT to do</h4>
+<ul class="space-y-3 text-neutral-300">
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Treating the robot purchase as the end of the project.</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Leave training for “after things stabilize.”</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Ignore cultural resistance, thinking it will disappear on its own.</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Fixing post-deploy failures—costs 5x to 10x more.</span></li>
+</ul>
+</div>
+</div>
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+<div class="bg-dark-800 rounded-lg border border-dark-600 p-4">
+<div class="text-emerald-400 font-bold text-lg mb-1">70%</div>
+<div class="text-sm text-neutral-400">Human-factor failures</div>
+</div>
+<div class="bg-dark-800 rounded-lg border border-dark-600 p-4">
+<div class="text-emerald-400 font-bold text-lg mb-1">5-10x</div>
+<div class="text-sm text-neutral-400">Cost of post-failure remediation</div>
+</div>
+<div class="bg-dark-800 rounded-lg border border-dark-600 p-4">
+<div class="text-emerald-400 font-bold text-lg mb-1">#1</div>
+<div class="text-sm text-neutral-400">Change management as a factor</div>
+</div>
+<div class="bg-dark-800 rounded-lg border border-dark-600 p-4">
+<div class="text-emerald-400 font-bold text-lg mb-1">Culture</div>
+<div class="text-sm text-neutral-400">Loses to technology when risk is involved</div>
+</div>
+</div>
+</section>
+<!-- ========================= TOPICO 3 ========================= -->
+<section class="mb-16" id="topico-3">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-xl">3</span>
+<h2 class="text-2xl font-bold">🔄 The Paradox: More Robots = More Jobs</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed">
+        The historical evidence is counterintuitive: countries with higher <strong class="text-emerald-400">robot
+        density</strong> — South Korea, Japan, Germany — have unemployment rates equal to or <em>smaller</em> that countries with
+        low automation. More robots create more jobs. But different jobs, requiring different skills.
+      </p>
+<div class="bg-gradient-to-br from-emerald-900/30 to-dark-800 rounded-xl border border-emerald-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-emerald-400 mb-4 flex items-center">
+<span class="mr-2">🧩</span> Key concept: human-machine complementarity
+        </h3>
+<p class="text-neutral-300 mb-4">
+          The robot doesn't replace the entire worker—it replaces tasks. When it takes over repetitive and dangerous work,
+          productivity rises, costs fall, the market grows, and <strong>new positions emerge at the edge</strong>:
+          supervision, maintenance, exceptions, coordination.
+        </p>
+<ul class="space-y-2 text-neutral-300">
+<li class="flex items-start space-x-2"><span class="text-emerald-400 mt-1">•</span><span>Productivity drives growth, which creates new jobs.</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400 mt-1">•</span><span>The gap isn’t about <strong>destination</strong>, and of <strong>transition</strong>.</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400 mt-1">•</span><span>Those who manage the transition capture the positive balance; those who ignore it pay the negative side.</span></li>
+</ul>
+</div>
+<div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
+<span class="mr-2">💡</span> Practical Tip
+        </h3>
+<p class="text-neutral-300">
+          The paradox is your strongest rhetorical weapon. When someone says “robots steal jobs,” respond with the
+          correlation: the countries with the highest robot density in the world don’t have more unemployment — they have less. What changes
+          isn’t the amount of work, but the type. And the type can be learned.
+        </p>
+</div>
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-red-400 mb-3 flex items-center">
+<span class="mr-2">🚨</span> Attention to misunderstandings
+        </h3>
+<p class="text-neutral-300">
+          "More jobs" in the aggregate does not mean "the same worker stays in the same position." The paradox describes
+          the system, not the individual. Without deliberate reskilling, the displaced person may not reach the newly created position
+          — and this is exactly the gap the upskilling professional fills.
+        </p>
+</div>
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+<div class="bg-dark-800 rounded-lg border border-dark-600 p-4">
+<div class="text-emerald-400 font-bold text-lg mb-1">Complementary</div>
+<div class="text-sm text-neutral-400">Human + machine, not versus</div>
+</div>
+<div class="bg-dark-800 rounded-lg border border-dark-600 p-4">
+<div class="text-emerald-400 font-bold text-lg mb-1">Productivity</div>
+<div class="text-sm text-neutral-400">Driver of new roles</div>
+</div>
+<div class="bg-dark-800 rounded-lg border border-dark-600 p-4">
+<div class="text-emerald-400 font-bold text-lg mb-1">Transition</div>
+<div class="text-sm text-neutral-400">Where the real gap lies</div>
+</div>
+<div class="bg-dark-800 rounded-lg border border-dark-600 p-4">
+<div class="text-emerald-400 font-bold text-lg mb-1">Korea/Japan</div>
+<div class="text-sm text-neutral-400">High Density, Low Unemployment</div>
+</div>
+</div>
+</section>
+<!-- ========================= TOPICO 4 ========================= -->
+<section class="mb-16" id="topico-4">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-xl">4</span>
+<h2 class="text-2xl font-bold">🗺️ Global Map of Robotic Density</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed">
+        A <strong class="text-emerald-400">robot density</strong> — industrial robots per 10,000 workers,
+        as measured by the IFR — and the best proxy for a country's industrial maturity. The ranking reveals both Brazil's
+        distance and the scale of the opportunity.
+      </p>
+<div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-blue-400 mb-4 flex items-center">
+<span class="mr-2">📐</span> IFR ranking (robots per 10,000 workers)
+        </h3>
+<div class="space-y-3">
+<div>
+<div class="flex justify-between text-sm mb-1"><span class="text-neutral-300">South Korea</span><span class="text-blue-400 font-bold">1.012</span></div>
+<div class="h-2 rounded-full bg-dark-700"><div class="h-2 rounded-full bg-blue-500" style="width:100%"></div></div>
+</div>
+<div>
+<div class="flex justify-between text-sm mb-1"><span class="text-neutral-300">Japan</span><span class="text-blue-400 font-bold">399</span></div>
+<div class="h-2 rounded-full bg-dark-700"><div class="h-2 rounded-full bg-blue-500" style="width:39%"></div></div>
+</div>
+<div>
+<div class="flex justify-between text-sm mb-1"><span class="text-neutral-300">Germany</span><span class="text-blue-400 font-bold">397</span></div>
+<div class="h-2 rounded-full bg-dark-700"><div class="h-2 rounded-full bg-blue-500" style="width:39%"></div></div>
+</div>
+<div>
+<div class="flex justify-between text-sm mb-1"><span class="text-neutral-300">China</span><span class="text-blue-400 font-bold">392</span></div>
+<div class="h-2 rounded-full bg-dark-700"><div class="h-2 rounded-full bg-blue-500" style="width:38%"></div></div>
+</div>
+<div>
+<div class="flex justify-between text-sm mb-1"><span class="text-neutral-300">Global average</span><span class="text-blue-400 font-bold">162</span></div>
+<div class="h-2 rounded-full bg-dark-700"><div class="h-2 rounded-full bg-blue-500" style="width:16%"></div></div>
+</div>
+<div>
+<div class="flex justify-between text-sm mb-1"><span class="text-neutral-300">Brazil</span><span class="text-blue-400 font-bold">18</span></div>
+<div class="h-2 rounded-full bg-dark-700"><div class="h-2 rounded-full bg-blue-500" style="width:2%"></div></div>
+</div>
+</div>
+</div>
+<div class="bg-gradient-to-br from-emerald-900/30 to-dark-800 rounded-xl border border-emerald-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-emerald-400 mb-3 flex items-center">
+<span class="mr-2">🇧🇷</span> Brazil’s 9x gap
+        </h3>
+<p class="text-neutral-300">
+          With a density of <strong>18</strong> against a global average of <strong>162</strong>, Brazil is about
+          <strong>9x lower</strong> of the global average. This is both the size of the gap and the size of the growth
+          opportunity. Where density rises quickly, demand for reskilling explodes at the same pace.
+        </p>
+</div>
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+<div class="bg-dark-800 rounded-lg border border-dark-600 p-4">
+<div class="text-emerald-400 font-bold text-lg mb-1">1.012</div>
+<div class="text-sm text-neutral-400">South Korea (leader)</div>
+</div>
+<div class="bg-dark-800 rounded-lg border border-dark-600 p-4">
+<div class="text-emerald-400 font-bold text-lg mb-1">162</div>
+<div class="text-sm text-neutral-400">Global average</div>
+</div>
+<div class="bg-dark-800 rounded-lg border border-dark-600 p-4">
+<div class="text-emerald-400 font-bold text-lg mb-1">18</div>
+<div class="text-sm text-neutral-400">Brazil</div>
+</div>
+<div class="bg-dark-800 rounded-lg border border-dark-600 p-4">
+<div class="text-emerald-400 font-bold text-lg mb-1">~9x</div>
+<div class="text-sm text-neutral-400">Brazil vs. average gap</div>
+</div>
+</div>
+</section>
+<!-- ========================= TOPICO 5 ========================= -->
+<section class="mb-16" id="topico-5">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-xl">5</span>
+<h2 class="text-2xl font-bold">👤 Emerging New Roles</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed">
+        Functions that <strong class="text-emerald-400">didn't exist 5 years ago</strong> are the concrete destinations of reskilling
+        programs. Without knowing them, you can't design a curriculum or career plan. The three roles below
+        already appear in real job postings.
+      </p>
+<div class="space-y-6 mb-6">
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-12 h-12 rounded-full bg-emerald-500/20 flex items-center justify-center">
+<span class="text-emerald-400 font-bold">1</span>
+</div>
+<div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+<h4 class="font-semibold text-white mb-2">Fleet Coordinator</h4>
+<p class="text-sm text-neutral-400 mb-3">Manages AMR fleets</p>
+<p class="text-neutral-300 text-sm">
+              Oversees between <strong>20 to 50 autonomous mobile robots</strong> simultaneously: prioritizes tasks,
+              resolves congestion, and keeps the logistics flow moving. It's the "traffic controller" of the robotic warehouse.
+            </p>
+</div>
+</div>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-12 h-12 rounded-full bg-emerald-500/20 flex items-center justify-center">
+<span class="text-emerald-400 font-bold">2</span>
+</div>
+<div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+<h4 class="font-semibold text-white mb-2">Exception Handler</h4>
+<p class="text-sm text-neutral-400 mb-3">Resolves failures in real time</p>
+<p class="text-neutral-300 text-sm">
+              Acts on <strong>edge cases that AI doesn't cover</strong>: the package that fell, the sensor that froze, the blocked
+              route. Where the machine stops, this role gets things moving again—combining rapid diagnosis with human decision-making.
+            </p>
+</div>
+</div>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-12 h-12 rounded-full bg-emerald-500/20 flex items-center justify-center">
+<span class="text-emerald-400 font-bold">3</span>
+</div>
+<div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+<h4 class="font-semibold text-white mb-2">AI Training Associate</h4>
+<p class="text-sm text-neutral-400 mb-3">Human-in-the-loop for robots</p>
+<p class="text-neutral-300 text-sm">
+              Feeds and validates the <strong>industrial AI models</strong>: labels data, corrects model errors, and
+              closes the learning loop. It's the human bridge between raw data and a robot that learns.
+            </p>
+</div>
+</div>
+</div>
+<div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
+<span class="mr-2">💡</span> Practical Tip
+        </h3>
+<p class="text-neutral-300">
+          When designing a reskilling program, anchor each learning path to a specific target role.
+          "Learning robotics" is vague; "becoming a Fleet Coordinator in 6 months" is a goal that motivates and can be measured.
+        </p>
+</div>
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+<div class="bg-dark-800 rounded-lg border border-dark-600 p-4">
+<div class="text-emerald-400 font-bold text-lg mb-1">20-50</div>
+<div class="text-sm text-neutral-400">AMRs per Fleet Coordinator</div>
+</div>
+<div class="bg-dark-800 rounded-lg border border-dark-600 p-4">
+<div class="text-emerald-400 font-bold text-lg mb-1">Edge cases</div>
+<div class="text-sm text-neutral-400">Mastery of the Exception Handler</div>
+</div>
+<div class="bg-dark-800 rounded-lg border border-dark-600 p-4">
+<div class="text-emerald-400 font-bold text-lg mb-1">Human-in-loop</div>
+<div class="text-sm text-neutral-400">AI Training Associate</div>
+</div>
+<div class="bg-dark-800 rounded-lg border border-dark-600 p-4">
+<div class="text-emerald-400 font-bold text-lg mb-1">&lt; 5 years</div>
+<div class="text-sm text-neutral-400">Age of these roles</div>
+</div>
+</div>
+</section>
+<!-- ========================= TOPICO 6 ========================= -->
+<section class="mb-16" id="topico-6">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-xl">6</span>
+<h2 class="text-2xl font-bold">📈 Adoption Wave Timeline</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed">
+        Were <strong class="text-emerald-400">6 waves in 64 years</strong> (1961 to 2025). Each one required new skills and,
+        with each cycle, more people came into direct contact with robots. The current wave — cobots + AI + humanoids — is the one involving the most reskilling in history.
+      </p>
+<div class="space-y-6 mb-6">
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-12 h-12 rounded-full bg-emerald-500/20 flex items-center justify-center">
+<span class="text-emerald-400 font-bold text-sm">1961</span>
+</div>
+<div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+<h4 class="font-semibold text-white mb-2">Unimate—the first wave</h4>
+<p class="text-neutral-300 text-sm">First industrial robot, installed on the General Motors automotive line. Automation of dangerous tasks begins.</p>
+</div>
+</div>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-12 h-12 rounded-full bg-emerald-500/20 flex items-center justify-center">
+<span class="text-emerald-400 font-bold text-sm">1990s</span>
+</div>
+<div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+<h4 class="font-semibold text-white mb-2">Expansion into electronics</h4>
+<p class="text-neutral-300 text-sm">Robotics moves beyond automotive and into electronics assembly, requiring precision and new operator profiles.</p>
+</div>
+</div>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-12 h-12 rounded-full bg-emerald-500/20 flex items-center justify-center">
+<span class="text-emerald-400 font-bold text-sm">2008</span>
+</div>
+<div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+<h4 class="font-semibold text-white mb-2">Commercial cobots</h4>
+<p class="text-neutral-300 text-sm">Collaborative robots arrive: for the first time, machines and humans share the same space without a safety cell.</p>
+</div>
+</div>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-12 h-12 rounded-full bg-emerald-500/20 flex items-center justify-center">
+<span class="text-emerald-400 font-bold text-sm">2012</span>
+</div>
+<div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+<h4 class="font-semibold text-white mb-2">Amazon Kiva</h4>
+<p class="text-neutral-300 text-sm">Amazon’s acquisition of Kiva ushered in the era of AMRs at scale in intralogistics.</p>
+</div>
+</div>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-12 h-12 rounded-full bg-emerald-500/20 flex items-center justify-center">
+<span class="text-emerald-400 font-bold text-sm">2020</span>
+</div>
+<div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+<h4 class="font-semibold text-white mb-2">The pandemic accelerates AMRs</h4>
+<p class="text-neutral-300 text-sm">The demand for physical distancing and supply chain resilience is driving rapid adoption of mobile robots in warehouses and hospitals.</p>
+</div>
+</div>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-12 h-12 rounded-full bg-emerald-500/20 flex items-center justify-center">
+<span class="text-emerald-400 font-bold text-sm">2025</span>
+</div>
+<div class="flex-1 bg-gradient-to-br from-emerald-900/30 to-dark-800 rounded-xl p-6 border border-emerald-500/30">
+<h4 class="font-semibold text-emerald-400 mb-2">Humanoids in pilot programs — the inflection point</h4>
+<p class="text-neutral-300 text-sm">Humanoids are entering industrial pilot programs. The convergence of cobots + AI + humanoids marks the inflection point and the greatest reskilling effort ever required.</p>
+</div>
+</div>
+</div>
+<div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
+<span class="mr-2">💡</span> Practical Tip
+        </h3>
+<p class="text-neutral-300">
+          Use the timeline to counter fear of novelty. Every previous wave caused concern — and each one ended with more people employed, not fewer. The historical pattern is the best argument against panic.
+        </p>
+</div>
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+<div class="bg-dark-800 rounded-lg border border-dark-600 p-4">
+<div class="text-emerald-400 font-bold text-lg mb-1">6 waves</div>
+<div class="text-sm text-neutral-400">In 64 years (1961-2025)</div>
+</div>
+<div class="bg-dark-800 rounded-lg border border-dark-600 p-4">
+<div class="text-emerald-400 font-bold text-lg mb-1">1961</div>
+<div class="text-sm text-neutral-400">Unimate at GM</div>
+</div>
+<div class="bg-dark-800 rounded-lg border border-dark-600 p-4">
+<div class="text-emerald-400 font-bold text-lg mb-1">2012</div>
+<div class="text-sm text-neutral-400">Amazon Kiva, formerly AMR</div>
+</div>
+<div class="bg-dark-800 rounded-lg border border-dark-600 p-4">
+<div class="text-emerald-400 font-bold text-lg mb-1">2025-30</div>
+<div class="text-sm text-neutral-400">Inflection point</div>
+</div>
+</div>
+</section>
+<!-- ========================= RESUMO ========================= -->
+<section class="mb-12">
+<div class="bg-gradient-to-br from-emerald-900/40 via-dark-800 to-dark-800 rounded-xl border border-emerald-500/30 p-8">
+<h2 class="text-2xl font-bold mb-6 flex items-center">
+<span class="mr-3">✅</span> Module Summary
+        </h2>
+<div class="space-y-4 mb-8">
+<div class="flex items-start space-x-3">
+<span class="text-emerald-400 mt-1">✓</span>
+<div><strong class="text-white">Positive net balance</strong><span class="text-neutral-400"> - WEF projects +78M jobs (+170M created, -92M displaced) and 59% of the workforce needing reskilling by 2030.</span></div>
+</div>
+<div class="flex items-start space-x-3">
+<span class="text-emerald-400 mt-1">✓</span>
+<div><strong class="text-white">The failure is human</strong><span class="text-neutral-400"> - 70% of projects (BCG) fail because of people, not machines; fixing issues post-deployment costs 5x to 10x more.</span></div>
+</div>
+<div class="flex items-start space-x-3">
+<span class="text-emerald-400 mt-1">✓</span>
+<div><strong class="text-white">The automation paradox</strong><span class="text-neutral-400"> - More robots = more jobs, but different ones. The gap is in the transition, not the destination.</span></div>
+</div>
+<div class="flex items-start space-x-3">
+<span class="text-emerald-400 mt-1">✓</span>
+<div><strong class="text-white">Robot density</strong><span class="text-neutral-400"> - Korea 1,012, global average 162, Brazil 18: a gap of ~9x that represents both a lag and an opportunity.</span></div>
+</div>
+<div class="flex items-start space-x-3">
+<span class="text-emerald-400 mt-1">✓</span>
+<div><strong class="text-white">Emerging roles</strong><span class="text-neutral-400"> - Fleet Coordinator, Exception Handler, and AI Training Associate are reskilling destinations.</span></div>
+</div>
+<div class="flex items-start space-x-3">
+<span class="text-emerald-400 mt-1">✓</span>
+<div><strong class="text-white">6 waves in 64 years</strong><span class="text-neutral-400"> - From Unimate (1961) to humanoid robots (2025); the current wave demands the largest reskilling effort in history.</span></div>
+</div>
+</div>
+<div class="bg-dark-800/50 rounded-lg p-4 mb-8">
+<h3 class="font-semibold text-emerald-400 mb-2">Next Module:</h3>
+<p class="text-neutral-300">1.2 - Cobots, AMRs, and Humanoids: Taxonomy</p>
+</div>
+<div class="flex flex-col sm:flex-row gap-4">
+<a class="flex-1 text-center px-6 py-3 bg-dark-700 text-neutral-300 rounded-lg font-semibold hover:bg-dark-600 transition-colors" href="index.html">
+            ← Back to Track
+          </a>
+<a class="flex-1 text-center px-6 py-3 bg-emerald-600 text-white rounded-lg font-semibold hover:bg-emerald-500 transition-colors" href="modulo-1-2.html">
+            Next Module →
+          </a>
+</div>
+</div>
+</section>
+</main>
+<!-- FOOTER -->
+<footer class="border-t border-dark-600 py-8 mt-16">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-neutral-500 text-sm">
+<p>segROBOT — INEMA.CLUB — 2026</p>
+</div>
+</footer>
+<!-- SCRIPTS -->
+<script>
+    const themeToggle = document.getElementById('theme-toggle');
+    const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
+    const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
+    const html = document.documentElement;
+
+    if (localStorage.getItem('theme') === 'light' || (!localStorage.getItem('theme') && !html.classList.contains('dark'))) {
+      themeToggleDarkIcon.classList.remove('hidden');
+      html.classList.remove('dark');
+    } else {
+      themeToggleLightIcon.classList.remove('hidden');
+    }
+
+    themeToggle.addEventListener('click', () => {
+      themeToggleDarkIcon.classList.toggle('hidden');
+      themeToggleLightIcon.classList.toggle('hidden');
+      html.classList.toggle('dark');
+      localStorage.setItem('theme', html.classList.contains('dark') ? 'dark' : 'light');
+    });
+  </script>
+</body>
+</html>

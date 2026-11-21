@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="pt-BR">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>segROBOT · Curso Completo — 3 Trilhas</title>
+<meta content="20 módulos sobre requalificação humana para ambientes robotizados. Fundamentos, Ação e Estratégia." name="description"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+tailwind.config = {
+  darkMode: 'class',
+  theme: {
+    extend: {
+      colors: {
+        dark: { 600:'#4b5563', 700:'#374151', 800:'#1f2937', 900:'#111827' },
+        primary: '#FACC15'
+      }
+    }
+  }
+}
+</script>
+<style>
+  body { font-family: 'Inter', sans-serif; }
+
+  .dark .border-dark-600 { border-color: #374151; }
+  .dark .divide-dark-600 > :not([hidden]) ~ :not([hidden]) { border-color: #374151; }
+
+  /* ── LIGHT MODE ── */
+  html:not(.dark) body { background-color: #f8fafc; color: #111827; }
+  html:not(.dark) .bg-dark-900 { background-color: #ffffff; }
+  html:not(.dark) .bg-dark-800 { background-color: #f9fafb; }
+  html:not(.dark) .bg-dark-700 { background-color: #f3f4f6; }
+  html:not(.dark) .border-dark-600 { border-color: #d1d5db; }
+  html:not(.dark) .border-dark-700 { border-color: #e5e7eb; }
+  html:not(.dark) .text-neutral-100 { color: #111827; }
+  html:not(.dark) .text-neutral-300 { color: #4b5563; }
+  html:not(.dark) .text-neutral-400 { color: #6b7280; }
+  html:not(.dark) .text-gray-100 { color: #111827; }
+  html:not(.dark) .text-gray-300 { color: #374151; }
+  html:not(.dark) .text-gray-400 { color: #6b7280; }
+  html:not(.dark) .text-gray-500 { color: #9ca3af; }
+
+  html:not(.dark) .text-emerald-400 { color: #059669; }
+  html:not(.dark) .bg-emerald-500\/10 { background-color: rgba(5,150,105,0.08); }
+  html:not(.dark) .border-emerald-500\/30 { border-color: rgba(5,150,105,0.25); }
+  html:not(.dark) .text-blue-400 { color: #2563eb; }
+  html:not(.dark) .bg-blue-500\/10 { background-color: rgba(37,99,235,0.08); }
+  html:not(.dark) .border-blue-500\/30 { border-color: rgba(37,99,235,0.25); }
+  html:not(.dark) .text-purple-400 { color: #7c3aed; }
+  html:not(.dark) .bg-purple-500\/10 { background-color: rgba(124,58,237,0.08); }
+  html:not(.dark) .border-purple-500\/30 { border-color: rgba(124,58,237,0.25); }
+
+  html:not(.dark) .text-sky-400 { color: #0369a1; }
+  html:not(.dark) .text-red-400 { color: #dc2626; }
+  html:not(.dark) .text-yellow-400 { color: #a16207; }
+  html:not(.dark) .hover\:text-sky-300:hover { color: #0284c7; }
+  html:not(.dark) [class*="bg-gradient-to"] { background-image: none !important; }
+  html:not(.dark) nav { background-color: rgba(255,255,255,0.9) !important; border-color: #e5e7eb !important; }
+</style>
+<link href="https://inematds.github.io/segrobot/curso/" hreflang="pt-BR" rel="alternate"/><link href="https://inematds.github.io/segrobot/en/curso/" hreflang="en" rel="alternate"/><link href="https://inematds.github.io/segrobot/es/curso/" hreflang="es" rel="alternate"/></head>
+<body class="bg-dark-900 text-gray-100"><div class="inema-lang" style="position:fixed;right:14px;bottom:14px;z-index:9999;display:flex;gap:2px;padding:4px;border-radius:10px;background:rgba(12,12,16,.82);border:1px solid rgba(226,162,59,.45);font:600 12px/1 Sora,Inter,system-ui,sans-serif;backdrop-filter:blur(8px)" translate="no"><a href="./" hreflang="pt-BR" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#1a1206;background:#E2A23B">PT</a><a href="../en/curso/" hreflang="en" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">EN</a><a href="../es/curso/" hreflang="es" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">ES</a></div>
+<!-- NAV -->
+<nav class="sticky top-0 z-40 backdrop-blur bg-dark-900/95 border-b border-dark-600">
+<div class="max-w-7xl mx-auto px-6 py-3 flex items-center justify-between gap-4">
+<a class="flex items-center gap-2 font-bold shrink-0" href="../">
+<span class="w-8 h-8 rounded-lg bg-red-500 text-white grid place-items-center text-sm">🤖</span>
+      seg<span class="text-red-400">ROBOT</span>
+</a>
+<div class="flex items-center gap-1 text-sm flex-wrap justify-end">
+<a class="px-3 py-2 rounded text-emerald-400 hover:bg-emerald-500/10" href="trilha1/">Fundamentos</a>
+<a class="px-3 py-2 rounded text-blue-400 hover:bg-blue-500/10" href="trilha2/">Ação</a>
+<a class="px-3 py-2 rounded text-purple-400 hover:bg-purple-500/10" href="trilha3/">Estratégico</a>
+<span class="text-gray-500 mx-1">|</span>
+<a class="text-sky-400 hover:text-sky-300 text-sm font-medium px-2" href="https://inema.club" rel="noopener" target="_blank">INEMA.CLUB</a>
+<button aria-label="Alternar tema" class="ml-2 w-9 h-9 rounded-lg border border-dark-600 hover:bg-dark-700 flex items-center justify-center text-sm" onclick="document.documentElement.classList.toggle('dark');localStorage.setItem('theme',document.documentElement.classList.contains('dark')?'dark':'light')">
+<span class="dark:hidden">🌙</span><span class="hidden dark:inline">☀️</span>
+</button>
+</div>
+</div>
+</nav>
+<!-- HEADER -->
+<header class="border-b border-dark-600 py-16 bg-gradient-to-b from-dark-800 to-dark-900">
+<div class="max-w-4xl mx-auto px-6 text-center">
+<h1 class="text-3xl md:text-5xl font-bold">Curso <span class="text-red-400">segROBOT</span></h1>
+<p class="mt-4 text-gray-400 text-lg">Requalificação Humana para Ambientes Robotizados</p>
+<p class="mt-2 text-gray-500">3 trilhas · 20 módulos · ~9 horas · 50+ fontes</p>
+</div>
+</header>
+<!-- MAPA DAS TRILHAS -->
+<section class="py-16 border-b border-dark-600">
+<div class="max-w-4xl mx-auto px-6">
+<h2 class="text-2xl font-bold mb-6">Mapa das trilhas</h2>
+<div class="grid md:grid-cols-3 gap-4">
+<a class="bg-dark-800 border border-dark-600 rounded-xl p-5 hover:border-emerald-500/50 transition-colors block" href="trilha1/">
+<div class="flex justify-between items-center mb-2">
+<span class="text-emerald-400 font-bold text-sm">T1</span>
+<span class="text-gray-500 text-xs">~2.5h</span>
+</div>
+<h3 class="font-bold text-emerald-400">📐 Fundamentos</h3>
+<p class="text-gray-400 text-xs mt-1">Cenário, normas, psicologia</p>
+</a>
+<a class="bg-dark-800 border border-dark-600 rounded-xl p-5 hover:border-blue-500/50 transition-colors block" href="trilha2/">
+<div class="flex justify-between items-center mb-2">
+<span class="text-blue-400 font-bold text-sm">T2</span>
+<span class="text-gray-500 text-xs">~4h</span>
+</div>
+<h3 class="font-bold text-blue-400">⚡ Ação</h3>
+<p class="text-gray-400 text-xs mt-1">Supervisão, segurança, VLA, código</p>
+</a>
+<a class="bg-dark-800 border border-dark-600 rounded-xl p-5 hover:border-purple-500/50 transition-colors block" href="trilha3/">
+<div class="flex justify-between items-center mb-2">
+<span class="text-purple-400 font-bold text-sm">T3</span>
+<span class="text-gray-500 text-xs">~2.5h</span>
+</div>
+<h3 class="font-bold text-purple-400">🎯 Estratégico</h3>
+<p class="text-gray-400 text-xs mt-1">Gestão, certificações, negócio</p>
+</a>
+</div>
+</div>
+</section>
+<!-- TRILHA 1 RESUMO -->
+<section class="py-12 border-b border-dark-600" id="t1">
+<div class="max-w-4xl mx-auto px-6">
+<div class="flex items-center justify-between mb-6">
+<div class="flex items-center gap-3">
+<span class="text-2xl">📐</span>
+<h2 class="text-2xl font-bold text-emerald-400">Trilha 1 — Fundamentos</h2>
+</div>
+<a class="text-emerald-400 text-sm hover:underline" href="trilha1/">Ver trilha completa →</a>
+</div>
+<div class="grid md:grid-cols-2 gap-3">
+<a class="bg-dark-800 border border-dark-600 rounded-lg p-4 hover:border-emerald-500/30 transition-colors block" href="trilha1/modulo-1-1.html">
+<span class="text-emerald-400 text-xs font-bold">M1.1</span>
+<p class="font-medium mt-1">O Grande Cenário: Robôs, Empregos e Requalificação</p>
+</a>
+<a class="bg-dark-800 border border-dark-600 rounded-lg p-4 hover:border-emerald-500/30 transition-colors block" href="trilha1/modulo-1-2.html">
+<span class="text-emerald-400 text-xs font-bold">M1.2</span>
+<p class="font-medium mt-1">Cobots, AMRs e Humanoides: Taxonomia</p>
+</a>
+<a class="bg-dark-800 border border-dark-600 rounded-lg p-4 hover:border-emerald-500/30 transition-colors block" href="trilha1/modulo-1-3.html">
+<span class="text-emerald-400 text-xs font-bold">M1.3</span>
+<p class="font-medium mt-1">ISO 10218:2025 — A Nova Era da Segurança HRC</p>
+</a>
+<a class="bg-dark-800 border border-dark-600 rounded-lg p-4 hover:border-emerald-500/30 transition-colors block" href="trilha1/modulo-1-4.html">
+<span class="text-emerald-400 text-xs font-bold">M1.4</span>
+<p class="font-medium mt-1">Psicologia da Resistência</p>
+</a>
+<a class="bg-dark-800 border border-dark-600 rounded-lg p-4 hover:border-emerald-500/30 transition-colors block" href="trilha1/modulo-1-5.html">
+<span class="text-emerald-400 text-xs font-bold">M1.5</span>
+<p class="font-medium mt-1">Brasil 2026: Diagnóstico e Oportunidade</p>
+</a>
+<a class="bg-dark-800 border border-dark-600 rounded-lg p-4 hover:border-emerald-500/30 transition-colors block" href="trilha1/modulo-1-6.html">
+<span class="text-emerald-400 text-xs font-bold">M1.6</span>
+<p class="font-medium mt-1">Programas de Referência Mundial</p>
+</a>
+</div>
+</div>
+</section>
+<!-- TRILHA 2 RESUMO -->
+<section class="py-12 border-b border-dark-600" id="t2">
+<div class="max-w-4xl mx-auto px-6">
+<div class="flex items-center justify-between mb-6">
+<div class="flex items-center gap-3">
+<span class="text-2xl">⚡</span>
+<h2 class="text-2xl font-bold text-blue-400">Trilha 2 — Ação</h2>
+</div>
+<a class="text-blue-400 text-sm hover:underline" href="trilha2/">Ver trilha completa →</a>
+</div>
+<div class="grid md:grid-cols-2 gap-3">
+<a class="bg-dark-800 border border-dark-600 rounded-lg p-4 hover:border-blue-500/30 transition-colors block" href="trilha2/modulo-2-1.html">
+<span class="text-blue-400 text-xs font-bold">M2.1</span>
+<p class="font-medium mt-1">Supervisão de Sistemas Autônomos</p>
+</a>
+<a class="bg-dark-800 border border-dark-600 rounded-lg p-4 hover:border-blue-500/30 transition-colors block" href="trilha2/modulo-2-2.html">
+<span class="text-blue-400 text-xs font-bold">M2.2</span>
+<p class="font-medium mt-1">Protocolos de Segurança Humano-Robô</p>
+</a>
+<a class="bg-dark-800 border border-dark-600 rounded-lg p-4 hover:border-blue-500/30 transition-colors block" href="trilha2/modulo-2-3.html">
+<span class="text-blue-400 text-xs font-bold">M2.3</span>
+<p class="font-medium mt-1">Simuladores, VR e Digital Twins</p>
+</a>
+<a class="bg-dark-800 border border-dark-600 rounded-lg p-4 hover:border-blue-500/30 transition-colors block" href="trilha2/modulo-2-4.html">
+<span class="text-blue-400 text-xs font-bold">M2.4</span>
+<p class="font-medium mt-1">Saúde: Equipes Hospitalares com Robôs</p>
+</a>
+<a class="bg-dark-800 border border-dark-600 rounded-lg p-4 hover:border-blue-500/30 transition-colors block" href="trilha2/modulo-2-5.html">
+<span class="text-blue-400 text-xs font-bold">M2.5</span>
+<p class="font-medium mt-1">Logística: Armazéns Autônomos</p>
+</a>
+<a class="bg-dark-800 border border-dark-600 rounded-lg p-4 hover:border-blue-500/30 transition-colors block" href="trilha2/modulo-2-6.html">
+<span class="text-blue-400 text-xs font-bold">M2.6</span>
+<p class="font-medium mt-1">Agro, Segurança e Outros Verticais</p>
+</a>
+<a class="bg-dark-800 border border-dark-600 rounded-lg p-4 hover:border-blue-500/30 transition-colors block" href="trilha2/modulo-2-7.html">
+<span class="text-blue-400 text-xs font-bold">M2.7</span>
+<p class="font-medium mt-1">VLA: Modelos Visão-Linguagem-Ação</p>
+</a>
+<a class="bg-dark-800 border border-dark-600 rounded-lg p-4 hover:border-blue-500/30 transition-colors block" href="trilha2/modulo-2-8.html">
+<span class="text-blue-400 text-xs font-bold">M2.8</span>
+<p class="font-medium mt-1">Como Programar Robôs: do Teach Pendant ao Código</p>
+</a>
+</div>
+</div>
+</section>
+<!-- TRILHA 3 RESUMO -->
+<section class="py-12 border-b border-dark-600" id="t3">
+<div class="max-w-4xl mx-auto px-6">
+<div class="flex items-center justify-between mb-6">
+<div class="flex items-center gap-3">
+<span class="text-2xl">🎯</span>
+<h2 class="text-2xl font-bold text-purple-400">Trilha 3 — Estratégico</h2>
+</div>
+<a class="text-purple-400 text-sm hover:underline" href="trilha3/">Ver trilha completa →</a>
+</div>
+<div class="grid md:grid-cols-2 gap-3">
+<a class="bg-dark-800 border border-dark-600 rounded-lg p-4 hover:border-purple-500/30 transition-colors block" href="trilha3/modulo-3-1.html">
+<span class="text-purple-400 text-xs font-bold">M3.1</span>
+<p class="font-medium mt-1">Gestão da Mudança: Framework para Robôs</p>
+</a>
+<a class="bg-dark-800 border border-dark-600 rounded-lg p-4 hover:border-purple-500/30 transition-colors block" href="trilha3/modulo-3-2.html">
+<span class="text-purple-400 text-xs font-bold">M3.2</span>
+<p class="font-medium mt-1">Métricas para Equipes Híbridas</p>
+</a>
+<a class="bg-dark-800 border border-dark-600 rounded-lg p-4 hover:border-purple-500/30 transition-colors block" href="trilha3/modulo-3-3.html">
+<span class="text-purple-400 text-xs font-bold">M3.3</span>
+<p class="font-medium mt-1">Business Case: Vendendo Requalificação</p>
+</a>
+<a class="bg-dark-800 border border-dark-600 rounded-lg p-4 hover:border-purple-500/30 transition-colors block" href="trilha3/modulo-3-4.html">
+<span class="text-purple-400 text-xs font-bold">M3.4</span>
+<p class="font-medium mt-1">Certificações e Compliance</p>
+</a>
+<a class="bg-dark-800 border border-dark-600 rounded-lg p-4 hover:border-purple-500/30 transition-colors block" href="trilha3/modulo-3-5.html">
+<span class="text-purple-400 text-xs font-bold">M3.5</span>
+<p class="font-medium mt-1">Formação de Formadores</p>
+</a>
+<a class="bg-dark-800 border border-dark-600 rounded-lg p-4 hover:border-purple-500/30 transition-colors block" href="trilha3/modulo-3-6.html">
+<span class="text-purple-400 text-xs font-bold">M3.6</span>
+<p class="font-medium mt-1">Projeções 2027-2030 e Posicionamento</p>
+</a>
+</div>
+</div>
+</section>
+<!-- FOOTER -->
+<footer class="py-12 text-center text-sm text-gray-500 space-y-2">
+<p>segROBOT — <a class="text-sky-400 hover:text-sky-300" href="https://inema.club">INEMA.CLUB</a></p>
+<p>Pesquisa profunda: maio 2026 · 50+ fontes acadêmicas e industriais</p>
+<p class="text-gray-600">WEF · IFR · ISO · BCG · Brookings · Amazon · Siemens · arxiv · PMC/NIH</p>
+</footer>
+<script>
+if (localStorage.getItem('theme') === 'light') {
+  document.documentElement.classList.remove('dark');
+}
+</script>
+</body>
+</html>

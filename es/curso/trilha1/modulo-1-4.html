@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="es">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Módulo 1.4 — Psicología de la resistencia | segROBOT</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            primary: '#FACC15',
+            dark: { 900: '#111827', 800: '#1f2937', 700: '#374151', 600: '#4b5563' }
+          }
+        }
+      }
+    }
+  </script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<style>
+    body { font-family: 'Inter', sans-serif; }
+    .dark body { background-color: #111827; }
+    .topic-explanation { display: none; }
+    .topic-explanation.active { display: block; }
+
+    /* Light mode overrides */
+    html:not(.dark) body { background-color: #f8fafc; }
+    html:not(.dark) .bg-dark-900 { background-color: #ffffff; }
+    html:not(.dark) .bg-dark-800 { background-color: #f9fafb; }
+    html:not(.dark) .bg-dark-700 { background-color: #f3f4f6; }
+    html:not(.dark) .bg-dark-600 { background-color: #e5e7eb; }
+    html:not(.dark) .text-neutral-100 { color: #111827; }
+    html:not(.dark) .text-neutral-300 { color: #4b5563; }
+    html:not(.dark) .text-neutral-400 { color: #6b7280; }
+    html:not(.dark) .text-neutral-500 { color: #9ca3af; }
+    html:not(.dark) .border-dark-600 { border-color: #d1d5db; }
+    html:not(.dark) .border-dark-700 { border-color: #e5e7eb; }
+
+    /* Light mode - cores de acento (trilha emerald) */
+    html:not(.dark) .text-emerald-400 { color: #059669; }
+    html:not(.dark) .bg-emerald-500\/20 { background-color: rgba(5, 150, 105, 0.12); }
+    html:not(.dark) .bg-emerald-500\/10 { background-color: rgba(5, 150, 105, 0.08); }
+    html:not(.dark) .border-emerald-500\/30 { border-color: rgba(5, 150, 105, 0.25); }
+    html:not(.dark) .hover\:bg-emerald-500\/30:hover { background-color: rgba(5, 150, 105, 0.18); }
+    html:not(.dark) .hover\:border-emerald-500\/30:hover { border-color: rgba(5, 150, 105, 0.25); }
+    html:not(.dark) .hover\:text-emerald-400:hover { color: #059669; }
+    html:not(.dark) .group:hover .group-hover\:text-emerald-400 { color: #059669; }
+
+    /* Light mode - remove gradientes */
+    html:not(.dark) [class*="bg-gradient-to"] { background-image: none !important; }
+
+    /* Light mode - cores especiais */
+    html:not(.dark) .text-primary { color: #a16207; }
+    html:not(.dark) .bg-primary\/10 { background-color: rgba(161, 98, 7, 0.08); }
+    html:not(.dark) .border-primary\/40 { border-color: rgba(161, 98, 7, 0.25); }
+    html:not(.dark) .text-sky-400 { color: #0369a1; }
+    html:not(.dark) .text-yellow-400 { color: #a16207; }
+    html:not(.dark) .hover\:text-sky-300:hover { color: #0284c7; }
+    html:not(.dark) .hover\:text-yellow-300:hover { color: #854d0e; }
+
+    /* Light mode - nav */
+    html:not(.dark) .bg-dark-900\/95 { background-color: rgba(255, 255, 255, 0.95); }
+
+    /* Dark mode - bordas suaves */
+    .dark .border-dark-600 { border-color: #374151; }
+    .dark .divide-dark-600 > :not([hidden]) ~ :not([hidden]) { border-color: #374151; }
+
+    /* SVG pulse */
+    @keyframes wf-pulse { 0%,100% { opacity:.55 } 50% { opacity:1 } }
+    @media (prefers-reduced-motion: no-preference) {
+      .wf-a { animation: wf-pulse 2.6s ease-in-out infinite; }
+      .wf-a:nth-child(2){animation-delay:.25s} .wf-a:nth-child(3){animation-delay:.5s}
+      .wf-a:nth-child(4){animation-delay:.75s} .wf-a:nth-child(5){animation-delay:1s}
+    }
+  </style>
+<link href="https://inematds.github.io/segrobot/curso/trilha1/modulo-1-4.html" hreflang="pt-BR" rel="alternate"/><link href="https://inematds.github.io/segrobot/en/curso/trilha1/modulo-1-4.html" hreflang="en" rel="alternate"/><link href="https://inematds.github.io/segrobot/es/curso/trilha1/modulo-1-4.html" hreflang="es" rel="alternate"/></head>
+<body class="bg-dark-900 text-neutral-100 min-h-screen"><div class="inema-lang" style="position:fixed;right:14px;bottom:14px;z-index:9999;display:flex;gap:2px;padding:4px;border-radius:10px;background:rgba(12,12,16,.82);border:1px solid rgba(226,162,59,.45);font:600 12px/1 Sora,Inter,system-ui,sans-serif;backdrop-filter:blur(8px)" translate="no"><a href="../../../curso/trilha1/modulo-1-4.html" hreflang="pt-BR" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">PT</a><a href="../../../en/curso/trilha1/modulo-1-4.html" hreflang="en" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">EN</a><a href="modulo-1-4.html" hreflang="es" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#1a1206;background:#E2A23B">ES</a></div>
+<!-- NAVIGATION -->
+<nav class="sticky top-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-600">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="flex justify-between items-center h-14">
+<div class="flex items-center space-x-4">
+<a class="flex items-center space-x-2 text-yellow-400 hover:text-yellow-300" href="../../index.html">
+<span class="text-2xl">🤖</span>
+<span class="font-bold text-lg hidden sm:inline">segROBOT</span>
+</a>
+<span class="text-neutral-600">|</span>
+<a class="text-sky-400 hover:text-sky-300 text-sm font-medium" href="https://inema.club" target="_blank">INEMA.CLUB</a>
+</div>
+<div class="flex items-center space-x-1 sm:space-x-2">
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-emerald-400 bg-emerald-500/10" href="index.html">
+<span class="sm:hidden">T1</span>
+<span class="hidden sm:inline">Fundamentos</span>
+</a>
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-blue-400 hover:bg-blue-500/10 transition-colors" href="../trilha2/index.html">
+<span class="sm:hidden">T2</span>
+<span class="hidden sm:inline">Acción</span>
+</a>
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-purple-400 hover:bg-purple-500/10 transition-colors" href="../trilha3/index.html">
+<span class="sm:hidden">T3</span>
+<span class="hidden sm:inline">Estratégico</span>
+</a>
+<button class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors ml-2" id="theme-toggle">
+<svg class="hidden w-5 h-5 text-neutral-300" fill="currentColor" id="theme-toggle-dark-icon" viewbox="0 0 20 20">
+<path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+</svg>
+<svg class="hidden w-5 h-5 text-neutral-300" fill="currentColor" id="theme-toggle-light-icon" viewbox="0 0 20 20">
+<path clip-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd"></path>
+</svg>
+</button>
+</div>
+</div>
+</div>
+</nav>
+<!-- BREADCRUMB -->
+<nav class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+<div class="flex items-center space-x-2 text-sm text-neutral-400">
+<a class="hover:text-emerald-400" href="../../index.html">Inicio</a>
+<span>/</span>
+<a class="hover:text-emerald-400" href="index.html">Ruta 1</a>
+<span>/</span>
+<span class="text-emerald-400">Módulo 1.4</span>
+</div>
+</nav>
+<!-- HEADER -->
+<header class="bg-gradient-to-br from-emerald-900/30 via-dark-800 to-dark-800 py-12 border-b border-dark-600">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+<span class="inline-block px-3 py-1 bg-emerald-500/20 text-emerald-400 text-xs font-semibold rounded-full mb-4">MÓDULO 1.4</span>
+<h1 class="text-3xl sm:text-4xl font-bold mb-4">🧠 Psicología de la Resistencia: Por Qué los Humanos Rechazan a los Robots</h1>
+<p class="text-lg text-neutral-400 max-w-3xl">
+        Amígdala, tecnoestrés, comportamientos desadaptativos y el ciclo miedo-incompetencia-resistencia.
+        La resistencia al robot no es terquedad: es biología. Quien entiende el mecanismo puede calibrar
+        la confianza, desactivar la alarma y transformar el rechazo en adopción.
+      </p>
+<!-- Stats -->
+<div class="grid grid-cols-4 gap-4 mt-8 max-w-2xl">
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+<div class="text-xl font-bold text-emerald-400">6</div>
+<div class="text-xs text-neutral-400">Temas</div>
+</div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+<div class="text-xl font-bold text-emerald-400">50</div>
+<div class="text-xs text-neutral-400">Minutos</div>
+</div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+<div class="text-xl font-bold text-emerald-400">Básico</div>
+<div class="text-xs text-neutral-400">Nivel</div>
+</div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+<div class="text-xl font-bold text-emerald-400">Teoría</div>
+<div class="text-xs text-neutral-400">Tipo</div>
+</div>
+</div>
+</div>
+</header>
+<!-- CONTEUDO -->
+<main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+<!-- SVG FUTURISTA: ciclo medo-incompetencia-resistencia -->
+<div class="rounded-2xl border border-emerald-500/30 bg-dark-900/40 p-3 sm:p-4 mb-12 overflow-hidden">
+<svg aria-label="Ciclo vicioso de miedo-evitación-incompetencia-resistencia que se refuerza a sí mismo, con un punto de entrada en la seguridad psicológica" class="w-full h-auto" role="img" viewbox="0 0 1000 300">
+<defs>
+<lineargradient id="m14-grad" x1="0" x2="1" y1="0" y2="1">
+<stop offset="0" stop-color="#34d399"></stop><stop offset="1" stop-color="#10b981"></stop>
+</lineargradient>
+<filter height="180%" id="m14-glow" width="180%" x="-40%" y="-40%">
+<fegaussianblur result="b" stddeviation="3"></fegaussianblur><femerge><femergenode in="b"></femergenode><femergenode in="SourceGraphic"></femergenode></femerge>
+</filter>
+<pattern height="32" id="m14-grid" patternunits="userSpaceOnUse" width="32">
+<circle cx="1.3" cy="1.3" fill="#10b981" opacity="0.12" r="1.3"></circle>
+</pattern>
+<marker id="m14-ah" markerheight="9" markerwidth="9" orient="auto" refx="6.5" refy="4.5"><path d="M0,0 L8,4.5 L0,9 L2.4,4.5 Z" fill="#34d399"></path></marker>
+<marker id="m14-ahc" markerheight="9" markerwidth="9" orient="auto" refx="6.5" refy="4.5"><path d="M0,0 L8,4.5 L0,9 L2.4,4.5 Z" fill="#38bdf8"></path></marker>
+</defs>
+<rect fill="url(#m14-grid)" height="300" width="1000" x="0" y="0"></rect>
+<!-- setas do loop (verde, sentido horario) -->
+<g fill="none" opacity="0.7" stroke="#34d399" stroke-width="2.5">
+<path d="M350,88 C460,55 600,55 700,88" marker-end="url(#m14-ah)"></path>
+<path d="M770,128 C812,170 812,200 770,242" marker-end="url(#m14-ah)"></path>
+<path d="M650,260 C540,293 400,293 300,260" marker-end="url(#m14-ah)"></path>
+<path d="M210,242 C168,200 168,170 210,128" marker-end="url(#m14-ah)"></path>
+</g>
+<!-- 4 nos do ciclo -->
+<g filter="url(#m14-glow)"><rect fill="#0e2018" height="60" rx="14" stroke="url(#m14-grad)" stroke-width="2.5" width="160" x="190" y="58"></rect></g>
+<text fill="#34d399" font-family="Inter,sans-serif" font-size="17" font-weight="700" text-anchor="middle" x="270" y="84">Miedo</text>
+<text fill="#a7f3d0" font-family="Inter,sans-serif" font-size="12" text-anchor="middle" x="270" y="103">se activa la amígdala</text>
+<g filter="url(#m14-glow)"><rect fill="#0e2018" height="60" rx="14" stroke="url(#m14-grad)" stroke-width="2.5" width="160" x="650" y="58"></rect></g>
+<text fill="#34d399" font-family="Inter,sans-serif" font-size="17" font-weight="700" text-anchor="middle" x="730" y="84">Evitación</text>
+<text fill="#a7f3d0" font-family="Inter,sans-serif" font-size="12" text-anchor="middle" x="730" y="103">se niega a interactuar</text>
+<g filter="url(#m14-glow)"><rect fill="#0e2018" height="60" rx="14" stroke="url(#m14-grad)" stroke-width="2.5" width="160" x="650" y="208"></rect></g>
+<text fill="#34d399" font-family="Inter,sans-serif" font-size="16" font-weight="700" text-anchor="middle" x="730" y="234">Incompetencia</text>
+<text fill="#a7f3d0" font-family="Inter,sans-serif" font-size="12" text-anchor="middle" x="730" y="253">no aprende</text>
+<g filter="url(#m14-glow)"><rect fill="#0e2018" height="60" rx="14" stroke="url(#m14-grad)" stroke-width="2.5" width="160" x="190" y="208"></rect></g>
+<text fill="#34d399" font-family="Inter,sans-serif" font-size="16" font-weight="700" text-anchor="middle" x="270" y="234">Resistencia</text>
+<text fill="#a7f3d0" font-family="Inter,sans-serif" font-size="12" text-anchor="middle" x="270" y="253">refuerza el miedo</text>
+<!-- intervencao (ciano): ponto de entrada -->
+<g fill="none" opacity="0.75" stroke="#38bdf8" stroke-dasharray="7 6" stroke-width="2">
+<path d="M906,165 C870,130 850,112 814,96" marker-end="url(#m14-ahc)"></path>
+</g>
+<g class="wf-a" filter="url(#m14-glow)"><rect fill="#0e1b26" height="56" rx="12" stroke="#38bdf8" stroke-width="2" width="92" x="900" y="138"></rect></g>
+<text fill="#bfe6ff" font-family="Inter,sans-serif" font-size="12" font-weight="700" text-anchor="middle" x="946" y="163">Seguridad</text>
+<text fill="#9ad6ff" font-family="Inter,sans-serif" font-size="11" text-anchor="middle" x="946" y="180">psicológica</text>
+<text fill="#6ee7b7" font-family="Inter,sans-serif" font-size="14" font-weight="700" text-anchor="middle" x="500" y="158">CÍRCULO VICIOSO</text>
+<text fill="#9ca3af" font-family="Inter,sans-serif" font-size="11" text-anchor="middle" x="500" y="178">se autorrefuerza</text>
+</svg>
+<p class="text-xs text-neutral-500 mt-2 text-center">Diagrama ilustrativo: el ciclo solo se rompe con una intervención deliberada en el punto de entrada (seguridad psicológica).</p>
+</div>
+<!-- ===================== TOPICO 1 ===================== -->
+<section class="mb-16" id="topico-1">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-xl">1</span>
+<h2 class="text-2xl font-bold">🫀 Amígdala y lucha o huida</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed">
+        A <strong class="text-emerald-400">amígdala</strong> procesa amenazas en milisegundos, incluso antes de que entre en escena la corteza
+        racional. Cuando el cerebro percibe que un robot puede "reemplazar" al trabajador, activa la misma
+        respuesta de <strong class="text-emerald-400">lucha o huida</strong> de una amenaza física. No es dramatismo: es biología
+        de supervivencia operando en un contexto que no fue diseñado para interpretar.
+      </p>
+<div class="bg-gradient-to-br from-emerald-900/30 to-dark-800 rounded-xl border border-emerald-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-emerald-400 mb-4 flex items-center">
+<span class="mr-2">⚡</span> Secuestro amigdalino: el secuestro emocional
+        </h3>
+<p class="text-neutral-300 mb-4">
+          Cuando se dispara la alarma, el cortisol inunda el organismo y la capacidad cognitiva se desploma. El trabajador
+          queda en un estado de «emotional flooding», incapaz de asimilar contenido técnico. Presentar el manual de operación en ese
+          estado es arrojar información contra una puerta cerrada.
+        </p>
+<ul class="space-y-2 text-neutral-300">
+<li class="flex items-start space-x-2"><span class="text-emerald-400 mt-1">•</span><span><strong>Secuestro amigdalino</strong> — lo emocional secuestra lo racional en fracciones de segundo.</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400 mt-1">•</span><span><strong>Cortisol</strong> reduce la capacidad cognitiva y la memoria de trabajo.</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400 mt-1">•</span><span><strong>Desbordamiento emocional</strong> en un contexto organizacional bloquea el aprendizaje.</span></li>
+</ul>
+</div>
+<div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
+<span class="mr-2">💡</span> Consejo práctico
+        </h3>
+<p class="text-neutral-300">
+          Desactiva la alarma <strong>antes</strong> de presentar el contenido técnico. Empieza cada sesión con
+          <strong>seguridad psicológica</strong> ("nadie va a ser despedido por usar el robot equivocado durante las primeras
+          semanas") y solo después entra en la parte técnica. El orden importa más que el contenido.
+        </p>
+</div>
+<!-- Conceitos-chave -->
+<h3 class="text-lg font-semibold mb-4">Conceptos clave</h3>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+<div class="bg-dark-800 rounded-lg border border-dark-600 p-4"><div class="text-emerald-400 font-bold text-sm mb-1">Secuestro amigdalino</div><p class="text-xs text-neutral-400">La emoción secuestra la razón.</p></div>
+<div class="bg-dark-800 rounded-lg border border-dark-600 p-4"><div class="text-emerald-400 font-bold text-sm mb-1">Cortisol</div><p class="text-xs text-neutral-400">Reduce la capacidad cognitiva.</p></div>
+<div class="bg-dark-800 rounded-lg border border-dark-600 p-4"><div class="text-emerald-400 font-bold text-sm mb-1">Desbordamiento emocional</div><p class="text-xs text-neutral-400">Bloquea el aprendizaje.</p></div>
+<div class="bg-dark-800 rounded-lg border border-dark-600 p-4"><div class="text-emerald-400 font-bold text-sm mb-1">Seguridad psicológica</div><p class="text-xs text-neutral-400">Prerrequisito del contenido.</p></div>
+</div>
+</section>
+<!-- ===================== TOPICO 2 ===================== -->
+<section class="mb-16" id="topico-2">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-xl">2</span>
+<h2 class="text-2xl font-bold">😰 Tecnoestrés y contrato psicológico</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed">
+<strong class="text-emerald-400">Technostress</strong> y es el estrés causado por la incapacidad de lidiar con nuevas
+        tecnologías. La introducción de robots viola el <strong class="text-emerald-400">contrato psicológico</strong> implícito
+        del trabajador: "hice bien mi trabajo, así que mi empleo es seguro". Cuando este acuerdo invisible se rompe,
+        la confianza en la organización se derrumba también.
+      </p>
+<div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-blue-400 mb-4 flex items-center">
+<span class="mr-2">📊</span> Los 5 creadores de technostress
+        </h3>
+<ul class="space-y-2 text-neutral-300">
+<li class="flex items-start space-x-2"><span class="text-blue-400 mt-1">1.</span><span><strong>Techno-overload</strong> — el robot exige trabajar más rápido y durante más tiempo.</span></li>
+<li class="flex items-start space-x-2"><span class="text-blue-400 mt-1">2.</span><span><strong>Techno-invasion</strong> — la tecnología invade las fronteras del tiempo y el espacio.</span></li>
+<li class="flex items-start space-x-2"><span class="text-blue-400 mt-1">3.</span><span><strong>Techno-complexity</strong> — la complejidad hace que el trabajador se sienta incapaz.</span></li>
+<li class="flex items-start space-x-2"><span class="text-blue-400 mt-1">4.</span><span><strong>Techno-insecurity</strong> — miedo a que lo reemplace alguien que domina la tecnología (o la propia máquina).</span></li>
+<li class="flex items-start space-x-2"><span class="text-blue-400 mt-1">5.</span><span><strong>Techno-uncertainty</strong> — los cambios constantes impiden dominar el sistema.</span></li>
+</ul>
+</div>
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-red-400 mb-3 flex items-center">
+<span class="mr-2">⚠️</span> El costo invisible de ignorar
+        </h3>
+<p class="text-neutral-300">
+          Technostress genera <strong>ausentismo</strong> (falta), <strong>presentismo</strong> (cuerpo presente, mente
+          ausente) y <strong>rotación de personal</strong> (salida). Ignorar este factor <strong>cuesta más que la propia inversión
+          en el robot</strong> — porque un robot costoso operado por un equipo disfuncional nunca alcanza el ROI proyectado.
+        </p>
+</div>
+<!-- Conceitos-chave -->
+<h3 class="text-lg font-semibold mb-4">Conceptos clave</h3>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+<div class="bg-dark-800 rounded-lg border border-dark-600 p-4"><div class="text-emerald-400 font-bold text-sm mb-1">Technostress</div><p class="text-xs text-neutral-400">Estrés ante una nueva tecnología.</p></div>
+<div class="bg-dark-800 rounded-lg border border-dark-600 p-4"><div class="text-emerald-400 font-bold text-sm mb-1">Contrato psicológico</div><p class="text-xs text-neutral-400">Acuerdo implícito incumplido.</p></div>
+<div class="bg-dark-800 rounded-lg border border-dark-600 p-4"><div class="text-emerald-400 font-bold text-sm mb-1">5 creadores</div><p class="text-xs text-neutral-400">Sobrecarga ante la incertidumbre.</p></div>
+<div class="bg-dark-800 rounded-lg border border-dark-600 p-4"><div class="text-emerald-400 font-bold text-sm mb-1">Presentismo</div><p class="text-xs text-neutral-400">Cuerpo presente, mente ausente.</p></div>
+</div>
+</section>
+<!-- ===================== TOPICO 3 ===================== -->
+<section class="mb-16" id="topico-3">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-xl">3</span>
+<h2 class="text-2xl font-bold">🔥 Comportamientos desadaptativos (APA)</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed">
+        A <strong class="text-emerald-400">APA</strong> documenta tres patrones de respuesta desadaptativa a la automatización:
+        <strong class="text-emerald-400">sabotaje</strong> (dañar el equipo), <strong class="text-emerald-400">evitación</strong>
+        (rechazar la interacción) y <strong class="text-emerald-400">somatización</strong> (dolores e insomnio atribuidos al robot).
+        Reconocerlos como síntomas — y no como vandalismo o pereza — es lo que distingue a un supervisor que resuelve la
+        causa raíz de uno que solo castiga.
+      </p>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+<div class="bg-emerald-900/20 rounded-xl border border-emerald-500/30 p-6">
+<h4 class="font-bold text-emerald-400 mb-4">✓ Cómo reacciona el supervisor consciente</h4>
+<ul class="space-y-3 text-neutral-300">
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Lee el sabotaje como <strong>llamada de auxilio</strong>, no como delito.</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Investiga la causa raíz del comportamiento.</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Hace una intervención temprana, antes de que el patrón se consolide.</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Deriva la somatización a servicios de salud ocupacional.</span></li>
+</ul>
+</div>
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+<h4 class="font-bold text-red-400 mb-4">✗ Qué NO hacer</h4>
+<ul class="space-y-3 text-neutral-300">
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Tratar el sabotaje como simple «vandalismo».</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Castigar la evitación sin entender el miedo que hay detrás.</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Ignorar las quejas físicas considerándolas «tonterías».</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Esperar a que el estándar se convierta en cultura para reaccionar.</span></li>
+</ul>
+</div>
+</div>
+<div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-blue-400 mb-4 flex items-center">
+<span class="mr-2">🔬</span> Matices de los tres patrones
+        </h3>
+<ul class="space-y-2 text-neutral-300">
+<li class="flex items-start space-x-2"><span class="text-blue-400 mt-1">•</span><span><strong>Sabotaje pasivo vs. activo</strong> — desde «olvidarse» de encender el robot hasta causar daños deliberadamente.</span></li>
+<li class="flex items-start space-x-2"><span class="text-blue-400 mt-1">•</span><span><strong>Evitación selectiva</strong> — usa el robot solo cuando está bajo supervisión.</span></li>
+<li class="flex items-start space-x-2"><span class="text-blue-400 mt-1">•</span><span><strong>Somatización</strong> — se correlaciona con la proximidad física al robot.</span></li>
+</ul>
+</div>
+<!-- Conceitos-chave -->
+<h3 class="text-lg font-semibold mb-4">Conceptos clave</h3>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+<div class="bg-dark-800 rounded-lg border border-dark-600 p-4"><div class="text-emerald-400 font-bold text-sm mb-1">Sabotaje</div><p class="text-xs text-neutral-400">Pasiva vs. activa.</p></div>
+<div class="bg-dark-800 rounded-lg border border-dark-600 p-4"><div class="text-emerald-400 font-bold text-sm mb-1">Evitación selectiva</div><p class="text-xs text-neutral-400">Solo lo usa cuando está bajo vigilancia.</p></div>
+<div class="bg-dark-800 rounded-lg border border-dark-600 p-4"><div class="text-emerald-400 font-bold text-sm mb-1">Somatización</div><p class="text-xs text-neutral-400">Se relaciona con la proximidad.</p></div>
+<div class="bg-dark-800 rounded-lg border border-dark-600 p-4"><div class="text-emerald-400 font-bold text-sm mb-1">Intervención temprana</div><p class="text-xs text-neutral-400">Antes de cristalizar.</p></div>
+</div>
+</section>
+<!-- ===================== TOPICO 4 ===================== -->
+<section class="mb-16" id="topico-4">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-xl">4</span>
+<h2 class="text-2xl font-bold">🔁 Ciclo miedo-incompetencia-resistencia</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed">
+        El miedo al robot genera <strong class="text-emerald-400">evitación</strong>; la evitación impide el aprendizaje; la falta de
+        aprendizaje genera <strong class="text-emerald-400">incompetencia</strong>; la incompetencia alimenta más
+        <strong class="text-emerald-400">miedo</strong>. Es un círculo vicioso que se refuerza a sí mismo, y que solo se rompe con
+        una intervención deliberada. El secreto es actuar sobre el eslabón más accesible: casi siempre, reducir el miedo antes de exigir competencia.
+      </p>
+<div class="space-y-6 mb-6">
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-12 h-12 rounded-full bg-emerald-500/20 flex items-center justify-center"><span class="text-emerald-400 font-bold">1</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+<h4 class="font-semibold text-white mb-2">La seguridad psicológica primero</h4>
+<p class="text-sm text-neutral-400 mb-3">Punto de entrada del ciclo</p>
+<p class="text-neutral-300 text-sm">Antes de cualquier entrenamiento técnico, asegúrate de que equivocarse no tenga castigo. Sin eso, ninguno de los pasos siguientes funciona.</p>
+</div>
+</div>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-12 h-12 rounded-full bg-emerald-500/20 flex items-center justify-center"><span class="text-emerald-400 font-bold">2</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+<h4 class="font-semibold text-white mb-2">Exposición gradual (proximity ladder)</h4>
+<p class="text-sm text-neutral-400 mb-3">Desensibilización por etapas</p>
+<p class="text-neutral-300 text-sm">Acerca al trabajador al robot por etapas: observar, estar cerca, tocar el panel, operar con supervisión, operar por cuenta propia. Cada etapa reduce el miedo a la siguiente.</p>
+</div>
+</div>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-12 h-12 rounded-full bg-emerald-500/20 flex items-center justify-center"><span class="text-emerald-400 font-bold">3</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+<h4 class="font-semibold text-white mb-2">Quick wins de competencias</h4>
+<p class="text-sm text-neutral-400 mb-3">Rompe el ciclo de la incompetencia</p>
+<p class="text-neutral-300 text-sm">Ofrece victorias rápidas y visibles: completar con éxito la primera tarea genera una sensación de competencia que, a su vez, reduce el miedo. El ciclo empieza a girar a favor.</p>
+</div>
+</div>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-12 h-12 rounded-full bg-emerald-500/20 flex items-center justify-center"><span class="text-emerald-400 font-bold">4</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+<h4 class="font-semibold text-white mb-2">Prueba social de pares</h4>
+<p class="text-sm text-neutral-400 mb-3">Consolida el cambio</p>
+<p class="text-neutral-300 text-sm">Los testimonios de colegas —no de la gerencia— son la prueba social más poderosa. «Si João puede, yo también» desarma la resistencia mejor que cualquier diapositiva.</p>
+</div>
+</div>
+</div>
+<div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
+<span class="mr-2">💡</span> Consejo práctico
+        </h3>
+<p class="text-neutral-300">
+          No intentes romper los cuatro eslabones al mismo tiempo. Elige <strong>un punto de entrada</strong> — casi siempre la
+          seguridad psicológica — y solo ella. El ciclo, al dejar de girar en un punto, pierde fuerza en todos los demás.
+        </p>
+</div>
+<!-- Conceitos-chave -->
+<h3 class="text-lg font-semibold mb-4">Conceptos clave</h3>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+<div class="bg-dark-800 rounded-lg border border-dark-600 p-4"><div class="text-emerald-400 font-bold text-sm mb-1">Ciclo vicioso</div><p class="text-xs text-neutral-400">Se autorrefuerza.</p></div>
+<div class="bg-dark-800 rounded-lg border border-dark-600 p-4"><div class="text-emerald-400 font-bold text-sm mb-1">Escalera de proximidad</div><p class="text-xs text-neutral-400">Exposición gradual.</p></div>
+<div class="bg-dark-800 rounded-lg border border-dark-600 p-4"><div class="text-emerald-400 font-bold text-sm mb-1">Quick wins</div><p class="text-xs text-neutral-400">Sentido de competencia.</p></div>
+<div class="bg-dark-800 rounded-lg border border-dark-600 p-4"><div class="text-emerald-400 font-bold text-sm mb-1">Prueba social</div><p class="text-xs text-neutral-400">Testimonios de pares.</p></div>
+</div>
+</section>
+<!-- ===================== TOPICO 5 ===================== -->
+<section class="mb-16" id="topico-5">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-xl">5</span>
+<h2 class="text-2xl font-bold">🛡️ Seguridad física + psicológica (Brookings)</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed">
+        O <strong class="text-emerald-400">Brookings Institution</strong> argumenta que la seguridad en el trabajo con robots
+        tiene dos dimensiones: <strong class="text-emerald-400">física</strong> (el robot no puede hacer daño) y
+        <strong class="text-emerald-400">psicológica</strong> (el trabajador no puede sentir que será reemplazado).
+        Normas como la ISO 10218 cubren la primera. La segunda no tiene norma — y ese es exactamente el vacío que llena el profesional
+        de reconversión.
+      </p>
+<div class="bg-gradient-to-br from-emerald-900/30 to-dark-800 rounded-xl border border-emerald-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-emerald-400 mb-4 flex items-center">
+<span class="mr-2">🧩</span> Dual safety framework
+        </h3>
+<p class="text-neutral-300 mb-4">
+          Las dos seguridades son interdependientes: un entorno físicamente seguro pero psicológicamente amenazante todavía
+          genera resistencia; y la seguridad psicológica sin seguridad física es irresponsable. Deben ir de la mano.
+        </p>
+<ul class="space-y-2 text-neutral-300">
+<li class="flex items-start space-x-2"><span class="text-emerald-400 mt-1">•</span><span><strong>Seguridad física</strong> — cubierta por la ISO 10218; barreras, sensores, parada de emergencia.</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400 mt-1">•</span><span><strong>Seguridad psicológica</strong> — sin norma; es un requisito previo para el aprendizaje (Edmondson).</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400 mt-1">•</span><span><strong>Indicadores</strong> — la rotación, el ausentismo y el NPS interno miden la dimensión psicológica.</span></li>
+</ul>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+<div class="bg-emerald-900/20 rounded-xl border border-emerald-500/30 p-6">
+<h4 class="font-bold text-emerald-400 mb-4">✓ Entorno de seguridad dual</h4>
+<ul class="space-y-3 text-neutral-300">
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>El equipo puede admitir errores sin miedo a represalias.</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>ISO 10218 implementada y visible en la planta.</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Indicadores de clima monitoreados (rotación de personal, NPS interno).</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Mensaje claro: «el robot te amplía, no te reemplaza».</span></li>
+</ul>
+</div>
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+<h4 class="font-bold text-red-400 mb-4">✗ Falsa seguridad</h4>
+<ul class="space-y-3 text-neutral-300">
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Cumplir solo la norma física y creer que basta.</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Castigar a quien reporta casi accidentes o dudas.</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Ignorar la rotación de personal y el ausentismo como ruido.</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Dejar en el aire el miedo al despido, sin respuesta.</span></li>
+</ul>
+</div>
+</div>
+<!-- Conceitos-chave -->
+<h3 class="text-lg font-semibold mb-4">Conceptos clave</h3>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+<div class="bg-dark-800 rounded-lg border border-dark-600 p-4"><div class="text-emerald-400 font-bold text-sm mb-1">Dual safety</div><p class="text-xs text-neutral-400">Física + psicológica.</p></div>
+<div class="bg-dark-800 rounded-lg border border-dark-600 p-4"><div class="text-emerald-400 font-bold text-sm mb-1">ISO 10218</div><p class="text-xs text-neutral-400">Cubre el aspecto físico.</p></div>
+<div class="bg-dark-800 rounded-lg border border-dark-600 p-4"><div class="text-emerald-400 font-bold text-sm mb-1">Edmondson</div><p class="text-xs text-neutral-400">Seguridad = aprendizaje.</p></div>
+<div class="bg-dark-800 rounded-lg border border-dark-600 p-4"><div class="text-emerald-400 font-bold text-sm mb-1">Indicadores</div><p class="text-xs text-neutral-400">Rotación, NPS interno.</p></div>
+</div>
+</section>
+<!-- ===================== TOPICO 6 ===================== -->
+<section class="mb-16" id="topico-6">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-xl">6</span>
+<h2 class="text-2xl font-bold">⚖️ Calibración de confianza</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed">
+<strong class="text-emerald-400">Over-trust</strong> y confiar demasiado en el robot: ignorar alarmas, saltarse
+        verificaciones. <strong class="text-emerald-400">Under-trust</strong> y no confiar lo suficiente: verificar todo
+        manualmente, anular las decisiones del robot. Ambos extremos son peligrosos. La confianza ideal es
+        <strong class="text-emerald-400">calibrada</strong> — el humano sabe cuándo el robot es confiable y cuándo debe intervenir.
+      </p>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+<div class="bg-emerald-900/20 rounded-xl border border-emerald-500/30 p-6">
+<h4 class="font-bold text-emerald-400 mb-4">✓ Confianza calibrada</h4>
+<ul class="space-y-3 text-neutral-300">
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Sabe distinguir las tareas en las que el robot es confiable de aquellas que requieren supervisión.</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Usa la transparencia del sistema para decidir cuándo intervenir.</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Ajusta la confianza con ciclos de retroalimentación continuos.</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Trata al robot como una herramienta, no como un oráculo ni como un enemigo.</span></li>
+</ul>
+</div>
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+<h4 class="font-bold text-red-400 mb-4">✗ Confianza descalibrada</h4>
+<ul class="space-y-3 text-neutral-300">
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span><strong>Over-trust:</strong> ignora las alarmas y omite las verificaciones (complacencia ante la automatización).</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span><strong>Over-trust:</strong> acepta la decisión del robot incluso contra la evidencia (sesgo de automatización).</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span><strong>Under-trust:</strong> vuelve a verificar todo manualmente, anulando el beneficio.</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span><strong>Under-trust:</strong> anula decisiones correctas del robot por desconfianza.</span></li>
+</ul>
+</div>
+</div>
+<div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
+<span class="mr-2">💡</span> Consejo práctico
+        </h3>
+<p class="text-neutral-300">
+<strong>Transparencia</strong> y es la principal herramienta de calibración. Cuando el robot muestra el porqué de cada
+          decisión, el operador aprende a prever cuándo acierta y cuándo se equivoca. La capacitación sin transparencia produce
+          inevitablemente uno de los dos extremos.
+        </p>
+</div>
+<!-- Conceitos-chave -->
+<h3 class="text-lg font-semibold mb-4">Conceptos clave</h3>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+<div class="bg-dark-800 rounded-lg border border-dark-600 p-4"><div class="text-emerald-400 font-bold text-sm mb-1">Trust calibration</div><p class="text-xs text-neutral-400">Confianza en el punto justo.</p></div>
+<div class="bg-dark-800 rounded-lg border border-dark-600 p-4"><div class="text-emerald-400 font-bold text-sm mb-1">Complacencia con la automatización</div><p class="text-xs text-neutral-400">Over-trust: se salta las verificaciones.</p></div>
+<div class="bg-dark-800 rounded-lg border border-dark-600 p-4"><div class="text-emerald-400 font-bold text-sm mb-1">Sesgo de automatización</div><p class="text-xs text-neutral-400">Acepta el robot contra la evidencia.</p></div>
+<div class="bg-dark-800 rounded-lg border border-dark-600 p-4"><div class="text-emerald-400 font-bold text-sm mb-1">Transparencia</div><p class="text-xs text-neutral-400">Herramienta de calibración.</p></div>
+</div>
+</section>
+<!-- ===================== RESUMO ===================== -->
+<section class="mb-12">
+<div class="bg-gradient-to-br from-emerald-900/40 via-dark-800 to-dark-800 rounded-xl border border-emerald-500/30 p-8">
+<h2 class="text-2xl font-bold mb-6 flex items-center">
+<span class="mr-3">🧠</span> Resumen del módulo
+        </h2>
+<div class="space-y-4 mb-8">
+<div class="flex items-start space-x-3">
+<span class="text-emerald-400 mt-1">✓</span>
+<div><strong class="text-white">Resistencia y biología</strong><span class="text-neutral-400"> - la amígdala activa la respuesta de lucha o huida; desactiva la alarma antes del contenido técnico.</span></div>
+</div>
+<div class="flex items-start space-x-3">
+<span class="text-emerald-400 mt-1">✓</span>
+<div><strong class="text-white">Technostress viola el contrato psicológico</strong><span class="text-neutral-400"> - los 5 creadores; ignorarlos cuesta más que el robot.</span></div>
+</div>
+<div class="flex items-start space-x-3">
+<span class="text-emerald-400 mt-1">✓</span>
+<div><strong class="text-white">Comportamientos desadaptativos (APA)</strong><span class="text-neutral-400"> - el sabotaje, la evitación y la somatización son síntomas, no delitos.</span></div>
+</div>
+<div class="flex items-start space-x-3">
+<span class="text-emerald-400 mt-1">✓</span>
+<div><strong class="text-white">El ciclo solo se rompe con una intervención</strong><span class="text-neutral-400"> - ataca un eslabón (seguridad psicológica) y usa proximity ladder, quick wins y social proof.</span></div>
+</div>
+<div class="flex items-start space-x-3">
+<span class="text-emerald-400 mt-1">✓</span>
+<div><strong class="text-white">Dual safety (Brookings)</strong><span class="text-neutral-400"> - lo físico tiene ISO; lo psicológico no tiene normas, y esa es la brecha que debes llenar.</span></div>
+</div>
+<div class="flex items-start space-x-3">
+<span class="text-emerald-400 mt-1">✓</span>
+<div><strong class="text-white">Confianza calibrada</strong><span class="text-neutral-400"> - ni over-trust ni under-trust; la transparencia es la herramienta para ajustarlos.</span></div>
+</div>
+</div>
+<div class="bg-dark-800/50 rounded-lg p-4 mb-8">
+<h3 class="font-semibold text-emerald-400 mb-2">Próximo módulo:</h3>
+<p class="text-neutral-300">1.5 - Brasil 2026: Diagnóstico y Oportunidad</p>
+</div>
+<div class="flex flex-col sm:flex-row gap-4">
+<a class="flex-1 text-center px-6 py-3 bg-dark-700 text-neutral-300 rounded-lg font-semibold hover:bg-dark-600 transition-colors" href="index.html">
+            ← Volver a la ruta
+          </a>
+<a class="flex-1 text-center px-6 py-3 bg-emerald-600 text-white rounded-lg font-semibold hover:bg-emerald-500 transition-colors" href="modulo-1-5.html">
+            Próximo módulo →
+          </a>
+</div>
+</div>
+</section>
+</main>
+<!-- FOOTER -->
+<footer class="border-t border-dark-600 py-8 mt-16">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-neutral-500 text-sm">
+<p>segROBOT — INEMA.CLUB — 2026</p>
+</div>
+</footer>
+<!-- SCRIPTS -->
+<script>
+    const themeToggle = document.getElementById('theme-toggle');
+    const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
+    const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
+    const html = document.documentElement;
+
+    if (localStorage.getItem('theme') === 'light' || (!localStorage.getItem('theme') && !html.classList.contains('dark'))) {
+      themeToggleDarkIcon.classList.remove('hidden');
+      html.classList.remove('dark');
+    } else {
+      themeToggleLightIcon.classList.remove('hidden');
+    }
+
+    themeToggle.addEventListener('click', () => {
+      themeToggleDarkIcon.classList.toggle('hidden');
+      themeToggleLightIcon.classList.toggle('hidden');
+      html.classList.toggle('dark');
+      localStorage.setItem('theme', html.classList.contains('dark') ? 'dark' : 'light');
+    });
+  </script>
+</body>
+</html>

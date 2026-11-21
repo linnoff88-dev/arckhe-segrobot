@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="pt-BR">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Modulo 1.5 — Brasil 2026: Diagnostico e Oportunidade | segROBOT</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            primary: '#FACC15',
+            dark: { 900: '#111827', 800: '#1f2937', 700: '#374151', 600: '#4b5563' }
+          }
+        }
+      }
+    }
+  </script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<style>
+    body { font-family: 'Inter', sans-serif; }
+    .dark body { background-color: #111827; }
+    .topic-explanation { display: none; }
+    .topic-explanation.active { display: block; }
+
+    /* Light mode overrides */
+    html:not(.dark) body { background-color: #f8fafc; }
+    html:not(.dark) .bg-dark-900 { background-color: #ffffff; }
+    html:not(.dark) .bg-dark-800 { background-color: #f9fafb; }
+    html:not(.dark) .bg-dark-700 { background-color: #f3f4f6; }
+    html:not(.dark) .bg-dark-600 { background-color: #e5e7eb; }
+    html:not(.dark) .text-neutral-100 { color: #111827; }
+    html:not(.dark) .text-neutral-300 { color: #4b5563; }
+    html:not(.dark) .text-neutral-400 { color: #6b7280; }
+    html:not(.dark) .text-neutral-500 { color: #9ca3af; }
+    html:not(.dark) .border-dark-600 { border-color: #d1d5db; }
+    html:not(.dark) .border-dark-700 { border-color: #e5e7eb; }
+
+    /* Light mode - cores de acento (trilha emerald) */
+    html:not(.dark) .text-emerald-400 { color: #059669; }
+    html:not(.dark) .bg-emerald-500\/20 { background-color: rgba(5, 150, 105, 0.12); }
+    html:not(.dark) .bg-emerald-500\/10 { background-color: rgba(5, 150, 105, 0.08); }
+    html:not(.dark) .border-emerald-500\/30 { border-color: rgba(5, 150, 105, 0.25); }
+    html:not(.dark) .hover\:bg-emerald-500\/30:hover { background-color: rgba(5, 150, 105, 0.18); }
+    html:not(.dark) .hover\:border-emerald-500\/30:hover { border-color: rgba(5, 150, 105, 0.25); }
+    html:not(.dark) .hover\:text-emerald-400:hover { color: #059669; }
+    html:not(.dark) .group:hover .group-hover\:text-emerald-400 { color: #059669; }
+
+    /* Light mode - remove gradientes */
+    html:not(.dark) [class*="bg-gradient-to"] { background-image: none !important; }
+
+    /* Light mode - cores especiais */
+    html:not(.dark) .text-primary { color: #a16207; }
+    html:not(.dark) .bg-primary\/10 { background-color: rgba(161, 98, 7, 0.08); }
+    html:not(.dark) .border-primary\/40 { border-color: rgba(161, 98, 7, 0.25); }
+    html:not(.dark) .text-sky-400 { color: #0369a1; }
+    html:not(.dark) .text-yellow-400 { color: #a16207; }
+    html:not(.dark) .hover\:text-sky-300:hover { color: #0284c7; }
+    html:not(.dark) .hover\:text-yellow-300:hover { color: #854d0e; }
+
+    /* Light mode - nav */
+    html:not(.dark) .bg-dark-900\/95 { background-color: rgba(255, 255, 255, 0.95); }
+
+    /* Dark mode - bordas suaves */
+    .dark .border-dark-600 { border-color: #374151; }
+    .dark .divide-dark-600 > :not([hidden]) ~ :not([hidden]) { border-color: #374151; }
+
+    /* SVG pulse / barras */
+    @keyframes wf-pulse { 0%,100% { opacity:.55 } 50% { opacity:1 } }
+    @keyframes m15-grow { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+    @media (prefers-reduced-motion: no-preference) {
+      .wf-a { animation: wf-pulse 2.6s ease-in-out infinite; }
+      .wf-a:nth-child(2){animation-delay:.25s} .wf-a:nth-child(3){animation-delay:.5s}
+      .m15-bar { animation: m15-grow 1.3s ease-out both; transform-origin: bottom center; transform-box: fill-box; }
+    }
+  </style>
+<link href="https://inematds.github.io/segrobot/curso/trilha1/modulo-1-5.html" hreflang="pt-BR" rel="alternate"/><link href="https://inematds.github.io/segrobot/en/curso/trilha1/modulo-1-5.html" hreflang="en" rel="alternate"/><link href="https://inematds.github.io/segrobot/es/curso/trilha1/modulo-1-5.html" hreflang="es" rel="alternate"/></head>
+<body class="bg-dark-900 text-neutral-100 min-h-screen"><div class="inema-lang" style="position:fixed;right:14px;bottom:14px;z-index:9999;display:flex;gap:2px;padding:4px;border-radius:10px;background:rgba(12,12,16,.82);border:1px solid rgba(226,162,59,.45);font:600 12px/1 Sora,Inter,system-ui,sans-serif;backdrop-filter:blur(8px)" translate="no"><a href="modulo-1-5.html" hreflang="pt-BR" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#1a1206;background:#E2A23B">PT</a><a href="../../en/curso/trilha1/modulo-1-5.html" hreflang="en" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">EN</a><a href="../../es/curso/trilha1/modulo-1-5.html" hreflang="es" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">ES</a></div>
+<!-- NAVIGATION -->
+<nav class="sticky top-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-600">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="flex justify-between items-center h-14">
+<div class="flex items-center space-x-4">
+<a class="flex items-center space-x-2 text-yellow-400 hover:text-yellow-300" href="../../index.html">
+<span class="text-2xl">🤖</span>
+<span class="font-bold text-lg hidden sm:inline">segROBOT</span>
+</a>
+<span class="text-neutral-600">|</span>
+<a class="text-sky-400 hover:text-sky-300 text-sm font-medium" href="https://inema.club" target="_blank">INEMA.CLUB</a>
+</div>
+<div class="flex items-center space-x-1 sm:space-x-2">
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-emerald-400 bg-emerald-500/10" href="index.html">
+<span class="sm:hidden">T1</span>
+<span class="hidden sm:inline">Fundamentos</span>
+</a>
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-blue-400 hover:bg-blue-500/10 transition-colors" href="../trilha2/index.html">
+<span class="sm:hidden">T2</span>
+<span class="hidden sm:inline">Acao</span>
+</a>
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-purple-400 hover:bg-purple-500/10 transition-colors" href="../trilha3/index.html">
+<span class="sm:hidden">T3</span>
+<span class="hidden sm:inline">Estrategico</span>
+</a>
+<button class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors ml-2" id="theme-toggle">
+<svg class="hidden w-5 h-5 text-neutral-300" fill="currentColor" id="theme-toggle-dark-icon" viewbox="0 0 20 20">
+<path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+</svg>
+<svg class="hidden w-5 h-5 text-neutral-300" fill="currentColor" id="theme-toggle-light-icon" viewbox="0 0 20 20">
+<path clip-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd"></path>
+</svg>
+</button>
+</div>
+</div>
+</div>
+</nav>
+<!-- BREADCRUMB -->
+<nav class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+<div class="flex items-center space-x-2 text-sm text-neutral-400">
+<a class="hover:text-emerald-400" href="../../index.html">Inicio</a>
+<span>/</span>
+<a class="hover:text-emerald-400" href="index.html">Trilha 1</a>
+<span>/</span>
+<span class="text-emerald-400">Modulo 1.5</span>
+</div>
+</nav>
+<!-- HEADER -->
+<header class="bg-gradient-to-br from-emerald-900/30 via-dark-800 to-dark-800 py-12 border-b border-dark-600">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+<span class="inline-block px-3 py-1 bg-emerald-500/20 text-emerald-400 text-xs font-semibold rounded-full mb-4">
+        MODULO 1.5
+      </span>
+<h1 class="text-3xl sm:text-4xl font-bold mb-4">🇧🇷 Brasil 2026: Diagnostico e Oportunidade</h1>
+<p class="text-lg text-neutral-400 max-w-3xl">
+        O Brasil tem <strong class="text-emerald-400">18 robos por 10 mil trabalhadores</strong> — um gap de 8x contra a media mundial. Mas as instalacoes cresceram 52% em 2025. Este modulo mapeia o diagnostico real e, dentro dele, onde estao as oportunidades profissionais que ninguem esta ocupando.
+      </p>
+<!-- Stats -->
+<div class="grid grid-cols-4 gap-4 mt-8 max-w-2xl">
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+<div class="text-xl font-bold text-emerald-400">6</div>
+<div class="text-xs text-neutral-400">Topicos</div>
+</div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+<div class="text-xl font-bold text-emerald-400">45</div>
+<div class="text-xs text-neutral-400">Minutos</div>
+</div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+<div class="text-xl font-bold text-emerald-400">Basico</div>
+<div class="text-xs text-neutral-400">Nivel</div>
+</div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+<div class="text-xl font-bold text-emerald-400">Teoria</div>
+<div class="text-xs text-neutral-400">Tipo</div>
+</div>
+</div>
+</div>
+</header>
+<!-- CONTEUDO -->
+<main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+<!-- SVG FUTURISTA: gap Brasil vs media mundial -->
+<div class="rounded-2xl border border-emerald-500/30 bg-dark-900/40 p-3 sm:p-4 mb-12 overflow-hidden">
+<svg aria-label="Grafico de barras comparando densidade robotica: Brasil 18 robos por 10 mil trabalhadores contra media mundial de 162 e Coreia do Sul com 1012, evidenciando gap de 8 vezes" class="w-full h-auto" role="img" viewbox="0 0 1000 300">
+<defs>
+<lineargradient id="m15-grad" x1="0" x2="1" y1="0" y2="1">
+<stop offset="0" stop-color="#34d399"></stop><stop offset="1" stop-color="#10b981"></stop>
+</lineargradient>
+<filter height="180%" id="m15-glow" width="180%" x="-40%" y="-40%">
+<fegaussianblur result="b" stddeviation="3"></fegaussianblur><femerge><femergenode in="b"></femergenode><femergenode in="SourceGraphic"></femergenode></femerge>
+</filter>
+<pattern height="32" id="m15-grid" patternunits="userSpaceOnUse" width="32">
+<circle cx="1.3" cy="1.3" fill="#10b981" opacity="0.12" r="1.3"></circle>
+</pattern>
+</defs>
+<rect fill="url(#m15-grid)" height="300" width="1000" x="0" y="0"></rect>
+<text fill="#34d399" font-family="Inter,sans-serif" font-size="20" font-weight="700" x="40" y="40">Densidade robotica — robos por 10 mil trabalhadores</text>
+<text fill="#9ca3af" font-family="Inter,sans-serif" font-size="13" x="40" y="62">Fonte: IFR — World Robotics. Diagrama ilustrativo.</text>
+<!-- eixo base -->
+<line stroke="#4b5563" stroke-width="2" x1="220" x2="220" y1="100" y2="270"></line>
+<line stroke="#4b5563" stroke-width="2" x1="220" x2="960" y1="270" y2="270"></line>
+<!-- Brasil 18 -->
+<g filter="url(#m15-glow)"><rect class="m15-bar" fill="url(#m15-grad)" height="30" rx="6" width="64" x="260" y="240"></rect></g>
+<text fill="#34d399" font-family="Inter,sans-serif" font-size="15" font-weight="700" x="266" y="232">18</text>
+<text fill="#e5e7eb" font-family="Inter,sans-serif" font-size="13" x="262" y="288">Brasil 🇧🇷</text>
+<!-- Media mundial 162 -->
+<g><rect class="m15-bar" fill="#0e1b26" height="132" rx="6" stroke="#38bdf8" stroke-width="2.5" width="64" x="460" y="138"></rect></g>
+<text fill="#9ad6ff" font-family="Inter,sans-serif" font-size="15" font-weight="700" x="466" y="130">162</text>
+<text fill="#e5e7eb" font-family="Inter,sans-serif" font-size="13" x="452" y="288">Media mundial</text>
+<!-- Coreia 1012 -->
+<g><rect class="m15-bar" fill="#0e1b26" height="160" rx="6" stroke="#38bdf8" stroke-width="2.5" width="64" x="720" y="110"></rect></g>
+<text fill="#9ad6ff" font-family="Inter,sans-serif" font-size="15" font-weight="700" x="726" y="102">1012</text>
+<text fill="#e5e7eb" font-family="Inter,sans-serif" font-size="13" x="710" y="288">Coreia do Sul</text>
+<!-- gap label -->
+<g filter="url(#m15-glow)"><rect fill="#0e2018" height="42" rx="10" stroke="url(#m15-grad)" stroke-width="2" width="98" x="338" y="150"></rect></g>
+<text fill="#34d399" font-family="Inter,sans-serif" font-size="16" font-weight="700" text-anchor="middle" x="387" y="170">gap 8x</text>
+<text fill="#a7f3d0" font-family="Inter,sans-serif" font-size="10" text-anchor="middle" x="387" y="185">vs media mundial</text>
+</svg>
+</div>
+<!-- TOPICO 1 -->
+<section class="mb-16" id="topico-1">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-xl">1</span>
+<h2 class="text-2xl font-bold">📉 18 robos por 10 mil trabalhadores</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed">
+        A densidade robotica e a metrica que a <strong class="text-emerald-400">IFR (International Federation of Robotics)</strong> usa para comparar paises: quantos robos industriais existem para cada 10 mil trabalhadores na manufatura. O Brasil registra <strong class="text-emerald-400">18</strong>. A media mundial e <strong class="text-emerald-400">162</strong>. O gap e de <strong class="text-emerald-400">8x</strong> — e isso, paradoxalmente, e a melhor noticia para quem entra no mercado agora.
+      </p>
+<div class="bg-gradient-to-br from-emerald-900/30 to-dark-800 rounded-xl border border-emerald-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-emerald-400 mb-4 flex items-center">
+<span class="mr-2">🧭</span> Por que o gap e uma oportunidade
+        </h3>
+<p class="text-neutral-300 mb-4">Um pais com densidade baixa nao significa um pais sem futuro robotico — significa um pais cuja curva de adocao ainda nao subiu. Quem se posiciona antes da curva captura o crescimento inteiro.</p>
+<ul class="space-y-2 text-neutral-300">
+<li class="flex items-start space-x-2"><span class="text-emerald-400 mt-1">•</span><span>Brasil ocupa o <strong>53o lugar global</strong> em densidade robotica.</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400 mt-1">•</span><span>A robotizacao esta concentrada em <strong>automotivo e metalmecanico</strong>.</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400 mt-1">•</span><span>No interior do Brasil, a densidade e <strong>proxima de zero</strong> — espaco aberto.</span></li>
+</ul>
+</div>
+<div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-blue-400 mb-4 flex items-center">
+<span class="mr-2">📊</span> Os numeros do Brasil
+        </h3>
+<ul class="space-y-2 text-neutral-300">
+<li><strong>18</strong> robos por 10 mil trabalhadores — densidade brasileira.</li>
+<li><strong>162</strong> — media mundial (gap de 8x).</li>
+<li><strong>1.012</strong> — Coreia do Sul, lider global.</li>
+<li><strong>53o</strong> — posicao do Brasil no ranking mundial de densidade.</li>
+</ul>
+</div>
+<div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
+<span class="mr-2">💡</span> Dica Pratica
+        </h3>
+<p class="text-neutral-300">Quando alguem disser "o Brasil esta atrasado em robotica", traduza para "o Brasil tem 8x de espaco para crescer". A leitura otimista nao e ingenuidade — e estrategia de carreira: voce quer estar no mercado que vai crescer, nao no que ja saturou.</p>
+</div>
+<h3 class="text-lg font-semibold mb-4">Conceitos-chave</h3>
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-2">
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-emerald-400 font-bold mb-1">Densidade IFR</div><div class="text-sm text-neutral-400">Robos por 10 mil trabalhadores.</div></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-emerald-400 font-bold mb-1">Gap 8x</div><div class="text-sm text-neutral-400">18 contra 162 mundial.</div></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-emerald-400 font-bold mb-1">53o lugar</div><div class="text-sm text-neutral-400">Posicao global do Brasil.</div></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-emerald-400 font-bold mb-1">Interior ~0</div><div class="text-sm text-neutral-400">Densidade quase nula fora dos polos.</div></div>
+</div>
+</section>
+<!-- TOPICO 2 -->
+<section class="mb-16" id="topico-2">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-xl">2</span>
+<h2 class="text-2xl font-bold">📈 52% de crescimento em 2025</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed">
+        Densidade baixa nao quer dizer mercado parado — quer dizer mercado em <strong class="text-emerald-400">aceleracao</strong>. As instalacoes de robos industriais no Brasil cresceram <strong class="text-emerald-400">52% em 2025</strong>, puxadas por automotivo, alimentos e farmaceutico. O problema: o pipeline de formacao nao acompanha esse ritmo.
+      </p>
+<div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-blue-400 mb-4 flex items-center">
+<span class="mr-2">📊</span> O que esta puxando o crescimento
+        </h3>
+<ul class="space-y-2 text-neutral-300">
+<li><strong>BYD Camaçari (BA)</strong> — planta com alto grau de automatizacao.</li>
+<li><strong>Stellantis Betim (MG)</strong> — cobots em linha de montagem.</li>
+<li><strong>Nearshoring</strong> — Brasil ganhando plantas que sairiam da Asia.</li>
+<li><strong>IPI reduzido</strong> para robos em 2025 — incentivo fiscal.</li>
+</ul>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+<div class="bg-emerald-900/20 rounded-xl border border-emerald-500/30 p-6">
+<h4 class="font-bold text-emerald-400 mb-4">✓ Demanda que cresce</h4>
+<ul class="space-y-3 text-neutral-300">
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Integradores que instalam e calibram celulas roboticas.</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Facilitadores de mudanca para equipes que recebem cobots.</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Tecnicos de manutencao preventiva de frotas roboticas.</span></li>
+</ul>
+</div>
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+<h4 class="font-bold text-red-400 mb-4">✗ Oferta que falta</h4>
+<ul class="space-y-3 text-neutral-300">
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Universidades formam engenheiros, nao integradores.</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Quase nenhum curso de gestao de mudanca em automacao.</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Pipeline de treinamento nao acompanha os 52% de crescimento.</span></li>
+</ul>
+</div>
+</div>
+<div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
+<span class="mr-2">💡</span> Dica Pratica
+        </h3>
+<p class="text-neutral-300">Crescimento de 52% num ano significa que cada planta nova precisa de gente que ainda nao existe. O descompasso entre demanda (rapida) e oferta de mao de obra (lenta) e exatamente onde salarios sobem e carreiras decolam.</p>
+</div>
+<h3 class="text-lg font-semibold mb-4">Conceitos-chave</h3>
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-2">
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-emerald-400 font-bold mb-1">+52%</div><div class="text-sm text-neutral-400">Instalacoes em 2025.</div></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-emerald-400 font-bold mb-1">BYD Camaçari</div><div class="text-sm text-neutral-400">Planta altamente automatizada.</div></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-emerald-400 font-bold mb-1">Nearshoring</div><div class="text-sm text-neutral-400">Plantas migrando para o Brasil.</div></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-emerald-400 font-bold mb-1">IPI reduzido</div><div class="text-sm text-neutral-400">Incentivo fiscal 2025.</div></div>
+</div>
+</section>
+<!-- TOPICO 3 -->
+<section class="mb-16" id="topico-3">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-xl">3</span>
+<h2 class="text-2xl font-bold">🏭 SENAI: 23 ISIs, 100 mil por ano</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed">
+        O Brasil ja tem a infraestrutura de formacao — falta orientar ela para os gaps certos. O <strong class="text-emerald-400">SENAI</strong> opera <strong class="text-emerald-400">23 Institutos SENAI de Inovacao (ISIs)</strong> com laboratorios de robotica e treina mais de <strong class="text-emerald-400">100 mil profissionais por ano</strong> em automacao e industria 4.0. E a maior rede de formacao tecnica do hemisferio sul.
+      </p>
+<div class="bg-gradient-to-br from-emerald-900/30 to-dark-800 rounded-xl border border-emerald-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-emerald-400 mb-4 flex items-center">
+<span class="mr-2">🏗️</span> Conceito: a infraestrutura ja existe
+        </h3>
+<p class="text-neutral-300 mb-4">Qualquer estrategia de requalificacao em escala no Brasil passa pelo SENAI. Os ISIs ja tem robos FANUC, ABB e KUKA instalados — o desafio nao e construir laboratorios, e desenhar conteudo certo e formar facilitadores.</p>
+<ul class="space-y-2 text-neutral-300">
+<li class="flex items-start space-x-2"><span class="text-emerald-400 mt-1">•</span><span>ISIs equipados com robos FANUC, ABB e KUKA.</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400 mt-1">•</span><span>Cursos de 40h a 400h, modulares.</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400 mt-1">•</span><span>Parcerias com Festo e Siemens.</span></li>
+</ul>
+</div>
+<!-- Timeline: estrutura SENAI -->
+<div class="space-y-6 mb-6">
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-12 h-12 rounded-full bg-emerald-500/20 flex items-center justify-center"><span class="text-emerald-400 font-bold">1</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+<h4 class="font-semibold text-white mb-2">23 Institutos SENAI de Inovacao</h4>
+<p class="text-sm text-neutral-400 mb-3">Rede nacional</p>
+<p class="text-neutral-300 text-sm">Laboratorios de robotica espalhados pelo pais, com infraestrutura de fabricantes de ponta ja instalada.</p>
+</div>
+</div>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-12 h-12 rounded-full bg-emerald-500/20 flex items-center justify-center"><span class="text-emerald-400 font-bold">2</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+<h4 class="font-semibold text-white mb-2">100 mil profissionais/ano</h4>
+<p class="text-sm text-neutral-400 mb-3">Capacidade de formacao</p>
+<p class="text-neutral-300 text-sm">Volume que ja existe em automacao e industria 4.0 — basta direcionar para os gaps de mercado.</p>
+</div>
+</div>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-12 h-12 rounded-full bg-emerald-500/20 flex items-center justify-center"><span class="text-emerald-400 font-bold">3</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+<h4 class="font-semibold text-white mb-2">Robotec Maker 4.0</h4>
+<p class="text-sm text-neutral-400 mb-3">Pipeline de talentos</p>
+<p class="text-neutral-300 text-sm">Competicao nacional SESI/SENAI que alimenta a industria com tecnicos ja testados em desafios reais.</p>
+</div>
+</div>
+</div>
+<h3 class="text-lg font-semibold mb-4">Conceitos-chave</h3>
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-2">
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-emerald-400 font-bold mb-1">23 ISIs</div><div class="text-sm text-neutral-400">Institutos de inovacao.</div></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-emerald-400 font-bold mb-1">100k/ano</div><div class="text-sm text-neutral-400">Profissionais formados.</div></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-emerald-400 font-bold mb-1">40h–400h</div><div class="text-sm text-neutral-400">Cursos modulares.</div></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-emerald-400 font-bold mb-1">Festo + Siemens</div><div class="text-sm text-neutral-400">Parcerias de fabricante.</div></div>
+</div>
+</section>
+<!-- TOPICO 4 -->
+<section class="mb-16" id="topico-4">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-xl">4</span>
+<h2 class="text-2xl font-bold">🏆 Robotec Maker 4.0</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed">
+        O <strong class="text-emerald-400">Robotec Maker 4.0</strong> e a competicao nacional SESI/SENAI de robotica industrial que coloca estudantes e tecnicos para resolver desafios reais de automacao com robos colaborativos. E o principal pipeline de talentos em robotica do Brasil: participantes tem <strong class="text-emerald-400">empregabilidade 3x maior</strong> em industria 4.0.
+      </p>
+<div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-blue-400 mb-4 flex items-center">
+<span class="mr-2">📊</span> Como funciona
+        </h3>
+<ul class="space-y-2 text-neutral-300">
+<li><strong>Categorias:</strong> programacao, integracao e manutencao.</li>
+<li><strong>500+ equipes</strong> na final nacional.</li>
+<li><strong>Premiacoes WorldSkills</strong> — porta de entrada para competicao internacional.</li>
+<li><strong>3x</strong> mais empregabilidade entre participantes.</li>
+</ul>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+<div class="bg-emerald-900/20 rounded-xl border border-emerald-500/30 p-6">
+<h4 class="font-bold text-emerald-400 mb-4">✓ O que o Robotec entrega</h4>
+<ul class="space-y-3 text-neutral-300">
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Experiencia pratica com cobots, nao so teoria.</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Desafios desenhados com fabricantes de robos.</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Networking direto com a industria contratante.</span></li>
+</ul>
+</div>
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+<h4 class="font-bold text-red-400 mb-4">✗ O que ele nao resolve sozinho</h4>
+<ul class="space-y-3 text-neutral-300">
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Nao cobre gestao de mudanca nem supervisao de frota.</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Foco competitivo, nao formacao continuada de adultos.</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Alcance limitado ao publico jovem/tecnico.</span></li>
+</ul>
+</div>
+</div>
+<h3 class="text-lg font-semibold mb-4">Conceitos-chave</h3>
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-2">
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-emerald-400 font-bold mb-1">SESI/SENAI</div><div class="text-sm text-neutral-400">Organizadores nacionais.</div></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-emerald-400 font-bold mb-1">500+ equipes</div><div class="text-sm text-neutral-400">Final nacional.</div></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-emerald-400 font-bold mb-1">3x emprego</div><div class="text-sm text-neutral-400">Empregabilidade dos participantes.</div></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-emerald-400 font-bold mb-1">WorldSkills</div><div class="text-sm text-neutral-400">Premiacao internacional.</div></div>
+</div>
+</section>
+<!-- TOPICO 5 -->
+<section class="mb-16" id="topico-5">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-xl">5</span>
+<h2 class="text-2xl font-bold">⚠️ Gaps estruturais</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed">
+        Existem <strong class="text-emerald-400">quatro gaps criticos</strong> no Brasil — e cada um e uma oportunidade profissional direta. O mercado nao tem oferta para nenhum dos quatro. Quem preencher primeiro captura o mercado.
+      </p>
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-red-400 mb-3 flex items-center">
+<span class="mr-2">⚠️</span> Os quatro gaps sem oferta
+        </h3>
+<ul class="space-y-2 text-neutral-300">
+<li class="flex items-start space-x-2"><span class="text-red-400 mt-1">1.</span><span><strong>Supervisao autonoma de frotas</strong> — zero cursos de "Fleet Supervision" no Brasil.</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400 mt-1">2.</span><span><strong>Gestao de mudanca</strong> para automacao — quase inexistente.</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400 mt-1">3.</span><span><strong>Certificacoes ISO 2025</strong> — menos de 50 profissionais certificados ISO 10218 no pais.</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400 mt-1">4.</span><span><strong>Conteudo vertical por setor</strong> (agro, pharma, food) — material importado dos EUA nao se aplica ao contexto brasileiro.</span></li>
+</ul>
+</div>
+<div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-blue-400 mb-4 flex items-center">
+<span class="mr-2">📊</span> O tamanho do vazio
+        </h3>
+<ul class="space-y-2 text-neutral-300">
+<li><strong>0</strong> cursos de Fleet Supervision no Brasil.</li>
+<li><strong>&lt;50</strong> profissionais certificados ISO 10218 no pais.</li>
+<li><strong>4</strong> gaps estruturais, todos sem oferta de mercado.</li>
+</ul>
+</div>
+<div class="bg-gradient-to-br from-emerald-900/30 to-dark-800 rounded-xl border border-emerald-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-emerald-400 mb-4 flex items-center">
+<span class="mr-2">🎯</span> Conceito: gap = vaga em aberto
+        </h3>
+<p class="text-neutral-300">Onde nao ha oferta, ha precos altos e baixa concorrencia. Conteudo importado nao serve porque ignora tarifas, ISO local e a realidade setorial brasileira. Quem domina um desses quatro temas no contexto nacional vira referencia quase por padrao.</p>
+</div>
+<h3 class="text-lg font-semibold mb-4">Conceitos-chave</h3>
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-2">
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-emerald-400 font-bold mb-1">Fleet Supervision</div><div class="text-sm text-neutral-400">Zero cursos no Brasil.</div></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-emerald-400 font-bold mb-1">Change mgmt</div><div class="text-sm text-neutral-400">Gestao de mudanca rara.</div></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-emerald-400 font-bold mb-1">&lt;50 ISO</div><div class="text-sm text-neutral-400">Certificados ISO 10218.</div></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-emerald-400 font-bold mb-1">Vertical BR</div><div class="text-sm text-neutral-400">Conteudo por setor local.</div></div>
+</div>
+</section>
+<!-- TOPICO 6 -->
+<section class="mb-16" id="topico-6">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-xl">6</span>
+<h2 class="text-2xl font-bold">💸 Tarifas de importacao</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed">
+        Um robo de <strong class="text-emerald-400">USD 50 mil</strong> chega ao Brasil custando <strong class="text-emerald-400">USD 90–100 mil</strong> — quase o dobro do preco internacional. A soma de <strong class="text-emerald-400">II + IPI + ICMS + PIS/COFINS</strong> dobra o custo de aquisicao. Isso alonga o ROI da automacao, mas tambem valoriza o profissional que otimiza a operacao e reduz o payback.
+      </p>
+<div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-blue-400 mb-4 flex items-center">
+<span class="mr-2">📊</span> A conta do robo importado
+        </h3>
+<div class="font-mono text-sm bg-dark-900/60 rounded-lg p-4 border border-dark-600 text-neutral-300 space-y-1">
+<div>Preco internacional ............ USD 50.000</div>
+<div>+ II + IPI + ICMS + PIS/COFINS .. ~USD 40-50.000</div>
+<div class="text-emerald-400 font-bold">= Custo no Brasil ............... USD 90-100.000</div>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+<div class="bg-emerald-900/20 rounded-xl border border-emerald-500/30 p-6">
+<h4 class="font-bold text-emerald-400 mb-4">✓ Como reduzir o custo</h4>
+<ul class="space-y-3 text-neutral-300">
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Ex-tarifario: reducao da aliquota para 0-2%.</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Regimes especiais por estado (ICMS).</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Leasing internacional como alternativa a compra direta.</span></li>
+</ul>
+</div>
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+<h4 class="font-bold text-red-400 mb-4">✗ O que encarece o payback</h4>
+<ul class="space-y-3 text-neutral-300">
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Comprar direto sem checar ex-tarifario.</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Ignorar incentivos estaduais de ICMS.</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Subutilizar o robo — custo dobrado, uso baixo.</span></li>
+</ul>
+</div>
+</div>
+<div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
+<span class="mr-2">💡</span> Dica Pratica
+        </h3>
+<p class="text-neutral-300">Como o robo custa o dobro no Brasil, cada hora ociosa pesa o dobro. O profissional que maximiza utilizacao e reduz o payback vale mais aqui do que em paises onde o robo e barato. O custo alto e, ironicamente, o que torna sua competencia valiosa.</p>
+</div>
+<h3 class="text-lg font-semibold mb-4">Conceitos-chave</h3>
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-2">
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-emerald-400 font-bold mb-1">Custo 2x</div><div class="text-sm text-neutral-400">USD 50k vira USD 90-100k.</div></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-emerald-400 font-bold mb-1">Ex-tarifario</div><div class="text-sm text-neutral-400">Aliquota cai para 0-2%.</div></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-emerald-400 font-bold mb-1">ICMS estadual</div><div class="text-sm text-neutral-400">Regimes especiais.</div></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-emerald-400 font-bold mb-1">Leasing</div><div class="text-sm text-neutral-400">Alternativa a compra.</div></div>
+</div>
+</section>
+<!-- RESUMO -->
+<section class="mb-12">
+<div class="bg-gradient-to-br from-emerald-900/40 via-dark-800 to-dark-800 rounded-xl border border-emerald-500/30 p-8">
+<h2 class="text-2xl font-bold mb-6 flex items-center">
+<span class="mr-3">📋</span> Resumo do Modulo
+        </h2>
+<div class="space-y-4 mb-8">
+<div class="flex items-start space-x-3"><span class="text-emerald-400 mt-1">✓</span><div><strong class="text-white">Gap de 8x</strong><span class="text-neutral-400"> - Brasil tem 18 robos/10k vs 162 da media mundial. Espaco para crescer, nao motivo de desanimo.</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-emerald-400 mt-1">✓</span><div><strong class="text-white">+52% em 2025</strong><span class="text-neutral-400"> - Mercado em aceleracao, com pipeline de formacao que nao acompanha.</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-emerald-400 mt-1">✓</span><div><strong class="text-white">SENAI ja existe</strong><span class="text-neutral-400"> - 23 ISIs e 100k formados/ano: a infraestrutura esta posta, falta direcionar.</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-emerald-400 mt-1">✓</span><div><strong class="text-white">Robotec Maker 4.0</strong><span class="text-neutral-400"> - Pipeline de talentos com 3x mais empregabilidade.</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-emerald-400 mt-1">✓</span><div><strong class="text-white">4 gaps sem oferta</strong><span class="text-neutral-400"> - Fleet supervision, change mgmt, ISO 2025 e conteudo vertical: vagas em aberto.</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-emerald-400 mt-1">✓</span><div><strong class="text-white">Custo dobrado</strong><span class="text-neutral-400"> - Tarifas fazem o robo custar 2x; quem otimiza utilizacao vale mais.</span></div></div>
+</div>
+<div class="bg-dark-800/50 rounded-lg p-4 mb-8">
+<h3 class="font-semibold text-emerald-400 mb-2">Proximo Modulo:</h3>
+<p class="text-neutral-300">1.6 — Programas de Referencia Mundial (Amazon Upskilling, Ausbildung alemao, academias de fabricantes)</p>
+</div>
+<div class="flex flex-col sm:flex-row gap-4">
+<a class="flex-1 text-center px-6 py-3 bg-dark-700 text-neutral-300 rounded-lg font-semibold hover:bg-dark-600 transition-colors" href="index.html">
+            ← Voltar para Trilha
+          </a>
+<a class="flex-1 text-center px-6 py-3 bg-emerald-600 text-white rounded-lg font-semibold hover:bg-emerald-500 transition-colors" href="modulo-1-6.html">
+            Proximo Modulo →
+          </a>
+</div>
+</div>
+</section>
+</main>
+<!-- FOOTER -->
+<footer class="border-t border-dark-600 py-8 mt-16">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-neutral-500 text-sm">
+<p>segROBOT — INEMA.CLUB — 2026</p>
+</div>
+</footer>
+<!-- SCRIPTS -->
+<script>
+    const themeToggle = document.getElementById('theme-toggle');
+    const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
+    const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
+    const html = document.documentElement;
+
+    if (localStorage.getItem('theme') === 'light' || (!localStorage.getItem('theme') && !html.classList.contains('dark'))) {
+      themeToggleDarkIcon.classList.remove('hidden');
+      html.classList.remove('dark');
+    } else {
+      themeToggleLightIcon.classList.remove('hidden');
+    }
+
+    themeToggle.addEventListener('click', () => {
+      themeToggleDarkIcon.classList.toggle('hidden');
+      themeToggleLightIcon.classList.toggle('hidden');
+      html.classList.toggle('dark');
+      localStorage.setItem('theme', html.classList.contains('dark') ? 'dark' : 'light');
+    });
+  </script>
+</body>
+</html>

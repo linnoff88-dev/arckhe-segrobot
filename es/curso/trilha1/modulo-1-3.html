@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="es">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Módulo 1.3 — ISO 10218:2025 | segROBOT</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            primary: '#FACC15',
+            dark: { 900: '#111827', 800: '#1f2937', 700: '#374151', 600: '#4b5563' }
+          }
+        }
+      }
+    }
+  </script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<style>
+    body { font-family: 'Inter', sans-serif; }
+    .dark body { background-color: #111827; }
+    .topic-explanation { display: none; }
+    .topic-explanation.active { display: block; }
+
+    /* Light mode overrides */
+    html:not(.dark) body { background-color: #f8fafc; }
+    html:not(.dark) .bg-dark-900 { background-color: #ffffff; }
+    html:not(.dark) .bg-dark-800 { background-color: #f9fafb; }
+    html:not(.dark) .bg-dark-700 { background-color: #f3f4f6; }
+    html:not(.dark) .bg-dark-600 { background-color: #e5e7eb; }
+    html:not(.dark) .text-neutral-100 { color: #111827; }
+    html:not(.dark) .text-neutral-300 { color: #4b5563; }
+    html:not(.dark) .text-neutral-400 { color: #6b7280; }
+    html:not(.dark) .text-neutral-500 { color: #9ca3af; }
+    html:not(.dark) .border-dark-600 { border-color: #d1d5db; }
+    html:not(.dark) .border-dark-700 { border-color: #e5e7eb; }
+
+    /* Light mode - cores de acento (trilha emerald) */
+    html:not(.dark) .text-emerald-400 { color: #059669; }
+    html:not(.dark) .bg-emerald-500\/20 { background-color: rgba(5, 150, 105, 0.12); }
+    html:not(.dark) .bg-emerald-500\/10 { background-color: rgba(5, 150, 105, 0.08); }
+    html:not(.dark) .border-emerald-500\/30 { border-color: rgba(5, 150, 105, 0.25); }
+    html:not(.dark) .hover\:bg-emerald-500\/30:hover { background-color: rgba(5, 150, 105, 0.18); }
+    html:not(.dark) .hover\:border-emerald-500\/30:hover { border-color: rgba(5, 150, 105, 0.25); }
+    html:not(.dark) .hover\:text-emerald-400:hover { color: #059669; }
+    html:not(.dark) .group:hover .group-hover\:text-emerald-400 { color: #059669; }
+
+    /* Light mode - remove gradientes */
+    html:not(.dark) [class*="bg-gradient-to"] { background-image: none !important; }
+
+    /* Light mode - cores especiais */
+    html:not(.dark) .text-primary { color: #a16207; }
+    html:not(.dark) .bg-primary\/10 { background-color: rgba(161, 98, 7, 0.08); }
+    html:not(.dark) .border-primary\/40 { border-color: rgba(161, 98, 7, 0.25); }
+    html:not(.dark) .border-primary\/30 { border-color: rgba(161, 98, 7, 0.25); }
+    html:not(.dark) .text-sky-400 { color: #0369a1; }
+    html:not(.dark) .text-yellow-400 { color: #a16207; }
+    html:not(.dark) .hover\:text-sky-300:hover { color: #0284c7; }
+    html:not(.dark) .hover\:text-yellow-300:hover { color: #854d0e; }
+    html:not(.dark) .text-blue-400 { color: #2563eb; }
+    html:not(.dark) .text-red-400 { color: #dc2626; }
+
+    /* Light mode - nav */
+    html:not(.dark) .bg-dark-900\/95 { background-color: rgba(255, 255, 255, 0.95); }
+
+    /* Dark mode - bordas suaves */
+    .dark .border-dark-600 { border-color: #374151; }
+    .dark .divide-dark-600 > :not([hidden]) ~ :not([hidden]) { border-color: #374151; }
+
+    /* SVG pulse */
+    @keyframes wf-pulse { 0%,100% { opacity:.55 } 50% { opacity:1 } }
+    @media (prefers-reduced-motion: no-preference) {
+      .wf-a { animation: wf-pulse 2.6s ease-in-out infinite; }
+      .wf-a:nth-child(2){animation-delay:.25s} .wf-a:nth-child(3){animation-delay:.5s}
+      .wf-a:nth-child(4){animation-delay:.75s} .wf-a:nth-child(5){animation-delay:1s}
+    }
+  </style>
+<link href="https://inematds.github.io/segrobot/curso/trilha1/modulo-1-3.html" hreflang="pt-BR" rel="alternate"/><link href="https://inematds.github.io/segrobot/en/curso/trilha1/modulo-1-3.html" hreflang="en" rel="alternate"/><link href="https://inematds.github.io/segrobot/es/curso/trilha1/modulo-1-3.html" hreflang="es" rel="alternate"/></head>
+<body class="bg-dark-900 text-neutral-100 min-h-screen"><div class="inema-lang" style="position:fixed;right:14px;bottom:14px;z-index:9999;display:flex;gap:2px;padding:4px;border-radius:10px;background:rgba(12,12,16,.82);border:1px solid rgba(226,162,59,.45);font:600 12px/1 Sora,Inter,system-ui,sans-serif;backdrop-filter:blur(8px)" translate="no"><a href="../../../curso/trilha1/modulo-1-3.html" hreflang="pt-BR" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">PT</a><a href="../../../en/curso/trilha1/modulo-1-3.html" hreflang="en" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">EN</a><a href="modulo-1-3.html" hreflang="es" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#1a1206;background:#E2A23B">ES</a></div>
+<!-- NAVIGATION -->
+<nav class="sticky top-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-600">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="flex justify-between items-center h-14">
+<div class="flex items-center space-x-4">
+<a class="flex items-center space-x-2 text-yellow-400 hover:text-yellow-300" href="../../index.html">
+<span class="text-2xl">🤖</span>
+<span class="font-bold text-lg hidden sm:inline">segROBOT</span>
+</a>
+<span class="text-neutral-600">|</span>
+<a class="text-sky-400 hover:text-sky-300 text-sm font-medium" href="https://inema.club" target="_blank">INEMA.CLUB</a>
+</div>
+<div class="flex items-center space-x-1 sm:space-x-2">
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-emerald-400 bg-emerald-500/10" href="index.html">
+<span class="sm:hidden">T1</span>
+<span class="hidden sm:inline">Fundamentos</span>
+</a>
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-blue-400 hover:bg-blue-500/10 transition-colors" href="../trilha2/index.html">
+<span class="sm:hidden">T2</span>
+<span class="hidden sm:inline">Acción</span>
+</a>
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-purple-400 hover:bg-purple-500/10 transition-colors" href="../trilha3/index.html">
+<span class="sm:hidden">T3</span>
+<span class="hidden sm:inline">Estratégico</span>
+</a>
+<button class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors ml-2" id="theme-toggle">
+<svg class="hidden w-5 h-5 text-neutral-300" fill="currentColor" id="theme-toggle-dark-icon" viewbox="0 0 20 20">
+<path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+</svg>
+<svg class="hidden w-5 h-5 text-neutral-300" fill="currentColor" id="theme-toggle-light-icon" viewbox="0 0 20 20">
+<path clip-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd"></path>
+</svg>
+</button>
+</div>
+</div>
+</div>
+</nav>
+<!-- BREADCRUMB -->
+<nav class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+<div class="flex items-center space-x-2 text-sm text-neutral-400">
+<a class="hover:text-emerald-400" href="../../index.html">Inicio</a>
+<span>/</span>
+<a class="hover:text-emerald-400" href="index.html">Ruta 1</a>
+<span>/</span>
+<span class="text-emerald-400">Módulo 1.3</span>
+</div>
+</nav>
+<!-- HEADER -->
+<header class="bg-gradient-to-br from-emerald-900/30 via-dark-800 to-dark-800 py-12 border-b border-dark-600">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+<span class="inline-block px-3 py-1 bg-emerald-500/20 text-emerald-400 text-xs font-semibold rounded-full mb-4">MÓDULO 1.3</span>
+<h1 class="text-3xl sm:text-4xl font-bold mb-4">📋 ISO 10218:2025 — La nueva era de la seguridad HRC</h1>
+<p class="text-lg text-neutral-400 max-w-3xl">
+        La primera revisión desde 2011 reescribe la base normativa de la robótica industrial. El concepto de
+        "robot colaborativo" como categoría desaparece, el TS 15066 se incorpora, la ciberseguridad se convierte en requisito
+        de seguridad física y surge la clasificación Class I / Class II. Entender esta norma marca la frontera
+        entre instalar con seguridad y responder ante la justicia.
+      </p>
+<div class="grid grid-cols-4 gap-4 mt-8 max-w-2xl">
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+<div class="text-xl font-bold text-emerald-400">6</div>
+<div class="text-xs text-neutral-400">Temas</div>
+</div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+<div class="text-xl font-bold text-emerald-400">50</div>
+<div class="text-xs text-neutral-400">Minutos</div>
+</div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+<div class="text-xl font-bold text-emerald-400">Básico</div>
+<div class="text-xs text-neutral-400">Nivel</div>
+</div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+<div class="text-xl font-bold text-emerald-400">Teoría</div>
+<div class="text-xs text-neutral-400">Tipo</div>
+</div>
+</div>
+</div>
+</header>
+<!-- CONTEUDO -->
+<main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+<!-- SVG FUTURISTA: 4 modos colaborativos -->
+<div class="rounded-2xl border border-emerald-500/30 bg-dark-900/40 p-3 sm:p-4 mb-12 overflow-hidden">
+<svg aria-label="Los cuatro modos de operación colaborativa de la ISO 10218:2025: parada monitoreada, guiado manual, monitoreo de velocidad y separación, y limitación de potencia y fuerza, todos regidos por el mismo análisis de riesgos por aplicación" class="w-full h-auto" role="img" viewbox="0 0 1000 260">
+<defs>
+<lineargradient id="m13-grad" x1="0" x2="1" y1="0" y2="1">
+<stop offset="0" stop-color="#34d399"></stop><stop offset="1" stop-color="#10b981"></stop>
+</lineargradient>
+<filter height="180%" id="m13-glow" width="180%" x="-40%" y="-40%">
+<fegaussianblur result="b" stddeviation="3"></fegaussianblur><femerge><femergenode in="b"></femergenode><femergenode in="SourceGraphic"></femergenode></femerge>
+</filter>
+<pattern height="32" id="m13-grid" patternunits="userSpaceOnUse" width="32">
+<circle cx="1.3" cy="1.3" fill="#10b981" opacity="0.12" r="1.3"></circle>
+</pattern>
+<marker id="m13-ah" markerheight="9" markerwidth="9" orient="auto" refx="6.5" refy="4.5"><path d="M0,0 L8,4.5 L0,9 L2.4,4.5 Z" fill="#34d399"></path></marker>
+<marker id="m13-ahc" markerheight="9" markerwidth="9" orient="auto" refx="6.5" refy="4.5"><path d="M0,0 L8,4.5 L0,9 L2.4,4.5 Z" fill="#38bdf8"></path></marker>
+</defs>
+<rect fill="url(#m13-grid)" height="260" width="1000" x="0" y="0"></rect>
+<!-- origem: analise de risco por aplicacao -->
+<g filter="url(#m13-glow)"><rect fill="#0e2018" height="64" rx="14" stroke="url(#m13-grad)" stroke-width="2.5" width="172" x="36" y="98"></rect></g>
+<text fill="#34d399" font-family="Inter,sans-serif" font-size="17" font-weight="700" text-anchor="middle" x="122" y="124">Análisis de riesgos</text>
+<text fill="#a7f3d0" font-family="Inter,sans-serif" font-size="12" text-anchor="middle" x="122" y="144">por aplicación</text>
+<!-- linhas para os 4 modos -->
+<g fill="none" opacity="0.65" stroke="#34d399" stroke-width="2">
+<path d="M208,130 C300,130 320,40 452,40" marker-end="url(#m13-ah)"></path>
+<path d="M208,130 C300,130 320,100 452,100" marker-end="url(#m13-ah)"></path>
+<path d="M208,130 C300,130 320,160 452,160" marker-end="url(#m13-ah)"></path>
+<path d="M208,130 C300,130 320,220 452,220" marker-end="url(#m13-ah)"></path>
+</g>
+<!-- 4 modos (ciano, pulsando) -->
+<g font-family="Inter,sans-serif" font-size="13" font-weight="600">
+<g class="wf-a"><rect fill="#0e1b26" height="36" rx="9" stroke="#38bdf8" stroke-width="2" width="200" x="452" y="22"></rect><text fill="#bfe6ff" text-anchor="middle" x="552" y="45">1 · Parada Monitoreada (SMS)</text></g>
+<g class="wf-a"><rect fill="#0e1b26" height="36" rx="9" stroke="#38bdf8" stroke-width="2" width="200" x="452" y="82"></rect><text fill="#bfe6ff" text-anchor="middle" x="552" y="105">2 · Guiado manual (HG)</text></g>
+<g class="wf-a"><rect fill="#0e1b26" height="36" rx="9" stroke="#38bdf8" stroke-width="2" width="200" x="452" y="142"></rect><text fill="#bfe6ff" text-anchor="middle" x="552" y="165">3 · Velocidad y separación (SSM)</text></g>
+<g class="wf-a"><rect fill="#0e1b26" height="36" rx="9" stroke="#38bdf8" stroke-width="2" width="200" x="452" y="202"></rect><text fill="#bfe6ff" text-anchor="middle" x="552" y="225">4 · Potencia y fuerza (PFL)</text></g>
+</g>
+<!-- convergencia para operacao colaborativa segura -->
+<g fill="none" opacity="0.55" stroke="#38bdf8" stroke-width="2">
+<path d="M652,40 C760,40 780,130 856,130" marker-end="url(#m13-ahc)"></path>
+<path d="M652,100 C760,100 780,130 856,130" marker-end="url(#m13-ahc)"></path>
+<path d="M652,160 C760,160 780,130 856,130" marker-end="url(#m13-ahc)"></path>
+<path d="M652,220 C760,220 780,130 856,130" marker-end="url(#m13-ahc)"></path>
+</g>
+<g filter="url(#m13-glow)"><rect fill="#0e2018" height="68" rx="14" stroke="url(#m13-grad)" stroke-width="2.5" width="120" x="856" y="96"></rect></g>
+<text fill="#34d399" font-family="Inter,sans-serif" font-size="14" font-weight="700" text-anchor="middle" x="916" y="124">Operación</text>
+<text fill="#34d399" font-family="Inter,sans-serif" font-size="14" font-weight="700" text-anchor="middle" x="916" y="142">colaborativa</text>
+</svg>
+<p class="text-xs text-neutral-500 mt-2 text-center">Diagrama ilustrativo: la norma no certifica el robot, certifica la aplicación. Los 4 modos derivan de un único análisis de riesgos.</p>
+</div>
+<h2 class="text-2xl font-bold mb-10">Contenido detallado</h2>
+<!-- TOPICO 1 -->
+<section class="mb-16" id="topico-1">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-xl">1</span>
+<h2 class="text-2xl font-bold">📅 Primera revisión desde 2011</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed">
+        A <strong class="text-emerald-400">ISO 10218:2025</strong> sustituye la versión de 2011 y es la primera
+        revisión en <strong class="text-emerald-400">14 años</strong>. En ese intervalo, la robótica industrial cambió
+        de naturaleza: llegaron los cobots, los AMR, la IA integrada y los ataques cibernéticos al piso de fábrica.
+        Publicada en Q1 2025, la norma incorpora todo esto y redefine lo que significa "trabajar junto a un robot".
+      </p>
+<!-- TIMELINE 2011 -> 2025 -->
+<div class="space-y-6 mb-6">
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-12 h-12 rounded-full bg-emerald-500/20 flex items-center justify-center">
+<span class="text-emerald-400 font-bold text-sm">2011</span>
+</div>
+<div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+<h4 class="font-semibold text-white mb-2">ISO 10218:2011 — Parte 1 y 2</h4>
+<p class="text-sm text-neutral-400 mb-3">La era del robot enjaulado</p>
+<p class="text-neutral-300 text-sm">Robot industrial = máquina peligrosa que opera detrás de cercas. La colaboración entre humanos y robots era la excepción, no la regla. Los cobots todavía estaban en el laboratorio.</p>
+</div>
+</div>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-12 h-12 rounded-full bg-emerald-500/20 flex items-center justify-center">
+<span class="text-emerald-400 font-bold text-sm">2016</span>
+</div>
+<div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+<h4 class="font-semibold text-white mb-2">ISO/TS 15066 — Especificación técnica</h4>
+<p class="text-sm text-neutral-400 mb-3">Los límites de fuerza y presión</p>
+<p class="text-neutral-300 text-sm">Documento separado que definía límites biomecánicos de fuerza y presión para la colaboración. Era la referencia, pero no tenía estatus de norma plena.</p>
+</div>
+</div>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-12 h-12 rounded-full bg-emerald-500/20 flex items-center justify-center">
+<span class="text-emerald-400 font-bold text-sm">2025</span>
+</div>
+<div class="flex-1 bg-dark-800 rounded-xl p-6 border border-emerald-500/30">
+<h4 class="font-semibold text-white mb-2">ISO 10218:2025 — La consolidación</h4>
+<p class="text-sm text-neutral-400 mb-3">La era de la operación colaborativa</p>
+<p class="text-neutral-300 text-sm">Absorbe la TS 15066, elimina "cobot" como categoría, integra la ciberseguridad y crea las clases I y II. Periodo de transición de 3 años para revalidar las instalaciones existentes.</p>
+</div>
+</div>
+</div>
+<!-- BOX DADOS -->
+<div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-blue-400 mb-4 flex items-center">
+<span class="mr-2">📊</span> Por qué esto importa ahora
+        </h3>
+<ul class="space-y-2 text-neutral-300">
+<li><strong>14 años</strong> - tiempo entre las dos revisiones de la norma</li>
+<li><strong>3 años</strong> - período de transición para revalidar instalaciones</li>
+<li><strong>Q1 2025</strong> - publicación oficial de la nueva versión</li>
+<li><strong>Escasez</strong> - los profesionales de seguridad robótica son escasos y muy demandados</li>
+</ul>
+</div>
+<!-- CONCEITOS-CHAVE -->
+<h3 class="text-lg font-semibold text-emerald-400 mb-4">Conceptos clave</h3>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-emerald-400 font-bold mb-1">Revisión 2025</div><p class="text-sm text-neutral-400">Reemplaza la versión de 2011</p></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-emerald-400 font-bold mb-1">TS 15066</div><p class="text-sm text-neutral-400">Absorbido en la norma</p></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-emerald-400 font-bold mb-1">"Cobot" eliminado</div><p class="text-sm text-neutral-400">Deja de ser una categoría</p></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-emerald-400 font-bold mb-1">Transición de 3 años</div><p class="text-sm text-neutral-400">Plazo de revalidación</p></div>
+</div>
+</section>
+<!-- TOPICO 2 -->
+<section class="mb-16" id="topico-2">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-xl">2</span>
+<h2 class="text-2xl font-bold">🚫 «Robot colaborativo» eliminado como categoría</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed">
+        El cambio más profundo de la norma es conceptual: <strong class="text-emerald-400">ya no existe más el «robot
+        colaborativo» como tipo de robot</strong>. Cualquier robot puede operar de forma colaborativa, siempre que la
+        <strong class="text-emerald-400">aplicación</strong> cumpla los requisitos de seguridad. El análisis de riesgos
+        deja de centrarse en la máquina y pasa a centrarse en su uso real.
+      </p>
+<!-- BOX CONCEITO GRADIENTE -->
+<div class="bg-gradient-to-br from-emerald-900/30 to-dark-800 rounded-xl border border-emerald-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-emerald-400 mb-4 flex items-center">
+<span class="mr-2">🎯</span> El cambio de paradigma
+        </h3>
+<p class="text-neutral-300 mb-4">La pregunta correcta cambió. Antes: "¿este robot es colaborativo?". Ahora: "¿esta aplicación funciona de forma colaborativa y segura?".</p>
+<ul class="space-y-2 text-neutral-300">
+<li class="flex items-start space-x-2"><span class="text-emerald-400 mt-1">•</span><span>El foco deja de estar en el equipo y pasa a la <strong>la tarea, el layout y la interacción</strong>.</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400 mt-1">•</span><span>Un robot «pesado» puede funcionar en modo colaborativo si la aplicación limita la velocidad y la fuerza.</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400 mt-1">•</span><span>Un cobot «ligero» puede ser peligroso si la herramienta en el extremo corta o perfora.</span></li>
+</ul>
+</div>
+<!-- GRID ANTES vs AGORA -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+<h4 class="font-bold text-red-400 mb-4">✗ Lógica antigua (2011)</h4>
+<ul class="space-y-3 text-neutral-300">
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>"Robot colaborativo" como categoría de producto</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Evaluación de riesgos centrada en la máquina</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Comprar el cobot ya resolvía «la seguridad»</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Marketing vendía «robot seguro por diseño»</span></li>
+</ul>
+</div>
+<div class="bg-emerald-900/20 rounded-xl border border-emerald-500/30 p-6">
+<h4 class="font-bold text-emerald-400 mb-4">✓ Nueva lógica (2025)</h4>
+<ul class="space-y-3 text-neutral-300">
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>"Operación colaborativa" como modo de uso</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Evaluación de riesgos por aplicación completa</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>La seguridad depende del robot + la herramienta + la tarea + el entorno</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Responsabilidad compartida entre integrador y empleador</span></li>
+</ul>
+</div>
+</div>
+<!-- TIP BOX PRIMARY -->
+<div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
+<span class="mr-2">💡</span> Consejo práctico
+        </h3>
+<p class="text-neutral-300">Cuando un proveedor diga «este es un robot colaborativo, ya es seguro», corrígelo mentalmente: ningún robot es seguro por sí solo. Lo que es seguro (o no) es la <strong>aplicación</strong>. Pide siempre la evaluación de riesgos de la celda, no la ficha técnica del brazo.</p>
+</div>
+<!-- CONCEITOS-CHAVE -->
+<h3 class="text-lg font-semibold text-emerald-400 mb-4">Conceptos clave</h3>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-emerald-400 font-bold mb-1">Operación colaborativa</div><p class="text-sm text-neutral-400">Modo, no tipo de robot</p></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-emerald-400 font-bold mb-1">Riesgo por aplicación</div><p class="text-sm text-neutral-400">Evalúa el uso, no la máquina</p></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-emerald-400 font-bold mb-1">Las herramientas importan</div><p class="text-sm text-neutral-400">El efector final cambia el riesgo</p></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-emerald-400 font-bold mb-1">Clase I vs. II</div><p class="text-sm text-neutral-400">Nueva clasificación de sistemas</p></div>
+</div>
+</section>
+<!-- TOPICO 3 -->
+<section class="mb-16" id="topico-3">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-xl">3</span>
+<h2 class="text-2xl font-bold">📐 ISO/TS 15066 asimilada — PFL y SSM integrados</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed">
+        O <strong class="text-emerald-400">Technical Specification 15066</strong> — que definía límites de fuerza y
+        presión para la colaboración — dejó de ser un documento separado y fue <strong class="text-emerald-400">absorbido
+        por la ISO 10218:2025</strong>. Con esto, los cuatro modos colaborativos adquieren requisitos normativos plenos,
+        más rigurosos e integrados. PFL y SSM, en particular, pasan a tener límites verificables y auditables.
+      </p>
+<!-- 4 MODOS - cards -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-6">
+<h4 class="font-bold text-emerald-400 mb-2">1 · SMS — Safety-rated Monitored Stop</h4>
+<p class="text-neutral-300 text-sm">El robot se detiene cuando el humano entra en la zona colaborativa y solo reanuda cuando sale. Parada con clasificación de seguridad, no corte de energía.</p>
+</div>
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-6">
+<h4 class="font-bold text-emerald-400 mb-2">2 · HG — Hand Guiding</h4>
+<p class="text-neutral-300 text-sm">El operador guía físicamente al robot, mano sobre mano, mediante un dispositivo de guiado con función de seguridad. Se usa en teach-in y en el movimiento asistido.</p>
+</div>
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-6">
+<h4 class="font-bold text-emerald-400 mb-2">3 · SSM — Speed and Separation Monitoring</h4>
+<p class="text-neutral-300 text-sm">Los sensores mantienen una distancia mínima de seguridad; el robot reduce la velocidad a medida que el humano se acerca y se detiene si la separación cae por debajo del límite.</p>
+</div>
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-6">
+<h4 class="font-bold text-emerald-400 mb-2">4 · PFL — Power and Force Limiting</h4>
+<p class="text-neutral-300 text-sm">El contacto con el humano está permitido, pero la fuerza y la presión quedan por debajo de los límites biomecánicos de la antigua TS 15066. Es el modo que más depende del hardware del robot.</p>
+</div>
+</div>
+<!-- MONOSPACE / DADOS BIOMECANICOS -->
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6">
+<h3 class="text-lg font-semibold text-emerald-400 mb-3 flex items-center">
+<span class="mr-2">📏</span> Legado de TS 15066 (PFL)
+        </h3>
+<p class="text-neutral-300 text-sm mb-4">Los límites biomecánicos por región del cuerpo se mantienen como referencia normativa dentro de la ISO 10218:2025:</p>
+<div class="font-mono text-sm bg-dark-900 rounded-lg p-4 border border-dark-600 space-y-1 text-neutral-300 overflow-x-auto">
+<div><span class="text-emerald-400">región_cuerpo</span>    limite_pressao   limite_forca</div>
+<div><span class="text-neutral-500">rostro / cráneo</span>   no permitido    no permitido</div>
+<div><span class="text-neutral-500">manos / dedos</span>     más restrictivo  bajo</div>
+<div><span class="text-neutral-500">tronco / abdomen</span> intermediario   intermediario</div>
+<div><span class="text-neutral-500">piernas / muslos</span>   más permisivo  más alto</div>
+</div>
+<p class="text-xs text-neutral-500 mt-3">Tabla ilustrativa de la lógica del PFL — los valores exactos por región constan en la norma. Cada región tiene su propio par de presión/fuerza.</p>
+</div>
+<!-- TIP BOX PRIMARY -->
+<div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
+<span class="mr-2">💡</span> Consejo práctico
+        </h3>
+<p class="text-neutral-300">Una celda puede combinar modos a lo largo del tiempo: SSM mientras el robot trabaja solo, pasando a PFL o SMS cuando entra una persona. Documentar esa transición en la evaluación de riesgos es donde la mayoría de las auditorías detecta fallas.</p>
+</div>
+<!-- CONCEITOS-CHAVE -->
+<h3 class="text-lg font-semibold text-emerald-400 mb-4">Conceptos clave</h3>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-emerald-400 font-bold mb-1">SMS</div><p class="text-sm text-neutral-400">Parada monitoreada</p></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-emerald-400 font-bold mb-1">Guiado manual</div><p class="text-sm text-neutral-400">Conducción manual</p></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-emerald-400 font-bold mb-1">SSM</div><p class="text-sm text-neutral-400">Velocidad y separación</p></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-emerald-400 font-bold mb-1">PFL</div><p class="text-sm text-neutral-400">Potencia y fuerza limitadas</p></div>
+</div>
+</section>
+<!-- TOPICO 4 -->
+<section class="mb-16" id="topico-4">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-xl">4</span>
+<h2 class="text-2xl font-bold">🔒 Ciberseguridad = seguridad física</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed">
+        Por primera vez, <strong class="text-emerald-400">la ciberseguridad se incorpora como requisito de seguridad
+        física</strong> en una norma de robótica. La lógica es directa: un ataque que altere los parámetros de fuerza de
+        un cobot, o desactive un sensor de separación, deja de ser un «problema de TI» y se convierte en una <strong class="text-emerald-400">riesgo
+        de lesiones</strong>. Safety y security convergen.
+      </p>
+<!-- BOX DE ALERTA RED -->
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-red-400 mb-3 flex items-center">
+<span class="mr-2">🚨</span> Alerta de cumplimiento y riesgo
+        </h3>
+<p class="text-neutral-300 mb-4">Un cobot conectado a la red con parámetros de fuerza accesibles de forma remota es, según la ISO 10218:2025, una <strong>vulnerabilidad de la seguridad física</strong>. Si un intruso aumenta los límites de fuerza, el robot deja de ser seguro según PFL sin que ningún operador lo note.</p>
+<ul class="space-y-2 text-neutral-300">
+<li class="flex items-start space-x-2"><span class="text-red-400">⚠</span><span>Los parámetros con clasificación de seguridad nunca deben poder reescribirse sin autenticación sólida.</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">⚠</span><span>La red OT de la celda debe estar segmentada de la red corporativa (IT).</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">⚠</span><span>Los registros de cambios de parámetros se convierten en evidencia legal en caso de accidente.</span></li>
+</ul>
+</div>
+<!-- BOX CONCEITO: IT/OT convergence -->
+<div class="bg-gradient-to-br from-emerald-900/30 to-dark-800 rounded-xl border border-emerald-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-emerald-400 mb-4 flex items-center">
+<span class="mr-2">🔗</span> Convergencia IT / OT
+        </h3>
+<p class="text-neutral-300 mb-4">Dos mundos que antes estaban separados ahora se cruzan dentro de la misma celda robótica:</p>
+<ul class="space-y-2 text-neutral-300">
+<li class="flex items-start space-x-2"><span class="text-emerald-400 mt-1">•</span><span><strong>TI (Information Technology):</strong> redes, autenticación, cifrado, gestión de parches.</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400 mt-1">•</span><span><strong>OT (Operational Technology):</strong> PLC, controladores de robot, sensores de seguridad.</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400 mt-1">•</span><span><strong>Defense-in-depth:</strong> múltiples capas —segmentación de red, control de acceso, monitoreo.</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400 mt-1">•</span><span><strong>IEC 62443:</strong> norma de ciberseguridad industrial utilizada como referencia complementaria.</span></li>
+</ul>
+</div>
+<!-- BOX DADOS BLUE -->
+<div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-blue-400 mb-4 flex items-center">
+<span class="mr-2">🧩</span> Qué cambia para el profesional
+        </h3>
+<ul class="space-y-2 text-neutral-300">
+<li><strong>Nueva competencia</strong> - los profesionales de seguridad robótica ahora necesitan entender de ciberseguridad.</li>
+<li><strong>IEC 62443</strong> - referencia complementaria para la capa de seguridad industrial.</li>
+<li><strong>Ataques a parámetros con clasificación de seguridad</strong> - pasan a ser vectores de riesgo físico documentados.</li>
+</ul>
+</div>
+<!-- CONCEITOS-CHAVE -->
+<h3 class="text-lg font-semibold text-emerald-400 mb-4">Conceptos clave</h3>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-emerald-400 font-bold mb-1">Convergencia IT/OT</div><p class="text-sm text-neutral-400">Redes y planta de producción</p></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-emerald-400 font-bold mb-1">Con clasificación de seguridad</div><p class="text-sm text-neutral-400">Parámetros protegidos</p></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-emerald-400 font-bold mb-1">Defense-in-depth</div><p class="text-sm text-neutral-400">Varias capas</p></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-emerald-400 font-bold mb-1">IEC 62443</div><p class="text-sm text-neutral-400">Referencia de ciberseguridad industrial</p></div>
+</div>
+</section>
+<!-- TOPICO 5 -->
+<section class="mb-16" id="topico-5">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-xl">5</span>
+<h2 class="text-2xl font-bold">⚙️ Class I vs Class II</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed">
+        La norma crea una nueva clasificación de sistemas robóticos. <strong class="text-emerald-400">Clase I</strong>
+        son sistemas con funciones de seguridad <strong class="text-emerald-400">inherentes</strong> (sensores de fuerza,
+        limitación de velocidad integrada). <strong class="text-emerald-400">Clase II</strong> son sistemas que
+        dependen de <strong class="text-emerald-400">dispositivos de protección externos</strong> para que sean seguros.
+        Equivocarse de clase significa aplicar los requisitos incorrectos y responder por ello.
+      </p>
+<!-- GRID Class I vs Class II -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+<div class="bg-emerald-900/20 rounded-xl border border-emerald-500/30 p-6">
+<h4 class="font-bold text-emerald-400 mb-4">Clase I — Seguridad integrada</h4>
+<ul class="space-y-3 text-neutral-300">
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Funciones de seguridad inherentes al sistema</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Sensores de fuerza y limitación de velocidad integrados</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Menor dependencia de protección externa</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Evaluación de riesgos centrada en la configuración del sistema</span></li>
+</ul>
+</div>
+<div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6">
+<h4 class="font-bold text-blue-400 mb-4">Clase II — Seguridad adicional</h4>
+<ul class="space-y-3 text-neutral-300">
+<li class="flex items-start space-x-2"><span class="text-blue-400">•</span><span>Depende de dispositivos de protección externos</span></li>
+<li class="flex items-start space-x-2"><span class="text-blue-400">•</span><span>Vallas, escáneres de área, cortinas de luz</span></li>
+<li class="flex items-start space-x-2"><span class="text-blue-400">•</span><span>Mayor complejidad y costo de integración</span></li>
+<li class="flex items-start space-x-2"><span class="text-blue-400">•</span><span>Evaluación de riesgos centrada en los dispositivos adicionales</span></li>
+</ul>
+</div>
+</div>
+<!-- TIP BOX PRIMARY -->
+<div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
+<span class="mr-2">💡</span> Consejo práctico
+        </h3>
+<p class="text-neutral-300">La clase cambia el costo. Un sistema Class II requiere cercas, escáneres y cortinas de luz, que aumentan el presupuesto de integración. Clasificarlo erróneamente por debajo expone al trabajador; clasificarlo por encima encarece sin necesidad. La clase correcta se determina mediante la evaluación de riesgos, no por intuición.</p>
+</div>
+<!-- BOX DE ALERTA red - juridico -->
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-red-400 mb-3 flex items-center">
+<span class="mr-2">⚖️</span> Riesgo jurídico
+        </h3>
+<p class="text-neutral-300">Clasificar mal puede significar <strong>cumplimiento inadecuado</strong>. En caso de accidente, la clasificación registrada en el proyecto de seguridad es el primer documento que examinan los peritos y las autoridades. Una celda Class II tratada como Class I es negligencia documentada.</p>
+</div>
+<!-- CONCEITOS-CHAVE -->
+<h3 class="text-lg font-semibold text-emerald-400 mb-4">Conceptos clave</h3>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-emerald-400 font-bold mb-1">Clase I</div><p class="text-sm text-neutral-400">Seguridad inherente</p></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-emerald-400 font-bold mb-1">Clase II</div><p class="text-sm text-neutral-400">Protección externa</p></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-emerald-400 font-bold mb-1">Costo de integración</div><p class="text-sm text-neutral-400">La Clase II cuesta más</p></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-emerald-400 font-bold mb-1">Clase correcta</div><p class="text-sm text-neutral-400">Sale de la evaluación de riesgos</p></div>
+</div>
+</section>
+<!-- TOPICO 6 -->
+<section class="mb-16" id="topico-6">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-xl">6</span>
+<h2 class="text-2xl font-bold">🔄 Impacto en la revalidación — cobots existentes</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed">
+        Cobots instalados bajo la <strong class="text-emerald-400">ISO 10218:2011</strong> deben ser
+        <strong class="text-emerald-400">revalidados</strong> frente a la nueva norma dentro del período de transición de
+        <strong class="text-emerald-400">3 años</strong>. No basta con mantener el certificado antiguo. Cada celda existente
+        se convierte en un proyecto de análisis de brechas — y es exactamente ahí donde surge la demanda masiva de profesionales de
+        safety assessment.
+      </p>
+<!-- TIMELINE de revalidacao / passos -->
+<div class="space-y-6 mb-6">
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-12 h-12 rounded-full bg-emerald-500/20 flex items-center justify-center">
+<span class="text-emerald-400 font-bold">1</span>
+</div>
+<div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+<h4 class="font-semibold text-white mb-2">Inventario de las celdas</h4>
+<p class="text-sm text-neutral-400 mb-3">Qué existe hoy bajo la norma de 2011</p>
+<p class="text-neutral-300 text-sm">Mapear todas las instalaciones robóticas certificadas por la versión anterior y su fecha de puesta en servicio.</p>
+</div>
+</div>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-12 h-12 rounded-full bg-emerald-500/20 flex items-center justify-center">
+<span class="text-emerald-400 font-bold">2</span>
+</div>
+<div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+<h4 class="font-semibold text-white mb-2">Análisis de brechas frente a la nueva norma</h4>
+<p class="text-sm text-neutral-400 mb-3">Donde la célula no cumple con los requisitos de 2025</p>
+<p class="text-neutral-300 text-sm">Compara la configuración actual con Class I/II, los modos colaborativos actualizados y los requisitos de ciberseguridad.</p>
+</div>
+</div>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-12 h-12 rounded-full bg-emerald-500/20 flex items-center justify-center">
+<span class="text-emerald-400 font-bold">3</span>
+</div>
+<div class="flex-1 bg-dark-800 rounded-xl p-6 border border-emerald-500/30">
+<h4 class="font-semibold text-white mb-2">Revalidación de la evaluación de riesgos</h4>
+<p class="text-sm text-neutral-400 mb-3">Costo estimado: EUR 5-15k por celda</p>
+<p class="text-neutral-300 text-sm">Actualizar la evaluación de riesgos, corregir las brechas y volver a emitir la documentación de conformidad dentro del plazo de 3 años.</p>
+</div>
+</div>
+</div>
+<!-- BOX DADOS BLUE - mercado -->
+<div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-blue-400 mb-4 flex items-center">
+<span class="mr-2">📈</span> La oportunidad de mercado
+        </h3>
+<ul class="space-y-2 text-neutral-300">
+<li><strong>EUR 5-15k</strong> - costo estimado de revalidación por célula</li>
+<li><strong>3 años</strong> - período en el que debe reevaluarse toda la base instalada</li>
+<li><strong>Demanda inmediata</strong> - cada célula existente genera un proyecto de evaluación de seguridad</li>
+<li><strong>Escasez de mano de obra</strong> - quien domina la nueva norma entra en un mercado dinámico</li>
+</ul>
+</div>
+<!-- CONCEITOS-CHAVE -->
+<h3 class="text-lg font-semibold text-emerald-400 mb-4">Conceptos clave</h3>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-emerald-400 font-bold mb-1">Transición de 3 años</div><p class="text-sm text-neutral-400">Plazo de revalidación</p></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-emerald-400 font-bold mb-1">Análisis de brechas</div><p class="text-sm text-neutral-400">2011 vs 2025</p></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-emerald-400 font-bold mb-1">EUR 5-15k</div><p class="text-sm text-neutral-400">Costo por celda</p></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-emerald-400 font-bold mb-1">Mercado laboral</div><p class="text-sm text-neutral-400">Demanda inmediata</p></div>
+</div>
+</section>
+<!-- RESUMO -->
+<section class="mb-12">
+<div class="bg-gradient-to-br from-emerald-900/40 via-dark-800 to-dark-800 rounded-xl border border-emerald-500/30 p-8">
+<h2 class="text-2xl font-bold mb-6 flex items-center">
+<span class="mr-3">✅</span> Resumen del módulo
+        </h2>
+<div class="space-y-4 mb-8">
+<div class="flex items-start space-x-3">
+<span class="text-emerald-400 mt-1">✓</span>
+<div><strong class="text-white">Primera revisión desde 2011</strong><span class="text-neutral-400"> - la ISO 10218:2025 incorpora 14 años de evolución y el TS 15066, con una transición de 3 años.</span></div>
+</div>
+<div class="flex items-start space-x-3">
+<span class="text-emerald-400 mt-1">✓</span>
+<div><strong class="text-white">"Robot colaborativo" eliminado</strong><span class="text-neutral-400"> - existe una operación colaborativa; la evaluación de riesgos pasa de la máquina a la aplicación.</span></div>
+</div>
+<div class="flex items-start space-x-3">
+<span class="text-emerald-400 mt-1">✓</span>
+<div><strong class="text-white">4 modos colaborativos</strong><span class="text-neutral-400"> - SMS, Hand Guiding, SSM y PFL, ahora con requisitos normativos integrados.</span></div>
+</div>
+<div class="flex items-start space-x-3">
+<span class="text-emerald-400 mt-1">✓</span>
+<div><strong class="text-white">Ciberseguridad = seguridad física</strong><span class="text-neutral-400"> - IT/OT convergence e IEC 62443 como referencia complementaria.</span></div>
+</div>
+<div class="flex items-start space-x-3">
+<span class="text-emerald-400 mt-1">✓</span>
+<div><strong class="text-white">Clase I vs. Clase II</strong><span class="text-neutral-400"> - seguridad integrada vs. complemento; la clase define los requisitos, el costo y el riesgo jurídico.</span></div>
+</div>
+<div class="flex items-start space-x-3">
+<span class="text-emerald-400 mt-1">✓</span>
+<div><strong class="text-white">Revalidación obligatoria</strong><span class="text-neutral-400"> - cada célula existente se convierte en un proyecto de gap analysis (EUR 5-15k), lo que genera demanda inmediata.</span></div>
+</div>
+</div>
+<div class="bg-dark-800/50 rounded-lg p-4 mb-8">
+<h3 class="font-semibold text-emerald-400 mb-2">Próximo módulo:</h3>
+<p class="text-neutral-300">1.4 - 🧠 Psicología de la Resistencia: Por Qué los Humanos Rechazan a los Robots</p>
+</div>
+<div class="flex flex-col sm:flex-row gap-4">
+<a class="flex-1 text-center px-6 py-3 bg-dark-700 text-neutral-300 rounded-lg font-semibold hover:bg-dark-600 transition-colors" href="index.html">
+            ← Volver a la ruta
+          </a>
+<a class="flex-1 text-center px-6 py-3 bg-emerald-600 text-white rounded-lg font-semibold hover:bg-emerald-500 transition-colors" href="modulo-1-4.html">
+            Próximo módulo →
+          </a>
+</div>
+</div>
+</section>
+</main>
+<!-- FOOTER -->
+<footer class="border-t border-dark-600 py-8 mt-16">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-neutral-500 text-sm">
+<p>segROBOT — INEMA.CLUB — 2026</p>
+</div>
+</footer>
+<!-- SCRIPTS -->
+<script>
+    const themeToggle = document.getElementById('theme-toggle');
+    const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
+    const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
+    const html = document.documentElement;
+
+    if (localStorage.getItem('theme') === 'light' || (!localStorage.getItem('theme') && !html.classList.contains('dark'))) {
+      themeToggleDarkIcon.classList.remove('hidden');
+      html.classList.remove('dark');
+    } else {
+      themeToggleLightIcon.classList.remove('hidden');
+    }
+
+    themeToggle.addEventListener('click', () => {
+      themeToggleDarkIcon.classList.toggle('hidden');
+      themeToggleLightIcon.classList.toggle('hidden');
+      html.classList.toggle('dark');
+      localStorage.setItem('theme', html.classList.contains('dark') ? 'dark' : 'light');
+    });
+  </script>
+</body>
+</html>

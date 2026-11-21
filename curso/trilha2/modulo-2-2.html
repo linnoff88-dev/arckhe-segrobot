@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="pt-BR">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Modulo 2.2 - Protocolos de Seguranca Humano-Robo | segROBOT</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            primary: '#FACC15',
+            dark: { 900: '#111827', 800: '#1f2937', 700: '#374151', 600: '#4b5563' }
+          }
+        }
+      }
+    }
+  </script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<style>
+    body { font-family: 'Inter', sans-serif; }
+    .dark body { background-color: #111827; }
+    .topic-explanation { display: none; }
+    .topic-explanation.active { display: block; }
+
+    @keyframes wf-pulse { 0%,100% { opacity:.55 } 50% { opacity:1 } }
+    @media (prefers-reduced-motion: no-preference) {
+      .wf-a { animation: wf-pulse 2.6s ease-in-out infinite; }
+      .wf-a:nth-child(2){animation-delay:.25s} .wf-a:nth-child(3){animation-delay:.5s}
+      .wf-a:nth-child(4){animation-delay:.75s} .wf-a:nth-child(5){animation-delay:1s}
+    }
+
+    /* Light mode overrides - OBRIGATORIO */
+    html:not(.dark) body { background-color: #f8fafc; }
+    html:not(.dark) .bg-dark-900 { background-color: #ffffff; }
+    html:not(.dark) .bg-dark-800 { background-color: #f9fafb; }
+    html:not(.dark) .bg-dark-700 { background-color: #f3f4f6; }
+    html:not(.dark) .bg-dark-600 { background-color: #e5e7eb; }
+    html:not(.dark) .text-neutral-100 { color: #111827; }
+    html:not(.dark) .text-neutral-300 { color: #4b5563; }
+    html:not(.dark) .text-neutral-400 { color: #6b7280; }
+    html:not(.dark) .text-neutral-500 { color: #9ca3af; }
+    html:not(.dark) .border-dark-600 { border-color: #d1d5db; }
+    html:not(.dark) .border-dark-700 { border-color: #e5e7eb; }
+
+    /* Light mode - cores de acento (trilha blue) */
+    html:not(.dark) .text-blue-400 { color: #2563eb; }
+    html:not(.dark) .bg-blue-500\/20 { background-color: rgba(37, 99, 235, 0.12); }
+    html:not(.dark) .bg-blue-500\/10 { background-color: rgba(37, 99, 235, 0.08); }
+    html:not(.dark) .border-blue-500\/30 { border-color: rgba(37, 99, 235, 0.25); }
+    html:not(.dark) .hover\:bg-blue-500\/30:hover { background-color: rgba(37, 99, 235, 0.18); }
+    html:not(.dark) .hover\:bg-blue-500\/10:hover { background-color: rgba(37, 99, 235, 0.08); }
+    html:not(.dark) .hover\:text-blue-400:hover { color: #2563eb; }
+    html:not(.dark) .hover\:border-blue-500\/30:hover { border-color: rgba(37, 99, 235, 0.25); }
+    html:not(.dark) .group:hover .group-hover\:text-blue-400 { color: #2563eb; }
+
+    /* Light mode - outras trilhas no nav */
+    html:not(.dark) .hover\:text-emerald-400:hover { color: #059669; }
+    html:not(.dark) .hover\:bg-emerald-500\/10:hover { background-color: rgba(5, 150, 105, 0.08); }
+    html:not(.dark) .hover\:text-purple-400:hover { color: #7c3aed; }
+    html:not(.dark) .hover\:bg-purple-500\/10:hover { background-color: rgba(124, 58, 237, 0.08); }
+
+    /* Light mode - remove gradientes (fundo uniforme) */
+    html:not(.dark) [class*="bg-gradient-to"] { background-image: none !important; }
+
+    /* Light mode - cores especiais */
+    html:not(.dark) .text-primary { color: #a16207; }
+    html:not(.dark) .bg-primary\/10 { background-color: rgba(161, 98, 7, 0.08); }
+    html:not(.dark) .border-primary\/40 { border-color: rgba(161, 98, 7, 0.25); }
+    html:not(.dark) .border-primary\/30 { border-color: rgba(161, 98, 7, 0.25); }
+    html:not(.dark) .text-sky-400 { color: #0369a1; }
+    html:not(.dark) .text-yellow-400 { color: #a16207; }
+    html:not(.dark) .hover\:text-sky-300:hover { color: #0284c7; }
+    html:not(.dark) .hover\:text-yellow-300:hover { color: #854d0e; }
+
+    /* Light mode - nav */
+    html:not(.dark) .bg-dark-900\/95 { background-color: rgba(255, 255, 255, 0.95); }
+
+    /* Dark mode - bordas e linhas divisorias mais suaves */
+    .dark .border-dark-600 { border-color: #374151; }
+    .dark .divide-dark-600 > :not([hidden]) ~ :not([hidden]) { border-color: #374151; }
+  </style>
+<link href="https://inematds.github.io/segrobot/curso/trilha2/modulo-2-2.html" hreflang="pt-BR" rel="alternate"/><link href="https://inematds.github.io/segrobot/en/curso/trilha2/modulo-2-2.html" hreflang="en" rel="alternate"/><link href="https://inematds.github.io/segrobot/es/curso/trilha2/modulo-2-2.html" hreflang="es" rel="alternate"/></head>
+<body class="bg-dark-900 text-neutral-100 min-h-screen"><div class="inema-lang" style="position:fixed;right:14px;bottom:14px;z-index:9999;display:flex;gap:2px;padding:4px;border-radius:10px;background:rgba(12,12,16,.82);border:1px solid rgba(226,162,59,.45);font:600 12px/1 Sora,Inter,system-ui,sans-serif;backdrop-filter:blur(8px)" translate="no"><a href="modulo-2-2.html" hreflang="pt-BR" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#1a1206;background:#E2A23B">PT</a><a href="../../en/curso/trilha2/modulo-2-2.html" hreflang="en" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">EN</a><a href="../../es/curso/trilha2/modulo-2-2.html" hreflang="es" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">ES</a></div>
+<!-- NAVIGATION -->
+<nav class="sticky top-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-600">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="flex justify-between items-center h-14">
+<div class="flex items-center space-x-4">
+<a class="flex items-center space-x-2 text-yellow-400 hover:text-yellow-300" href="../../index.html">
+<span class="text-2xl">🤖</span>
+<span class="font-bold text-lg hidden sm:inline">segROBOT</span>
+</a>
+<span class="text-neutral-600">|</span>
+<a class="text-sky-400 hover:text-sky-300 text-sm font-medium" href="https://inema.club" target="_blank">INEMA.CLUB</a>
+</div>
+<div class="flex items-center space-x-1 sm:space-x-2">
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-emerald-400 hover:bg-emerald-500/10 transition-colors" href="../trilha1/index.html">
+<span class="sm:hidden">T1</span>
+<span class="hidden sm:inline">Fundamentos</span>
+</a>
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-blue-400 bg-blue-500/10" href="index.html">
+<span class="sm:hidden">T2</span>
+<span class="hidden sm:inline">Acao</span>
+</a>
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-purple-400 hover:bg-purple-500/10 transition-colors" href="../trilha3/index.html">
+<span class="sm:hidden">T3</span>
+<span class="hidden sm:inline">Estrategico</span>
+</a>
+<button class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors ml-2" id="theme-toggle">
+<svg class="hidden w-5 h-5 text-neutral-300" fill="currentColor" id="theme-toggle-dark-icon" viewbox="0 0 20 20">
+<path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+</svg>
+<svg class="hidden w-5 h-5 text-neutral-300" fill="currentColor" id="theme-toggle-light-icon" viewbox="0 0 20 20">
+<path clip-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd"></path>
+</svg>
+</button>
+</div>
+</div>
+</div>
+</nav>
+<!-- BREADCRUMB -->
+<nav class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+<div class="flex items-center space-x-2 text-sm text-neutral-400">
+<a class="hover:text-blue-400" href="../../index.html">Inicio</a>
+<span>/</span>
+<a class="hover:text-blue-400" href="index.html">Trilha 2</a>
+<span>/</span>
+<span class="text-blue-400">Modulo 2.2</span>
+</div>
+</nav>
+<!-- HEADER -->
+<header class="bg-gradient-to-br from-blue-900/30 via-dark-800 to-dark-800 py-12 border-b border-dark-600">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+<span class="inline-block px-3 py-1 bg-blue-500/20 text-blue-400 text-xs font-semibold rounded-full mb-4">MODULO 2.2</span>
+<h1 class="text-3xl sm:text-4xl font-bold mb-4">🛡️ Protocolos de Seguranca Humano-Robo</h1>
+<p class="text-lg text-neutral-400 max-w-3xl">
+        Da avaliacao de risco pre-comissionamento a resposta de incidentes. Normas ISO 12100 e 10218,
+        validacao de forca de contato (ISO/TS 15066), os 4 modos colaborativos, LOTO adaptado para robos
+        e cultura de near-miss. Seguranca nao e burocracia: e o que mantem o trabalhador vivo ao lado da maquina.
+      </p>
+<!-- Stats -->
+<div class="grid grid-cols-4 gap-4 mt-8 max-w-2xl">
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+<div class="text-xl font-bold text-blue-400">6</div>
+<div class="text-xs text-neutral-400">Topicos</div>
+</div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+<div class="text-xl font-bold text-blue-400">50</div>
+<div class="text-xs text-neutral-400">Minutos</div>
+</div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+<div class="text-xl font-bold text-blue-400">Intermediario</div>
+<div class="text-xs text-neutral-400">Nivel</div>
+</div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+<div class="text-xl font-bold text-blue-400">Pratica</div>
+<div class="text-xs text-neutral-400">Tipo</div>
+</div>
+</div>
+<!-- SVG FUTURISTA: zonas de seguranca + SSM + E-stop/LOTO -->
+<div class="rounded-2xl border border-blue-500/30 bg-dark-900/40 p-3 sm:p-4 mt-8 overflow-hidden">
+<svg aria-label="Diagrama de zonas de seguranca: o robo no centro, anel de coexistencia, anel ciano de velocidade reduzida (Speed and Separation Monitoring) e anel vermelho de parada de emergencia, com cadeia sensor, controlador, E-stop e LOTO" class="w-full h-auto" role="img" viewbox="0 0 1000 280">
+<defs>
+<lineargradient id="m22-grad" x1="0" x2="1" y1="0" y2="1">
+<stop offset="0" stop-color="#60a5fa"></stop><stop offset="1" stop-color="#3b82f6"></stop>
+</lineargradient>
+<filter height="180%" id="m22-glow" width="180%" x="-40%" y="-40%">
+<fegaussianblur result="b" stddeviation="3"></fegaussianblur><femerge><femergenode in="b"></femergenode><femergenode in="SourceGraphic"></femergenode></femerge>
+</filter>
+<pattern height="32" id="m22-grid" patternunits="userSpaceOnUse" width="32">
+<circle cx="1.3" cy="1.3" fill="#3b82f6" opacity="0.12" r="1.3"></circle>
+</pattern>
+<marker id="m22-ah" markerheight="9" markerwidth="9" orient="auto" refx="6.5" refy="4.5"><path d="M0,0 L8,4.5 L0,9 L2.4,4.5 Z" fill="#60a5fa"></path></marker>
+<marker id="m22-ahc" markerheight="9" markerwidth="9" orient="auto" refx="6.5" refy="4.5"><path d="M0,0 L8,4.5 L0,9 L2.4,4.5 Z" fill="#38bdf8"></path></marker>
+</defs>
+<rect fill="url(#m22-grid)" height="280" width="1000" x="0" y="0"></rect>
+<!-- Zonas concentricas (esquerda) -->
+<circle cx="250" cy="135" fill="#2a0f16" opacity="0.5" r="118" stroke="#fb7185" stroke-width="2"></circle>
+<circle class="wf-a" cx="250" cy="135" fill="#0e1b26" opacity="0.75" r="82" stroke="#38bdf8" stroke-width="2"></circle>
+<circle cx="250" cy="135" fill="#0e1622" r="46" stroke="url(#m22-grad)" stroke-width="2.5"></circle>
+<g filter="url(#m22-glow)"><circle cx="250" cy="135" fill="#0e1622" r="20" stroke="#60a5fa" stroke-width="2.5"></circle></g>
+<text fill="#60a5fa" font-family="Inter,sans-serif" font-size="16" font-weight="700" text-anchor="middle" x="250" y="141">🤖</text>
+<text fill="#60a5fa" font-family="Inter,sans-serif" font-size="10" text-anchor="middle" x="250" y="118">coexistencia</text>
+<text fill="#9ad6ff" font-family="Inter,sans-serif" font-size="11" text-anchor="middle" x="250" y="195">zona reduzida (SSM)</text>
+<text fill="#fb7185" font-family="Inter,sans-serif" font-size="11" font-weight="600" text-anchor="middle" x="250" y="244">zona de parada (E-stop)</text>
+<!-- Cadeia de controle (direita) -->
+<g fill="none" opacity="0.75" stroke="#38bdf8" stroke-width="2">
+<path d="M520,80 L600,80" marker-end="url(#m22-ahc)"></path>
+<path d="M740,80 L820,80" marker-end="url(#m22-ahc)"></path>
+</g>
+<g fill="none" opacity="0.75" stroke="#60a5fa" stroke-width="2">
+<path d="M882,104 C882,150 670,150 670,178" marker-end="url(#m22-ah)"></path>
+<path d="M600,202 L522,202" marker-end="url(#m22-ah)"></path>
+</g>
+<g font-family="Inter,sans-serif" font-size="13" font-weight="600">
+<g><rect fill="#0e1b26" height="44" rx="11" stroke="#38bdf8" stroke-width="2" width="124" x="396" y="58"></rect><text fill="#bfe6ff" text-anchor="middle" x="458" y="78">sensor /</text><text fill="#bfe6ff" text-anchor="middle" x="458" y="94">scanner</text></g>
+<g><rect fill="#0e1b26" height="44" rx="11" stroke="#38bdf8" stroke-width="2" width="140" x="600" y="58"></rect><text fill="#bfe6ff" text-anchor="middle" x="670" y="78">controlador</text><text fill="#bfe6ff" text-anchor="middle" x="670" y="94">de seguranca</text></g>
+<g filter="url(#m22-glow)"><rect fill="#2a0f16" height="44" rx="11" stroke="#fb7185" stroke-width="2.5" width="124" x="820" y="58"></rect><text fill="#fb7185" text-anchor="middle" x="882" y="78">E-STOP</text><text fill="#fda4af" text-anchor="middle" x="882" y="94">+ freios</text></g>
+<g><rect fill="#1f1604" height="44" rx="11" stroke="#fbbf24" stroke-width="2" width="140" x="600" y="180"></rect><text fill="#fbbf24" text-anchor="middle" x="670" y="200">LOTO</text><text fill="#fcd9a0" text-anchor="middle" x="670" y="216">energia zero</text></g>
+<g><rect fill="#0e1622" height="44" rx="11" stroke="url(#m22-grad)" stroke-width="2.5" width="124" x="398" y="180"></rect><text fill="#60a5fa" text-anchor="middle" x="460" y="200">manutencao</text><text fill="#93bbfc" text-anchor="middle" x="460" y="216">segura</text></g>
+</g>
+</svg>
+<p class="text-xs text-neutral-500 mt-2 text-center">Ilustrativo: zonas de seguranca concentricas + cadeia sensor → controlador → E-stop → LOTO.</p>
+</div>
+</div>
+</header>
+<!-- CONTEUDO -->
+<main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+<!-- TOPICO 1 -->
+<section class="mb-16" id="topico-1">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">1</span>
+<h2 class="text-2xl font-bold">📋 Risk Assessment Pre-Comissionamento</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed">
+        Antes de qualquer robo entrar em operacao, e <strong class="text-blue-400">obrigatorio por norma</strong> executar um
+        processo sistematico de identificacao de perigos e avaliacao de riscos. As normas <strong class="text-blue-400">ISO 12100</strong>
+        (principios gerais) e <strong class="text-blue-400">ISO 10218</strong> exigem essa etapa: sem ela, a celula nao pode ser comissionada.
+      </p>
+<div class="bg-gradient-to-br from-blue-900/30 to-dark-800 rounded-xl border border-blue-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-blue-400 mb-4 flex items-center"><span class="mr-2">🎯</span> O que e e por que importa</h3>
+<p class="text-neutral-300 mb-4">
+          O risk assessment e a <strong>base</strong> de tudo que vem depois: define zonas de seguranca, velocidades maximas e
+          forcas de contato permitidas. Sem ele documentado, a empresa opera fora de conformidade, com risco legal e de acidente.
+        </p>
+<ul class="space-y-2 text-neutral-300">
+<li class="flex items-start space-x-2"><span class="text-blue-400 mt-1">•</span><span><strong>ISO 12100</strong> — principios gerais de seguranca de maquinas.</span></li>
+<li class="flex items-start space-x-2"><span class="text-blue-400 mt-1">•</span><span><strong>HIRA</strong> — Hazard Identification and Risk Assessment.</span></li>
+<li class="flex items-start space-x-2"><span class="text-blue-400 mt-1">•</span><span><strong>Matriz severidade × probabilidade</strong> — classifica cada perigo.</span></li>
+<li class="flex items-start space-x-2"><span class="text-blue-400 mt-1">•</span><span><strong>Documentacao obrigatoria</strong> — sem registro, nao houve avaliacao.</span></li>
+</ul>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+<div class="bg-emerald-900/20 rounded-xl border border-emerald-500/30 p-6">
+<h4 class="font-bold text-emerald-400 mb-4">✓ O que FAZER</h4>
+<ul class="space-y-3 text-neutral-300">
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Executar o HIRA <strong>antes</strong> do comissionamento, com a celula real.</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Documentar cada perigo na matriz severidade × probabilidade.</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Derivar zonas, velocidades e forcas a partir da avaliacao.</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Revisar o assessment a cada mudanca de layout ou ferramenta.</span></li>
+</ul>
+</div>
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+<h4 class="font-bold text-red-400 mb-4">✗ O que NAO fazer</h4>
+<ul class="space-y-3 text-neutral-300">
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Copiar um assessment de outra celula "parecida".</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Comissionar primeiro e "documentar depois".</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Confiar so na ficha do fabricante sem avaliar o uso real.</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Tratar o documento como burocracia arquivada e nunca consultada.</span></li>
+</ul>
+</div>
+</div>
+<div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-primary mb-3 flex items-center"><span class="mr-2">💡</span> Dica Pratica</h3>
+<p class="text-neutral-300">
+          Trate a matriz severidade × probabilidade como documento vivo: cada near-miss e cada nova ferramenta
+          acoplada deve disparar uma revisao. Um assessment de 2 anos atras provavelmente nao reflete a celula de hoje.
+        </p>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-blue-400 font-bold mb-1">ISO 12100</div><div class="text-xs text-neutral-400">Principios gerais</div></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-blue-400 font-bold mb-1">HIRA</div><div class="text-xs text-neutral-400">Identificacao de perigos</div></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-blue-400 font-bold mb-1">Matriz S×P</div><div class="text-xs text-neutral-400">Severidade x probabilidade</div></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-blue-400 font-bold mb-1">Registro</div><div class="text-xs text-neutral-400">Documentacao obrigatoria</div></div>
+</div>
+</section>
+<!-- TOPICO 2 -->
+<section class="mb-16" id="topico-2">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">2</span>
+<h2 class="text-2xl font-bold">💪 Validacao de Forca de Contato</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed">
+        Medicao <strong class="text-blue-400">fisica</strong> das forcas que um robo colaborativo aplica, validando contra os
+        limites biomecanicos da <strong class="text-blue-400">ISO/TS 15066</strong>. Medicao real, nao teorica:
+        fabricantes publicam forcas nominais, mas com ferramentas e pecas acopladas a forca real pode exceder os limites.
+      </p>
+<div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-blue-400 mb-4 flex items-center"><span class="mr-2">📊</span> Dados que voce precisa medir</h3>
+<ul class="space-y-2 text-neutral-300">
+<li><strong>ISO/TS 15066</strong> — define limites de forca e pressao por regiao corporal.</li>
+<li><strong>Transient vs quasi-static</strong> — contato breve (impacto) versus prolongado (esmagamento) tem limites diferentes.</li>
+<li><strong>CBSF</strong> — dispositivos de medicao de forca biomecanica usados in-situ.</li>
+<li><strong>Recalibracao</strong> — frequencia definida; a validacao nao e evento unico.</li>
+</ul>
+</div>
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-red-400 mb-3 flex items-center"><span class="mr-2">⚠️</span> Alerta: forca nominal nao e forca real</h3>
+<p class="text-neutral-300">
+          A forca publicada pelo fabricante vale para o robo <strong>nu</strong>. Ao acoplar garra, ferramenta e peca,
+          massa e geometria mudam — a forca de contato in-situ pode ultrapassar os limites da ISO/TS 15066.
+          <strong>A validacao in-situ e obrigatoria</strong> e deve ser refeita a cada troca de end-effector.
+        </p>
+</div>
+<div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-primary mb-3 flex items-center"><span class="mr-2">💡</span> Dica Pratica</h3>
+<p class="text-neutral-300">
+          Meca a forca nas regioes corporais mais expostas na aplicacao real (mao, antebraco, tronco) e nos pontos da
+          trajetoria onde a velocidade e maior. Separe sempre contato transient de quasi-static — os limites nao sao iguais.
+        </p>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-blue-400 font-bold mb-1">ISO/TS 15066</div><div class="text-xs text-neutral-400">Limites biomecanicos</div></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-blue-400 font-bold mb-1">Regiao corporal</div><div class="text-xs text-neutral-400">Limite por parte do corpo</div></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-blue-400 font-bold mb-1">Transient/Quasi</div><div class="text-xs text-neutral-400">Contato breve vs prolongado</div></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-blue-400 font-bold mb-1">CBSF</div><div class="text-xs text-neutral-400">Medicao in-situ</div></div>
+</div>
+</section>
+<!-- TOPICO 3 -->
+<section class="mb-16" id="topico-3">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">3</span>
+<h2 class="text-2xl font-bold">🔄 SSM/PFL e Modos Colaborativos</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed">
+        A <strong class="text-blue-400">ISO 10218-2</strong> define <strong class="text-blue-400">4 modos de operacao colaborativa</strong>.
+        Cada aplicacao exige um modo especifico — usar o modo errado e tao perigoso quanto nao ter protecao nenhuma.
+        E PFL <strong>nao</strong> e sinonimo de "seguro em todas as situacoes".
+      </p>
+<div class="space-y-6 mb-6">
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-12 h-12 rounded-full bg-blue-500/20 flex items-center justify-center"><span class="text-blue-400 font-bold">1</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+<h4 class="font-semibold text-white mb-2">Safety-rated Monitored Stop</h4>
+<p class="text-sm text-neutral-400 mb-3">Parada monitorada de seguranca</p>
+<p class="text-neutral-300 text-sm">O robo para quando o humano entra na zona e so retoma quando ele sai. Coexistencia sem movimento simultaneo.</p>
+</div>
+</div>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-12 h-12 rounded-full bg-blue-500/20 flex items-center justify-center"><span class="text-blue-400 font-bold">2</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+<h4 class="font-semibold text-white mb-2">Hand Guiding</h4>
+<p class="text-sm text-neutral-400 mb-3">Guia manual</p>
+<p class="text-neutral-300 text-sm">O operador move o robo fisicamente atraves de um dispositivo de guia. Movimento so ocorre sob comando direto da mao.</p>
+</div>
+</div>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-12 h-12 rounded-full bg-blue-500/20 flex items-center justify-center"><span class="text-blue-400 font-bold">3</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+<h4 class="font-semibold text-white mb-2">Speed and Separation Monitoring (SSM)</h4>
+<p class="text-sm text-neutral-400 mb-3">Monitoramento de velocidade e separacao</p>
+<p class="text-neutral-300 text-sm">Sensores mantem uma distancia minima; o robo reduz velocidade conforme o humano se aproxima e para se a separacao cai abaixo do limite.</p>
+</div>
+</div>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-12 h-12 rounded-full bg-blue-500/20 flex items-center justify-center"><span class="text-blue-400 font-bold">4</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+<h4 class="font-semibold text-white mb-2">Power and Force Limiting (PFL)</h4>
+<p class="text-sm text-neutral-400 mb-3">Limitacao de potencia e forca</p>
+<p class="text-neutral-300 text-sm">O robo limita forca e potencia a niveis biomecanicamente seguros, permitindo contato. Depende diretamente da validacao da ISO/TS 15066 (topico 2).</p>
+</div>
+</div>
+</div>
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-red-400 mb-3 flex items-center"><span class="mr-2">⚠️</span> Atencao ao modo</h3>
+<p class="text-neutral-300">
+          Cada aplicacao exige um modo especifico. Usar o modo errado e tao perigoso quanto nao ter protecao nenhuma.
+          <strong>PFL nao significa "seguro em qualquer situacao"</strong> — arestas vivas e ferramentas perfurantes
+          podem ferir mesmo dentro dos limites de forca. Modos podem ser combinados e devem ter transicao controlada.
+        </p>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-blue-400 font-bold mb-1">Monitored Stop</div><div class="text-xs text-neutral-400">Para na presenca</div></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-blue-400 font-bold mb-1">Hand Guiding</div><div class="text-xs text-neutral-400">Guia manual</div></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-blue-400 font-bold mb-1">SSM</div><div class="text-xs text-neutral-400">Velocidade x separacao</div></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-blue-400 font-bold mb-1">PFL</div><div class="text-xs text-neutral-400">Forca limitada</div></div>
+</div>
+</section>
+<!-- TOPICO 4 -->
+<section class="mb-16" id="topico-4">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">4</span>
+<h2 class="text-2xl font-bold">🔒 LOTO Adaptado para Robos</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed">
+        O classico <strong class="text-blue-400">Lock-Out Tag-Out</strong> precisa ser adaptado para celulas roboticas.
+        Robos tem <strong class="text-blue-400">energia potencial gravitacional</strong> nos eixos: desligar a energia
+        nao significa que o braco nao vai cair. LOTO para robos exige procedimentos adicionais que o LOTO classico nao cobre.
+      </p>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+<div class="bg-emerald-900/20 rounded-xl border border-emerald-500/30 p-6">
+<h4 class="font-bold text-emerald-400 mb-4">✓ LOTO Robotico (correto)</h4>
+<ul class="space-y-3 text-neutral-300">
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Considerar energia residual e potencial gravitacional dos eixos.</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Engatar freios mecanicos antes de entrar na zona.</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Verificar energia zero (procedimento explicito de confirmacao).</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Usar tag especifico para o modo de ensino/programacao.</span></li>
+</ul>
+</div>
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+<h4 class="font-bold text-red-400 mb-4">✗ LOTO Classico aplicado cru</h4>
+<ul class="space-y-3 text-neutral-300">
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Assumir que desligar a energia trava o braco.</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Ignorar a queda do eixo vertical por gravidade.</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Pular a verificacao de energia zero.</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Entrar na celula em modo de ensino sem tag dedicado.</span></li>
+</ul>
+</div>
+</div>
+<div class="space-y-6 mb-6">
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-12 h-12 rounded-full bg-blue-500/20 flex items-center justify-center"><span class="text-blue-400 font-bold">1</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+<h4 class="font-semibold text-white mb-2">Desenergizar e isolar</h4>
+<p class="text-sm text-neutral-400 mb-3">Cortar a fonte de energia</p>
+<p class="text-neutral-300 text-sm">Isolar e bloquear a fonte de energia eletrica, pneumatica e hidraulica da celula com cadeado e etiqueta.</p>
+</div>
+</div>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-12 h-12 rounded-full bg-blue-500/20 flex items-center justify-center"><span class="text-blue-400 font-bold">2</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+<h4 class="font-semibold text-white mb-2">Travar eixos com freio mecanico</h4>
+<p class="text-sm text-neutral-400 mb-3">Conter energia gravitacional</p>
+<p class="text-neutral-300 text-sm">Engatar os freios mecanicos para impedir a queda dos eixos verticais sob carga, que a energia cortada nao segura.</p>
+</div>
+</div>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-12 h-12 rounded-full bg-blue-500/20 flex items-center justify-center"><span class="text-blue-400 font-bold">3</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+<h4 class="font-semibold text-white mb-2">Verificar energia zero</h4>
+<p class="text-sm text-neutral-400 mb-3">Confirmar antes de entrar</p>
+<p class="text-neutral-300 text-sm">Confirmar explicitamente que nao ha energia residual armazenada antes de qualquer parte do corpo entrar na zona.</p>
+</div>
+</div>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-12 h-12 rounded-full bg-blue-500/20 flex items-center justify-center"><span class="text-blue-400 font-bold">4</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+<h4 class="font-semibold text-white mb-2">Tag de modo de ensino</h4>
+<p class="text-sm text-neutral-400 mb-3">Sinalizacao especifica</p>
+<p class="text-neutral-300 text-sm">Quando a celula precisa estar energizada para programacao, usar tag dedicado que sinaliza o modo de ensino ativo.</p>
+</div>
+</div>
+</div>
+<div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-primary mb-3 flex items-center"><span class="mr-2">💡</span> Dica Pratica</h3>
+<p class="text-neutral-300">
+          O eixo mais perigoso e o vertical sob carga: ao cortar a energia, ele tende a cair pela gravidade.
+          Sempre engate o freio mecanico e confirme energia zero <strong>antes</strong> de qualquer parte do corpo
+          entrar na zona de risco. Tag de modo de ensino deve ser visualmente diferente do tag de manutencao.
+        </p>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-blue-400 font-bold mb-1">Energia residual</div><div class="text-xs text-neutral-400">Nem tudo descarrega</div></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-blue-400 font-bold mb-1">Freios mecanicos</div><div class="text-xs text-neutral-400">Travam o eixo vertical</div></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-blue-400 font-bold mb-1">Energia zero</div><div class="text-xs text-neutral-400">Verificacao explicita</div></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-blue-400 font-bold mb-1">Tag de ensino</div><div class="text-xs text-neutral-400">Especifico para programacao</div></div>
+</div>
+</section>
+<!-- TOPICO 5 -->
+<section class="mb-16" id="topico-5">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">5</span>
+<h2 class="text-2xl font-bold">🚑 Resposta a Incidentes</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed">
+        Robo toca trabalhador: e agora? Existe uma <strong class="text-blue-400">sequencia padronizada</strong> de acoes para
+        contato nao planejado. Os <strong class="text-blue-400">primeiros 60 segundos</strong> definem tudo: severidade da lesao,
+        preservacao de evidencias para investigacao e responsabilidade legal.
+      </p>
+<div class="space-y-6 mb-6">
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-12 h-12 rounded-full bg-blue-500/20 flex items-center justify-center"><span class="text-blue-400 font-bold">1</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+<h4 class="font-semibold text-white mb-2">E-stop</h4>
+<p class="text-sm text-neutral-400 mb-3">Parada de emergencia imediata</p>
+<p class="text-neutral-300 text-sm">Acionar a parada de emergencia para interromper qualquer movimento do robo antes de aproximar-se.</p>
+</div>
+</div>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-12 h-12 rounded-full bg-blue-500/20 flex items-center justify-center"><span class="text-blue-400 font-bold">2</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+<h4 class="font-semibold text-white mb-2">Socorrer</h4>
+<p class="text-sm text-neutral-400 mb-3">Atendimento ao trabalhador</p>
+<p class="text-neutral-300 text-sm">Prestar primeiros socorros e acionar atendimento medico. A vida da pessoa vem antes de qualquer registro.</p>
+</div>
+</div>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-12 h-12 rounded-full bg-blue-500/20 flex items-center justify-center"><span class="text-blue-400 font-bold">3</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+<h4 class="font-semibold text-white mb-2">Isolar</h4>
+<p class="text-sm text-neutral-400 mb-3">Preservacao de evidencias</p>
+<p class="text-neutral-300 text-sm">Isolar a area e preservar o estado da celula e os logs do controlador para a investigacao root cause.</p>
+</div>
+</div>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-12 h-12 rounded-full bg-blue-500/20 flex items-center justify-center"><span class="text-blue-400 font-bold">4</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+<h4 class="font-semibold text-white mb-2">Registrar e notificar</h4>
+<p class="text-sm text-neutral-400 mb-3">Notificacao obrigatoria</p>
+<p class="text-neutral-300 text-sm">Registrar o ocorrido e notificar conforme obrigacao (CIPA/SESMT), iniciando a investigacao de causa raiz.</p>
+</div>
+</div>
+</div>
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-red-400 mb-3 flex items-center"><span class="mr-2">🚨</span> Os primeiros 60 segundos</h3>
+<p class="text-neutral-300">
+          Nao apague nem reinicie o controlador antes de preservar os <strong>logs</strong>: eles sao a evidencia central da
+          investigacao. A cadeia <strong>E-stop → socorrer → isolar → registrar</strong> deve estar treinada e
+          afixada na celula — ninguem improvisa sequencia de resposta no meio de um acidente.
+        </p>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-blue-400 font-bold mb-1">E-stop</div><div class="text-xs text-neutral-400">Parar movimento</div></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-blue-400 font-bold mb-1">Socorrer</div><div class="text-xs text-neutral-400">Atendimento primeiro</div></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-blue-400 font-bold mb-1">Preservar logs</div><div class="text-xs text-neutral-400">Evidencia da investigacao</div></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-blue-400 font-bold mb-1">CIPA/SESMT</div><div class="text-xs text-neutral-400">Notificacao obrigatoria</div></div>
+</div>
+</section>
+<!-- TOPICO 6 -->
+<section class="mb-16" id="topico-6">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">6</span>
+<h2 class="text-2xl font-bold">📝 Cultura de Near-Miss</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed">
+        Um sistema de reporte de <strong class="text-blue-400">quase-acidentes sem punicao</strong>. Para cada acidente grave,
+        existem cerca de <strong class="text-blue-400">300 near-misses</strong> nao reportados (piramide de Heinrich).
+        Capturar near-misses previne acidentes <strong>antes</strong> que aconteçam.
+      </p>
+<div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-blue-400 mb-4 flex items-center"><span class="mr-2">📊</span> Piramide de Heinrich</h3>
+<ul class="space-y-2 text-neutral-300">
+<li><strong>~300 near-misses</strong> para cada acidente grave — sao sinais antecipados.</li>
+<li><strong>Reporte anonimo</strong> — sem punicao, as pessoas reportam de verdade.</li>
+<li><strong>Classificacao de near-miss</strong> — permite analise de tendencias.</li>
+<li><strong>Simulacao de comportamento erratico humano</strong> (Springer 2024) — testa a robustez da celula.</li>
+</ul>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+<div class="bg-emerald-900/20 rounded-xl border border-emerald-500/30 p-6">
+<h4 class="font-bold text-emerald-400 mb-4">✓ Cultura saudavel</h4>
+<ul class="space-y-3 text-neutral-300">
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Reporte anonimo e sem punicao.</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Classificar e analisar tendencias dos near-misses.</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Testar a celula com comportamento humano erratico simulado.</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Agir nos near-misses recorrentes antes do acidente.</span></li>
+</ul>
+</div>
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+<h4 class="font-bold text-red-400 mb-4">✗ Cultura toxica</h4>
+<ul class="space-y-3 text-neutral-300">
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Punir quem reporta quase-acidentes.</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>So registrar acidentes que ja geraram lesao.</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Ignorar near-misses por serem "sem consequencia".</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Assumir que o humano sempre age de forma previsivel.</span></li>
+</ul>
+</div>
+</div>
+<div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-primary mb-3 flex items-center"><span class="mr-2">💡</span> Dica Pratica</h3>
+<p class="text-neutral-300">
+          O near-miss e gratis: e um acidente que nao custou nada e ainda te avisou. Facilite ao maximo o reporte
+          (anonimo, em 30 segundos) e mostre publicamente as acoes tomadas — e o que sustenta a confianca e mantem
+          o fluxo de reportes vivo.
+        </p>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-blue-400 font-bold mb-1">Heinrich</div><div class="text-xs text-neutral-400">~300 near-misses : 1 grave</div></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-blue-400 font-bold mb-1">Reporte anonimo</div><div class="text-xs text-neutral-400">Sem punicao</div></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-blue-400 font-bold mb-1">Classificacao</div><div class="text-xs text-neutral-400">Analise de tendencias</div></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-blue-400 font-bold mb-1">Erratico simulado</div><div class="text-xs text-neutral-400">Springer 2024</div></div>
+</div>
+</section>
+<!-- RESUMO -->
+<section class="mb-12">
+<div class="bg-gradient-to-br from-blue-900/40 via-dark-800 to-dark-800 rounded-xl border border-blue-500/30 p-8">
+<h2 class="text-2xl font-bold mb-6 flex items-center"><span class="mr-3">🛡️</span> Resumo do Modulo</h2>
+<div class="space-y-4 mb-8">
+<div class="flex items-start space-x-3"><span class="text-blue-400 mt-1">✓</span><div><strong class="text-white">Risk assessment pre-comissionamento</strong><span class="text-neutral-400"> - ISO 12100/10218, HIRA e matriz severidade x probabilidade, documentado.</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-blue-400 mt-1">✓</span><div><strong class="text-white">Validacao de forca de contato</strong><span class="text-neutral-400"> - ISO/TS 15066, medicao in-situ com CBSF, transient vs quasi-static.</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-blue-400 mt-1">✓</span><div><strong class="text-white">4 modos colaborativos</strong><span class="text-neutral-400"> - Monitored Stop, Hand Guiding, SSM e PFL; cada aplicacao exige o seu.</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-blue-400 mt-1">✓</span><div><strong class="text-white">LOTO adaptado</strong><span class="text-neutral-400"> - energia residual, freios mecanicos, energia zero e tag de modo de ensino.</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-blue-400 mt-1">✓</span><div><strong class="text-white">Resposta a incidentes</strong><span class="text-neutral-400"> - E-stop, socorrer, isolar, registrar; preservar logs e notificar CIPA/SESMT.</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-blue-400 mt-1">✓</span><div><strong class="text-white">Cultura de near-miss</strong><span class="text-neutral-400"> - piramide de Heinrich, reporte anonimo sem punicao, comportamento erratico simulado.</span></div></div>
+</div>
+<div class="bg-dark-800/50 rounded-lg p-4 mb-8">
+<h3 class="font-semibold text-blue-400 mb-2">Proximo Modulo:</h3>
+<p class="text-neutral-300">2.3 - 🥽 Simuladores, VR e Digital Twins para Treinamento</p>
+</div>
+<div class="flex flex-col sm:flex-row gap-4">
+<a class="flex-1 text-center px-6 py-3 bg-dark-700 text-neutral-300 rounded-lg font-semibold hover:bg-dark-600 transition-colors" href="index.html">
+            ← Voltar para Trilha
+          </a>
+<a class="flex-1 text-center px-6 py-3 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-500 transition-colors" href="modulo-2-3.html">
+            Proximo Modulo →
+          </a>
+</div>
+</div>
+</section>
+</main>
+<!-- FOOTER -->
+<footer class="border-t border-dark-600 py-8 mt-16">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-neutral-500 text-sm">
+<p>segROBOT — INEMA.CLUB — 2026</p>
+</div>
+</footer>
+<!-- SCRIPTS -->
+<script>
+    const themeToggle = document.getElementById('theme-toggle');
+    const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
+    const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
+    const html = document.documentElement;
+    if (localStorage.getItem('theme') === 'light' || (!localStorage.getItem('theme') && !html.classList.contains('dark'))) {
+      themeToggleDarkIcon.classList.remove('hidden'); html.classList.remove('dark');
+    } else { themeToggleLightIcon.classList.remove('hidden'); }
+    themeToggle.addEventListener('click', () => {
+      themeToggleDarkIcon.classList.toggle('hidden'); themeToggleLightIcon.classList.toggle('hidden');
+      html.classList.toggle('dark'); localStorage.setItem('theme', html.classList.contains('dark') ? 'dark' : 'light');
+    });
+  </script>
+</body>
+</html>

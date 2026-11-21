@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="pt-BR">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Modulo 2.8 - Como Programar Robos: do Teach Pendant ao Codigo | segROBOT</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            primary: '#FACC15',
+            dark: { 900: '#111827', 800: '#1f2937', 700: '#374151', 600: '#4b5563' }
+          }
+        }
+      }
+    }
+  </script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<style>
+    body { font-family: 'Inter', sans-serif; }
+    .dark body { background-color: #111827; }
+    .topic-explanation { display: none; }
+    .topic-explanation.active { display: block; }
+
+    @keyframes wf-pulse { 0%,100% { opacity:.55 } 50% { opacity:1 } }
+    @media (prefers-reduced-motion: no-preference) {
+      .wf-a { animation: wf-pulse 2.6s ease-in-out infinite; }
+      .wf-a:nth-child(2){animation-delay:.25s} .wf-a:nth-child(3){animation-delay:.5s}
+      .wf-a:nth-child(4){animation-delay:.75s} .wf-a:nth-child(5){animation-delay:1s}
+    }
+
+    /* Light mode overrides - OBRIGATORIO */
+    html:not(.dark) body { background-color: #f8fafc; }
+    html:not(.dark) .bg-dark-900 { background-color: #ffffff; }
+    html:not(.dark) .bg-dark-800 { background-color: #f9fafb; }
+    html:not(.dark) .bg-dark-700 { background-color: #f3f4f6; }
+    html:not(.dark) .bg-dark-600 { background-color: #e5e7eb; }
+    html:not(.dark) .text-neutral-100 { color: #111827; }
+    html:not(.dark) .text-neutral-300 { color: #4b5563; }
+    html:not(.dark) .text-neutral-400 { color: #6b7280; }
+    html:not(.dark) .text-neutral-500 { color: #9ca3af; }
+    html:not(.dark) .border-dark-600 { border-color: #d1d5db; }
+    html:not(.dark) .border-dark-700 { border-color: #e5e7eb; }
+
+    /* Light mode - cores de acento (trilha blue) */
+    html:not(.dark) .text-blue-400 { color: #2563eb; }
+    html:not(.dark) .bg-blue-500\/20 { background-color: rgba(37, 99, 235, 0.12); }
+    html:not(.dark) .bg-blue-500\/10 { background-color: rgba(37, 99, 235, 0.08); }
+    html:not(.dark) .border-blue-500\/30 { border-color: rgba(37, 99, 235, 0.25); }
+    html:not(.dark) .hover\:bg-blue-500\/30:hover { background-color: rgba(37, 99, 235, 0.18); }
+    html:not(.dark) .hover\:bg-blue-500\/10:hover { background-color: rgba(37, 99, 235, 0.08); }
+    html:not(.dark) .hover\:text-blue-400:hover { color: #2563eb; }
+    html:not(.dark) .hover\:border-blue-500\/30:hover { border-color: rgba(37, 99, 235, 0.25); }
+    html:not(.dark) .group:hover .group-hover\:text-blue-400 { color: #2563eb; }
+
+    /* Light mode - outras trilhas no nav */
+    html:not(.dark) .hover\:text-emerald-400:hover { color: #059669; }
+    html:not(.dark) .hover\:bg-emerald-500\/10:hover { background-color: rgba(5, 150, 105, 0.08); }
+    html:not(.dark) .hover\:text-purple-400:hover { color: #7c3aed; }
+    html:not(.dark) .hover\:bg-purple-500\/10:hover { background-color: rgba(124, 58, 237, 0.08); }
+
+    /* Light mode - remove gradientes (fundo uniforme) */
+    html:not(.dark) [class*="bg-gradient-to"] { background-image: none !important; }
+
+    /* Light mode - cores especiais */
+    html:not(.dark) .text-primary { color: #a16207; }
+    html:not(.dark) .bg-primary\/10 { background-color: rgba(161, 98, 7, 0.08); }
+    html:not(.dark) .border-primary\/40 { border-color: rgba(161, 98, 7, 0.25); }
+    html:not(.dark) .text-sky-400 { color: #0369a1; }
+    html:not(.dark) .text-yellow-400 { color: #a16207; }
+    html:not(.dark) .hover\:text-sky-300:hover { color: #0284c7; }
+    html:not(.dark) .hover\:text-yellow-300:hover { color: #854d0e; }
+
+    /* Light mode - nav */
+    html:not(.dark) .bg-dark-900\/95 { background-color: rgba(255, 255, 255, 0.95); }
+
+    /* Light mode - SVG diagramas */
+    html:not(.dark) svg[role="img"] { filter: saturate(0.82) brightness(0.96); }
+
+    /* Dark mode - bordas e linhas divisorias mais suaves */
+    .dark .border-dark-600 { border-color: #374151; }
+    .dark .divide-dark-600 > :not([hidden]) ~ :not([hidden]) { border-color: #374151; }
+
+    /* Caixa de codigo */
+    .code-box { font-family: 'SFMono-Regular', ui-monospace, Menlo, Consolas, monospace; }
+  </style>
+<link href="https://inematds.github.io/segrobot/curso/trilha2/modulo-2-8.html" hreflang="pt-BR" rel="alternate"/><link href="https://inematds.github.io/segrobot/en/curso/trilha2/modulo-2-8.html" hreflang="en" rel="alternate"/><link href="https://inematds.github.io/segrobot/es/curso/trilha2/modulo-2-8.html" hreflang="es" rel="alternate"/></head>
+<body class="bg-dark-900 text-neutral-100 min-h-screen"><div class="inema-lang" style="position:fixed;right:14px;bottom:14px;z-index:9999;display:flex;gap:2px;padding:4px;border-radius:10px;background:rgba(12,12,16,.82);border:1px solid rgba(226,162,59,.45);font:600 12px/1 Sora,Inter,system-ui,sans-serif;backdrop-filter:blur(8px)" translate="no"><a href="modulo-2-8.html" hreflang="pt-BR" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#1a1206;background:#E2A23B">PT</a><a href="../../en/curso/trilha2/modulo-2-8.html" hreflang="en" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">EN</a><a href="../../es/curso/trilha2/modulo-2-8.html" hreflang="es" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">ES</a></div>
+<!-- NAVIGATION -->
+<nav class="sticky top-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-600">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="flex justify-between items-center h-14">
+<div class="flex items-center space-x-4">
+<a class="flex items-center space-x-2 text-yellow-400 hover:text-yellow-300" href="../../index.html">
+<span class="text-2xl">🤖</span>
+<span class="font-bold text-lg hidden sm:inline">segROBOT</span>
+</a>
+<span class="text-neutral-600">|</span>
+<a class="text-sky-400 hover:text-sky-300 text-sm font-medium" href="https://inema.club" target="_blank">INEMA.CLUB</a>
+</div>
+<div class="flex items-center space-x-1 sm:space-x-2">
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-emerald-400 hover:bg-emerald-500/10 transition-colors" href="../trilha1/index.html">
+<span class="sm:hidden">T1</span>
+<span class="hidden sm:inline">Fundamentos</span>
+</a>
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-blue-400 bg-blue-500/10" href="index.html">
+<span class="sm:hidden">T2</span>
+<span class="hidden sm:inline">Acao</span>
+</a>
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-purple-400 hover:bg-purple-500/10 transition-colors" href="../trilha3/index.html">
+<span class="sm:hidden">T3</span>
+<span class="hidden sm:inline">Estrategico</span>
+</a>
+<button class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors ml-2" id="theme-toggle">
+<svg class="hidden w-5 h-5 text-neutral-300" fill="currentColor" id="theme-toggle-dark-icon" viewbox="0 0 20 20">
+<path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+</svg>
+<svg class="hidden w-5 h-5 text-neutral-300" fill="currentColor" id="theme-toggle-light-icon" viewbox="0 0 20 20">
+<path clip-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd"></path>
+</svg>
+</button>
+</div>
+</div>
+</div>
+</nav>
+<!-- BREADCRUMB -->
+<nav class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+<div class="flex items-center space-x-2 text-sm text-neutral-400">
+<a class="hover:text-blue-400" href="../../index.html">Inicio</a>
+<span>/</span>
+<a class="hover:text-blue-400" href="index.html">Trilha 2</a>
+<span>/</span>
+<span class="text-blue-400">Modulo 2.8</span>
+</div>
+</nav>
+<!-- HEADER -->
+<header class="bg-gradient-to-br from-blue-900/30 via-dark-800 to-dark-800 py-12 border-b border-dark-600">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+<span class="inline-block px-3 py-1 bg-blue-500/20 text-blue-400 text-xs font-semibold rounded-full mb-4">MODULO 2.8</span>
+<h1 class="text-3xl sm:text-4xl font-bold mb-4">💻 Como Programar Robos: do Teach Pendant ao Codigo</h1>
+<p class="text-lg text-neutral-400 max-w-3xl">
+        Existe uma escada de metodos para dizer a um robo o que fazer — do teach pendant (sem uma linha de codigo) ao Python, ao ROS 2 e a linguagem natural. Este modulo mostra cada degrau, quando usar, e a rota de aprendizado por perfil para subir do simples ao avancado.
+      </p>
+<div class="grid grid-cols-4 gap-4 mt-8 max-w-2xl">
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+<div class="text-xl font-bold text-blue-400">6</div>
+<div class="text-xs text-neutral-400">Topicos</div>
+</div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+<div class="text-xl font-bold text-blue-400">50</div>
+<div class="text-xs text-neutral-400">Minutos</div>
+</div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+<div class="text-xl font-bold text-blue-400">Intermediario</div>
+<div class="text-xs text-neutral-400">Nivel</div>
+</div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+<div class="text-xl font-bold text-blue-400">Pratica</div>
+<div class="text-xs text-neutral-400">Tipo</div>
+</div>
+</div>
+</div>
+</header>
+<!-- CONTEUDO -->
+<main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+<!-- SVG FUTURISTA: escada de metodos -->
+<div class="rounded-2xl border border-blue-500/30 bg-dark-900/40 p-3 sm:p-4 mb-12 overflow-hidden">
+<svg aria-label="Uma escada de metodos para programar robos sobe do mais simples ao mais avancado: teach pendant, no-code em blocos, Python, ROS 2 e linguagem natural com VLA" class="w-full h-auto" role="img" viewbox="0 0 1000 320">
+<defs>
+<lineargradient id="m28-grad" x1="0" x2="1" y1="0" y2="1">
+<stop offset="0" stop-color="#60a5fa"></stop><stop offset="1" stop-color="#3b82f6"></stop>
+</lineargradient>
+<filter height="180%" id="m28-glow" width="180%" x="-40%" y="-40%">
+<fegaussianblur result="b" stddeviation="1.8"></fegaussianblur><femerge><femergenode in="b"></femergenode><femergenode in="SourceGraphic"></femergenode></femerge>
+</filter>
+<pattern height="32" id="m28-grid" patternunits="userSpaceOnUse" width="32">
+<circle cx="1.3" cy="1.3" fill="#3b82f6" opacity="0.12" r="1.3"></circle>
+</pattern>
+</defs>
+<rect fill="url(#m28-grid)" height="320" width="1000" x="0" y="0"></rect>
+<!-- linha tracejada da escada (do simples ao avancado) -->
+<path d="M70,272 L930,52" fill="none" opacity="0.5" stroke="#38bdf8" stroke-dasharray="9 9" stroke-width="1.8"></path>
+<!-- eixo de complexidade -->
+<text fill="#9ad6ff" font-family="Inter,sans-serif" font-size="12.5" x="60" y="296">simples</text>
+<text fill="#9ad6ff" font-family="Inter,sans-serif" font-size="12.5" text-anchor="end" x="940" y="36">avancado</text>
+<!-- degrau 1: teach pendant -->
+<g class="wf-a"><rect fill="#0e1b26" height="50" rx="11" stroke="#38bdf8" stroke-width="2" width="160" x="40" y="240"></rect>
+<text fill="#bfe6ff" font-family="Inter,sans-serif" font-size="14" font-weight="600" text-anchor="middle" x="120" y="263">🕹️ Teach pendant</text>
+<text fill="#9ad6ff" font-family="Inter,sans-serif" font-size="11" text-anchor="middle" x="120" y="280">guiar / gravar pose</text>
+</g>
+<!-- degrau 2: no-code -->
+<g class="wf-a"><rect fill="#0e1b26" height="50" rx="11" stroke="#38bdf8" stroke-width="2" width="160" x="240" y="190"></rect>
+<text fill="#bfe6ff" font-family="Inter,sans-serif" font-size="14" font-weight="600" text-anchor="middle" x="320" y="213">🧱 No-code</text>
+<text fill="#9ad6ff" font-family="Inter,sans-serif" font-size="11" text-anchor="middle" x="320" y="230">blocos / fluxo</text>
+</g>
+<!-- degrau 3: python -->
+<g class="wf-a"><rect fill="#0e1b26" height="50" rx="11" stroke="#38bdf8" stroke-width="2" width="160" x="440" y="140"></rect>
+<text fill="#bfe6ff" font-family="Inter,sans-serif" font-size="14" font-weight="600" text-anchor="middle" x="520" y="163">🐍 Python</text>
+<text fill="#9ad6ff" font-family="Inter,sans-serif" font-size="11" text-anchor="middle" x="520" y="180">SDK / visao / IA</text>
+</g>
+<!-- degrau 4: ROS 2 -->
+<g class="wf-a"><rect fill="#0e1b26" height="50" rx="11" stroke="#38bdf8" stroke-width="2" width="160" x="640" y="90"></rect>
+<text fill="#bfe6ff" font-family="Inter,sans-serif" font-size="14" font-weight="600" text-anchor="middle" x="720" y="113">🤖 ROS 2</text>
+<text fill="#9ad6ff" font-family="Inter,sans-serif" font-size="11" text-anchor="middle" x="720" y="130">nos / topicos</text>
+</g>
+<!-- degrau 5: linguagem natural (caixa-foco com glow + cor da trilha) -->
+<g filter="url(#m28-glow)"><rect fill="#0e1622" height="56" rx="13" stroke="url(#m28-grad)" stroke-width="2.5" width="168" x="800" y="34"></rect></g>
+<text fill="#60a5fa" font-family="Inter,sans-serif" font-size="14" font-weight="700" text-anchor="middle" x="884" y="58">🗣️ Linguagem natural</text>
+<text fill="#bcd6fb" font-family="Inter,sans-serif" font-size="11" text-anchor="middle" x="884" y="76">VLA / code-as-policies</text>
+</svg>
+<p class="text-xs text-neutral-500 mt-2 text-center">Diagrama ilustrativo: cada degrau sobe em poder e complexidade — do teach pendant (sem codigo) ate a linguagem natural com VLA.</p>
+</div>
+<!-- TOPICO 1 -->
+<section class="mb-16" id="topico-1">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">1</span>
+<h2 class="text-2xl font-bold">🕹️ Teach Pendant e Lead-Through</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed">
+        O metodo dominante hoje nao usa uma linha de codigo. No <strong class="text-blue-400">teach pendant</strong>, voce navega num console portatil para mover o braco e gravar posicoes. No <strong class="text-blue-400">lead-through</strong> (hand-guiding), voce simplesmente segura o braco com a mao e o guia pela trajetoria, gravando cada pose. E a base dos cobots (UR, FANUC CRX) e a porta de entrada de quem nunca programou.
+      </p>
+<div class="bg-gradient-to-br from-blue-900/30 to-dark-800 rounded-xl border border-blue-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-blue-400 mb-4 flex items-center">
+<span class="mr-2">📍</span> Como o robo "aprende" uma rotina
+        </h3>
+<p class="text-neutral-300 mb-4">Programar por teach pendant e gravar uma sequencia de <strong>waypoints</strong> (pontos de passagem). Cada waypoint e uma <strong>pose</strong> — posicao mais orientacao do efetuador — relativa a um <strong>frame</strong> (base ou tool).</p>
+<ul class="space-y-2 text-neutral-300">
+<li class="flex items-start space-x-2"><span class="text-blue-400 mt-1">•</span><span><strong>Jog manual:</strong> mover o braco eixo a eixo (ou no espaco cartesiano) pelo console.</span></li>
+<li class="flex items-start space-x-2"><span class="text-blue-400 mt-1">•</span><span><strong>Gravar waypoint:</strong> salvar a pose atual como ponto da trajetoria.</span></li>
+<li class="flex items-start space-x-2"><span class="text-blue-400 mt-1">•</span><span><strong>Velocidade e aceleracao:</strong> ajustar o quao rapido o robo vai entre pontos.</span></li>
+</ul>
+</div>
+<div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-blue-400 mb-4 flex items-center">
+<span class="mr-2">📊</span> Por que comeca aqui
+        </h3>
+<ul class="space-y-2 text-neutral-300">
+<li><strong>Metodo dominante</strong> - a maioria das celulas de cobot em chao de fabrica e programada assim.</li>
+<li><strong>Zero codigo</strong> - operador aprende em horas, nao meses; ideal para tarefas repetitivas.</li>
+<li><strong>Cobots UR e FANUC CRX</strong> - lead-through nativo: pressiona um botao e guia o braco com a mao.</li>
+</ul>
+</div>
+<div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
+<span class="mr-2">💡</span> Dica Pratica
+        </h3>
+<p class="text-neutral-300">Antes de gravar waypoints, defina bem os frames base/tool. Um frame de ferramenta errado faz o robo "pensar" que a garra esta em outro lugar — e toda a trajetoria sai deslocada. Dominar frames e o primeiro salto de qualidade de quem programa por teach pendant.</p>
+</div>
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-6">
+<h4 class="font-semibold text-white mb-4">Conceitos-chave</h4>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+<div class="bg-dark-700/50 rounded-lg p-4"><div class="text-blue-400 font-bold mb-1">Waypoints</div><div class="text-xs text-neutral-400">Pontos da trajetoria</div></div>
+<div class="bg-dark-700/50 rounded-lg p-4"><div class="text-blue-400 font-bold mb-1">Pose / frames</div><div class="text-xs text-neutral-400">Base e tool</div></div>
+<div class="bg-dark-700/50 rounded-lg p-4"><div class="text-blue-400 font-bold mb-1">Jog manual</div><div class="text-xs text-neutral-400">Mover pelo console</div></div>
+<div class="bg-dark-700/50 rounded-lg p-4"><div class="text-blue-400 font-bold mb-1">Lead-through</div><div class="text-xs text-neutral-400">Guiar com a mao</div></div>
+</div>
+</div>
+</section>
+<!-- TOPICO 2 -->
+<section class="mb-16" id="topico-2">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">2</span>
+<h2 class="text-2xl font-bold">🧱 No-Code e Blocos / Fluxo</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed">
+        O segundo degrau adiciona logica sem escrever texto. Interfaces visuais — <strong class="text-blue-400">blocos tipo Blockly</strong>, fluxogramas e o <strong class="text-blue-400">PolyScope da UR</strong> com drag-and-drop — deixam voce montar condicionais, loops e esperas arrastando pecas. Isso democratiza: quem domina teach pendant passa a programar comportamento, nao so trajetorias.
+      </p>
+<div class="bg-dark-900 rounded-xl border border-blue-500/30 p-6 mb-6 overflow-x-auto">
+<div class="flex items-center space-x-2 mb-3">
+<span class="w-3 h-3 rounded-full bg-red-400/70"></span>
+<span class="w-3 h-3 rounded-full bg-yellow-400/70"></span>
+<span class="w-3 h-3 rounded-full bg-emerald-400/70"></span>
+<span class="text-xs text-neutral-500 ml-2">Programa visual (ilustrativo)</span>
+</div>
+<pre class="code-box text-sm text-neutral-300 leading-relaxed"><span class="text-blue-400">▸ Programa</span>
+  <span class="text-blue-400">┌ Loop</span> (sempre)
+  │   <span class="text-emerald-400">◆ Se</span> sensor_peca == verdadeiro
+  │       → MoveJ  waypoint_pegar
+  │       → Garra  fechar
+  │       → MoveL  waypoint_soltar
+  │       → Garra  abrir
+  │   <span class="text-emerald-400">◆ Senao</span>
+  │       → Esperar  0.5 s
+  <span class="text-blue-400">└ Fim Loop</span></pre>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+<div class="bg-emerald-900/20 rounded-xl border border-emerald-500/30 p-6">
+<h4 class="font-bold text-emerald-400 mb-4">✓ Quando usar NO-CODE</h4>
+<ul class="space-y-3 text-neutral-300">
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Tarefa repetitiva com poucas variacoes (pick-and-place)</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Equipe sem programadores; operadores montam a rotina</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Logica simples: if por sensor, loop, wait, templates prontos</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Prototipo rapido na celula, sem ciclo de build</span></li>
+</ul>
+</div>
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+<h4 class="font-bold text-red-400 mb-4">✗ Quando o NO-CODE trava</h4>
+<ul class="space-y-3 text-neutral-300">
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Logica complexa com muitos ramos e estados</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Integrar visao computacional ou IA externa</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Reuso entre robos de fabricantes diferentes</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Versionar e testar codigo como software de verdade</span></li>
+</ul>
+</div>
+</div>
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-6">
+<h4 class="font-semibold text-white mb-4">Conceitos-chave</h4>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+<div class="bg-dark-700/50 rounded-lg p-4"><div class="text-blue-400 font-bold mb-1">Blocos if/loop</div><div class="text-xs text-neutral-400">Logica arrastavel</div></div>
+<div class="bg-dark-700/50 rounded-lg p-4"><div class="text-blue-400 font-bold mb-1">Nos de acao</div><div class="text-xs text-neutral-400">Mover, garra, wait</div></div>
+<div class="bg-dark-700/50 rounded-lg p-4"><div class="text-blue-400 font-bold mb-1">Condicional</div><div class="text-xs text-neutral-400">If por sensor</div></div>
+<div class="bg-dark-700/50 rounded-lg p-4"><div class="text-blue-400 font-bold mb-1">Templates</div><div class="text-xs text-neutral-400">Reuso de rotinas</div></div>
+</div>
+</div>
+</section>
+<!-- TOPICO 3 -->
+<section class="mb-16" id="topico-3">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">3</span>
+<h2 class="text-2xl font-bold">🐍 Python e a Fronteira do Codigo</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed">
+<strong class="text-blue-400">Python</strong> e a linguagem mais usada em robotica e IA. Com ela voce controla cobots via SDK (ex.: <strong class="text-blue-400">ur_rtde</strong>), processa visao computacional e integra modelos de IA. Sair do no-code para o codigo abre tarefas complexas que blocos nao alcancam — e, na pratica, abre salarios melhores.
+      </p>
+<div class="bg-dark-900 rounded-xl border border-blue-500/30 p-6 mb-6 overflow-x-auto">
+<div class="flex items-center space-x-2 mb-3">
+<span class="w-3 h-3 rounded-full bg-red-400/70"></span>
+<span class="w-3 h-3 rounded-full bg-yellow-400/70"></span>
+<span class="w-3 h-3 rounded-full bg-emerald-400/70"></span>
+<span class="text-xs text-neutral-500 ml-2">controle_cobot.py (ilustrativo)</span>
+</div>
+<pre class="code-box text-sm text-neutral-300 leading-relaxed"><span class="text-neutral-500"># Mover um cobot UR e acionar a garra (ilustrativo)</span>
+<span class="text-purple-400">from</span> rtde_control <span class="text-purple-400">import</span> RTDEControlInterface <span class="text-purple-400">as</span> RTDEControl
+robo = <span class="text-blue-400">RTDEControl</span>(<span class="text-emerald-400">"192.168.0.10"</span>)
+pose = [-<span class="text-yellow-400">0.14</span>, -<span class="text-yellow-400">0.40</span>, <span class="text-yellow-400">0.20</span>, <span class="text-yellow-400">0</span>, <span class="text-yellow-400">3.14</span>, <span class="text-yellow-400">0</span>]   <span class="text-neutral-500"># x, y, z + rotacao</span>
+robo.<span class="text-blue-400">moveL</span>(pose, speed=<span class="text-yellow-400">0.25</span>, acceleration=<span class="text-yellow-400">0.5</span>)
+robo.<span class="text-blue-400">setStandardDigitalOut</span>(<span class="text-yellow-400">0</span>, <span class="text-purple-400">True</span>)         <span class="text-neutral-500"># fecha a garra</span></pre>
+</div>
+<div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-blue-400 mb-4 flex items-center">
+<span class="mr-2">📈</span> O que o codigo destrava
+        </h3>
+<ul class="space-y-2 text-neutral-300">
+<li><strong>Loop de controle</strong> - ler sensores e reagir em tempo real, alem do que blocos permitem.</li>
+<li><strong>Visao computacional</strong> - localizar pecas com camera e calcular a pose de pegada na hora.</li>
+<li><strong>Scripts reutilizaveis</strong> - versionar, testar e reaproveitar codigo entre projetos.</li>
+</ul>
+</div>
+<div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
+<span class="mr-2">💡</span> Dica Pratica
+        </h3>
+<p class="text-neutral-300">Voce nao precisa abandonar o teach pendant para aprender Python. Comece grava a trajetoria no console, exporte as poses, e use o SDK so para a parte que blocos nao fazem (visao, decisao, integracao). Esse "hibrido" e o caminho real de quem migra de operador para tecnico.</p>
+</div>
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-6">
+<h4 class="font-semibold text-white mb-4">Conceitos-chave</h4>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+<div class="bg-dark-700/50 rounded-lg p-4"><div class="text-blue-400 font-bold mb-1">SDK</div><div class="text-xs text-neutral-400">ur_rtde, fabricante</div></div>
+<div class="bg-dark-700/50 rounded-lg p-4"><div class="text-blue-400 font-bold mb-1">Loop de controle</div><div class="text-xs text-neutral-400">Ler e reagir</div></div>
+<div class="bg-dark-700/50 rounded-lg p-4"><div class="text-blue-400 font-bold mb-1">Visao</div><div class="text-xs text-neutral-400">Camera + pose</div></div>
+<div class="bg-dark-700/50 rounded-lg p-4"><div class="text-blue-400 font-bold mb-1">Scripts</div><div class="text-xs text-neutral-400">Reutilizaveis</div></div>
+</div>
+</div>
+</section>
+<!-- TOPICO 4 -->
+<section class="mb-16" id="topico-4">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">4</span>
+<h2 class="text-2xl font-bold">🤖 ROS 2: o Middleware Padrao</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed">
+        Apesar do nome, <strong class="text-blue-400">ROS 2</strong> nao e um sistema operacional de verdade — e um <strong class="text-blue-400">middleware</strong>: uma camada que conecta as partes de um robo. Programas viram <strong>nos</strong> que conversam por <strong>topicos</strong> (publish/subscribe), <strong>mensagens</strong> e <strong>servicos</strong>. AMRs, humanoides e a pesquisa academica rodam ROS 2.
+      </p>
+<div class="bg-gradient-to-br from-blue-900/30 to-dark-800 rounded-xl border border-blue-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-blue-400 mb-4 flex items-center">
+<span class="mr-2">🧩</span> O ecossistema que vem junto
+        </h3>
+<p class="text-neutral-300 mb-4">A forca do ROS 2 nao e so a comunicacao: e a pilha de ferramentas maduras que voce reusa em vez de reescrever.</p>
+<ul class="space-y-2 text-neutral-300">
+<li class="flex items-start space-x-2"><span class="text-blue-400 mt-1">•</span><span><strong>Nav2:</strong> navegacao autonoma para robos moveis (AMRs).</span></li>
+<li class="flex items-start space-x-2"><span class="text-blue-400 mt-1">•</span><span><strong>MoveIt 2:</strong> planejamento de movimento e manipulacao de bracos.</span></li>
+<li class="flex items-start space-x-2"><span class="text-blue-400 mt-1">•</span><span><strong>Gazebo:</strong> simulacao fisica para testar antes do hardware real.</span></li>
+</ul>
+</div>
+<div class="bg-dark-900 rounded-xl border border-blue-500/30 p-6 mb-6 overflow-x-auto">
+<div class="flex items-center space-x-2 mb-3">
+<span class="w-3 h-3 rounded-full bg-red-400/70"></span>
+<span class="w-3 h-3 rounded-full bg-yellow-400/70"></span>
+<span class="w-3 h-3 rounded-full bg-emerald-400/70"></span>
+<span class="text-xs text-neutral-500 ml-2">no ROS 2 publicando um topico (ilustrativo)</span>
+</div>
+<pre class="code-box text-sm text-neutral-300 leading-relaxed"><span class="text-purple-400">import</span> rclpy
+<span class="text-purple-400">from</span> geometry_msgs.msg <span class="text-purple-400">import</span> Twist
+
+no = rclpy.<span class="text-blue-400">create_node</span>(<span class="text-emerald-400">"motorista"</span>)
+pub = no.<span class="text-blue-400">create_publisher</span>(Twist, <span class="text-emerald-400">"/cmd_vel"</span>, <span class="text-yellow-400">10</span>)
+cmd = <span class="text-blue-400">Twist</span>()
+cmd.linear.x = <span class="text-yellow-400">0.2</span>     <span class="text-neutral-500"># anda pra frente</span>
+pub.<span class="text-blue-400">publish</span>(cmd)         <span class="text-neutral-500"># publica no topico /cmd_vel</span></pre>
+</div>
+<div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
+<span class="mr-2">💡</span> Dica Pratica
+        </h3>
+<p class="text-neutral-300">Voce nao precisa de um robo fisico para aprender ROS 2: o Gazebo simula a fisica e os sensores. Boa parte dos engenheiros de robotica comeca publicando topicos num robo virtual antes de tocar em hardware caro — erre na simulacao, nao na celula de producao.</p>
+</div>
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-6">
+<h4 class="font-semibold text-white mb-4">Conceitos-chave</h4>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+<div class="bg-dark-700/50 rounded-lg p-4"><div class="text-blue-400 font-bold mb-1">Nos / topicos</div><div class="text-xs text-neutral-400">Publish/subscribe</div></div>
+<div class="bg-dark-700/50 rounded-lg p-4"><div class="text-blue-400 font-bold mb-1">Mensagens</div><div class="text-xs text-neutral-400">Servicos e dados</div></div>
+<div class="bg-dark-700/50 rounded-lg p-4"><div class="text-blue-400 font-bold mb-1">Nav2 / MoveIt 2</div><div class="text-xs text-neutral-400">Navegacao e bracos</div></div>
+<div class="bg-dark-700/50 rounded-lg p-4"><div class="text-blue-400 font-bold mb-1">Gazebo</div><div class="text-xs text-neutral-400">Simulacao fisica</div></div>
+</div>
+</div>
+</section>
+<!-- TOPICO 5 -->
+<section class="mb-16" id="topico-5">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">5</span>
+<h2 class="text-2xl font-bold">🗣️ Programar por Linguagem Natural</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed">
+        A nova fronteira: voce <strong class="text-blue-400">descreve a tarefa em portugues</strong> e o robo gera e executa a rotina. Liga direto ao modulo 2.7 (VLA). No paradigma <strong class="text-blue-400">"code-as-policies"</strong>, um LLM escreve o codigo de controle e o humano revisa antes de rodar. A skill deixa de ser "digitar codigo" e passa a ser "especificar bem a tarefa e revisar o que a IA gerou".
+      </p>
+<div class="bg-gradient-to-br from-blue-900/30 to-dark-800 rounded-xl border border-blue-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-blue-400 mb-4 flex items-center">
+<span class="mr-2">✨</span> Como funciona o code-as-policies
+        </h3>
+<p class="text-neutral-300 mb-4">Voce escreve um <strong>prompt de tarefa</strong> ("separe as pecas vermelhas da esteira"). O LLM gera o codigo que aciona o robo; voce revisa e aprova. A IA acelera, mas a responsabilidade pela seguranca continua humana.</p>
+<ul class="space-y-2 text-neutral-300">
+<li class="flex items-start space-x-2"><span class="text-blue-400 mt-1">•</span><span><strong>Prompt de tarefa:</strong> descrever o objetivo, nao os passos.</span></li>
+<li class="flex items-start space-x-2"><span class="text-blue-400 mt-1">•</span><span><strong>VLA:</strong> modelos visao-linguagem-acao que ligam percepcao a movimento.</span></li>
+<li class="flex items-start space-x-2"><span class="text-blue-400 mt-1">•</span><span><strong>Revisao humana:</strong> aprovar o codigo antes de ele tocar o hardware.</span></li>
+</ul>
+</div>
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-red-400 mb-3 flex items-center">
+<span class="mr-2">🚫</span> Atencao: seguranca do codigo autogerado
+        </h3>
+<p class="text-neutral-300">Codigo gerado por LLM pode estar sintaticamente perfeito e ainda assim mandar o braco para uma colisao. Nunca rode codigo autogerado direto em producao: valide em simulacao, limite velocidade/forca e mantenha o operador no loop. A IA escreve rapido, mas nao responde por um acidente — voce responde.</p>
+</div>
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-6">
+<h4 class="font-semibold text-white mb-4">Conceitos-chave</h4>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+<div class="bg-dark-700/50 rounded-lg p-4"><div class="text-blue-400 font-bold mb-1">Code-as-policies</div><div class="text-xs text-neutral-400">LLM escreve controle</div></div>
+<div class="bg-dark-700/50 rounded-lg p-4"><div class="text-blue-400 font-bold mb-1">Prompt de tarefa</div><div class="text-xs text-neutral-400">Objetivo em texto</div></div>
+<div class="bg-dark-700/50 rounded-lg p-4"><div class="text-blue-400 font-bold mb-1">VLA</div><div class="text-xs text-neutral-400">Visao-linguagem-acao</div></div>
+<div class="bg-dark-700/50 rounded-lg p-4"><div class="text-blue-400 font-bold mb-1">Revisao humana</div><div class="text-xs text-neutral-400">Seguranca no loop</div></div>
+</div>
+</div>
+</section>
+<!-- TOPICO 6 -->
+<section class="mb-16" id="topico-6">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">6</span>
+<h2 class="text-2xl font-bold">🧭 Que Caminho Seguir</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed">
+        Nao existe "o jeito certo" — existe o <strong class="text-blue-400">degrau certo para o seu perfil</strong>. A rota e progressiva: cada nivel abre um patamar salarial e se liga as certificacoes do modulo 3.4. O segredo nao e pular degraus, e subir um de cada vez construindo um portfolio de projetos.
+      </p>
+<div class="space-y-6 mb-6">
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-12 h-12 rounded-full bg-blue-500/20 flex items-center justify-center">
+<span class="text-blue-400 font-bold">1</span>
+</div>
+<div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+<h4 class="font-semibold text-white mb-2">Operador: teach pendant → no-code</h4>
+<p class="text-sm text-neutral-400 mb-3">Do braco guiado a logica em blocos</p>
+<p class="text-neutral-300 text-sm">Comece dominando lead-through e waypoints; depois suba para no-code (PolyScope, blocos) para programar condicionais e loops. Aqui voce ja entrega celulas inteiras sem escrever codigo.</p>
+</div>
+</div>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-12 h-12 rounded-full bg-blue-500/20 flex items-center justify-center">
+<span class="text-blue-400 font-bold">2</span>
+</div>
+<div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+<h4 class="font-semibold text-white mb-2">Tecnico: no-code → Python</h4>
+<p class="text-sm text-neutral-400 mb-3">O salto para o codigo</p>
+<p class="text-neutral-300 text-sm">Quem ja monta logica em blocos aprende Python e SDKs (ur_rtde) para integrar visao e decisao. E o degrau onde o salario mais sobe, porque destrava tarefas que no-code nao alcanca.</p>
+</div>
+</div>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-12 h-12 rounded-full bg-blue-500/20 flex items-center justify-center">
+<span class="text-blue-400 font-bold">3</span>
+</div>
+<div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+<h4 class="font-semibold text-white mb-2">Engenheiro: Python → ROS 2 → VLA</h4>
+<p class="text-sm text-neutral-400 mb-3">Topo da escada</p>
+<p class="text-neutral-300 text-sm">Com Python solido, avance para ROS 2 (sistemas complexos, AMRs, humanoides) e para a fronteira VLA / linguagem natural. Aprendizado continuo: a fronteira de hoje vira o padrao de amanha.</p>
+</div>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+<div class="bg-emerald-900/20 rounded-xl border border-emerald-500/30 p-6">
+<h4 class="font-bold text-emerald-400 mb-4">✓ Como subir a escada</h4>
+<ul class="space-y-3 text-neutral-300">
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Dominar um degrau antes de avancar para o proximo</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Construir portfolio de projetos reais em cada nivel</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Ligar a aprendizagem a certificacoes (modulo 3.4)</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Manter aprendizado continuo: a fronteira se move</span></li>
+</ul>
+</div>
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+<h4 class="font-bold text-red-400 mb-4">✗ Erros de quem se perde</h4>
+<ul class="space-y-3 text-neutral-300">
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Pular para ROS 2 sem base de Python</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Achar que no-code "nao conta" como skill — conta, e muito</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Estudar so teoria, sem entregar projeto nenhum</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Parar de aprender ao chegar num degrau confortavel</span></li>
+</ul>
+</div>
+</div>
+<div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
+<span class="mr-2">💡</span> Dica Pratica
+        </h3>
+<p class="text-neutral-300">Identifique seu degrau atual com honestidade e mire o degrau imediatamente acima — nao o topo. Um operador que aprende no-code vale mais que um operador parado; um tecnico que aprende Python vale mais que um tecnico de blocos. A escada paga em cada passo, nao so no fim.</p>
+</div>
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-6">
+<h4 class="font-semibold text-white mb-4">Conceitos-chave</h4>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+<div class="bg-dark-700/50 rounded-lg p-4"><div class="text-blue-400 font-bold mb-1">Trilha por perfil</div><div class="text-xs text-neutral-400">Operador a engenheiro</div></div>
+<div class="bg-dark-700/50 rounded-lg p-4"><div class="text-blue-400 font-bold mb-1">Do simples ao complexo</div><div class="text-xs text-neutral-400">Um degrau por vez</div></div>
+<div class="bg-dark-700/50 rounded-lg p-4"><div class="text-blue-400 font-bold mb-1">Portfolio</div><div class="text-xs text-neutral-400">Projetos reais</div></div>
+<div class="bg-dark-700/50 rounded-lg p-4"><div class="text-blue-400 font-bold mb-1">Aprendizado continuo</div><div class="text-xs text-neutral-400">A fronteira se move</div></div>
+</div>
+</div>
+</section>
+<!-- RESUMO -->
+<section class="mb-12">
+<div class="bg-gradient-to-br from-blue-900/40 via-dark-800 to-dark-800 rounded-xl border border-blue-500/30 p-8">
+<h2 class="text-2xl font-bold mb-6 flex items-center">
+<span class="mr-3">🏁</span> Resumo do Modulo
+        </h2>
+<div class="space-y-4 mb-8">
+<div class="flex items-start space-x-3">
+<span class="text-blue-400 mt-1">✓</span>
+<div><strong class="text-white">Teach pendant e lead-through</strong><span class="text-neutral-400"> - metodo dominante e sem codigo: grava waypoints e poses guiando o braco; base dos cobots UR e FANUC CRX.</span></div>
+</div>
+<div class="flex items-start space-x-3">
+<span class="text-blue-400 mt-1">✓</span>
+<div><strong class="text-white">No-code e blocos</strong><span class="text-neutral-400"> - logica visual (Blockly, PolyScope) com if/loop/wait; democratiza, mas trava em complexidade e integracao.</span></div>
+</div>
+<div class="flex items-start space-x-3">
+<span class="text-blue-400 mt-1">✓</span>
+<div><strong class="text-white">Python</strong><span class="text-neutral-400"> - SDK (ur_rtde), loop de controle, visao e IA; o salto que destrava tarefas complexas e salarios melhores.</span></div>
+</div>
+<div class="flex items-start space-x-3">
+<span class="text-blue-400 mt-1">✓</span>
+<div><strong class="text-white">ROS 2</strong><span class="text-neutral-400"> - middleware com nos, topicos e mensagens; Nav2, MoveIt 2 e Gazebo movem AMRs, humanoides e pesquisa.</span></div>
+</div>
+<div class="flex items-start space-x-3">
+<span class="text-blue-400 mt-1">✓</span>
+<div><strong class="text-white">Linguagem natural / VLA</strong><span class="text-neutral-400"> - code-as-policies: descrever a tarefa, a IA gera o codigo, o humano revisa. Seguranca continua humana.</span></div>
+</div>
+<div class="flex items-start space-x-3">
+<span class="text-blue-400 mt-1">✓</span>
+<div><strong class="text-white">Rota por perfil</strong><span class="text-neutral-400"> - operador, tecnico, engenheiro: cada degrau paga e liga as certificacoes do modulo 3.4.</span></div>
+</div>
+</div>
+<div class="bg-dark-800/50 rounded-lg p-4 mb-8">
+<h3 class="font-semibold text-blue-400 mb-2">Proxima Trilha:</h3>
+<p class="text-neutral-300">Trilha 3 - Estrategico: como liderar a transicao robotica no nivel organizacional, do piloto a escala.</p>
+</div>
+<div class="flex flex-col sm:flex-row gap-4">
+<a class="flex-1 text-center px-6 py-3 bg-dark-700 text-neutral-300 rounded-lg font-semibold hover:bg-dark-600 transition-colors" href="index.html">
+            ← Voltar para Trilha
+          </a>
+<a class="flex-1 text-center px-6 py-3 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-500 transition-colors" href="../trilha3/index.html">
+            Proxima Trilha →
+          </a>
+</div>
+</div>
+</section>
+</main>
+<!-- FOOTER -->
+<footer class="border-t border-dark-600 py-8 mt-16">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-neutral-500 text-sm">
+<p>segROBOT — INEMA.CLUB — 2026</p>
+</div>
+</footer>
+<!-- SCRIPTS -->
+<script>
+    const themeToggle = document.getElementById('theme-toggle');
+    const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
+    const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
+    const html = document.documentElement;
+    if (localStorage.getItem('theme') === 'light' || (!localStorage.getItem('theme') && !html.classList.contains('dark'))) {
+      themeToggleDarkIcon.classList.remove('hidden'); html.classList.remove('dark');
+    } else { themeToggleLightIcon.classList.remove('hidden'); }
+    themeToggle.addEventListener('click', () => {
+      themeToggleDarkIcon.classList.toggle('hidden'); themeToggleLightIcon.classList.toggle('hidden');
+      html.classList.toggle('dark'); localStorage.setItem('theme', html.classList.contains('dark') ? 'dark' : 'light');
+    });
+  </script>
+</body>
+</html>

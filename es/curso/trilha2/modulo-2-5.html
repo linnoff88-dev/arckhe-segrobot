@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="es">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Módulo 2.5 - Logística: almacenes autónomos y flotas de AMR | segROBOT</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            primary: '#FACC15',
+            dark: { 900: '#111827', 800: '#1f2937', 700: '#374151', 600: '#4b5563' }
+          }
+        }
+      }
+    }
+  </script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<style>
+    body { font-family: 'Inter', sans-serif; }
+    .dark body { background-color: #111827; }
+    .topic-explanation { display: none; }
+    .topic-explanation.active { display: block; }
+
+    @keyframes wf-pulse { 0%,100% { opacity:.55 } 50% { opacity:1 } }
+    @media (prefers-reduced-motion: no-preference) {
+      .wf-a { animation: wf-pulse 2.6s ease-in-out infinite; }
+      .wf-a:nth-child(2){animation-delay:.25s} .wf-a:nth-child(3){animation-delay:.5s}
+      .wf-a:nth-child(4){animation-delay:.75s} .wf-a:nth-child(5){animation-delay:1s}
+    }
+
+    /* Light mode overrides - OBRIGATORIO */
+    html:not(.dark) body { background-color: #f8fafc; }
+    html:not(.dark) .bg-dark-900 { background-color: #ffffff; }
+    html:not(.dark) .bg-dark-800 { background-color: #f9fafb; }
+    html:not(.dark) .bg-dark-700 { background-color: #f3f4f6; }
+    html:not(.dark) .bg-dark-600 { background-color: #e5e7eb; }
+    html:not(.dark) .text-neutral-100 { color: #111827; }
+    html:not(.dark) .text-neutral-300 { color: #4b5563; }
+    html:not(.dark) .text-neutral-400 { color: #6b7280; }
+    html:not(.dark) .text-neutral-500 { color: #9ca3af; }
+    html:not(.dark) .border-dark-600 { border-color: #d1d5db; }
+    html:not(.dark) .border-dark-700 { border-color: #e5e7eb; }
+
+    /* Light mode - cores de acento (trilha blue) */
+    html:not(.dark) .text-blue-400 { color: #2563eb; }
+    html:not(.dark) .bg-blue-500\/20 { background-color: rgba(37, 99, 235, 0.12); }
+    html:not(.dark) .bg-blue-500\/10 { background-color: rgba(37, 99, 235, 0.08); }
+    html:not(.dark) .border-blue-500\/30 { border-color: rgba(37, 99, 235, 0.25); }
+    html:not(.dark) .hover\:bg-blue-500\/30:hover { background-color: rgba(37, 99, 235, 0.18); }
+    html:not(.dark) .hover\:bg-blue-500\/10:hover { background-color: rgba(37, 99, 235, 0.08); }
+    html:not(.dark) .hover\:text-blue-400:hover { color: #2563eb; }
+    html:not(.dark) .hover\:border-blue-500\/30:hover { border-color: rgba(37, 99, 235, 0.25); }
+    html:not(.dark) .group:hover .group-hover\:text-blue-400 { color: #2563eb; }
+
+    /* Light mode - outras trilhas no nav */
+    html:not(.dark) .hover\:text-emerald-400:hover { color: #059669; }
+    html:not(.dark) .hover\:bg-emerald-500\/10:hover { background-color: rgba(5, 150, 105, 0.08); }
+    html:not(.dark) .hover\:text-purple-400:hover { color: #7c3aed; }
+    html:not(.dark) .hover\:bg-purple-500\/10:hover { background-color: rgba(124, 58, 237, 0.08); }
+
+    /* Light mode - remove gradientes (fundo uniforme) */
+    html:not(.dark) [class*="bg-gradient-to"] { background-image: none !important; }
+
+    /* Light mode - cores especiais */
+    html:not(.dark) .text-primary { color: #a16207; }
+    html:not(.dark) .bg-primary\/10 { background-color: rgba(161, 98, 7, 0.08); }
+    html:not(.dark) .border-primary\/40 { border-color: rgba(161, 98, 7, 0.25); }
+    html:not(.dark) .text-sky-400 { color: #0369a1; }
+    html:not(.dark) .text-yellow-400 { color: #a16207; }
+    html:not(.dark) .hover\:text-sky-300:hover { color: #0284c7; }
+    html:not(.dark) .hover\:text-yellow-300:hover { color: #854d0e; }
+
+    /* Light mode - nav */
+    html:not(.dark) .bg-dark-900\/95 { background-color: rgba(255, 255, 255, 0.95); }
+
+    /* Dark mode - bordas e linhas divisorias mais suaves */
+    .dark .border-dark-600 { border-color: #374151; }
+    .dark .divide-dark-600 > :not([hidden]) ~ :not([hidden]) { border-color: #374151; }
+  </style>
+<link href="https://inematds.github.io/segrobot/curso/trilha2/modulo-2-5.html" hreflang="pt-BR" rel="alternate"/><link href="https://inematds.github.io/segrobot/en/curso/trilha2/modulo-2-5.html" hreflang="en" rel="alternate"/><link href="https://inematds.github.io/segrobot/es/curso/trilha2/modulo-2-5.html" hreflang="es" rel="alternate"/></head>
+<body class="bg-dark-900 text-neutral-100 min-h-screen"><div class="inema-lang" style="position:fixed;right:14px;bottom:14px;z-index:9999;display:flex;gap:2px;padding:4px;border-radius:10px;background:rgba(12,12,16,.82);border:1px solid rgba(226,162,59,.45);font:600 12px/1 Sora,Inter,system-ui,sans-serif;backdrop-filter:blur(8px)" translate="no"><a href="../../../curso/trilha2/modulo-2-5.html" hreflang="pt-BR" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">PT</a><a href="../../../en/curso/trilha2/modulo-2-5.html" hreflang="en" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">EN</a><a href="modulo-2-5.html" hreflang="es" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#1a1206;background:#E2A23B">ES</a></div>
+<!-- NAVIGATION -->
+<nav class="sticky top-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-600">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="flex justify-between items-center h-14">
+<div class="flex items-center space-x-4">
+<a class="flex items-center space-x-2 text-yellow-400 hover:text-yellow-300" href="../../index.html">
+<span class="text-2xl">🤖</span>
+<span class="font-bold text-lg hidden sm:inline">segROBOT</span>
+</a>
+<span class="text-neutral-600">|</span>
+<a class="text-sky-400 hover:text-sky-300 text-sm font-medium" href="https://inema.club" target="_blank">INEMA.CLUB</a>
+</div>
+<div class="flex items-center space-x-1 sm:space-x-2">
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-emerald-400 hover:bg-emerald-500/10 transition-colors" href="../trilha1/index.html">
+<span class="sm:hidden">T1</span>
+<span class="hidden sm:inline">Fundamentos</span>
+</a>
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-blue-400 bg-blue-500/10" href="index.html">
+<span class="sm:hidden">T2</span>
+<span class="hidden sm:inline">Acción</span>
+</a>
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-purple-400 hover:bg-purple-500/10 transition-colors" href="../trilha3/index.html">
+<span class="sm:hidden">T3</span>
+<span class="hidden sm:inline">Estratégico</span>
+</a>
+<button class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors ml-2" id="theme-toggle">
+<svg class="hidden w-5 h-5 text-neutral-300" fill="currentColor" id="theme-toggle-dark-icon" viewbox="0 0 20 20">
+<path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+</svg>
+<svg class="hidden w-5 h-5 text-neutral-300" fill="currentColor" id="theme-toggle-light-icon" viewbox="0 0 20 20">
+<path clip-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd"></path>
+</svg>
+</button>
+</div>
+</div>
+</div>
+</nav>
+<!-- BREADCRUMB -->
+<nav class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+<div class="flex items-center space-x-2 text-sm text-neutral-400">
+<a class="hover:text-blue-400" href="../../index.html">Inicio</a>
+<span>/</span>
+<a class="hover:text-blue-400" href="index.html">Ruta 2</a>
+<span>/</span>
+<span class="text-blue-400">Módulo 2.5</span>
+</div>
+</nav>
+<!-- HEADER -->
+<header class="bg-gradient-to-br from-blue-900/30 via-dark-800 to-dark-800 py-12 border-b border-dark-600">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+<span class="inline-block px-3 py-1 bg-blue-500/20 text-blue-400 text-xs font-semibold rounded-full mb-4">MÓDULO 2.5</span>
+<h1 class="text-3xl sm:text-4xl font-bold mb-4">📦 Logística: almacenes autónomos y flotas de AMR</h1>
+<p class="text-lg text-neutral-400 max-w-3xl">
+        Amazon opera más de 1 millón de robots coordinados por DeepFleet AI e invierte USD 1.2 billion en recapacitación. Entiende la transformación del almacén: nuevos puestos, KPIs de operación de flotas y la llegada de humanoides como Digit en GXO.
+      </p>
+<!-- Hero SVG: frota de AMRs coordenada por fleet manager + handoff humano-AMR -->
+<div class="rounded-2xl border border-blue-500/30 bg-dark-900/40 p-3 sm:p-4 mt-8 overflow-hidden">
+<svg aria-label="Un Fleet Manager de IA coordina una flota de AMR paralelos dentro de un almacén; un supervisor humano recibe el handoff de las excepciones que los robots no resuelven" class="w-full h-auto" role="img" viewbox="0 0 1000 260">
+<defs>
+<lineargradient id="m25-grad" x1="0" x2="1" y1="0" y2="1">
+<stop offset="0" stop-color="#60a5fa"></stop><stop offset="1" stop-color="#3b82f6"></stop>
+</lineargradient>
+<filter height="180%" id="m25-glow" width="180%" x="-40%" y="-40%">
+<fegaussianblur result="b" stddeviation="3"></fegaussianblur><femerge><femergenode in="b"></femergenode><femergenode in="SourceGraphic"></femergenode></femerge>
+</filter>
+<pattern height="32" id="m25-grid" patternunits="userSpaceOnUse" width="32">
+<circle cx="1.3" cy="1.3" fill="#3b82f6" opacity="0.12" r="1.3"></circle>
+</pattern>
+<marker id="m25-ah" markerheight="9" markerwidth="9" orient="auto" refx="6.5" refy="4.5"><path d="M0,0 L8,4.5 L0,9 L2.4,4.5 Z" fill="#60a5fa"></path></marker>
+<marker id="m25-ahc" markerheight="9" markerwidth="9" orient="auto" refx="6.5" refy="4.5"><path d="M0,0 L8,4.5 L0,9 L2.4,4.5 Z" fill="#38bdf8"></path></marker>
+</defs>
+<rect fill="url(#m25-grid)" height="260" width="1000" x="0" y="0"></rect>
+<!-- Fleet Manager (origem) -->
+<g filter="url(#m25-glow)"><rect fill="#0e1622" height="78" rx="14" stroke="url(#m25-grad)" stroke-width="2.5" width="168" x="34" y="98"></rect></g>
+<text fill="#60a5fa" font-family="Inter,sans-serif" font-size="16" font-weight="700" text-anchor="middle" x="118" y="130">DeepFleet AI</text>
+<text fill="#93bbfc" font-family="Inter,sans-serif" font-size="12" text-anchor="middle" x="118" y="152">Fleet Manager</text>
+<!-- Arrows to AMRs (frota paralela) -->
+<g fill="none" opacity="0.65" stroke="#60a5fa" stroke-width="2">
+<path d="M202,118 C320,118 340,42 452,42" marker-end="url(#m25-ah)"></path>
+<path d="M202,128 C320,128 340,90 452,90" marker-end="url(#m25-ah)"></path>
+<path d="M202,138 L452,138" marker-end="url(#m25-ah)"></path>
+<path d="M202,148 C320,148 340,186 452,186" marker-end="url(#m25-ah)"></path>
+</g>
+<!-- Frota de AMRs -->
+<g font-family="Inter,sans-serif" font-size="13" font-weight="600">
+<g class="wf-a"><rect fill="#0e1b26" height="32" rx="9" stroke="#38bdf8" stroke-width="2" width="150" x="452" y="26"></rect><text fill="#bfe6ff" text-anchor="middle" x="527" y="47">AMR · Proteus</text></g>
+<g class="wf-a"><rect fill="#0e1b26" height="32" rx="9" stroke="#38bdf8" stroke-width="2" width="150" x="452" y="74"></rect><text fill="#bfe6ff" text-anchor="middle" x="527" y="95">AMR · Sparrow</text></g>
+<g class="wf-a"><rect fill="#0e1b26" height="32" rx="9" stroke="#38bdf8" stroke-width="2" width="150" x="452" y="122"></rect><text fill="#bfe6ff" text-anchor="middle" x="527" y="143">AMR · Robin</text></g>
+<g class="wf-a"><rect fill="#0e1b26" height="32" rx="9" stroke="#38bdf8" stroke-width="2" width="150" x="452" y="170"></rect><text fill="#bfe6ff" text-anchor="middle" x="527" y="191">AMR · Digit …</text></g>
+</g>
+<!-- Excecoes convergem para o humano (handoff) -->
+<g fill="none" opacity="0.55" stroke="#38bdf8" stroke-dasharray="6 5" stroke-width="2">
+<path d="M602,42  C720,42 740,138 802,138" marker-end="url(#m25-ahc)"></path>
+<path d="M602,90  C720,90 740,138 802,138" marker-end="url(#m25-ahc)"></path>
+<path d="M602,138 L802,138" marker-end="url(#m25-ahc)"></path>
+<path d="M602,186 C720,186 740,138 802,138" marker-end="url(#m25-ahc)"></path>
+</g>
+<!-- Supervisor humano (resultado / handoff) -->
+<g filter="url(#m25-glow)"><rect fill="#0e1622" height="78" rx="14" stroke="url(#m25-grad)" stroke-width="2.5" width="164" x="802" y="100"></rect></g>
+<text fill="#60a5fa" font-family="Inter,sans-serif" font-size="15" font-weight="700" text-anchor="middle" x="884" y="132">Supervisor</text>
+<text fill="#93bbfc" font-family="Inter,sans-serif" font-size="12" text-anchor="middle" x="884" y="154">excepciones / handoff</text>
+<text fill="#93bbfc" font-family="Inter,sans-serif" font-size="12.5" text-anchor="middle" x="527" y="232">Los robots resuelven lo rutinario · las personas resuelven las excepciones</text>
+</svg>
+</div>
+<!-- Stats Banner -->
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-4 mt-8 max-w-2xl">
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+<div class="text-xl font-bold text-blue-400">6</div>
+<div class="text-xs text-neutral-400">Temas</div>
+</div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+<div class="text-xl font-bold text-blue-400">50</div>
+<div class="text-xs text-neutral-400">Minutos</div>
+</div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+<div class="text-xl font-bold text-blue-400">Intermedio</div>
+<div class="text-xs text-neutral-400">Nivel</div>
+</div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+<div class="text-xl font-bold text-blue-400">Práctica</div>
+<div class="text-xs text-neutral-400">Tipo</div>
+</div>
+</div>
+</div>
+</header>
+<!-- CONTEUDO -->
+<main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+<!-- TOPICO 1 -->
+<section class="mb-16" id="topico-1">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">1</span>
+<h2 class="text-2xl font-bold">🏭 Amazon: 1M de robots con DeepFleet AI</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed">
+        Amazon opera <strong class="text-blue-400">más de 1 millón de robots</strong> en sus centros de distribución, coordinados por <strong class="text-blue-400">DeepFleet AI</strong>, un sistema de inteligencia artificial que optimiza rutas y asignación de tareas en tiempo real. Ya no es un robot aislado que ejecuta una tarea: es una flota entera orquestada como un solo organismo.
+      </p>
+<div class="bg-gradient-to-br from-blue-900/30 to-dark-800 rounded-xl border border-blue-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-blue-400 mb-4 flex items-center"><span class="mr-2">🧠</span> Concepto principal: coordinación de múltiples robots</h3>
+<p class="text-neutral-300 mb-4">DeepFleet AI no controla un robot a la vez. Trata la flota como un sistema y decide qué robot se encarga de cada tarea y por qué ruta, evitando colisiones y cuellos de botella. Esta optimización en tiempo real es lo que hace que la escala de 1M de robots sea manejable.</p>
+<ul class="space-y-2 text-neutral-300">
+<li class="flex items-start space-x-2"><span class="text-blue-400 mt-1">•</span><span><strong>Optimización de rutas en tiempo real</strong> — cada AMR recibe la ruta más eficiente, recalculada continuamente.</span></li>
+<li class="flex items-start space-x-2"><span class="text-blue-400 mt-1">•</span><span><strong>Asignación dinámica de tareas</strong> — el trabajo se asigna al robot mejor posicionado, no según un orden fijo.</span></li>
+<li class="flex items-start space-x-2"><span class="text-blue-400 mt-1">•</span><span><strong>Escala de flota</strong> — el mismo sistema coordina 100 o 100 mil robots sin reescribir la lógica.</span></li>
+</ul>
+</div>
+<div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-blue-400 mb-4 flex items-center"><span class="mr-2">📊</span> Los robots de Amazon</h3>
+<ul class="space-y-2 text-neutral-300">
+<li><strong>Robin</strong> — brazo robótico que separa y clasifica paquetes por destino.</li>
+<li><strong>Sparrow</strong> — manipula artículos individuales que aún están en el inventario, antes del empaquetado.</li>
+<li><strong>Proteus</strong> — primer AMR totalmente autónomo de Amazon, navega libremente por el almacén entre personas.</li>
+<li><strong>+1.000.000</strong> — total de robots en operación, coordinados por DeepFleet AI.</li>
+</ul>
+</div>
+<div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-primary mb-3 flex items-center"><span class="mr-2">💡</span> Consejo práctico</h3>
+<p class="text-neutral-300">Amazon marca el estándar del sector. Lo que hace hoy, el resto del mercado lo hará en 3-5 años. Estudiar DeepFleet no es una curiosidad: es anticiparse a la competencia que tu región exigirá antes de que se convierta en un requisito del puesto.</p>
+</div>
+<!-- Conceitos-chave -->
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-blue-400 font-bold text-sm mb-1">DeepFleet AI</div><p class="text-xs text-neutral-400">Cerebro que coordina toda la flota.</p></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-blue-400 font-bold text-sm mb-1">Robin / Sparrow / Proteus</div><p class="text-xs text-neutral-400">Familia de robots por función.</p></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-blue-400 font-bold text-sm mb-1">Ruta en tiempo real</div><p class="text-xs text-neutral-400">Trayectoria recalculada en cada instante.</p></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-blue-400 font-bold text-sm mb-1">Escala de flota</div><p class="text-xs text-neutral-400">La misma lógica de 100 a 1M de robots.</p></div>
+</div>
+</section>
+<!-- TOPICO 2 -->
+<section class="mb-16" id="topico-2">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">2</span>
+<h2 class="text-2xl font-bold">🔄 Antes/después de la automatización</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed">
+        El puesto de almacén no desaparece: <strong class="text-blue-400">cambia de naturaleza</strong>. El picking y el packing manuales dan paso a la supervisión de flotas robóticas, la resolución de excepciones y el kitting de materiales complejos. Quien entiende esta transformación se reposiciona; quien no la entiende, se queda atrás.
+      </p>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+<h4 class="font-bold text-red-400 mb-4">✗ Antes (manual)</h4>
+<ul class="space-y-3 text-neutral-300">
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Pick-pack-ship hecho a pie, caminando todo el día por el almacén.</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Esfuerzo físico repetitivo, alto riesgo de lesiones.</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Bajo valor agregado: la tarea es mecánica.</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Salario mínimo, poca progresión.</span></li>
+</ul>
+</div>
+<div class="bg-emerald-900/20 rounded-xl border border-emerald-500/30 p-6">
+<h4 class="font-bold text-emerald-400 mb-4">✓ Después (supervisión)</h4>
+<ul class="space-y-3 text-neutral-300">
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Supervisión de flotas: monitorea decenas de AMR en pantalla.</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Exception handling: resuelve lo que el robot no puede.</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Kitting de materiales complejos, montaje de valor agregado.</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Salario más alto, trayectoria profesional técnica.</span></li>
+</ul>
+</div>
+</div>
+<div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-primary mb-3 flex items-center"><span class="mr-2">💡</span> Consejo práctico</h3>
+<p class="text-neutral-300">El valor humano se desplaza de la ejecución a la excepción. Los robots resuelven lo rutinario a la perfección; lo que queda para la persona es precisamente lo que genera un margen mayor: el problema imprevisto, la decisión en el límite, el caso que nadie programó.</p>
+</div>
+<!-- Conceitos-chave -->
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-blue-400 font-bold text-sm mb-1">Pick-pack-ship</div><p class="text-xs text-neutral-400">Flujo manual que se está automatizando.</p></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-blue-400 font-bold text-sm mb-1">Supervisión de flotas</div><p class="text-xs text-neutral-400">Monitorear varios robots en lugar de cargar cajas.</p></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-blue-400 font-bold text-sm mb-1">Exception handling</div><p class="text-xs text-neutral-400">Resolver lo que el robot no puede manejar.</p></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-blue-400 font-bold text-sm mb-1">Kitting</div><p class="text-xs text-neutral-400">Montaje de conjuntos de valor agregado.</p></div>
+</div>
+</section>
+<!-- TOPICO 3 -->
+<section class="mb-16" id="topico-3">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">3</span>
+<h2 class="text-2xl font-bold">🎓 Amazon Upskilling USD 1.2bi</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed">
+        Amazon invierte <strong class="text-blue-400">USD 1.2 mil millones</strong> para recapacitar a los empleados. Es el mayor programa corporativo de recapacitación en robótica del mundo, y sus modelos y métricas sirven como referencia para cualquier empresa que quiera hacer lo mismo. Se destacan dos itinerarios: la Technical Academy y Associate2Tech.
+      </p>
+<!-- Timeline dos trilhos -->
+<div class="space-y-6 mb-6">
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-12 h-12 rounded-full bg-blue-500/20 flex items-center justify-center"><span class="text-blue-400 font-bold">1</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+<h4 class="font-semibold text-white mb-2">Associate2Tech — 90 días</h4>
+<p class="text-sm text-neutral-400 mb-3">Ruta rápida para funciones técnicas intermedias</p>
+<p class="text-neutral-300 text-sm">En 90 días, un asociado de almacén pasa a un puesto técnico intermedio: el primer paso de la transformación profesional, sin salir de la empresa.</p>
+</div>
+</div>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-12 h-12 rounded-full bg-blue-500/20 flex items-center justify-center"><span class="text-blue-400 font-bold">2</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+<h4 class="font-semibold text-white mb-2">Technical Academy — 9 meses</h4>
+<p class="text-sm text-neutral-400 mb-3">Formación de técnicos de mantenimiento</p>
+<p class="text-neutral-300 text-sm">Programa de 9 meses que forma técnicos de mantenimiento capaces de cuidar sus propios robots. En colaboración con community colleges, combina clases y práctica.</p>
+</div>
+</div>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-12 h-12 rounded-full bg-blue-500/20 flex items-center justify-center"><span class="text-blue-400 font-bold">3</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+<h4 class="font-semibold text-white mb-2">Métricas y retención</h4>
+<p class="text-sm text-neutral-400 mb-3">Qué convierte al programa en un benchmark</p>
+<p class="text-neutral-300 text-sm">La tasa de conversión, el costo por persona recalificada y la retención después del programa son las métricas que miden si la inversión de USD 1.2bi se amortiza, y que cualquier empresa puede replicar.</p>
+</div>
+</div>
+</div>
+<div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-blue-400 mb-4 flex items-center"><span class="mr-2">📊</span> Cifras del programa</h3>
+<ul class="space-y-2 text-neutral-300">
+<li><strong>USD 1.2 mil millones</strong> — inversión total en recapacitación.</li>
+<li><strong>90 días</strong> — duración de Associate2Tech.</li>
+<li><strong>9 meses</strong> — duración de Technical Academy.</li>
+<li><strong>Community colleges</strong> — alianza educativa que amplía la formación.</li>
+</ul>
+</div>
+<!-- Conceitos-chave -->
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-blue-400 font-bold text-sm mb-1">Technical Academy</div><p class="text-xs text-neutral-400">9 meses, técnico de mantenimiento.</p></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-blue-400 font-bold text-sm mb-1">Associate2Tech</div><p class="text-xs text-neutral-400">90 días, función técnica intermedia.</p></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-blue-400 font-bold text-sm mb-1">Tasa de conversión</div><p class="text-xs text-neutral-400">Cuántos completan la capacitación y cambian de cargo.</p></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-blue-400 font-bold text-sm mb-1">Retención posterior al programa</div><p class="text-xs text-neutral-400">Quién se queda después de recapacitarse.</p></div>
+</div>
+</section>
+<!-- TOPICO 4 -->
+<section class="mb-16" id="topico-4">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">4</span>
+<h2 class="text-2xl font-bold">💼 Nuevos puestos en la logística robotizada</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed">
+        Puestos que <strong class="text-blue-400">no existían hace 5 años</strong> hoy ganan entre un 30-60% más que en un puesto de almacén tradicional, y la demanda va en aumento. La oferta de profesionales calificados no alcanza a cubrirla, y esa brecha es tu oportunidad.
+      </p>
+<div class="bg-gradient-to-br from-blue-900/30 to-dark-800 rounded-xl border border-blue-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-blue-400 mb-4 flex items-center"><span class="mr-2">🚀</span> Concepto principal: carreras emergentes</h3>
+<p class="text-neutral-300 mb-4">La automatización destruye tareas, pero crea funciones. Cuatro puestos concentran la mayor parte de la nueva demanda en el almacén robotizado:</p>
+<ul class="space-y-2 text-neutral-300">
+<li class="flex items-start space-x-2"><span class="text-blue-400 mt-1">•</span><span><strong>Robot Fleet Coordinator</strong> — gestiona la flota de AMR, prioriza tareas y elimina cuellos de botella.</span></li>
+<li class="flex items-start space-x-2"><span class="text-blue-400 mt-1">•</span><span><strong>AMR Maintenance Tech</strong> — mantenimiento especializado de los robots, mecánico y electrónico.</span></li>
+<li class="flex items-start space-x-2"><span class="text-blue-400 mt-1">•</span><span><strong>Exception Handler</strong> — resuelve los problemas que los robots no pueden resolver por sí solos.</span></li>
+<li class="flex items-start space-x-2"><span class="text-blue-400 mt-1">•</span><span><strong>AI Training Associate</strong> — enseña al sistema con datos y correcciones del mundo real.</span></li>
+</ul>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+<div class="bg-emerald-900/20 rounded-xl border border-emerald-500/30 p-6">
+<h4 class="font-bold text-emerald-400 mb-4">✓ Para acceder a estos puestos</h4>
+<ul class="space-y-3 text-neutral-300">
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Busca certificaciones recomendadas en flotas/AMR.</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Aprovecha programas internos como Associate2Tech.</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Desarrolla habilidades para leer dashboards y diagnosticar.</span></li>
+</ul>
+</div>
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+<h4 class="font-bold text-red-400 mb-4">✗ Qué ya no funciona</h4>
+<ul class="space-y-3 text-neutral-300">
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Apostar solo por la resistencia física como diferencial.</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Ignorar la parte técnica pensando que es «cosa de ingenieros».</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Esperar a que aparezca la vacante para recién entonces buscar la competencia.</span></li>
+</ul>
+</div>
+</div>
+<!-- Conceitos-chave -->
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-blue-400 font-bold text-sm mb-1">Robot Fleet Coordinator</div><p class="text-xs text-neutral-400">Gestiona la flota de AMR.</p></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-blue-400 font-bold text-sm mb-1">AMR Maintenance Tech</div><p class="text-xs text-neutral-400">Mantenimiento especializado de los robots.</p></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-blue-400 font-bold text-sm mb-1">Exception Handler</div><p class="text-xs text-neutral-400">Resuelve lo que el robot no puede.</p></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-blue-400 font-bold text-sm mb-1">Rango salarial</div><p class="text-xs text-neutral-400">30-60% por encima del cargo tradicional.</p></div>
+</div>
+</section>
+<!-- TOPICO 5 -->
+<section class="mb-16" id="topico-5">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">5</span>
+<h2 class="text-2xl font-bold">📊 KPIs de operación de flotas</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed">
+        No puedes gestionar lo que no mides. Tres KPI definen si la automatización está <strong class="text-blue-400">funcionando o creando más problemas de los que resuelve</strong>: System Throughput, Exception Rate y MTTR. Dominar estas métricas es lo que distingue al supervisor que reacciona del que se anticipa.
+      </p>
+<div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-blue-400 mb-4 flex items-center"><span class="mr-2">📈</span> Los KPI esenciales</h3>
+<ul class="space-y-3 text-neutral-300">
+<li><strong class="text-blue-400">System Throughput</strong> — unidades procesadas por hora. Mide el flujo real de la flota.</li>
+<li><strong class="text-blue-400">Exception Rate</strong> — % de tareas que requieren intervención humana. Cuanto menor sea, más autónoma será la operación.</li>
+<li><strong class="text-blue-400">MTTR (Mean Time to Resolve)</strong> — tiempo promedio para resolver una excepción o falla. Mide la agilidad del equipo.</li>
+<li><strong class="text-blue-400">OEE robótico</strong> — eficiencia general del equipo aplicada a la flota (disponibilidad x rendimiento x calidad).</li>
+</ul>
+</div>
+<!-- Mock de dashboard (ilustrativo) -->
+<div class="bg-dark-800 rounded-xl border border-dark-600 overflow-hidden mb-6">
+<div class="flex items-center space-x-2 px-4 py-2 bg-dark-700/60 border-b border-dark-600">
+<span class="w-3 h-3 rounded-full bg-red-400"></span>
+<span class="w-3 h-3 rounded-full bg-yellow-400"></span>
+<span class="w-3 h-3 rounded-full bg-emerald-400"></span>
+<span class="text-xs text-neutral-500 ml-2">fleet-ops / dashboard (recreación ilustrativa, no es una captura de pantalla real)</span>
+</div>
+<div class="p-6 font-mono text-sm space-y-3">
+<div class="flex items-center justify-between"><span class="text-neutral-400">System Throughput</span><span class="text-blue-400">1.842 un/h</span></div>
+<div class="h-2 bg-dark-700 rounded"><div class="h-2 bg-blue-500/60 rounded" style="width:84%"></div></div>
+<div class="flex items-center justify-between"><span class="text-neutral-400">Exception Rate</span><span class="text-blue-400">3,1 %</span></div>
+<div class="h-2 bg-dark-700 rounded"><div class="h-2 bg-blue-500/60 rounded" style="width:31%"></div></div>
+<div class="flex items-center justify-between"><span class="text-neutral-400">MTTR</span><span class="text-blue-400">4,7 min</span></div>
+<div class="h-2 bg-dark-700 rounded"><div class="h-2 bg-blue-500/60 rounded" style="width:47%"></div></div>
+</div>
+</div>
+<div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-primary mb-3 flex items-center"><span class="mr-2">💡</span> Consejo práctico</h3>
+<p class="text-neutral-300">Exception Rate es el KPI que más revela la madurez de la operación. Un throughput alto con una Exception Rate alta es una ilusión: la flota avanza rápido, pero la persona siempre está apagando incendios. El objetivo es un throughput alto, pocas excepciones y un MTTR corto.</p>
+</div>
+<!-- Conceitos-chave -->
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-blue-400 font-bold text-sm mb-1">System Throughput</div><p class="text-xs text-neutral-400">Unidades por hora de la flota.</p></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-blue-400 font-bold text-sm mb-1">Exception Rate</div><p class="text-xs text-neutral-400">% de tareas con intervención humana.</p></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-blue-400 font-bold text-sm mb-1">MTTR</div><p class="text-xs text-neutral-400">Tiempo promedio para resolver.</p></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-blue-400 font-bold text-sm mb-1">OEE robótico</div><p class="text-xs text-neutral-400">Eficiencia general aplicada a la flota.</p></div>
+</div>
+</section>
+<!-- TOPICO 6 -->
+<section class="mb-16" id="topico-6">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">6</span>
+<h2 class="text-2xl font-bold">🦿 Agility Robotics Digit en GXO</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed">
+<strong class="text-blue-400">Digit</strong>, el robot humanoide de Agility Robotics, opera en almacenes de <strong class="text-blue-400">GXO Logistics desde 2024</strong>. Bípedo, manipula cajas y navega en entornos diseñados para humanos. Los humanoides en almacenes son la próxima frontera, y vuelven a cambiar las competencias que se exigen a los trabajadores.
+      </p>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+<div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6">
+<h4 class="font-bold text-blue-400 mb-4">🦿 Humanoide (Digit)</h4>
+<ul class="space-y-3 text-neutral-300">
+<li class="flex items-start space-x-2"><span class="text-blue-400">•</span><span>Bípedo, navega a escala humana (human-scale).</span></li>
+<li class="flex items-start space-x-2"><span class="text-blue-400">•</span><span>Funciona con la infraestructura existente, sin modificar el almacén.</span></li>
+<li class="flex items-start space-x-2"><span class="text-blue-400">•</span><span>Manipula cajas como lo haría una persona.</span></li>
+</ul>
+</div>
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-6">
+<h4 class="font-bold text-neutral-300 mb-4">🤖 AMR tradicional</h4>
+<ul class="space-y-3 text-neutral-300">
+<li class="flex items-start space-x-2"><span class="text-neutral-500">•</span><span>Sobre ruedas, en pisos y rutas dedicados.</span></li>
+<li class="flex items-start space-x-2"><span class="text-neutral-500">•</span><span>Suele requerir un almacén diseñado para robots.</span></li>
+<li class="flex items-start space-x-2"><span class="text-neutral-500">•</span><span>Tarea especializada y repetitiva.</span></li>
+</ul>
+</div>
+</div>
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-red-400 mb-3 flex items-center"><span class="mr-2">⚠️</span> Implicación para la fuerza laboral</h3>
+<p class="text-neutral-300">Como Digit opera en la misma infraestructura que las personas, la frontera entre humanos y robots está más cerca que con los AMR. Esto exige nuevas competencias de seguridad y colaboración, y anticipa un escenario donde la recapacitación deja de ser opcional.</p>
+</div>
+<div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-primary mb-3 flex items-center"><span class="mr-2">💡</span> Consejo práctico</h3>
+<p class="text-neutral-300">Sigue el despliegue de Digit en GXO como termómetro. Un humanoide en producción real (y no en una demo) es la señal de que la próxima ola llegó al piso del almacén — y quienes ya dominan la supervisión de flotas llevan ventaja.</p>
+</div>
+<!-- Conceitos-chave -->
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-blue-400 font-bold text-sm mb-1">Digit (bípedo)</div><p class="text-xs text-neutral-400">Humanoide de Agility Robotics.</p></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-blue-400 font-bold text-sm mb-1">implementación de GXO</div><p class="text-xs text-neutral-400">En almacenes reales desde 2024.</p></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-blue-400 font-bold text-sm mb-1">Navegación a escala humana</div><p class="text-xs text-neutral-400">Infraestructura existente, sin modificar.</p></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-blue-400 font-bold text-sm mb-1">Humanoide vs. AMR</div><p class="text-xs text-neutral-400">Implicaciones para la fuerza laboral.</p></div>
+</div>
+</section>
+<!-- RESUMO -->
+<section class="mb-12">
+<div class="bg-gradient-to-br from-blue-900/40 via-dark-800 to-dark-800 rounded-xl border border-blue-500/30 p-8">
+<h2 class="text-2xl font-bold mb-6 flex items-center"><span class="mr-3">✅</span> Resumen del módulo</h2>
+<div class="space-y-4 mb-8">
+<div class="flex items-start space-x-3"><span class="text-blue-400 mt-1">✓</span><div><strong class="text-white">Amazon define el estándar</strong><span class="text-neutral-400"> - Más de 1M de robots coordinados por DeepFleet AI; el mercado sigue en 3-5 años.</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-blue-400 mt-1">✓</span><div><strong class="text-white">El puesto cambia, no desaparece</strong><span class="text-neutral-400"> - de pick-pack manual a la supervisión de flotas y la gestión de excepciones.</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-blue-400 mt-1">✓</span><div><strong class="text-white">USD 1.2 mil millones en recapacitación</strong><span class="text-neutral-400"> - Associate2Tech (90d) y Technical Academy (9mo) como referencia.</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-blue-400 mt-1">✓</span><div><strong class="text-white">Los nuevos cargos pagan más</strong><span class="text-neutral-400"> - Fleet Coordinator, AMR Maintenance Tech, Exception Handler: 30-60% por encima.</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-blue-400 mt-1">✓</span><div><strong class="text-white">Gestiona según los KPI</strong><span class="text-neutral-400"> - Throughput, Exception Rate y MTTR indican si la automatización funciona.</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-blue-400 mt-1">✓</span><div><strong class="text-white">Llegaron los humanoides</strong><span class="text-neutral-400"> - Digit en GXO desde 2024 anticipa la próxima frontera del almacén.</span></div></div>
+</div>
+<div class="bg-dark-800/50 rounded-lg p-4 mb-8">
+<h3 class="font-semibold text-blue-400 mb-2">Próximo módulo:</h3>
+<p class="text-neutral-300">2.6 - Agro: robótica en el campo y el trabajador rural recapacitado</p>
+</div>
+<div class="flex flex-col sm:flex-row gap-4">
+<a class="flex-1 text-center px-6 py-3 bg-dark-700 text-neutral-300 rounded-lg font-semibold hover:bg-dark-600 transition-colors" href="index.html">← Volver a la ruta</a>
+<a class="flex-1 text-center px-6 py-3 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-500 transition-colors" href="modulo-2-6.html">Próximo módulo →</a>
+</div>
+</div>
+</section>
+</main>
+<!-- FOOTER -->
+<footer class="border-t border-dark-600 py-8 mt-16">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-neutral-500 text-sm">
+<p>segROBOT — INEMA.CLUB — 2026</p>
+</div>
+</footer>
+<!-- SCRIPTS -->
+<script>
+    const themeToggle = document.getElementById('theme-toggle');
+    const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
+    const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
+    const html = document.documentElement;
+
+    if (localStorage.getItem('theme') === 'light' || (!localStorage.getItem('theme') && !html.classList.contains('dark'))) {
+      themeToggleDarkIcon.classList.remove('hidden');
+      html.classList.remove('dark');
+    } else {
+      themeToggleLightIcon.classList.remove('hidden');
+    }
+
+    themeToggle.addEventListener('click', () => {
+      themeToggleDarkIcon.classList.toggle('hidden');
+      themeToggleLightIcon.classList.toggle('hidden');
+      html.classList.toggle('dark');
+      localStorage.setItem('theme', html.classList.contains('dark') ? 'dark' : 'light');
+    });
+  </script>
+</body>
+</html>

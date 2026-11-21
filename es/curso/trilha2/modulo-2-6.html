@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="es">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Módulo 2.6 - Agro, seguridad y otros sectores | segROBOT</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            primary: '#FACC15',
+            dark: { 900: '#111827', 800: '#1f2937', 700: '#374151', 600: '#4b5563' }
+          }
+        }
+      }
+    }
+  </script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<style>
+    body { font-family: 'Inter', sans-serif; }
+    .dark body { background-color: #111827; }
+    .topic-explanation { display: none; }
+    .topic-explanation.active { display: block; }
+
+    @keyframes wf-pulse { 0%,100% { opacity:.55 } 50% { opacity:1 } }
+    @media (prefers-reduced-motion: no-preference) {
+      .wf-a { animation: wf-pulse 2.6s ease-in-out infinite; }
+      .wf-a:nth-child(2){animation-delay:.25s} .wf-a:nth-child(3){animation-delay:.5s}
+      .wf-a:nth-child(4){animation-delay:.75s} .wf-a:nth-child(5){animation-delay:1s}
+    }
+
+    /* Light mode overrides - OBRIGATORIO */
+    html:not(.dark) body { background-color: #f8fafc; }
+    html:not(.dark) .bg-dark-900 { background-color: #ffffff; }
+    html:not(.dark) .bg-dark-800 { background-color: #f9fafb; }
+    html:not(.dark) .bg-dark-700 { background-color: #f3f4f6; }
+    html:not(.dark) .bg-dark-600 { background-color: #e5e7eb; }
+    html:not(.dark) .text-neutral-100 { color: #111827; }
+    html:not(.dark) .text-neutral-300 { color: #4b5563; }
+    html:not(.dark) .text-neutral-400 { color: #6b7280; }
+    html:not(.dark) .text-neutral-500 { color: #9ca3af; }
+    html:not(.dark) .border-dark-600 { border-color: #d1d5db; }
+    html:not(.dark) .border-dark-700 { border-color: #e5e7eb; }
+
+    /* Light mode - cores de acento (trilha blue) */
+    html:not(.dark) .text-blue-400 { color: #2563eb; }
+    html:not(.dark) .bg-blue-500\/20 { background-color: rgba(37, 99, 235, 0.12); }
+    html:not(.dark) .bg-blue-500\/10 { background-color: rgba(37, 99, 235, 0.08); }
+    html:not(.dark) .border-blue-500\/30 { border-color: rgba(37, 99, 235, 0.25); }
+    html:not(.dark) .hover\:bg-blue-500\/30:hover { background-color: rgba(37, 99, 235, 0.18); }
+    html:not(.dark) .hover\:bg-blue-500\/10:hover { background-color: rgba(37, 99, 235, 0.08); }
+    html:not(.dark) .hover\:text-blue-400:hover { color: #2563eb; }
+    html:not(.dark) .hover\:border-blue-500\/30:hover { border-color: rgba(37, 99, 235, 0.25); }
+    html:not(.dark) .group:hover .group-hover\:text-blue-400 { color: #2563eb; }
+
+    /* Light mode - outras trilhas no nav */
+    html:not(.dark) .hover\:text-emerald-400:hover { color: #059669; }
+    html:not(.dark) .hover\:bg-emerald-500\/10:hover { background-color: rgba(5, 150, 105, 0.08); }
+    html:not(.dark) .hover\:text-purple-400:hover { color: #7c3aed; }
+    html:not(.dark) .hover\:bg-purple-500\/10:hover { background-color: rgba(124, 58, 237, 0.08); }
+
+    /* Light mode - remove gradientes (fundo uniforme) */
+    html:not(.dark) [class*="bg-gradient-to"] { background-image: none !important; }
+
+    /* Light mode - cores especiais */
+    html:not(.dark) .text-primary { color: #a16207; }
+    html:not(.dark) .bg-primary\/10 { background-color: rgba(161, 98, 7, 0.08); }
+    html:not(.dark) .border-primary\/40 { border-color: rgba(161, 98, 7, 0.25); }
+    html:not(.dark) .text-sky-400 { color: #0369a1; }
+    html:not(.dark) .text-yellow-400 { color: #a16207; }
+    html:not(.dark) .hover\:text-sky-300:hover { color: #0284c7; }
+    html:not(.dark) .hover\:text-yellow-300:hover { color: #854d0e; }
+
+    /* Light mode - nav */
+    html:not(.dark) .bg-dark-900\/95 { background-color: rgba(255, 255, 255, 0.95); }
+
+    /* Dark mode - bordas e linhas divisorias mais suaves */
+    .dark .border-dark-600 { border-color: #374151; }
+    .dark .divide-dark-600 > :not([hidden]) ~ :not([hidden]) { border-color: #374151; }
+  </style>
+<link href="https://inematds.github.io/segrobot/curso/trilha2/modulo-2-6.html" hreflang="pt-BR" rel="alternate"/><link href="https://inematds.github.io/segrobot/en/curso/trilha2/modulo-2-6.html" hreflang="en" rel="alternate"/><link href="https://inematds.github.io/segrobot/es/curso/trilha2/modulo-2-6.html" hreflang="es" rel="alternate"/></head>
+<body class="bg-dark-900 text-neutral-100 min-h-screen"><div class="inema-lang" style="position:fixed;right:14px;bottom:14px;z-index:9999;display:flex;gap:2px;padding:4px;border-radius:10px;background:rgba(12,12,16,.82);border:1px solid rgba(226,162,59,.45);font:600 12px/1 Sora,Inter,system-ui,sans-serif;backdrop-filter:blur(8px)" translate="no"><a href="../../../curso/trilha2/modulo-2-6.html" hreflang="pt-BR" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">PT</a><a href="../../../en/curso/trilha2/modulo-2-6.html" hreflang="en" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">EN</a><a href="modulo-2-6.html" hreflang="es" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#1a1206;background:#E2A23B">ES</a></div>
+<!-- NAVIGATION -->
+<nav class="sticky top-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-600">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="flex justify-between items-center h-14">
+<div class="flex items-center space-x-4">
+<a class="flex items-center space-x-2 text-yellow-400 hover:text-yellow-300" href="../../index.html">
+<span class="text-2xl">🤖</span>
+<span class="font-bold text-lg hidden sm:inline">segROBOT</span>
+</a>
+<span class="text-neutral-600">|</span>
+<a class="text-sky-400 hover:text-sky-300 text-sm font-medium" href="https://inema.club" target="_blank">INEMA.CLUB</a>
+</div>
+<div class="flex items-center space-x-1 sm:space-x-2">
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-emerald-400 hover:bg-emerald-500/10 transition-colors" href="../trilha1/index.html">
+<span class="sm:hidden">T1</span>
+<span class="hidden sm:inline">Fundamentos</span>
+</a>
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-blue-400 bg-blue-500/10" href="index.html">
+<span class="sm:hidden">T2</span>
+<span class="hidden sm:inline">Acción</span>
+</a>
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-purple-400 hover:bg-purple-500/10 transition-colors" href="../trilha3/index.html">
+<span class="sm:hidden">T3</span>
+<span class="hidden sm:inline">Estratégico</span>
+</a>
+<button class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors ml-2" id="theme-toggle">
+<svg class="hidden w-5 h-5 text-neutral-300" fill="currentColor" id="theme-toggle-dark-icon" viewbox="0 0 20 20">
+<path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+</svg>
+<svg class="hidden w-5 h-5 text-neutral-300" fill="currentColor" id="theme-toggle-light-icon" viewbox="0 0 20 20">
+<path clip-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd"></path>
+</svg>
+</button>
+</div>
+</div>
+</div>
+</nav>
+<!-- BREADCRUMB -->
+<nav class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+<div class="flex items-center space-x-2 text-sm text-neutral-400">
+<a class="hover:text-blue-400" href="../../index.html">Inicio</a>
+<span>/</span>
+<a class="hover:text-blue-400" href="index.html">Ruta 2</a>
+<span>/</span>
+<span class="text-blue-400">Módulo 2.6</span>
+</div>
+</nav>
+<!-- HEADER -->
+<header class="bg-gradient-to-br from-blue-900/30 via-dark-800 to-dark-800 py-12 border-b border-dark-600">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+<span class="inline-block px-3 py-1 bg-blue-500/20 text-blue-400 text-xs font-semibold rounded-full mb-4">MÓDULO 2.6</span>
+<h1 class="text-3xl sm:text-4xl font-bold mb-4">🌾 Agro, seguridad y otros verticales</h1>
+<p class="text-lg text-neutral-400 max-w-3xl">
+        Los sectores verticales que completan la Ruta de Acción: desde el campo (agro de USD 14.7bi para 48bi con John Deere autónomo de 2.ª generación) hasta el perímetro (Knightscope K5, Spot, Figure 02 en BMW), pasando por la LGPD y los protocolos de coordinación humano-robot en crisis que se aplican a todos ellos.
+      </p>
+<div class="grid grid-cols-4 gap-4 mt-8 max-w-2xl">
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+<div class="text-xl font-bold text-blue-400">6</div>
+<div class="text-xs text-neutral-400">Temas</div>
+</div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+<div class="text-xl font-bold text-blue-400">45</div>
+<div class="text-xs text-neutral-400">Minutos</div>
+</div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+<div class="text-xl font-bold text-blue-400">Intermedio</div>
+<div class="text-xs text-neutral-400">Nivel</div>
+</div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+<div class="text-xl font-bold text-blue-400">Práctica</div>
+<div class="text-xs text-neutral-400">Tipo</div>
+</div>
+</div>
+</div>
+</header>
+<!-- CONTEUDO -->
+<main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+<!-- SVG FUTURISTA: mapa dos verticais -->
+<div class="rounded-2xl border border-blue-500/30 bg-dark-900/40 p-3 sm:p-4 mb-12 overflow-hidden">
+<svg aria-label="Una plataforma de operación distribuye robots en tres sectores —agro, seguridad y manufactura— que convergen en un único protocolo de coordinación entre humanos y robots" class="w-full h-auto" role="img" viewbox="0 0 1000 260">
+<defs>
+<lineargradient id="m26-grad" x1="0" x2="1" y1="0" y2="1">
+<stop offset="0" stop-color="#60a5fa"></stop><stop offset="1" stop-color="#3b82f6"></stop>
+</lineargradient>
+<filter height="180%" id="m26-glow" width="180%" x="-40%" y="-40%">
+<fegaussianblur result="b" stddeviation="3"></fegaussianblur><femerge><femergenode in="b"></femergenode><femergenode in="SourceGraphic"></femergenode></femerge>
+</filter>
+<pattern height="32" id="m26-grid" patternunits="userSpaceOnUse" width="32">
+<circle cx="1.3" cy="1.3" fill="#3b82f6" opacity="0.12" r="1.3"></circle>
+</pattern>
+<marker id="m26-ah" markerheight="9" markerwidth="9" orient="auto" refx="6.5" refy="4.5"><path d="M0,0 L8,4.5 L0,9 L2.4,4.5 Z" fill="#60a5fa"></path></marker>
+<marker id="m26-ahc" markerheight="9" markerwidth="9" orient="auto" refx="6.5" refy="4.5"><path d="M0,0 L8,4.5 L0,9 L2.4,4.5 Z" fill="#38bdf8"></path></marker>
+</defs>
+<rect fill="url(#m26-grid)" height="260" width="1000" x="0" y="0"></rect>
+<!-- origem -> verticais -->
+<g fill="none" opacity="0.65" stroke="#60a5fa" stroke-width="2">
+<path d="M206,130 C310,130 330,52 452,52" marker-end="url(#m26-ah)"></path>
+<path d="M206,130 L452,130" marker-end="url(#m26-ah)"></path>
+<path d="M206,130 C310,130 330,208 452,208" marker-end="url(#m26-ah)"></path>
+</g>
+<!-- verticais -> protocolo (ciano = coordenacao) -->
+<g fill="none" opacity="0.55" stroke="#38bdf8" stroke-width="2">
+<path d="M604,52  C720,52 740,130 812,130" marker-end="url(#m26-ahc)"></path>
+<path d="M604,130 L812,130" marker-end="url(#m26-ahc)"></path>
+<path d="M604,208 C720,208 740,130 812,130" marker-end="url(#m26-ahc)"></path>
+</g>
+<!-- origem -->
+<g filter="url(#m26-glow)"><rect fill="#0e1622" height="68" rx="14" stroke="url(#m26-grad)" stroke-width="2.5" width="162" x="44" y="96"></rect></g>
+<text fill="#60a5fa" font-family="Inter,sans-serif" font-size="18" font-weight="700" text-anchor="middle" x="125" y="124">Operación</text>
+<text fill="#bcd6fb" font-family="Inter,sans-serif" font-size="12.5" text-anchor="middle" x="125" y="146">multi-vertical</text>
+<!-- verticais -->
+<g font-family="Inter,sans-serif" font-size="14" font-weight="600">
+<g class="wf-a"><rect fill="#0e1b26" height="40" rx="10" stroke="#38bdf8" stroke-width="2" width="152" x="452" y="32"></rect><text fill="#bfe6ff" text-anchor="middle" x="528" y="57">🚜 Agro</text></g>
+<g class="wf-a"><rect fill="#0e1b26" height="40" rx="10" stroke="#38bdf8" stroke-width="2" width="152" x="452" y="110"></rect><text fill="#bfe6ff" text-anchor="middle" x="528" y="135">🛡️ Seguridad</text></g>
+<g class="wf-a"><rect fill="#0e1b26" height="40" rx="10" stroke="#38bdf8" stroke-width="2" width="152" x="452" y="188"></rect><text fill="#bfe6ff" text-anchor="middle" x="528" y="213">🏭 Manufactura</text></g>
+</g>
+<!-- protocolo -->
+<g filter="url(#m26-glow)"><rect fill="#0e1622" height="76" rx="14" stroke="url(#m26-grad)" stroke-width="2.5" width="156" x="812" y="92"></rect></g>
+<text fill="#60a5fa" font-family="Inter,sans-serif" font-size="15" font-weight="700" text-anchor="middle" x="890" y="124">Protocolo</text>
+<text fill="#bcd6fb" font-family="Inter,sans-serif" font-size="11.5" text-anchor="middle" x="890" y="144">humano-robot</text>
+<text fill="#bcd6fb" font-family="Inter,sans-serif" font-size="11.5" text-anchor="middle" x="890" y="158">en crisis</text>
+</svg>
+<p class="text-xs text-neutral-500 mt-2 text-center">Diagrama ilustrativo: cada vertical envía robots al campo, pero todos convergen en el mismo protocolo de coordinación en una crisis.</p>
+</div>
+<!-- TOPICO 1 -->
+<section class="mb-16" id="topico-1">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">1</span>
+<h2 class="text-2xl font-bold">🚜 Agro: de USD 14.7bi a 48bi</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed">
+        El mercado de la robótica agrícola crece de <strong class="text-blue-400">USD 14.7 mil millones a 48 mil millones</strong>. A <strong class="text-blue-400">John Deere</strong> lidera con tractores autónomos de segunda generación, drones de pulverización y sensorización mediante IA. El sector agrícola no adopta la robótica por moda: es el sector con la mayor brecha de mano de obra del planeta.
+      </p>
+<div class="bg-gradient-to-br from-blue-900/30 to-dark-800 rounded-xl border border-blue-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-blue-400 mb-4 flex items-center">
+<span class="mr-2">🌱</span> El salto de la agricultura de precisión
+        </h3>
+<p class="text-neutral-300 mb-4">La John Deere de 2.ª generación combina tres capas: máquinas autónomas, drones y sensores, orquestados por IA para decidir dónde plantar, regar y fumigar con precisión centimétrica.</p>
+<ul class="space-y-2 text-neutral-300">
+<li class="flex items-start space-x-2"><span class="text-blue-400 mt-1">•</span><span><strong>John Deere autónomo:</strong> tractores que aran y siembran sin operador en la cabina.</span></li>
+<li class="flex items-start space-x-2"><span class="text-blue-400 mt-1">•</span><span><strong>Drones + sensores:</strong> mapeo de plagas, deficiencia hídrica y estrés de los cultivos.</span></li>
+<li class="flex items-start space-x-2"><span class="text-blue-400 mt-1">•</span><span><strong>Ecosistema de startups:</strong> Blue River y Bear Flag aceleran el avance del sector.</span></li>
+</ul>
+</div>
+<div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-blue-400 mb-4 flex items-center">
+<span class="mr-2">📊</span> Datos del mercado agropecuario
+        </h3>
+<ul class="space-y-2 text-neutral-300">
+<li><strong>USD 14.7 mil millones → 48 mil millones</strong> - crecimiento proyectado del mercado de robótica agrícola.</li>
+<li><strong>58 años</strong> - edad promedio del productor rural en EE. UU., que muestra la brecha de mano de obra.</li>
+<li><strong>2.ª generación</strong> - etapa actual de los vehículos autónomos de John Deere, ya en uso comercial.</li>
+</ul>
+</div>
+<div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
+<span class="mr-2">💡</span> Consejo práctico
+        </h3>
+<p class="text-neutral-300">En el agro, la robótica es una cuestión de supervivencia de la producción alimentaria, no un lujo. Quienes operan máquinas hoy deben aprender a supervisar flotas autónomas: el cargo cambia de "conducir el tractor" a "gestionar la operación con datos".</p>
+</div>
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-6">
+<h4 class="font-semibold text-white mb-4">Conceptos clave</h4>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+<div class="bg-dark-700/50 rounded-lg p-4"><div class="text-blue-400 font-bold mb-1">John Deere</div><div class="text-xs text-neutral-400">Autónomos de 2.ª gen.</div></div>
+<div class="bg-dark-700/50 rounded-lg p-4"><div class="text-blue-400 font-bold mb-1">Precision ag</div><div class="text-xs text-neutral-400">Drones + sensores</div></div>
+<div class="bg-dark-700/50 rounded-lg p-4"><div class="text-blue-400 font-bold mb-1">Brecha generacional</div><div class="text-xs text-neutral-400">Edad promedio: 58</div></div>
+<div class="bg-dark-700/50 rounded-lg p-4"><div class="text-blue-400 font-bold mb-1">Startups</div><div class="text-xs text-neutral-400">Blue River, Bear Flag</div></div>
+</div>
+</div>
+</section>
+<!-- TOPICO 2 -->
+<section class="mb-16" id="topico-2">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">2</span>
+<h2 class="text-2xl font-bold">🛡️ Seguridad Patrimonial: K5 y Spot</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed">
+        Dos robots, dos paradigmas. El <strong class="text-blue-400">Knightscope K5</strong> hace patrullaje autónomo en centros comerciales y campus. El <strong class="text-blue-400">Boston Dynamics Spot</strong> y es un cuadrúpedo versátil para la inspección industrial y la seguridad perimetral. Conocer la diferencia permite saber dónde aporta valor cada uno y dónde falla.
+      </p>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+<div class="bg-emerald-900/20 rounded-xl border border-emerald-500/30 p-6">
+<h4 class="font-bold text-emerald-400 mb-4">✓ Dónde aporta valor la seguridad robótica</h4>
+<ul class="space-y-3 text-neutral-300">
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Patrulla 24/7 de áreas amplias y repetitivas (K5)</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Inspección en entornos peligrosos o de difícil acceso (Spot)</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Sensores LiDAR, cámaras y térmicos que alimentan la central</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Reducción de la exposición humana al riesgo físico</span></li>
+</ul>
+</div>
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+<h4 class="font-bold text-red-400 mb-4">✗ Dónde FALLA la seguridad robótica</h4>
+<ul class="space-y-3 text-neutral-300">
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Reemplazar por completo el juicio humano en una situación ambigua</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Operar sin integración con la central de seguridad</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Terreno irregular o escaleras estrechas (limita el K5)</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Implementación sin un protocolo operativo definido</span></li>
+</ul>
+</div>
+</div>
+<div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-blue-400 mb-4 flex items-center">
+<span class="mr-2">🔍</span> K5 vs. Spot
+        </h3>
+<ul class="space-y-2 text-neutral-300">
+<li><strong>K5:</strong> patrulla autónoma fija, con forma de "cono", ideal para centros comerciales y campus.</li>
+<li><strong>Spot:</strong> cuadrúpedo versátil, sube escaleras y terrenos irregulares; inspección industrial.</li>
+<li><strong>Común a ambos:</strong> sensores (LiDAR, cámaras, térmica) e integración con central.</li>
+</ul>
+</div>
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-6">
+<h4 class="font-semibold text-white mb-4">Conceptos clave</h4>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+<div class="bg-dark-700/50 rounded-lg p-4"><div class="text-blue-400 font-bold mb-1">K5</div><div class="text-xs text-neutral-400">Patrulla autónoma</div></div>
+<div class="bg-dark-700/50 rounded-lg p-4"><div class="text-blue-400 font-bold mb-1">Spot</div><div class="text-xs text-neutral-400">Cuadrúpedo versátil</div></div>
+<div class="bg-dark-700/50 rounded-lg p-4"><div class="text-blue-400 font-bold mb-1">Sensores</div><div class="text-xs text-neutral-400">LiDAR, cámaras, térmica</div></div>
+<div class="bg-dark-700/50 rounded-lg p-4"><div class="text-blue-400 font-bold mb-1">Central</div><div class="text-xs text-neutral-400">Integración operativa</div></div>
+</div>
+</div>
+</section>
+<!-- TOPICO 3 -->
+<section class="mb-16" id="topico-3">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">3</span>
+<h2 class="text-2xl font-bold">⚠️ NYPD K5 y Spot en Massachusetts</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed">
+        Dos casos reales y opuestos. El <strong class="text-blue-400">NYPD retiró el K5</strong> por una falla en el procedimiento operativo, no del robot. El <strong class="text-blue-400">Le dispararon a Spot</strong> durante una operación policial en Massachusetts (2024) y siguió funcionando. La lección es clara: el problema rara vez está en el hardware.
+      </p>
+<div class="space-y-6 mb-6">
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-12 h-12 rounded-full bg-blue-500/20 flex items-center justify-center">
+<span class="text-blue-400 font-bold">1</span>
+</div>
+<div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+<h4 class="font-semibold text-white mb-2">NYPD retira el K5</h4>
+<p class="text-sm text-neutral-400 mb-3">Falla de proceso, no de producto</p>
+<p class="text-neutral-300 text-sm">El robot fue retirado de operación por una falla en el protocolo operativo y fricción en la aceptación pública — no por un defecto técnico. La tecnología sin un proceso definido falla incluso cuando el hardware funciona.</p>
+</div>
+</div>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-12 h-12 rounded-full bg-blue-500/20 flex items-center justify-center">
+<span class="text-blue-400 font-bold">2</span>
+</div>
+<div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+<h4 class="font-semibold text-white mb-2">Le disparan a Spot en Massachusetts (2024)</h4>
+<p class="text-sm text-neutral-400 mb-3">Resiliencia física</p>
+<p class="text-neutral-300 text-sm">Durante una operación policial, le dispararon al Spot y siguió funcionando. El caso demuestra resiliencia mecánica y el valor de poner a la máquina en la línea de riesgo en lugar de a una persona.</p>
+</div>
+</div>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-12 h-12 rounded-full bg-blue-500/20 flex items-center justify-center">
+<span class="text-blue-400 font-bold">3</span>
+</div>
+<div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+<h4 class="font-semibold text-white mb-2">La lección transversal entre sectores</h4>
+<p class="text-sm text-neutral-400 mb-3">Proceso &gt; producto</p>
+<p class="text-neutral-300 text-sm">Una falla de proceso interrumpe un deploy; la resiliencia del hardware permite sostener otro. El ROI de la seguridad robótica depende del protocolo operativo, no solo de las especificaciones.</p>
+</div>
+</div>
+</div>
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-red-400 mb-3 flex items-center">
+<span class="mr-2">🚫</span> Atención
+        </h3>
+<p class="text-neutral-300">La mayoría de los incidentes de seguridad robótica se atribuyen al robot en la prensa, pero la causa raíz suele ser una falla de proceso: falta de protocolo, capacitación insuficiente o falta de aceptación pública. Diagnosticarlo mal lleva a cambiar el robot cuando lo que falta es el procedimiento.</p>
+</div>
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-6">
+<h4 class="font-semibold text-white mb-4">Conceptos clave</h4>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+<div class="bg-dark-700/50 rounded-lg p-4"><div class="text-blue-400 font-bold mb-1">Proceso vs. producto</div><div class="text-xs text-neutral-400">Causa raíz real</div></div>
+<div class="bg-dark-700/50 rounded-lg p-4"><div class="text-blue-400 font-bold mb-1">Protocolo</div><div class="text-xs text-neutral-400">Operacional definido</div></div>
+<div class="bg-dark-700/50 rounded-lg p-4"><div class="text-blue-400 font-bold mb-1">Resiliencia</div><div class="text-xs text-neutral-400">Hardware físico</div></div>
+<div class="bg-dark-700/50 rounded-lg p-4"><div class="text-blue-400 font-bold mb-1">Aceptación</div><div class="text-xs text-neutral-400">Pública y ROI</div></div>
+</div>
+</div>
+</section>
+<!-- TOPICO 4 -->
+<section class="mb-16" id="topico-4">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">4</span>
+<h2 class="text-2xl font-bold">🏭 Figure 02 en BMW</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed">
+        O <strong class="text-blue-400">Figure 02</strong>, el humanoide de segunda generación de Figure AI, está en operación piloto en la fábrica de <strong class="text-blue-400">BMW</strong>. Realiza tareas de ensamblaje que requieren destreza manual en espacios diseñados para humanos. BMW es la primera automotriz en integrar humanoides en la producción — y el modelo se replicará.
+      </p>
+<div class="bg-gradient-to-br from-blue-900/30 to-dark-800 rounded-xl border border-blue-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-blue-400 mb-4 flex items-center">
+<span class="mr-2">🤝</span> Por qué importa el humanoide en la manufactura
+        </h3>
+<p class="text-neutral-300 mb-4">El humanoide no exige rediseñar la fábrica: opera en el mismo espacio y en las mismas estaciones hechas para humanos. Esto cambia la economía de la automatización: en vez de líneas dedicadas, incorporas robots donde ya hay personas.</p>
+<ul class="space-y-2 text-neutral-300">
+<li class="flex items-start space-x-2"><span class="text-blue-400 mt-1">•</span><span><strong>Manipulación bimanual:</strong> tareas que requieren coordinar ambas manos.</span></li>
+<li class="flex items-start space-x-2"><span class="text-blue-400 mt-1">•</span><span><strong>Compartir espacio de trabajo:</strong> compartir la estación con trabajadores humanos.</span></li>
+<li class="flex items-start space-x-2"><span class="text-blue-400 mt-1">•</span><span><strong>Capacitación mediante demostración:</strong> aprender la tarea observando, no programando.</span></li>
+</ul>
+</div>
+<div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
+<span class="mr-2">💡</span> Consejo práctico
+        </h3>
+<p class="text-neutral-300">Los trabajadores de montaje no serán «reemplazados de golpe»: convivirán con humanoides en la misma estación. La diferencia profesional pasa a ser saber entrenar al robot mediante demostraciones y supervisar el espacio de trabajo compartido.</p>
+</div>
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-6">
+<h4 class="font-semibold text-white mb-4">Conceptos clave</h4>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+<div class="bg-dark-700/50 rounded-lg p-4"><div class="text-blue-400 font-bold mb-1">Figure 02</div><div class="text-xs text-neutral-400">Humanoide de 2.ª generación</div></div>
+<div class="bg-dark-700/50 rounded-lg p-4"><div class="text-blue-400 font-bold mb-1">Bimanual</div><div class="text-xs text-neutral-400">Dos manos coordinadas</div></div>
+<div class="bg-dark-700/50 rounded-lg p-4"><div class="text-blue-400 font-bold mb-1">Compartir espacio de trabajo</div><div class="text-xs text-neutral-400">Estación compartida</div></div>
+<div class="bg-dark-700/50 rounded-lg p-4"><div class="text-blue-400 font-bold mb-1">Demostración</div><div class="text-xs text-neutral-400">Práctica por observación</div></div>
+</div>
+</div>
+</section>
+<!-- TOPICO 5 -->
+<section class="mb-16" id="topico-5">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">5</span>
+<h2 class="text-2xl font-bold">⚖️ Protocolos legales y LGPD</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed">
+        Los robots recopilan datos: cámaras, sensores biométricos, seguimiento de trabajadores. La <strong class="text-blue-400">LGPD</strong> en Brasil y es la <strong class="text-blue-400">GDPR</strong> en Europa impactan directamente el despliegue. Un robot de seguridad con cámara facial sin consentimiento viola la LGPD, y las multas llegan al 2% de la facturación.
+      </p>
+<div class="bg-gradient-to-br from-blue-900/30 to-dark-800 rounded-xl border border-blue-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-blue-400 mb-4 flex items-center">
+<span class="mr-2">📜</span> Qué debe garantizar el operador
+        </h3>
+<p class="text-neutral-300 mb-4">Quien opera el robot necesita saber qué datos recopila y por qué. El cumplimiento normativo no es solo responsabilidad del área legal: forma parte del día a día de las operaciones.</p>
+<ul class="space-y-2 text-neutral-300">
+<li class="flex items-start space-x-2"><span class="text-blue-400 mt-1">•</span><span><strong>Base legal (LGPD Art. 7):</strong> todo tratamiento de datos necesita fundamento.</span></li>
+<li class="flex items-start space-x-2"><span class="text-blue-400 mt-1">•</span><span><strong>Minimización de datos:</strong> recopilar solo lo necesario para la finalidad.</span></li>
+<li class="flex items-start space-x-2"><span class="text-blue-400 mt-1">•</span><span><strong>Retención y anonimización:</strong> las imágenes no pueden guardarse para siempre.</span></li>
+</ul>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+<div class="bg-emerald-900/20 rounded-xl border border-emerald-500/30 p-6">
+<h4 class="font-bold text-emerald-400 mb-4">✓ Deploy conforme a la normativa</h4>
+<ul class="space-y-3 text-neutral-300">
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Base legal definida (consentimiento o interés legítimo)</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>DPO involucrado y audit trail de las recolecciones</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Política de retención y anonimización de imágenes</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Indicación clara de que el área está monitoreada</span></li>
+</ul>
+</div>
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+<h4 class="font-bold text-red-400 mb-4">✗ Deploy que se convierte en un pasivo legal</h4>
+<ul class="space-y-3 text-neutral-300">
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Cámara facial sin consentimiento ni base legal</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Recopilar más datos de los que requiere el propósito</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Conservar imágenes indefinidamente, sin una política</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Seguimiento biométrico de trabajadores sin transparencia</span></li>
+</ul>
+</div>
+</div>
+<div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
+<span class="mr-2">💡</span> Consejo práctico
+        </h3>
+<p class="text-neutral-300">Antes de encender un robot con cámara, responde tres preguntas: ¿cuál es la base legal?, ¿por cuánto tiempo se guardan los datos? y ¿quién responde por ellos (DPO)? Sin esas respuestas, el deploy implica un riesgo de multa de hasta el 2% de la facturación.</p>
+</div>
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-6">
+<h4 class="font-semibold text-white mb-4">Conceptos clave</h4>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+<div class="bg-dark-700/50 rounded-lg p-4"><div class="text-blue-400 font-bold mb-1">LGPD Art. 7</div><div class="text-xs text-neutral-400">Base legal</div></div>
+<div class="bg-dark-700/50 rounded-lg p-4"><div class="text-blue-400 font-bold mb-1">Minimización</div><div class="text-xs text-neutral-400">Recopilar solo lo necesario</div></div>
+<div class="bg-dark-700/50 rounded-lg p-4"><div class="text-blue-400 font-bold mb-1">DPO</div><div class="text-xs text-neutral-400">Responsable de datos</div></div>
+<div class="bg-dark-700/50 rounded-lg p-4"><div class="text-blue-400 font-bold mb-1">Retención</div><div class="text-xs text-neutral-400">Anonimización y auditoría</div></div>
+</div>
+</div>
+</section>
+<!-- TOPICO 6 -->
+<section class="mb-16" id="topico-6">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">6</span>
+<h2 class="text-2xl font-bold">🚨 Coordinación Humano-Robot en Crisis</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed">
+        En caso de incendio, desastre natural, intruso o falla eléctrica, los robots pueden <strong class="text-blue-400">ayudar</strong> (reconocimiento, transporte) o <strong class="text-blue-400">estorbar</strong> (obstruir salidas, continuar operando). El protocolo de emergencia define qué comportamiento prevalece — y esto se aplica a todos los sectores.
+      </p>
+<div class="bg-gradient-to-br from-blue-900/30 to-dark-800 rounded-xl border border-blue-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-blue-400 mb-4 flex items-center">
+<span class="mr-2">🧭</span> Modos de comportamiento en emergencias
+        </h3>
+<p class="text-neutral-300 mb-4">Todo robot debe tener un comportamiento de emergencia explícito. Sin él, la máquina sigue la rutina normal en un momento en que eso puede costar vidas.</p>
+<ul class="space-y-2 text-neutral-300">
+<li class="flex items-start space-x-2"><span class="text-blue-400 mt-1">•</span><span><strong>Detenerse:</strong> detenerse inmediatamente para no convertirse en un obstáculo.</span></li>
+<li class="flex items-start space-x-2"><span class="text-blue-400 mt-1">•</span><span><strong>Retiro:</strong> retroceder a una safe harbor zone fuera del camino.</span></li>
+<li class="flex items-start space-x-2"><span class="text-blue-400 mt-1">•</span><span><strong>Assist:</strong> ayudar con reconocimiento o transporte cuando sea seguro.</span></li>
+</ul>
+</div>
+<div class="space-y-6 mb-6">
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-12 h-12 rounded-full bg-blue-500/20 flex items-center justify-center">
+<span class="text-blue-400 font-bold">1</span>
+</div>
+<div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+<h4 class="font-semibold text-white mb-2">Detección y modo de emergencia</h4>
+<p class="text-sm text-neutral-400 mb-3">Activador del protocolo</p>
+<p class="text-neutral-300 text-sm">El robot identifica la crisis (alarma, sensor, comando) y cambia de la rutina al modo de emergencia definido: halt, retreat o assist.</p>
+</div>
+</div>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-12 h-12 rounded-full bg-blue-500/20 flex items-center justify-center">
+<span class="text-blue-400 font-bold">2</span>
+</div>
+<div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+<h4 class="font-semibold text-white mb-2">Comunicación entre humanos y robots bajo estrés</h4>
+<p class="text-sm text-neutral-400 mb-3">Claridad en medio del caos</p>
+<p class="text-neutral-300 text-sm">La interfaz debe ser legible en situaciones de estrés: señales simples y zonas seguras de refugio definidas para que las personas sepan dónde estará el robot.</p>
+</div>
+</div>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-12 h-12 rounded-full bg-blue-500/20 flex items-center justify-center">
+<span class="text-blue-400 font-bold">3</span>
+</div>
+<div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+<h4 class="font-semibold text-white mb-2">Recovery y lecciones aprendidas</h4>
+<p class="text-sm text-neutral-400 mb-3">Cerrar el ciclo</p>
+<p class="text-neutral-300 text-sm">Después de la crisis, la secuencia de recuperación devuelve el robot a la operación normal y el marco de lecciones aprendidas registra qué ajustar — el mismo ciclo sirve para la agricultura, la seguridad y la manufactura.</p>
+</div>
+</div>
+</div>
+<div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
+<span class="mr-2">💡</span> Consejo práctico
+        </h3>
+<p class="text-neutral-300">El protocolo de crisis es el componente más transversal de todos: cambia el escenario (campo, perímetro, fábrica), pero la lógica halt/retreat/assist + safe harbor + recovery es la misma. Aprende una vez y aplícala en cualquier vertical.</p>
+</div>
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-6">
+<h4 class="font-semibold text-white mb-4">Conceptos clave</h4>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+<div class="bg-dark-700/50 rounded-lg p-4"><div class="text-blue-400 font-bold mb-1">Modos de comportamiento</div><div class="text-xs text-neutral-400">Detenerse / retirarse / pedir asistencia</div></div>
+<div class="bg-dark-700/50 rounded-lg p-4"><div class="text-blue-400 font-bold mb-1">Puerto seguro</div><div class="text-xs text-neutral-400">Zona segura definida</div></div>
+<div class="bg-dark-700/50 rounded-lg p-4"><div class="text-blue-400 font-bold mb-1">Recovery</div><div class="text-xs text-neutral-400">Secuencia de respuesta</div></div>
+<div class="bg-dark-700/50 rounded-lg p-4"><div class="text-blue-400 font-bold mb-1">Lessons learned</div><div class="text-xs text-neutral-400">Framework de ajuste</div></div>
+</div>
+</div>
+</section>
+<!-- RESUMO -->
+<section class="mb-12">
+<div class="bg-gradient-to-br from-blue-900/40 via-dark-800 to-dark-800 rounded-xl border border-blue-500/30 p-8">
+<h2 class="text-2xl font-bold mb-6 flex items-center">
+<span class="mr-3">🏁</span> Resumen del módulo
+        </h2>
+<div class="space-y-4 mb-8">
+<div class="flex items-start space-x-3">
+<span class="text-blue-400 mt-1">✓</span>
+<div><strong class="text-white">Agro: de 14.7bi a 48bi</strong><span class="text-neutral-400"> - John Deere autónomo de 2.ª generación es la respuesta a la brecha de mano de obra (edad promedio 58).</span></div>
+</div>
+<div class="flex items-start space-x-3">
+<span class="text-blue-400 mt-1">✓</span>
+<div><strong class="text-white">K5 y Spot</strong><span class="text-neutral-400"> - dos paradigmas de seguridad: patrulla autónoma fija frente a cuadrúpedo versátil.</span></div>
+</div>
+<div class="flex items-start space-x-3">
+<span class="text-blue-400 mt-1">✓</span>
+<div><strong class="text-white">NYPD y Massachusetts</strong><span class="text-neutral-400"> - una falla de proceso arruina el deploy; la resiliencia del hardware lo sostiene. Rara vez el problema es el robot.</span></div>
+</div>
+<div class="flex items-start space-x-3">
+<span class="text-blue-400 mt-1">✓</span>
+<div><strong class="text-white">Figure 02 en BMW</strong><span class="text-neutral-400"> - humanoides en producción, workspace sharing y entrenamiento por demostración.</span></div>
+</div>
+<div class="flex items-start space-x-3">
+<span class="text-blue-400 mt-1">✓</span>
+<div><strong class="text-white">LGPD y GDPR</strong><span class="text-neutral-400"> - base legal, minimización, DPO y retención; multa de hasta el 2% de la facturación.</span></div>
+</div>
+<div class="flex items-start space-x-3">
+<span class="text-blue-400 mt-1">✓</span>
+<div><strong class="text-white">Coordinación en crisis</strong><span class="text-neutral-400"> - halt/retreat/assist, safe harbor y recovery: el protocolo cross-vertical que completa el recorrido.</span></div>
+</div>
+</div>
+<div class="bg-dark-800/50 rounded-lg p-4 mb-8">
+<h3 class="font-semibold text-blue-400 mb-2">Próximo módulo: 2.7</h3>
+<p class="text-neutral-300">VLA: Modelos Visión-Lenguaje-Acción — robots que entienden órdenes en lenguaje natural.</p>
+</div>
+<div class="flex flex-col sm:flex-row gap-4">
+<a class="flex-1 text-center px-6 py-3 bg-dark-700 text-neutral-300 rounded-lg font-semibold hover:bg-dark-600 transition-colors" href="index.html">
+            ← Volver a la ruta
+          </a>
+<a class="flex-1 text-center px-6 py-3 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-500 transition-colors" href="modulo-2-7.html">
+            Próximo módulo →
+          </a>
+</div>
+</div>
+</section>
+</main>
+<!-- FOOTER -->
+<footer class="border-t border-dark-600 py-8 mt-16">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-neutral-500 text-sm">
+<p>segROBOT — INEMA.CLUB — 2026</p>
+</div>
+</footer>
+<!-- SCRIPTS -->
+<script>
+    const themeToggle = document.getElementById('theme-toggle');
+    const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
+    const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
+    const html = document.documentElement;
+    if (localStorage.getItem('theme') === 'light' || (!localStorage.getItem('theme') && !html.classList.contains('dark'))) {
+      themeToggleDarkIcon.classList.remove('hidden'); html.classList.remove('dark');
+    } else { themeToggleLightIcon.classList.remove('hidden'); }
+    themeToggle.addEventListener('click', () => {
+      themeToggleDarkIcon.classList.toggle('hidden'); themeToggleLightIcon.classList.toggle('hidden');
+      html.classList.toggle('dark'); localStorage.setItem('theme', html.classList.contains('dark') ? 'dark' : 'light');
+    });
+  </script>
+</body>
+</html>

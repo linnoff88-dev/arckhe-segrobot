@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="pt-BR">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Modulo 2.3 - Simuladores, VR e Digital Twins | segROBOT</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            primary: '#FACC15',
+            dark: { 900: '#111827', 800: '#1f2937', 700: '#374151', 600: '#4b5563' }
+          }
+        }
+      }
+    }
+  </script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<style>
+    body { font-family: 'Inter', sans-serif; }
+    .dark body { background-color: #111827; }
+    .topic-explanation { display: none; }
+    .topic-explanation.active { display: block; }
+
+    @keyframes wf-pulse { 0%,100% { opacity:.55 } 50% { opacity:1 } }
+    @media (prefers-reduced-motion: no-preference) {
+      .wf-a { animation: wf-pulse 2.6s ease-in-out infinite; }
+      .wf-a:nth-child(2){animation-delay:.25s} .wf-a:nth-child(3){animation-delay:.5s}
+      .wf-a:nth-child(4){animation-delay:.75s} .wf-a:nth-child(5){animation-delay:1s}
+    }
+
+    /* Light mode overrides - OBRIGATORIO */
+    html:not(.dark) body { background-color: #f8fafc; }
+    html:not(.dark) .bg-dark-900 { background-color: #ffffff; }
+    html:not(.dark) .bg-dark-800 { background-color: #f9fafb; }
+    html:not(.dark) .bg-dark-700 { background-color: #f3f4f6; }
+    html:not(.dark) .bg-dark-600 { background-color: #e5e7eb; }
+    html:not(.dark) .text-neutral-100 { color: #111827; }
+    html:not(.dark) .text-neutral-300 { color: #4b5563; }
+    html:not(.dark) .text-neutral-400 { color: #6b7280; }
+    html:not(.dark) .text-neutral-500 { color: #9ca3af; }
+    html:not(.dark) .border-dark-600 { border-color: #d1d5db; }
+    html:not(.dark) .border-dark-700 { border-color: #e5e7eb; }
+
+    /* Light mode - cores de acento (trilha blue) */
+    html:not(.dark) .text-blue-400 { color: #2563eb; }
+    html:not(.dark) .bg-blue-500\/20 { background-color: rgba(37, 99, 235, 0.12); }
+    html:not(.dark) .bg-blue-500\/10 { background-color: rgba(37, 99, 235, 0.08); }
+    html:not(.dark) .border-blue-500\/30 { border-color: rgba(37, 99, 235, 0.25); }
+    html:not(.dark) .hover\:bg-blue-500\/30:hover { background-color: rgba(37, 99, 235, 0.18); }
+    html:not(.dark) .hover\:bg-blue-500\/10:hover { background-color: rgba(37, 99, 235, 0.08); }
+    html:not(.dark) .hover\:text-blue-400:hover { color: #2563eb; }
+    html:not(.dark) .hover\:border-blue-500\/30:hover { border-color: rgba(37, 99, 235, 0.25); }
+    html:not(.dark) .group:hover .group-hover\:text-blue-400 { color: #2563eb; }
+
+    /* Light mode - outras trilhas no nav */
+    html:not(.dark) .hover\:text-emerald-400:hover { color: #059669; }
+    html:not(.dark) .hover\:bg-emerald-500\/10:hover { background-color: rgba(5, 150, 105, 0.08); }
+    html:not(.dark) .hover\:text-purple-400:hover { color: #7c3aed; }
+    html:not(.dark) .hover\:bg-purple-500\/10:hover { background-color: rgba(124, 58, 237, 0.08); }
+
+    /* Light mode - remove gradientes (fundo uniforme) */
+    html:not(.dark) [class*="bg-gradient-to"] { background-image: none !important; }
+
+    /* Light mode - cores especiais */
+    html:not(.dark) .text-primary { color: #a16207; }
+    html:not(.dark) .bg-primary\/10 { background-color: rgba(161, 98, 7, 0.08); }
+    html:not(.dark) .border-primary\/40 { border-color: rgba(161, 98, 7, 0.25); }
+    html:not(.dark) .border-primary\/30 { border-color: rgba(161, 98, 7, 0.25); }
+    html:not(.dark) .text-sky-400 { color: #0369a1; }
+    html:not(.dark) .text-yellow-400 { color: #a16207; }
+    html:not(.dark) .hover\:text-sky-300:hover { color: #0284c7; }
+    html:not(.dark) .hover\:text-yellow-300:hover { color: #854d0e; }
+
+    /* Light mode - nav */
+    html:not(.dark) .bg-dark-900\/95 { background-color: rgba(255, 255, 255, 0.95); }
+
+    /* Dark mode - bordas e linhas divisorias mais suaves */
+    .dark .border-dark-600 { border-color: #374151; }
+    .dark .divide-dark-600 > :not([hidden]) ~ :not([hidden]) { border-color: #374151; }
+  </style>
+<link href="https://inematds.github.io/segrobot/curso/trilha2/modulo-2-3.html" hreflang="pt-BR" rel="alternate"/><link href="https://inematds.github.io/segrobot/en/curso/trilha2/modulo-2-3.html" hreflang="en" rel="alternate"/><link href="https://inematds.github.io/segrobot/es/curso/trilha2/modulo-2-3.html" hreflang="es" rel="alternate"/></head>
+<body class="bg-dark-900 text-neutral-100 min-h-screen"><div class="inema-lang" style="position:fixed;right:14px;bottom:14px;z-index:9999;display:flex;gap:2px;padding:4px;border-radius:10px;background:rgba(12,12,16,.82);border:1px solid rgba(226,162,59,.45);font:600 12px/1 Sora,Inter,system-ui,sans-serif;backdrop-filter:blur(8px)" translate="no"><a href="modulo-2-3.html" hreflang="pt-BR" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#1a1206;background:#E2A23B">PT</a><a href="../../en/curso/trilha2/modulo-2-3.html" hreflang="en" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">EN</a><a href="../../es/curso/trilha2/modulo-2-3.html" hreflang="es" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">ES</a></div>
+<!-- NAVIGATION -->
+<nav class="sticky top-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-600">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="flex justify-between items-center h-14">
+<div class="flex items-center space-x-4">
+<a class="flex items-center space-x-2 text-yellow-400 hover:text-yellow-300" href="../../index.html">
+<span class="text-2xl">🤖</span>
+<span class="font-bold text-lg hidden sm:inline">segROBOT</span>
+</a>
+<span class="text-neutral-600">|</span>
+<a class="text-sky-400 hover:text-sky-300 text-sm font-medium" href="https://inema.club" target="_blank">INEMA.CLUB</a>
+</div>
+<div class="flex items-center space-x-1 sm:space-x-2">
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-emerald-400 hover:bg-emerald-500/10 transition-colors" href="../trilha1/index.html">
+<span class="sm:hidden">T1</span>
+<span class="hidden sm:inline">Fundamentos</span>
+</a>
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-blue-400 bg-blue-500/10" href="index.html">
+<span class="sm:hidden">T2</span>
+<span class="hidden sm:inline">Acao</span>
+</a>
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-purple-400 hover:bg-purple-500/10 transition-colors" href="../trilha3/index.html">
+<span class="sm:hidden">T3</span>
+<span class="hidden sm:inline">Estrategico</span>
+</a>
+<button class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors ml-2" id="theme-toggle">
+<svg class="hidden w-5 h-5 text-neutral-300" fill="currentColor" id="theme-toggle-dark-icon" viewbox="0 0 20 20">
+<path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+</svg>
+<svg class="hidden w-5 h-5 text-neutral-300" fill="currentColor" id="theme-toggle-light-icon" viewbox="0 0 20 20">
+<path clip-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd"></path>
+</svg>
+</button>
+</div>
+</div>
+</div>
+</nav>
+<!-- BREADCRUMB -->
+<nav class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+<div class="flex items-center space-x-2 text-sm text-neutral-400">
+<a class="hover:text-blue-400" href="../../index.html">Inicio</a>
+<span>/</span>
+<a class="hover:text-blue-400" href="index.html">Trilha 2</a>
+<span>/</span>
+<span class="text-blue-400">Modulo 2.3</span>
+</div>
+</nav>
+<!-- HEADER -->
+<header class="bg-gradient-to-br from-blue-900/30 via-dark-800 to-dark-800 py-12 border-b border-dark-600">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+<span class="inline-block px-3 py-1 bg-blue-500/20 text-blue-400 text-xs font-semibold rounded-full mb-4">MODULO 2.3</span>
+<h1 class="text-3xl sm:text-4xl font-bold mb-4">🥽 Simuladores, VR e Digital Twins para Treinamento</h1>
+<p class="text-lg text-neutral-400 max-w-3xl">
+        O treinamento sai da sala de aula e entra no espaco virtual. Mercado de digital twins automotivos salta de USD 2.1bi para 28.7bi (CAGR 30%), VR reduz tempo de execucao de tarefas em 38%, e cenarios criticos impossiveis de ensaiar na vida real viram rotina segura. Plataformas, fisiologia e simulacao de emergencia.
+      </p>
+<!-- Hero SVG: mundo fisico <-> gemeo virtual em tempo real -->
+<div class="rounded-2xl border border-blue-500/30 bg-dark-900/40 p-3 sm:p-4 mt-8 overflow-hidden">
+<svg aria-label="Diagrama de digital twin: uma celula robotica fisica sincroniza dados em tempo real com seu gemeo virtual, que alimenta treinamento VR" class="w-full h-auto" role="img" viewbox="0 0 1000 250">
+<defs>
+<lineargradient id="m23-grad" x1="0" x2="1" y1="0" y2="1">
+<stop offset="0" stop-color="#60a5fa"></stop><stop offset="1" stop-color="#3b82f6"></stop>
+</lineargradient>
+<filter height="180%" id="m23-glow" width="180%" x="-40%" y="-40%">
+<fegaussianblur result="b" stddeviation="3"></fegaussianblur><femerge><femergenode in="b"></femergenode><femergenode in="SourceGraphic"></femergenode></femerge>
+</filter>
+<pattern height="32" id="m23-grid" patternunits="userSpaceOnUse" width="32">
+<circle cx="1.3" cy="1.3" fill="#3b82f6" opacity="0.12" r="1.3"></circle>
+</pattern>
+<marker id="m23-ah" markerheight="9" markerwidth="9" orient="auto" refx="6.5" refy="4.5"><path d="M0,0 L8,4.5 L0,9 L2.4,4.5 Z" fill="#60a5fa"></path></marker>
+<marker id="m23-ahc" markerheight="9" markerwidth="9" orient="auto" refx="6.5" refy="4.5"><path d="M0,0 L8,4.5 L0,9 L2.4,4.5 Z" fill="#38bdf8"></path></marker>
+</defs>
+<rect fill="url(#m23-grid)" height="250" width="1000" x="0" y="0"></rect>
+<!-- Mundo fisico -->
+<g filter="url(#m23-glow)"><rect fill="#0e1622" height="94" rx="16" stroke="url(#m23-grad)" stroke-width="2.5" width="200" x="40" y="78"></rect></g>
+<text fill="#60a5fa" font-family="Inter,sans-serif" font-size="17" font-weight="700" text-anchor="middle" x="140" y="108">Mundo Fisico</text>
+<text fill="#93bbfc" font-family="Inter,sans-serif" font-size="12.5" text-anchor="middle" x="140" y="132">celula robotica real</text>
+<text fill="#93bbfc" font-family="Inter,sans-serif" font-size="12.5" text-anchor="middle" x="140" y="152">sensores + telemetria</text>
+<!-- Sincronizacao bidirecional -->
+<g fill="none" opacity="0.8" stroke="#38bdf8" stroke-width="2.5">
+<path d="M242,108 L398,108" marker-end="url(#m23-ahc)"></path>
+<path d="M398,142 L242,142" marker-end="url(#m23-ahc)"></path>
+</g>
+<text fill="#9ad6ff" font-family="Inter,sans-serif" font-size="11.5" text-anchor="middle" x="320" y="98">estado real</text>
+<text fill="#9ad6ff" font-family="Inter,sans-serif" font-size="11.5" text-anchor="middle" x="320" y="162">comandos &lt;100ms</text>
+<!-- Gemeo virtual -->
+<g filter="url(#m23-glow)"><rect fill="#0e1622" height="94" rx="16" stroke="url(#m23-grad)" stroke-width="2.5" width="200" x="400" y="78"></rect></g>
+<text fill="#60a5fa" font-family="Inter,sans-serif" font-size="17" font-weight="700" text-anchor="middle" x="500" y="108">Gemeo Virtual</text>
+<text fill="#93bbfc" font-family="Inter,sans-serif" font-size="12.5" text-anchor="middle" x="500" y="132">replica sincronizada</text>
+<text fill="#93bbfc" font-family="Inter,sans-serif" font-size="12.5" text-anchor="middle" x="500" y="152">fisica + comportamento</text>
+<!-- Arrows to VR training -->
+<g fill="none" opacity="0.65" stroke="#60a5fa" stroke-width="2">
+<path d="M600,100 C700,100 720,52 800,52" marker-end="url(#m23-ah)"></path>
+<path d="M600,125 L800,125" marker-end="url(#m23-ah)"></path>
+<path d="M600,150 C700,150 720,198 800,198" marker-end="url(#m23-ah)"></path>
+</g>
+<!-- VR cenarios -->
+<g font-family="Inter,sans-serif" font-size="12.5" font-weight="600">
+<g class="wf-a"><rect fill="#0e1b26" height="32" rx="9" stroke="#38bdf8" stroke-width="2" width="160" x="800" y="36"></rect><text fill="#bfe6ff" text-anchor="middle" x="880" y="57">treino VR rotina</text></g>
+<g class="wf-a"><rect fill="#0e1b26" height="32" rx="9" stroke="#38bdf8" stroke-width="2" width="160" x="800" y="109"></rect><text fill="#bfe6ff" text-anchor="middle" x="880" y="130">cenario raro</text></g>
+<g class="wf-a"><rect fill="#0e1b26" height="32" rx="9" stroke="#38bdf8" stroke-width="2" width="160" x="800" y="182"></rect><text fill="#bfe6ff" text-anchor="middle" x="880" y="203">emergencia</text></g>
+</g>
+</svg>
+<p class="text-xs text-neutral-500 mt-2 text-center">Diagrama ilustrativo: o gemeo virtual sincroniza em tempo real com a celula fisica e alimenta cenarios de treinamento VR.</p>
+</div>
+<!-- Stats Banner -->
+<div class="grid grid-cols-4 gap-4 mt-8 max-w-2xl">
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+<div class="text-xl font-bold text-blue-400">6</div>
+<div class="text-xs text-neutral-400">Topicos</div>
+</div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+<div class="text-xl font-bold text-blue-400">50</div>
+<div class="text-xs text-neutral-400">Minutos</div>
+</div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+<div class="text-xl font-bold text-blue-400">Intermediario</div>
+<div class="text-xs text-neutral-400">Nivel</div>
+</div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+<div class="text-xl font-bold text-blue-400">Pratica</div>
+<div class="text-xs text-neutral-400">Tipo</div>
+</div>
+</div>
+</div>
+</header>
+<!-- CONTEUDO -->
+<main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+<!-- ============ TOPICO 1 ============ -->
+<section class="mb-16" id="topico-1">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">1</span>
+<h2 class="text-2xl font-bold">📈 Mercado de Digital Twins Automotivo</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed">
+        Um <strong class="text-blue-400">digital twin</strong> e a replica virtual de um ativo fisico que sincroniza dados em tempo real. Nao e um modelo CAD estatico nem uma animacao: e um espelho vivo que reflete o estado da maquina real a cada instante. No automotivo, esse mercado salta de <strong class="text-blue-400">USD 2.1 bilhoes para 28.7 bilhoes ate 2030</strong>, um CAGR de 30%.
+      </p>
+<!-- Box conceito gradiente -->
+<div class="bg-gradient-to-br from-blue-900/30 to-dark-800 rounded-xl border border-blue-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-blue-400 mb-4 flex items-center">
+<span class="mr-2">🔁</span> O que separa twin de simulacao
+        </h3>
+<p class="text-neutral-300 mb-4">A diferenca esta na conexao com o mundo real. A simulacao roda isolada; o twin esta acoplado ao ativo fisico.</p>
+<ul class="space-y-2 text-neutral-300">
+<li class="flex items-start space-x-2"><span class="text-blue-400 mt-1">•</span><span><strong>Sincronizacao bidirecional:</strong> o twin recebe o estado real e pode enviar comandos de volta.</span></li>
+<li class="flex items-start space-x-2"><span class="text-blue-400 mt-1">•</span><span><strong>Latencia aceitavel (&lt;100ms):</strong> abaixo disso o operador percebe o twin como "instantaneo".</span></li>
+<li class="flex items-start space-x-2"><span class="text-blue-400 mt-1">•</span><span><strong>Fidelidade de modelo:</strong> fisica, cinematica e comportamento precisam bater com o real.</span></li>
+</ul>
+</div>
+<!-- Box dados blue -->
+<div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-blue-400 mb-4 flex items-center">
+<span class="mr-2">📊</span> Dados de mercado
+        </h3>
+<ul class="space-y-2 text-neutral-300">
+<li><strong>USD 2.1bi → 28.7bi</strong> - tamanho do mercado de digital twins automotivos ate 2030.</li>
+<li><strong>CAGR 30%</strong> - taxa de crescimento anual composta do segmento.</li>
+<li><strong>&lt;100ms</strong> - latencia-alvo para sincronizacao percebida como tempo real.</li>
+</ul>
+</div>
+<!-- Tip box primary -->
+<div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
+<span class="mr-2">💡</span> Dica Pratica
+        </h3>
+<p class="text-neutral-300">Treinamento com digital twin permite <strong>errar sem consequencias fisicas</strong>. O profissional ensaia cenarios raros — falha catastrofica, colisao multi-robo — que nunca veria na pratica ate que fosse tarde demais. O ROI nasce de evitar um unico acidente.</p>
+</div>
+<!-- Conceitos-chave -->
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-blue-400 font-semibold text-sm mb-1">Twin vs simulacao</div><p class="text-xs text-neutral-400">Espelho vivo acoplado vs modelo isolado.</p></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-blue-400 font-semibold text-sm mb-1">Sincronizacao</div><p class="text-xs text-neutral-400">Bidirecional, estado e comandos.</p></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-blue-400 font-semibold text-sm mb-1">Latencia</div><p class="text-xs text-neutral-400">&lt;100ms para sensacao de tempo real.</p></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-blue-400 font-semibold text-sm mb-1">ROI virtual</div><p class="text-xs text-neutral-400">Treino seguro de cenarios raros.</p></div>
+</div>
+</section>
+<!-- ============ TOPICO 2 ============ -->
+<section class="mb-16" id="topico-2">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">2</span>
+<h2 class="text-2xl font-bold">🕶️ VR Reduz Tempo de Execucao em 38%</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed">
+        Treinamento <strong class="text-blue-400">VR imersivo reduz o tempo de execucao</strong> de tarefas roboticas em ate <strong class="text-blue-400">38%</strong> comparado com treinamento em sala de aula convencional. A explicacao esta no <em>motor learning</em>: o corpo aprende o gesto, nao apenas a teoria.
+      </p>
+<!-- Box dados blue -->
+<div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-blue-400 mb-4 flex items-center">
+<span class="mr-2">⏱️</span> Evidencia empirica
+        </h3>
+<ul class="space-y-2 text-neutral-300">
+<li><strong>-38%</strong> - reducao no tempo de execucao de tarefas apos treino VR.</li>
+<li><strong>1h VR ≈ 2.5h presencial</strong> - em termos de retencao e aplicacao pratica.</li>
+<li><strong>Meses, nao anos</strong> - prazo de payback do investimento em VR.</li>
+</ul>
+</div>
+<!-- Grid Fazer vs Evitar (1) -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+<div class="bg-emerald-900/20 rounded-xl border border-emerald-500/30 p-6">
+<h4 class="font-bold text-emerald-400 mb-4">✓ O que FAZER no treino VR</h4>
+<ul class="space-y-3 text-neutral-300">
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Usar haptic feedback para reforcar o gesto correto.</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Medir transferencia VR-para-real com tarefas equivalentes.</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Repetir ate a curva de aprendizagem estabilizar.</span></li>
+</ul>
+</div>
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+<h4 class="font-bold text-red-400 mb-4">✗ O que NAO fazer</h4>
+<ul class="space-y-3 text-neutral-300">
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Tratar VR como video passivo sem interacao.</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Avaliar so por percepcao subjetiva do trainee.</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Ignorar a fidelidade fisica do simulador.</span></li>
+</ul>
+</div>
+</div>
+<!-- Conceitos-chave -->
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-blue-400 font-semibold text-sm mb-1">Motor learning</div><p class="text-xs text-neutral-400">Aprendizado pelo gesto, nao so teoria.</p></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-blue-400 font-semibold text-sm mb-1">Haptic feedback</div><p class="text-xs text-neutral-400">Resposta tatil reforca o movimento.</p></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-blue-400 font-semibold text-sm mb-1">Transferencia</div><p class="text-xs text-neutral-400">Habilidade VR migra para o real.</p></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-blue-400 font-semibold text-sm mb-1">Metricas VR</div><p class="text-xs text-neutral-400">Curva de aprendizagem e avaliacao.</p></div>
+</div>
+</section>
+<!-- ============ TOPICO 3 ============ -->
+<section class="mb-16" id="topico-3">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">3</span>
+<h2 class="text-2xl font-bold">🏫 Virginia Tech 2025: Twins + VR Integrados</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed">
+        O estudo da <strong class="text-blue-400">Virginia Tech (2025)</strong> demonstrou a integracao de digital twins com VR para treinar operadores de robos industriais, medindo a eficacia por <strong class="text-blue-400">biometria</strong>. E a referencia academica de ponta que valida o modelo de treinamento hibrido — twin + VR + biometria — diretamente aplicavel em programas corporativos.
+      </p>
+<!-- Box conceito gradiente -->
+<div class="bg-gradient-to-br from-blue-900/30 to-dark-800 rounded-xl border border-blue-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-blue-400 mb-4 flex items-center">
+<span class="mr-2">🔬</span> O modelo hibrido validado
+        </h3>
+<p class="text-neutral-300 mb-4">Tres camadas que se reforcam: o twin gera o cenario fiel, o VR coloca o corpo na cena, a biometria mede a eficacia sem depender do relato do trainee.</p>
+<ul class="space-y-2 text-neutral-300">
+<li class="flex items-start space-x-2"><span class="text-blue-400 mt-1">•</span><span><strong>Digital twin:</strong> cenario com fisica e comportamento fieis ao real.</span></li>
+<li class="flex items-start space-x-2"><span class="text-blue-400 mt-1">•</span><span><strong>VR:</strong> imersao que ativa o motor learning.</span></li>
+<li class="flex items-start space-x-2"><span class="text-blue-400 mt-1">•</span><span><strong>Biometria:</strong> medida objetiva de eficacia e transferencia.</span></li>
+</ul>
+</div>
+<!-- Timeline -->
+<h3 class="text-xl font-bold mb-4">Protocolo de avaliacao em 4 etapas</h3>
+<div class="space-y-6 mb-6">
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-12 h-12 rounded-full bg-blue-500/20 flex items-center justify-center"><span class="text-blue-400 font-bold">1</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+<h4 class="font-semibold text-white mb-2">Baseline</h4>
+<p class="text-sm text-neutral-400 mb-3">Antes do treino</p>
+<p class="text-neutral-300 text-sm">Mede-se desempenho e biometria de partida para servir de referencia.</p>
+</div>
+</div>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-12 h-12 rounded-full bg-blue-500/20 flex items-center justify-center"><span class="text-blue-400 font-bold">2</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+<h4 class="font-semibold text-white mb-2">Treino twin + VR</h4>
+<p class="text-sm text-neutral-400 mb-3">Sessoes imersivas</p>
+<p class="text-neutral-300 text-sm">O trainee executa tarefas no gemeo virtual enquanto sensores registram estresse e atencao.</p>
+</div>
+</div>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-12 h-12 rounded-full bg-blue-500/20 flex items-center justify-center"><span class="text-blue-400 font-bold">3</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+<h4 class="font-semibold text-white mb-2">Medicao biometrica</h4>
+<p class="text-sm text-neutral-400 mb-3">Durante e apos</p>
+<p class="text-neutral-300 text-sm">Dados de eficacia comparam o ganho real entre as sessoes.</p>
+</div>
+</div>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-12 h-12 rounded-full bg-blue-500/20 flex items-center justify-center"><span class="text-blue-400 font-bold">4</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+<h4 class="font-semibold text-white mb-2">Transferencia ao real</h4>
+<p class="text-sm text-neutral-400 mb-3">Validacao final</p>
+<p class="text-neutral-300 text-sm">O operador executa a mesma tarefa no ambiente fisico para confirmar a transferencia de habilidade.</p>
+</div>
+</div>
+</div>
+<!-- Conceitos-chave -->
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-blue-400 font-semibold text-sm mb-1">Integracao twin-VR</div><p class="text-xs text-neutral-400">Cenario fiel dentro da imersao.</p></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-blue-400 font-semibold text-sm mb-1">Biometria</div><p class="text-xs text-neutral-400">Medida objetiva de eficacia.</p></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-blue-400 font-semibold text-sm mb-1">Protocolo</div><p class="text-xs text-neutral-400">Baseline → treino → validacao.</p></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-blue-400 font-semibold text-sm mb-1">Custo vs beneficio</div><p class="text-xs text-neutral-400">Modelo aplicavel ao corporativo.</p></div>
+</div>
+</section>
+<!-- ============ TOPICO 4 ============ -->
+<section class="mb-16" id="topico-4">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">4</span>
+<h2 class="text-2xl font-bold">❤️ Monitoramento Fisiologico em VR</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed">
+        Sensores fisiologicos durante o treino VR medem <strong class="text-blue-400">estresse, atencao, postura e fadiga</strong> em tempo real. Os dados revelam o que o trainee nao consegue verbalizar: estresse oculto, distracao e fadiga cognitiva. E <strong class="text-blue-400">feedback objetivo, nao subjetivo</strong>.
+      </p>
+<!-- Box monospace: leitura de sensores -->
+<div class="bg-dark-900 rounded-xl border border-blue-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-blue-400 mb-3 flex items-center">
+<span class="mr-2">📟</span> Painel de telemetria fisiologica <span class="ml-2 text-xs text-neutral-500 font-normal">(recriacao ilustrativa, nao screenshot real)</span>
+</h3>
+<pre class="font-mono text-sm text-neutral-300 overflow-x-auto leading-relaxed"><span class="text-blue-400">[trainee#07]</span> sessao=evacuacao_celula_3   t=04:12
+HRV   ......... <span class="text-emerald-400">62 ms</span>   estresse: <span class="text-emerald-400">normal</span>
+gaze  ......... <span class="text-blue-400">fixacao 78%</span>  saccade: <span class="text-blue-400">22%</span>
+GSR   ......... <span class="text-primary">elevado</span>      pico em E-stop
+postura ....... <span class="text-emerald-400">estavel</span>
+cybersickness . <span class="text-emerald-400">0.2 / limite 0.6</span></pre>
+</div>
+<!-- Box dados blue -->
+<div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-blue-400 mb-4 flex items-center">
+<span class="mr-2">🩺</span> O que cada sensor mede
+        </h3>
+<ul class="space-y-2 text-neutral-300">
+<li><strong>HRV (heart rate variability):</strong> nivel de estresse e carga.</li>
+<li><strong>Eye-tracking:</strong> fixacao vs saccade revela atencao e busca visual.</li>
+<li><strong>GSR (galvanic skin response):</strong> resposta emocional/excitacao.</li>
+<li><strong>Posture analysis:</strong> ergonomia e fadiga corporal.</li>
+</ul>
+</div>
+<!-- Tip box primary -->
+<div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
+<span class="mr-2">⚠️</span> Atencao ao cybersickness
+        </h3>
+<p class="text-neutral-300">Vigie sempre o <strong>limite de cybersickness</strong>. Quando os sinais de enjoo passam do limiar, a sessao perde valor de treino e pode virar aversao ao VR. Pausar e ajustar a fidelidade visual antes de insistir.</p>
+</div>
+<!-- Conceitos-chave -->
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-blue-400 font-semibold text-sm mb-1">HRV</div><p class="text-xs text-neutral-400">Variabilidade cardiaca = estresse.</p></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-blue-400 font-semibold text-sm mb-1">Eye-tracking</div><p class="text-xs text-neutral-400">Fixacao vs saccade = atencao.</p></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-blue-400 font-semibold text-sm mb-1">GSR</div><p class="text-xs text-neutral-400">Resposta galvanica da pele.</p></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-blue-400 font-semibold text-sm mb-1">Cybersickness</div><p class="text-xs text-neutral-400">Limite de enjoo a respeitar.</p></div>
+</div>
+</section>
+<!-- ============ TOPICO 5 ============ -->
+<section class="mb-16" id="topico-5">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">5</span>
+<h2 class="text-2xl font-bold">🚨 Evacuacao de Emergencia com Robos</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed">
+        A simulacao VR encena cenarios de evacuacao em ambientes com <strong class="text-blue-400">robos ativos</strong>: incendio em celula robotica, falha de comunicacao, robo obstruindo a rota de fuga. <strong class="text-blue-400">Ninguem treina evacuacao com robos reais em movimento</strong> — VR e o unico meio seguro de praticar quando robos interagem com humanos em panico.
+      </p>
+<!-- Grid Fazer vs Evitar (2) -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+<div class="bg-emerald-900/20 rounded-xl border border-emerald-500/30 p-6">
+<h4 class="font-bold text-emerald-400 mb-4">✓ Em uma evacuacao com robos</h4>
+<ul class="space-y-3 text-neutral-300">
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Conhecer rotas de fuga que evitam zonas roboticas.</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Garantir E-stop acessivel no caminho.</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Acionar desligamento de area antes de cruzar.</span></li>
+</ul>
+</div>
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+<h4 class="font-bold text-red-400 mb-4">✗ Erros que matam</h4>
+<ul class="space-y-3 text-neutral-300">
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Cruzar zona robotica energizada para encurtar caminho.</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Assumir que o robo "vai parar sozinho".</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Ignorar a falha de comunicacao como gatilho de cascata.</span></li>
+</ul>
+</div>
+</div>
+<!-- Box de alerta red -->
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-red-400 mb-3 flex items-center">
+<span class="mr-2">🔥</span> Cenarios de cascata
+        </h3>
+<p class="text-neutral-300">O perigo raramente e um evento isolado. Um incendio derruba a rede, a falha de comunicacao impede o desligamento remoto, e o robo continua se movendo na rota de fuga. Treinar a <strong>cascata</strong> — nao so o evento inicial — e o que diferencia uma simulacao util.</p>
+</div>
+<!-- Conceitos-chave -->
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-blue-400 font-semibold text-sm mb-1">Rotas vs zonas</div><p class="text-xs text-neutral-400">Fuga que evita area robotica.</p></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-blue-400 font-semibold text-sm mb-1">E-stop acessivel</div><p class="text-xs text-neutral-400">Parada de emergencia no caminho.</p></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-blue-400 font-semibold text-sm mb-1">Desligamento</div><p class="text-xs text-neutral-400">Corte de energia da area.</p></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-blue-400 font-semibold text-sm mb-1">Cascata</div><p class="text-xs text-neutral-400">Falhas encadeadas, nao isoladas.</p></div>
+</div>
+</section>
+<!-- ============ TOPICO 6 ============ -->
+<section class="mb-16" id="topico-6">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">6</span>
+<h2 class="text-2xl font-bold">🛠️ Plataformas Comerciais</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed">
+        As ferramentas comerciais criam e operam digital twins e treinamento VR. Saber <strong class="text-blue-400">qual plataforma usar para cada caso</strong> evita pagar caro por capacidade que nao se usa: <strong class="text-blue-400">Siemens, PTC, Scope AR e RoboDK</strong> resolvem problemas diferentes.
+      </p>
+<!-- Box conceito gradiente -->
+<div class="bg-gradient-to-br from-blue-900/30 to-dark-800 rounded-xl border border-blue-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-blue-400 mb-4 flex items-center">
+<span class="mr-2">🧰</span> Cada plataforma, seu caso
+        </h3>
+<ul class="space-y-2 text-neutral-300">
+<li class="flex items-start space-x-2"><span class="text-blue-400 mt-1">•</span><span><strong>Siemens Xcelerator (enterprise):</strong> linhas de producao completas.</span></li>
+<li class="flex items-start space-x-2"><span class="text-blue-400 mt-1">•</span><span><strong>PTC Vuforia (AR+IoT):</strong> manutencao com instrucoes em realidade aumentada.</span></li>
+<li class="flex items-start space-x-2"><span class="text-blue-400 mt-1">•</span><span><strong>Scope AR (step-by-step):</strong> instrucoes passo-a-passo guiadas.</span></li>
+<li class="flex items-start space-x-2"><span class="text-blue-400 mt-1">•</span><span><strong>RoboDK (offline programming):</strong> simulacao e programacao offline de robos.</span></li>
+</ul>
+</div>
+<!-- Tip box primary -->
+<div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
+<span class="mr-2">💡</span> Criterio de escolha
+        </h3>
+<p class="text-neutral-300">Comece pela pergunta certa: <strong>e linha completa, manutencao, instrucao de campo ou programacao de robo?</strong> O custo por licenca varia muito — Siemens e enterprise pesado; RoboDK resolve programacao offline com fracao do investimento. Casar a ferramenta ao caso e o que define o ROI.</p>
+</div>
+<!-- Conceitos-chave -->
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-blue-400 font-semibold text-sm mb-1">Siemens Xcelerator</div><p class="text-xs text-neutral-400">Linhas completas (enterprise).</p></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-blue-400 font-semibold text-sm mb-1">PTC Vuforia</div><p class="text-xs text-neutral-400">Manutencao AR + IoT.</p></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-blue-400 font-semibold text-sm mb-1">Scope AR</div><p class="text-xs text-neutral-400">Instrucoes passo-a-passo.</p></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-blue-400 font-semibold text-sm mb-1">RoboDK</div><p class="text-xs text-neutral-400">Programacao offline de robos.</p></div>
+</div>
+</section>
+<!-- ============ RESUMO ============ -->
+<section class="mb-12">
+<div class="bg-gradient-to-br from-blue-900/40 via-dark-800 to-dark-800 rounded-xl border border-blue-500/30 p-8">
+<h2 class="text-2xl font-bold mb-6 flex items-center">
+<span class="mr-3">✅</span> Resumo do Modulo
+        </h2>
+<div class="space-y-4 mb-8">
+<div class="flex items-start space-x-3"><span class="text-blue-400 mt-1">✓</span><div><strong class="text-white">Digital twin sincroniza em tempo real</strong><span class="text-neutral-400"> - mercado USD 2.1bi → 28.7bi, latencia &lt;100ms.</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-blue-400 mt-1">✓</span><div><strong class="text-white">VR reduz tempo de execucao em 38%</strong><span class="text-neutral-400"> - 1h VR ≈ 2.5h presencial.</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-blue-400 mt-1">✓</span><div><strong class="text-white">Virginia Tech validou o modelo hibrido</strong><span class="text-neutral-400"> - twin + VR + biometria.</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-blue-400 mt-1">✓</span><div><strong class="text-white">Sensores dao feedback objetivo</strong><span class="text-neutral-400"> - HRV, eye-tracking, GSR, postura, cybersickness.</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-blue-400 mt-1">✓</span><div><strong class="text-white">VR e o unico jeito seguro de treinar evacuacao</strong><span class="text-neutral-400"> - rotas, E-stop, cenarios de cascata.</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-blue-400 mt-1">✓</span><div><strong class="text-white">Cada plataforma resolve um caso</strong><span class="text-neutral-400"> - Siemens, PTC, Scope AR, RoboDK.</span></div></div>
+</div>
+<div class="bg-dark-800/50 rounded-lg p-4 mb-8">
+<h3 class="font-semibold text-blue-400 mb-2">Proximo Modulo:</h3>
+<p class="text-neutral-300">2.4 - Saude: Enfermeiros e Equipes Hospitalares com Robos</p>
+</div>
+<div class="flex flex-col sm:flex-row gap-4">
+<a class="flex-1 text-center px-6 py-3 bg-dark-700 text-neutral-300 rounded-lg font-semibold hover:bg-dark-600 transition-colors" href="index.html">
+            ← Voltar para Trilha
+          </a>
+<a class="flex-1 text-center px-6 py-3 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-500 transition-colors" href="modulo-2-4.html">
+            Proximo Modulo →
+          </a>
+</div>
+</div>
+</section>
+</main>
+<!-- FOOTER -->
+<footer class="border-t border-dark-600 py-8 mt-16">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-neutral-500 text-sm">
+<p>segROBOT — INEMA.CLUB — 2026</p>
+</div>
+</footer>
+<!-- SCRIPTS -->
+<script>
+    const themeToggle = document.getElementById('theme-toggle');
+    const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
+    const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
+    const html = document.documentElement;
+    if (localStorage.getItem('theme') === 'light' || (!localStorage.getItem('theme') && !html.classList.contains('dark'))) {
+      themeToggleDarkIcon.classList.remove('hidden'); html.classList.remove('dark');
+    } else { themeToggleLightIcon.classList.remove('hidden'); }
+    themeToggle.addEventListener('click', () => {
+      themeToggleDarkIcon.classList.toggle('hidden'); themeToggleLightIcon.classList.toggle('hidden');
+      html.classList.toggle('dark'); localStorage.setItem('theme', html.classList.contains('dark') ? 'dark' : 'light');
+    });
+  </script>
+</body>
+</html>

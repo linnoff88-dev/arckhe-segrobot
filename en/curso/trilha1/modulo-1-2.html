@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Module 1.2 — Cobots, AMRs, and Humanoids: Taxonomy | segROBOT</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            primary: '#FACC15',
+            dark: { 900: '#111827', 800: '#1f2937', 700: '#374151', 600: '#4b5563' }
+          }
+        }
+      }
+    }
+  </script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<style>
+    body { font-family: 'Inter', sans-serif; }
+    .dark body { background-color: #111827; }
+    .topic-explanation { display: none; }
+    .topic-explanation.active { display: block; }
+
+    /* Light mode overrides */
+    html:not(.dark) body { background-color: #f8fafc; }
+    html:not(.dark) .bg-dark-900 { background-color: #ffffff; }
+    html:not(.dark) .bg-dark-800 { background-color: #f9fafb; }
+    html:not(.dark) .bg-dark-700 { background-color: #f3f4f6; }
+    html:not(.dark) .bg-dark-600 { background-color: #e5e7eb; }
+    html:not(.dark) .text-neutral-100 { color: #111827; }
+    html:not(.dark) .text-neutral-300 { color: #4b5563; }
+    html:not(.dark) .text-neutral-400 { color: #6b7280; }
+    html:not(.dark) .text-neutral-500 { color: #9ca3af; }
+    html:not(.dark) .border-dark-600 { border-color: #d1d5db; }
+    html:not(.dark) .border-dark-700 { border-color: #e5e7eb; }
+
+    /* Light mode - cores de acento (trilha emerald) */
+    html:not(.dark) .text-emerald-400 { color: #059669; }
+    html:not(.dark) .bg-emerald-500\/20 { background-color: rgba(5, 150, 105, 0.12); }
+    html:not(.dark) .bg-emerald-500\/10 { background-color: rgba(5, 150, 105, 0.08); }
+    html:not(.dark) .border-emerald-500\/30 { border-color: rgba(5, 150, 105, 0.25); }
+    html:not(.dark) .hover\:bg-emerald-500\/30:hover { background-color: rgba(5, 150, 105, 0.18); }
+    html:not(.dark) .hover\:border-emerald-500\/30:hover { border-color: rgba(5, 150, 105, 0.25); }
+    html:not(.dark) .hover\:text-emerald-400:hover { color: #059669; }
+    html:not(.dark) .group:hover .group-hover\:text-emerald-400 { color: #059669; }
+
+    /* Light mode - remove gradientes */
+    html:not(.dark) [class*="bg-gradient-to"] { background-image: none !important; }
+
+    /* Light mode - cores especiais */
+    html:not(.dark) .text-primary { color: #a16207; }
+    html:not(.dark) .bg-primary\/10 { background-color: rgba(161, 98, 7, 0.08); }
+    html:not(.dark) .border-primary\/40 { border-color: rgba(161, 98, 7, 0.25); }
+    html:not(.dark) .text-sky-400 { color: #0369a1; }
+    html:not(.dark) .text-yellow-400 { color: #a16207; }
+    html:not(.dark) .hover\:text-sky-300:hover { color: #0284c7; }
+    html:not(.dark) .hover\:text-yellow-300:hover { color: #854d0e; }
+
+    /* Light mode - nav */
+    html:not(.dark) .bg-dark-900\/95 { background-color: rgba(255, 255, 255, 0.95); }
+
+    /* Dark mode - bordas suaves */
+    .dark .border-dark-600 { border-color: #374151; }
+    .dark .divide-dark-600 > :not([hidden]) ~ :not([hidden]) { border-color: #374151; }
+
+    /* SVG pulse */
+    @keyframes wf-pulse { 0%,100% { opacity:.55 } 50% { opacity:1 } }
+    @media (prefers-reduced-motion: no-preference) {
+      .wf-a { animation: wf-pulse 2.6s ease-in-out infinite; }
+      .wf-a:nth-child(2){animation-delay:.25s} .wf-a:nth-child(3){animation-delay:.5s}
+      .wf-a:nth-child(4){animation-delay:.75s} .wf-a:nth-child(5){animation-delay:1s}
+    }
+  </style>
+<link href="https://inematds.github.io/segrobot/curso/trilha1/modulo-1-2.html" hreflang="pt-BR" rel="alternate"/><link href="https://inematds.github.io/segrobot/en/curso/trilha1/modulo-1-2.html" hreflang="en" rel="alternate"/><link href="https://inematds.github.io/segrobot/es/curso/trilha1/modulo-1-2.html" hreflang="es" rel="alternate"/></head>
+<body class="bg-dark-900 text-neutral-100 min-h-screen"><div class="inema-lang" style="position:fixed;right:14px;bottom:14px;z-index:9999;display:flex;gap:2px;padding:4px;border-radius:10px;background:rgba(12,12,16,.82);border:1px solid rgba(226,162,59,.45);font:600 12px/1 Sora,Inter,system-ui,sans-serif;backdrop-filter:blur(8px)" translate="no"><a href="../../../curso/trilha1/modulo-1-2.html" hreflang="pt-BR" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">PT</a><a href="modulo-1-2.html" hreflang="en" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#1a1206;background:#E2A23B">EN</a><a href="../../../es/curso/trilha1/modulo-1-2.html" hreflang="es" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">ES</a></div>
+<!-- NAVIGATION -->
+<nav class="sticky top-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-600">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="flex justify-between items-center h-14">
+<div class="flex items-center space-x-4">
+<a class="flex items-center space-x-2 text-yellow-400 hover:text-yellow-300" href="../../index.html">
+<span class="text-2xl">🤖</span>
+<span class="font-bold text-lg hidden sm:inline">segROBOT</span>
+</a>
+<span class="text-neutral-600">|</span>
+<a class="text-sky-400 hover:text-sky-300 text-sm font-medium" href="https://inema.club" target="_blank">INEMA.CLUB</a>
+</div>
+<div class="flex items-center space-x-1 sm:space-x-2">
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-emerald-400 bg-emerald-500/10" href="index.html">
+<span class="sm:hidden">T1</span>
+<span class="hidden sm:inline">Fundamentals</span>
+</a>
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-blue-400 hover:bg-blue-500/10 transition-colors" href="../trilha2/index.html">
+<span class="sm:hidden">T2</span>
+<span class="hidden sm:inline">Action</span>
+</a>
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-purple-400 hover:bg-purple-500/10 transition-colors" href="../trilha3/index.html">
+<span class="sm:hidden">T3</span>
+<span class="hidden sm:inline">Strategic</span>
+</a>
+<button class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors ml-2" id="theme-toggle">
+<svg class="hidden w-5 h-5 text-neutral-300" fill="currentColor" id="theme-toggle-dark-icon" viewbox="0 0 20 20">
+<path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+</svg>
+<svg class="hidden w-5 h-5 text-neutral-300" fill="currentColor" id="theme-toggle-light-icon" viewbox="0 0 20 20">
+<path clip-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd"></path>
+</svg>
+</button>
+</div>
+</div>
+</div>
+</nav>
+<!-- BREADCRUMB -->
+<nav class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+<div class="flex items-center space-x-2 text-sm text-neutral-400">
+<a class="hover:text-emerald-400" href="../../index.html">Start</a>
+<span>/</span>
+<a class="hover:text-emerald-400" href="index.html">Track 1</a>
+<span>/</span>
+<span class="text-emerald-400">Module 1.2</span>
+</div>
+</nav>
+<!-- HEADER -->
+<header class="bg-gradient-to-br from-emerald-900/30 via-dark-800 to-dark-800 py-12 border-b border-dark-600">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+<span class="inline-block px-3 py-1 bg-emerald-500/20 text-emerald-400 text-xs font-semibold rounded-full mb-4">
+        MODULE 1.2
+      </span>
+<h1 class="text-3xl sm:text-4xl font-bold mb-4">🦾 Cobots, AMRs, and Humanoids: Taxonomy</h1>
+<p class="text-lg text-neutral-400 max-w-3xl">
+        Practical classification of the four major robot families on the factory floor—cobots, AMRs, humanoids, and service robots—with manufacturers, market figures, and Amazon's case of 1 million robots.
+      </p>
+<!-- Stats Banner -->
+<div class="grid grid-cols-4 gap-4 mt-8 max-w-2xl">
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+<div class="text-xl font-bold text-emerald-400">6</div>
+<div class="text-xs text-neutral-400">Topics</div>
+</div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+<div class="text-xl font-bold text-emerald-400">50</div>
+<div class="text-xs text-neutral-400">Minutes</div>
+</div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+<div class="text-xl font-bold text-emerald-400">Basic</div>
+<div class="text-xs text-neutral-400">Level</div>
+</div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+<div class="text-xl font-bold text-emerald-400">Theory</div>
+<div class="text-xs text-neutral-400">Type</div>
+</div>
+</div>
+</div>
+</header>
+<!-- CONTEUDO -->
+<main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+<!-- SVG FUTURISTA — Taxonomia -->
+<div class="rounded-2xl border border-emerald-500/30 bg-dark-900/40 p-3 sm:p-4 mb-12 overflow-hidden">
+<svg aria-label="Robot taxonomy: a central industrial robotics axis branches into four parallel categories — cobots, AMRs, humanoids, and service robots — that converge in human-robot coexistence" class="w-full h-auto" role="img" viewbox="0 0 1000 280">
+<defs>
+<lineargradient id="m12-grad" x1="0" x2="1" y1="0" y2="1">
+<stop offset="0" stop-color="#34d399"></stop><stop offset="1" stop-color="#10b981"></stop>
+</lineargradient>
+<filter height="180%" id="m12-glow" width="180%" x="-40%" y="-40%">
+<fegaussianblur result="b" stddeviation="3"></fegaussianblur><femerge><femergenode in="b"></femergenode><femergenode in="SourceGraphic"></femergenode></femerge>
+</filter>
+<pattern height="32" id="m12-grid" patternunits="userSpaceOnUse" width="32">
+<circle cx="1.3" cy="1.3" fill="#10b981" opacity="0.12" r="1.3"></circle>
+</pattern>
+<marker id="m12-ah" markerheight="9" markerwidth="9" orient="auto" refx="6.5" refy="4.5"><path d="M0,0 L8,4.5 L0,9 L2.4,4.5 Z" fill="#34d399"></path></marker>
+<marker id="m12-ahc" markerheight="9" markerwidth="9" orient="auto" refx="6.5" refy="4.5"><path d="M0,0 L8,4.5 L0,9 L2.4,4.5 Z" fill="#38bdf8"></path></marker>
+</defs>
+<rect fill="url(#m12-grid)" height="280" width="1000" x="0" y="0"></rect>
+<!-- ramos da origem para as 4 categorias -->
+<g fill="none" opacity="0.65" stroke="#34d399" stroke-width="2">
+<path d="M206,140 C320,140 340,46 452,46" marker-end="url(#m12-ah)"></path>
+<path d="M206,140 C320,140 340,108 452,108" marker-end="url(#m12-ah)"></path>
+<path d="M206,140 C320,140 340,172 452,172" marker-end="url(#m12-ah)"></path>
+<path d="M206,140 C320,140 340,234 452,234" marker-end="url(#m12-ah)"></path>
+</g>
+<!-- convergencia das categorias para a coexistencia -->
+<g fill="none" opacity="0.55" stroke="#38bdf8" stroke-width="2">
+<path d="M620,46  C720,46 740,140 808,140" marker-end="url(#m12-ahc)"></path>
+<path d="M620,108 C720,108 740,140 808,140" marker-end="url(#m12-ahc)"></path>
+<path d="M620,172 C720,172 740,140 808,140" marker-end="url(#m12-ahc)"></path>
+<path d="M620,234 C720,234 740,140 808,140" marker-end="url(#m12-ahc)"></path>
+</g>
+<!-- nó de origem -->
+<g filter="url(#m12-glow)"><rect fill="#0e2018" height="68" rx="14" stroke="url(#m12-grad)" stroke-width="2.5" width="162" x="44" y="106"></rect></g>
+<text fill="#34d399" font-family="Inter,sans-serif" font-size="19" font-weight="700" text-anchor="middle" x="125" y="134">Robotics</text>
+<text fill="#a7f3d0" font-family="Inter,sans-serif" font-size="12.5" text-anchor="middle" x="125" y="156">on the factory floor</text>
+<!-- 4 categorias paralelas (ciano, pulsando) -->
+<g font-family="Inter,sans-serif" font-size="14" font-weight="600">
+<g class="wf-a"><rect fill="#0e1b26" height="36" rx="9" stroke="#38bdf8" stroke-width="2" width="168" x="452" y="28"></rect><text fill="#bfe6ff" text-anchor="middle" x="536" y="51">🤝 Cobots</text></g>
+<g class="wf-a"><rect fill="#0e1b26" height="36" rx="9" stroke="#38bdf8" stroke-width="2" width="168" x="452" y="90"></rect><text fill="#bfe6ff" text-anchor="middle" x="536" y="113">🚗 AMRs</text></g>
+<g class="wf-a"><rect fill="#0e1b26" height="36" rx="9" stroke="#38bdf8" stroke-width="2" width="168" x="452" y="154"></rect><text fill="#bfe6ff" text-anchor="middle" x="536" y="177">🧍 Humanoids</text></g>
+<g class="wf-a"><rect fill="#0e1b26" height="36" rx="9" stroke="#38bdf8" stroke-width="2" width="168" x="452" y="216"></rect><text fill="#bfe6ff" text-anchor="middle" x="536" y="239">🏥 Service</text></g>
+</g>
+<!-- nó de convergencia -->
+<g filter="url(#m12-glow)"><rect fill="#0e2018" height="68" rx="14" stroke="url(#m12-grad)" stroke-width="2.5" width="156" x="808" y="106"></rect></g>
+<text fill="#34d399" font-family="Inter,sans-serif" font-size="16" font-weight="700" text-anchor="middle" x="886" y="134">Coexistence</text>
+<text fill="#a7f3d0" font-family="Inter,sans-serif" font-size="12" text-anchor="middle" x="886" y="156">human-robot</text>
+</svg>
+<p class="text-xs text-neutral-500 text-center mt-2">Illustrative diagram — the four robot families converge on the same challenge: working alongside people.</p>
+</div>
+<!-- TOPICO 1 — Cobots -->
+<section class="mb-16" id="topico-1">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-xl">1</span>
+<h2 class="text-2xl font-bold">🤝 Cobots</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed">
+<strong class="text-emerald-400">Cobots</strong> (collaborative robots) are designed to work side by side with humans <strong class="text-emerald-400">without a safety cell</strong>. They’re the fastest-growing type of robot and the closest to factory floor workers—which makes them the entry point for reskilling.
+      </p>
+<div class="bg-gradient-to-br from-emerald-900/30 to-dark-800 rounded-xl border border-emerald-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-emerald-400 mb-4 flex items-center">
+<span class="mr-2">🧩</span> The concept of collaboration
+        </h3>
+<p class="text-neutral-300 mb-4">A cobot operates in collaborative mode at reduced speed and has integrated force/torque sensors that stop movement when they detect contact. This eliminates the need for guards, fences, and the physical separation that defines classical industrial robotics.</p>
+<ul class="space-y-2 text-neutral-300">
+<li class="flex items-start space-x-2"><span class="text-emerald-400 mt-1">•</span><span><strong>Payload</strong> 3 to 25 kg — suitable for light assembly, palletizing, and machine tending.</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400 mt-1">•</span><span><strong>Force/torque sensors</strong> integrated into the arm itself.</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400 mt-1">•</span><span><strong>Typical ROI</strong> 12 to 18 months, making adoption by small businesses feasible.</span></li>
+</ul>
+</div>
+<div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
+<span class="mr-2">💡</span> Practical Tip
+        </h3>
+<p class="text-neutral-300">The three major manufacturers you’ll see on the factory floor are <strong>Universal Robots (UR)</strong>, <strong>FANUC (CRX line)</strong> e <strong>ABB (GoFa / SWIFTI)</strong>. Knowing the brand helps you find the right manual, teach pendant, and gripper ecosystem.</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+<div class="bg-emerald-900/20 rounded-xl border border-emerald-500/30 p-6">
+<h4 class="font-bold text-emerald-400 mb-4">✓ Good use of a cobot</h4>
+<ul class="space-y-3 text-neutral-300">
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Repetitive, light-duty tasks alongside people</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Lines that frequently switch products</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Tight space, with no room to fence off an industrial robot</span></li>
+</ul>
+</div>
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+<h4 class="font-bold text-red-400 mb-4">✗ Improper use</h4>
+<ul class="space-y-3 text-neutral-300">
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Heavy loads over 25 kg</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>High-speed cycles where collaborative mode loses productivity</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Treat the cobot as "safe by default" without a task risk assessment</span></li>
+</ul>
+</div>
+</div>
+<h3 class="text-lg font-semibold text-emerald-400 mb-4">Key concepts</h3>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-emerald-400 font-bold text-sm mb-1">UR / FANUC / ABB</div><div class="text-xs text-neutral-400">Major manufacturers</div></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-emerald-400 font-bold text-sm mb-1">3 to 25 kg</div><div class="text-xs text-neutral-400">Payload range</div></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-emerald-400 font-bold text-sm mb-1">Force/torque</div><div class="text-xs text-neutral-400">Security without a fence</div></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-emerald-400 font-bold text-sm mb-1">12–18 months</div><div class="text-xs text-neutral-400">Typical ROI</div></div>
+</div>
+</section>
+<!-- TOPICO 2 — AMRs -->
+<section class="mb-16" id="topico-2">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-xl">2</span>
+<h2 class="text-2xl font-bold">🚗 AMRs</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed">
+<strong class="text-emerald-400">AMRs</strong> (Autonomous Mobile Robots) navigate <strong class="text-emerald-400">without fixed tracks</strong> using LiDAR, cameras, and SLAM. They are replacing manned forklifts and fixed conveyor belts in logistics, intralogistics, and hospitals—and workers need to learn to co-navigate with them.
+      </p>
+<div class="bg-gradient-to-br from-emerald-900/30 to-dark-800 rounded-xl border border-emerald-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-emerald-400 mb-4 flex items-center">
+<span class="mr-2">🧭</span> How the AMR localizes
+        </h3>
+<p class="text-neutral-300 mb-4">Unlike an AGV (which follows a tape or rail on the floor), an AMR builds and updates a map of its surroundings in real time. The core cycle is SLAM—localizing and mapping at the same time—orchestrated by a fleet management system.</p>
+<ul class="space-y-2 text-neutral-300">
+<li class="flex items-start space-x-2"><span class="text-emerald-400 mt-1">•</span><span><strong>SLAM</strong> — Simultaneous Localization and Mapping.</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400 mt-1">•</span><span><strong>Fleet Management System</strong> coordinates dozens or thousands of units.</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400 mt-1">•</span><span><strong>Adaptive speed zones</strong> is human-AMR handoff.</span></li>
+</ul>
+</div>
+<div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-blue-400 mb-4 flex items-center">
+<span class="mr-2">📊</span> Market data
+        </h3>
+<ul class="space-y-2 text-neutral-300">
+<li><strong>1 million</strong> robots operating at Amazon (July 2025) — mostly AMRs.</li>
+<li><strong>Locus Robotics and Amazon Proteus</strong> are AMR references in intralogistics.</li>
+<li>AMRs coexist with <strong>more than 750,000 employees</strong> in Amazon fulfillment centers.</li>
+</ul>
+</div>
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-red-400 mb-3 flex items-center">
+<span class="mr-2">⚠️</span> Attention on the floor
+        </h3>
+<p class="text-neutral-300">AMR doesn't mean "invisible robot." Suddenly changing routes, stopping in front of the sensor, or leaving a load outside the mapped zone disrupts fleet flow. The worker is part of the map—predictable behavior keeps coexistence safe.</p>
+</div>
+<h3 class="text-lg font-semibold text-emerald-400 mb-4">Key concepts</h3>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-emerald-400 font-bold text-sm mb-1">SLAM</div><div class="text-xs text-neutral-400">Localization + map</div></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-emerald-400 font-bold text-sm mb-1">Fleet Mgmt</div><div class="text-xs text-neutral-400">Coordinates the fleet</div></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-emerald-400 font-bold text-sm mb-1">Proteus / Locus</div><div class="text-xs text-neutral-400">Reference AMRs</div></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-emerald-400 font-bold text-sm mb-1">Handoff</div><div class="text-xs text-neutral-400">Human-AMR handoff</div></div>
+</div>
+</section>
+<!-- TOPICO 3 — Humanoides -->
+<section class="mb-16" id="topico-3">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-xl">3</span>
+<h2 class="text-2xl font-bold">🧍 Humanoids</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed">
+<strong class="text-emerald-400">Humanoids</strong> have a human form—bipedal, with dexterous arms and hands—designed to operate in environments built for people, <strong class="text-emerald-400">without layout changes</strong>. They’re the next wave of robotics.
+      </p>
+<div class="bg-gradient-to-br from-emerald-900/30 to-dark-800 rounded-xl border border-emerald-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-emerald-400 mb-4 flex items-center">
+<span class="mr-2">🦿</span> Why human form matters
+        </h3>
+<p class="text-neutral-300 mb-4">Factories, warehouses, and stores were designed for the human body: aisles, stairs, workbenches, and tools. A robot with the same form fits into this world without any renovations. The cost shifts from real estate to software.</p>
+<ul class="space-y-2 text-neutral-300">
+<li class="flex items-start space-x-2"><span class="text-emerald-400 mt-1">•</span><span><strong>Manipulative dexterity</strong> — hands capable of picking up a variety of objects.</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400 mt-1">•</span><span><strong>Bipedal navigation</strong> on human floors, stairs, and uneven surfaces.</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400 mt-1">•</span><span><strong>Learning transfer</strong> between models and the <em>uncanny valley</em> on the factory floor.</span></li>
+</ul>
+</div>
+<!-- Timeline de pilotos -->
+<h3 class="text-xl font-bold mb-4">Pilots already on the floor</h3>
+<div class="space-y-6 mb-6">
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-12 h-12 rounded-full bg-emerald-500/20 flex items-center justify-center"><span class="text-emerald-400 font-bold">1</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+<h4 class="font-semibold text-white mb-2">Figure 02</h4>
+<p class="text-sm text-neutral-400 mb-3">Pilot at BMW</p>
+<p class="text-neutral-300 text-sm">General-purpose humanoid tested on an automotive assembly line, handling parts at stations designed for human operators.</p>
+</div>
+</div>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-12 h-12 rounded-full bg-emerald-500/20 flex items-center justify-center"><span class="text-emerald-400 font-bold">2</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+<h4 class="font-semibold text-white mb-2">Digit</h4>
+<p class="text-sm text-neutral-400 mb-3">Test at Amazon</p>
+<p class="text-neutral-300 text-sm">Bipedal robot being evaluated for moving totes in a fulfillment environment, alongside the AMR fleet.</p>
+</div>
+</div>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-12 h-12 rounded-full bg-emerald-500/20 flex items-center justify-center"><span class="text-emerald-400 font-bold">3</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+<h4 class="font-semibold text-white mb-2">UBTECH Walker S2</h4>
+<p class="text-sm text-neutral-400 mb-3">Manufacturing</p>
+<p class="text-neutral-300 text-sm">Industrial humanoid tested in manufacturing environments, part of the global race for factory-floor humanoids.</p>
+</div>
+</div>
+</div>
+<div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-blue-400 mb-4 flex items-center">
+<span class="mr-2">📈</span> Market projection
+        </h3>
+<ul class="space-y-2 text-neutral-300">
+<li><strong>USD 38 billion by 2035</strong> — Goldman Sachs projection for humanoids.</li>
+<li>They work in <strong>human spaces without layout modifications</strong>, reducing renovation costs.</li>
+</ul>
+</div>
+<h3 class="text-lg font-semibold text-emerald-400 mb-4">Key concepts</h3>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-emerald-400 font-bold text-sm mb-1">Figure 02</div><div class="text-xs text-neutral-400">BMW pilot</div></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-emerald-400 font-bold text-sm mb-1">Digit</div><div class="text-xs text-neutral-400">Amazon test</div></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-emerald-400 font-bold text-sm mb-1">USD 38bn</div><div class="text-xs text-neutral-400">Market through 2035</div></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-emerald-400 font-bold text-sm mb-1">Dexterity</div><div class="text-xs text-neutral-400">Hands + biped</div></div>
+</div>
+</section>
+<!-- TOPICO 4 — Robos de servico -->
+<section class="mb-16" id="topico-4">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-xl">4</span>
+<h2 class="text-2xl font-bold">🏥 Service Robots</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed">
+<strong class="text-emerald-400">Service robots</strong> cover tasks <strong class="text-emerald-400">non-industrial</strong>: UV disinfection in hospitals, agricultural spraying, security patrols, and commercial cleaning. This is the fastest-growing segment outside manufacturing—and the person providing training isn't the technician, it's the end user.
+      </p>
+<div class="bg-gradient-to-br from-emerald-900/30 to-dark-800 rounded-xl border border-emerald-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-emerald-400 mb-4 flex items-center">
+<span class="mr-2">🛠️</span> Professional vs. staff
+        </h3>
+<p class="text-neutral-300 mb-4">The taxonomy distinguishes service robots <strong>professionals</strong> (healthcare, agriculture, security, logistics) of <strong>personal</strong> (household). In the context of reskilling, the focus is on professionals — operated by healthcare, agriculture, and security workers, not engineers.</p>
+<ul class="space-y-2 text-neutral-300">
+<li class="flex items-start space-x-2"><span class="text-emerald-400 mt-1">•</span><span><strong>Level 3–4 autonomy</strong> — operates on its own most of the time, with supervision.</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400 mt-1">•</span><span><strong>Fragmented regulation</strong> by sector (healthcare, agriculture, and security have different rules).</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400 mt-1">•</span><span><strong>End-user training</strong>, not the maintenance technician.</span></li>
+</ul>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+<div class="bg-emerald-900/20 rounded-xl border border-emerald-500/30 p-6">
+<h4 class="font-bold text-emerald-400 mb-4">✓ Where they shine</h4>
+<ul class="space-y-3 text-neutral-300">
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>UV disinfection in a hospital setting</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Agricultural spraying and monitoring</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>24/7 commercial security and cleaning patrol</span></li>
+</ul>
+</div>
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+<h4 class="font-bold text-red-400 mb-4">✗ Pitfalls</h4>
+<ul class="space-y-3 text-neutral-300">
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Ignore industry-specific regulations</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Expect full autonomy (level 5) where only level 3–4 exists</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Train only the technical aspects and forget the end user who operates the system day to day</span></li>
+</ul>
+</div>
+</div>
+<div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
+<span class="mr-2">💡</span> Practical Tip
+        </h3>
+<p class="text-neutral-300">When evaluating a service robot, first ask <strong>"what is the level of autonomy?"</strong> e <strong>"who regulates this in my sector?"</strong>. The answers completely change the team's training plan.</p>
+</div>
+<h3 class="text-lg font-semibold text-emerald-400 mb-4">Key concepts</h3>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-emerald-400 font-bold text-sm mb-1">UV / agriculture / security</div><div class="text-xs text-neutral-400">Use cases</div></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-emerald-400 font-bold text-sm mb-1">Level 3-4</div><div class="text-xs text-neutral-400">Autonomy</div></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-emerald-400 font-bold text-sm mb-1">By sector</div><div class="text-xs text-neutral-400">Regulation</div></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-emerald-400 font-bold text-sm mb-1">End user</div><div class="text-xs text-neutral-400">Who trains</div></div>
+</div>
+</section>
+<!-- TOPICO 5 — Numeros de mercado -->
+<section class="mb-16" id="topico-5">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-xl">5</span>
+<h2 class="text-2xl font-bold">💰 Market Numbers</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed">
+        The cobot market is worth <strong class="text-emerald-400">USD 1.4 to 3.4 billion in 2025</strong> with a projected <strong class="text-emerald-400">USD 7 to 32 billion by 2030</strong> (varies by source), in a <strong class="text-emerald-400">CAGR of 30-35%</strong>. Market growth means direct demand for qualified professionals.
+      </p>
+<div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-blue-400 mb-4 flex items-center">
+<span class="mr-2">📊</span> Research Data
+        </h3>
+<ul class="space-y-2 text-neutral-300">
+<li><strong>USD 1.4-3.4 bn</strong> - cobot market size in 2025.</li>
+<li><strong>USD 7–32 billion</strong> - projection through 2030 (range varies by source).</li>
+<li><strong>CAGR 30-35%</strong> - compound annual growth rate.</li>
+</ul>
+</div>
+<!-- Timeline da curva de mercado -->
+<h3 class="text-xl font-bold mb-4">The logic of growth</h3>
+<div class="space-y-6 mb-6">
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-12 h-12 rounded-full bg-emerald-500/20 flex items-center justify-center"><span class="text-emerald-400 font-bold">1</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+<h4 class="font-semibold text-white mb-2">Cobots as an entry point for SMEs</h4>
+<p class="text-neutral-300 text-sm">Small and medium-sized businesses adopt cobots because the ROI fits their budgets — opening up a market that classic industrial robotics never reached.</p>
+</div>
+</div>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-12 h-12 rounded-full bg-emerald-500/20 flex items-center justify-center"><span class="text-emerald-400 font-bold">2</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+<h4 class="font-semibold text-white mb-2">RaaS and pay-per-use accelerate adoption</h4>
+<p class="text-neutral-300 text-sm">Robot-as-a-Service removes the robot from the balance sheet as capital and turns it into a monthly expense — lowering the barrier to entry and multiplying the number of units in operation.</p>
+</div>
+</div>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-12 h-12 rounded-full bg-emerald-500/20 flex items-center justify-center"><span class="text-emerald-400 font-bold">3</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+<h4 class="font-semibold text-white mb-2">More robots = greater demand for reskilling</h4>
+<p class="text-neutral-300 text-sm">If the market quintuples in 5 years, the demand for training grows at the same rate. Market growth is the central argument of this course.</p>
+</div>
+</div>
+</div>
+<div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
+<span class="mr-2">💡</span> Reading the Numbers
+        </h3>
+<p class="text-neutral-300">When you see wide ranges (USD 7-32 bi), it isn’t a mistake: each consultancy uses a different market definition. What matters is the <strong>direction</strong> — all agree on a CAGR of 30-35%, meaning double-digit growth per year.</p>
+</div>
+<h3 class="text-lg font-semibold text-emerald-400 mb-4">Key concepts</h3>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-emerald-400 font-bold text-sm mb-1">USD 1.4-3.4bn</div><div class="text-xs text-neutral-400">2025 market</div></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-emerald-400 font-bold text-sm mb-1">USD 7–32 billion</div><div class="text-xs text-neutral-400">Through 2030</div></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-emerald-400 font-bold text-sm mb-1">30-35%</div><div class="text-xs text-neutral-400">CAGR</div></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-emerald-400 font-bold text-sm mb-1">RaaS</div><div class="text-xs text-neutral-400">Accelerates adoption</div></div>
+</div>
+</section>
+<!-- TOPICO 6 — Amazon: 1 milhao de robos -->
+<section class="mb-16" id="topico-6">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-xl">6</span>
+<h2 class="text-2xl font-bold">📦 Amazon: 1 Million Robots</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed">
+        In <strong class="text-emerald-400">July 2025</strong> Amazon reached <strong class="text-emerald-400">1 million robots</strong> operating in its fulfillment centers, becoming the world's largest private robotics fleet — and the living laboratory for human-robot coexistence.
+      </p>
+<div class="bg-gradient-to-br from-emerald-900/30 to-dark-800 rounded-xl border border-emerald-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-emerald-400 mb-4 flex items-center">
+<span class="mr-2">🏭</span> Why the case matters
+        </h3>
+<p class="text-neutral-300 mb-4">The Amazon case demonstrates coexistence at real scale: more than <strong>750 thousand employees</strong> work together with <strong>1 million robots</strong>. It’s not theory—it’s the largest practical demonstration of mass reskilling underway on the planet.</p>
+<ul class="space-y-2 text-neutral-300">
+<li class="flex items-start space-x-2"><span class="text-emerald-400 mt-1">•</span><span><strong>Proteus</strong> — Amazon's first fully autonomous AMR.</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400 mt-1">•</span><span><strong>Sparrow</strong> — AI-powered picking arm for individual items.</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400 mt-1">•</span><span><strong>Career Choice</strong> — USD 1,2 bilhao invested in employee upskilling.</span></li>
+</ul>
+</div>
+<div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-blue-400 mb-4 flex items-center">
+<span class="mr-2">📊</span> The case numbers
+        </h3>
+<ul class="space-y-2 text-neutral-300">
+<li><strong>1 million</strong> robots in operation (July 2025).</li>
+<li><strong>+750 thousand</strong> employees coexisting with the fleet.</li>
+<li><strong>USD 1.2 billion</strong> invested in the Career Choice upskilling program.</li>
+</ul>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+<div class="bg-emerald-900/20 rounded-xl border border-emerald-500/30 p-6">
+<h4 class="font-bold text-emerald-400 mb-4">✓ Case study lesson</h4>
+<ul class="space-y-3 text-neutral-300">
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Robots and people scale together, with neither replacing the other</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Investing in upskilling (Career Choice) is part of the automation strategy</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>New roles emerge around the fleet (operations, supervision, maintenance)</span></li>
+</ul>
+</div>
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+<h4 class="font-bold text-red-400 mb-4">✗ Misreading</h4>
+<ul class="space-y-3 text-neutral-300">
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>"1M robots = 1M jobs lost" — the workforce grew alongside them</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Thinking automation eliminates the need for training — it’s the opposite</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Ignore that coexistence requires new safety and workflow skills</span></li>
+</ul>
+</div>
+</div>
+<h3 class="text-lg font-semibold text-emerald-400 mb-4">Key concepts</h3>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-emerald-400 font-bold text-sm mb-1">1 million</div><div class="text-xs text-neutral-400">Robots (Jul/2025)</div></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-emerald-400 font-bold text-sm mb-1">Proteus</div><div class="text-xs text-neutral-400">1st autonomous AMR</div></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-emerald-400 font-bold text-sm mb-1">Sparrow</div><div class="text-xs text-neutral-400">AI picking</div></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-emerald-400 font-bold text-sm mb-1">USD 1.2bn</div><div class="text-xs text-neutral-400">Career Choice</div></div>
+</div>
+</section>
+<!-- RESUMO -->
+<section class="mb-12">
+<div class="bg-gradient-to-br from-emerald-900/40 via-dark-800 to-dark-800 rounded-xl border border-emerald-500/30 p-8">
+<h2 class="text-2xl font-bold mb-6 flex items-center">
+<span class="mr-3">🎯</span> Module Summary
+        </h2>
+<div class="space-y-4 mb-8">
+<div class="flex items-start space-x-3"><span class="text-emerald-400 mt-1">✓</span><div><strong class="text-white">Cobots</strong><span class="text-neutral-400"> - Collaborative, fence-free, 3-25 kg, UR/FANUC/ABB, ROI in 12-18 months.</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-emerald-400 mt-1">✓</span><div><strong class="text-white">AMRs</strong><span class="text-neutral-400"> - mobile and autonomous via SLAM and fleet management; Proteus and Locus.</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-emerald-400 mt-1">✓</span><div><strong class="text-white">Humanoids</strong><span class="text-neutral-400"> - human form, without redesigning the layout; Figure 02, Digit, Walker S2; USD 38bi by 2035.</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-emerald-400 mt-1">✓</span><div><strong class="text-white">Service robots</strong><span class="text-neutral-400"> - UV, agriculture, and security; levels 3–4; end users are trained.</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-emerald-400 mt-1">✓</span><div><strong class="text-white">Market</strong><span class="text-neutral-400"> - Cobots from USD 1.4–3.4bn (2025) to USD 7–32bn (2030), CAGR 30-35%.</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-emerald-400 mt-1">✓</span><div><strong class="text-white">Amazon</strong><span class="text-neutral-400"> - 1M robots (Jul 2025), 750K+ employees, USD 1.2B in Career Choice.</span></div></div>
+</div>
+<div class="bg-dark-800/50 rounded-lg p-4 mb-8">
+<h3 class="font-semibold text-emerald-400 mb-2">Next Module:</h3>
+<p class="text-neutral-300">1.3 - Anatomy of a Robot: Sensors, Actuators, and Control</p>
+</div>
+<div class="flex flex-col sm:flex-row gap-4">
+<a class="flex-1 text-center px-6 py-3 bg-dark-700 text-neutral-300 rounded-lg font-semibold hover:bg-dark-600 transition-colors" href="index.html">
+            ← Back to Track
+          </a>
+<a class="flex-1 text-center px-6 py-3 bg-emerald-600 text-white rounded-lg font-semibold hover:bg-emerald-500 transition-colors" href="modulo-1-3.html">
+            Next Module →
+          </a>
+</div>
+</div>
+</section>
+</main>
+<!-- FOOTER -->
+<footer class="border-t border-dark-600 py-8 mt-16">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-neutral-500 text-sm">
+<p>segROBOT — INEMA.CLUB — 2026</p>
+</div>
+</footer>
+<!-- SCRIPTS -->
+<script>
+    const themeToggle = document.getElementById('theme-toggle');
+    const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
+    const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
+    const html = document.documentElement;
+
+    if (localStorage.getItem('theme') === 'light' || (!localStorage.getItem('theme') && !html.classList.contains('dark'))) {
+      themeToggleDarkIcon.classList.remove('hidden');
+      html.classList.remove('dark');
+    } else {
+      themeToggleLightIcon.classList.remove('hidden');
+    }
+
+    themeToggle.addEventListener('click', () => {
+      themeToggleDarkIcon.classList.toggle('hidden');
+      themeToggleLightIcon.classList.toggle('hidden');
+      html.classList.toggle('dark');
+      localStorage.setItem('theme', html.classList.contains('dark') ? 'dark' : 'light');
+    });
+  </script>
+</body>
+</html>

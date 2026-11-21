@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="es">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Módulo 2.7 - VLA: modelos de visión-lenguaje-acción | segROBOT</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            primary: '#FACC15',
+            dark: { 900: '#111827', 800: '#1f2937', 700: '#374151', 600: '#4b5563' }
+          }
+        }
+      }
+    }
+  </script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<style>
+    body { font-family: 'Inter', sans-serif; }
+    .dark body { background-color: #111827; }
+    .topic-explanation { display: none; }
+    .topic-explanation.active { display: block; }
+
+    @keyframes wf-pulse { 0%,100% { opacity:.55 } 50% { opacity:1 } }
+    @media (prefers-reduced-motion: no-preference) {
+      .wf-a { animation: wf-pulse 2.6s ease-in-out infinite; }
+      .wf-a:nth-child(2){animation-delay:.25s} .wf-a:nth-child(3){animation-delay:.5s}
+      .wf-a:nth-child(4){animation-delay:.75s} .wf-a:nth-child(5){animation-delay:1s}
+    }
+
+    html:not(.dark) svg[role="img"] { filter: saturate(0.82) brightness(0.96); }
+
+    /* Light mode overrides - OBRIGATORIO */
+    html:not(.dark) body { background-color: #f8fafc; }
+    html:not(.dark) .bg-dark-900 { background-color: #ffffff; }
+    html:not(.dark) .bg-dark-800 { background-color: #f9fafb; }
+    html:not(.dark) .bg-dark-700 { background-color: #f3f4f6; }
+    html:not(.dark) .bg-dark-600 { background-color: #e5e7eb; }
+    html:not(.dark) .text-neutral-100 { color: #111827; }
+    html:not(.dark) .text-neutral-300 { color: #4b5563; }
+    html:not(.dark) .text-neutral-400 { color: #6b7280; }
+    html:not(.dark) .text-neutral-500 { color: #9ca3af; }
+    html:not(.dark) .border-dark-600 { border-color: #d1d5db; }
+    html:not(.dark) .border-dark-700 { border-color: #e5e7eb; }
+
+    /* Light mode - cores de acento (trilha blue) */
+    html:not(.dark) .text-blue-400 { color: #2563eb; }
+    html:not(.dark) .bg-blue-500\/20 { background-color: rgba(37, 99, 235, 0.12); }
+    html:not(.dark) .bg-blue-500\/10 { background-color: rgba(37, 99, 235, 0.08); }
+    html:not(.dark) .border-blue-500\/30 { border-color: rgba(37, 99, 235, 0.25); }
+    html:not(.dark) .hover\:bg-blue-500\/30:hover { background-color: rgba(37, 99, 235, 0.18); }
+    html:not(.dark) .hover\:bg-blue-500\/10:hover { background-color: rgba(37, 99, 235, 0.08); }
+    html:not(.dark) .hover\:text-blue-400:hover { color: #2563eb; }
+    html:not(.dark) .hover\:border-blue-500\/30:hover { border-color: rgba(37, 99, 235, 0.25); }
+    html:not(.dark) .group:hover .group-hover\:text-blue-400 { color: #2563eb; }
+
+    /* Light mode - outras trilhas no nav */
+    html:not(.dark) .hover\:text-emerald-400:hover { color: #059669; }
+    html:not(.dark) .hover\:bg-emerald-500\/10:hover { background-color: rgba(5, 150, 105, 0.08); }
+    html:not(.dark) .hover\:text-purple-400:hover { color: #7c3aed; }
+    html:not(.dark) .hover\:bg-purple-500\/10:hover { background-color: rgba(124, 58, 237, 0.08); }
+
+    /* Light mode - remove gradientes (fundo uniforme) */
+    html:not(.dark) [class*="bg-gradient-to"] { background-image: none !important; }
+
+    /* Light mode - cores especiais */
+    html:not(.dark) .text-primary { color: #a16207; }
+    html:not(.dark) .bg-primary\/10 { background-color: rgba(161, 98, 7, 0.08); }
+    html:not(.dark) .border-primary\/40 { border-color: rgba(161, 98, 7, 0.25); }
+    html:not(.dark) .text-sky-400 { color: #0369a1; }
+    html:not(.dark) .text-yellow-400 { color: #a16207; }
+    html:not(.dark) .hover\:text-sky-300:hover { color: #0284c7; }
+    html:not(.dark) .hover\:text-yellow-300:hover { color: #854d0e; }
+
+    /* Light mode - nav */
+    html:not(.dark) .bg-dark-900\/95 { background-color: rgba(255, 255, 255, 0.95); }
+
+    /* Dark mode - bordas e linhas divisorias mais suaves */
+    .dark .border-dark-600 { border-color: #374151; }
+    .dark .divide-dark-600 > :not([hidden]) ~ :not([hidden]) { border-color: #374151; }
+  </style>
+<link href="https://inematds.github.io/segrobot/curso/trilha2/modulo-2-7.html" hreflang="pt-BR" rel="alternate"/><link href="https://inematds.github.io/segrobot/en/curso/trilha2/modulo-2-7.html" hreflang="en" rel="alternate"/><link href="https://inematds.github.io/segrobot/es/curso/trilha2/modulo-2-7.html" hreflang="es" rel="alternate"/></head>
+<body class="bg-dark-900 text-neutral-100 min-h-screen"><div class="inema-lang" style="position:fixed;right:14px;bottom:14px;z-index:9999;display:flex;gap:2px;padding:4px;border-radius:10px;background:rgba(12,12,16,.82);border:1px solid rgba(226,162,59,.45);font:600 12px/1 Sora,Inter,system-ui,sans-serif;backdrop-filter:blur(8px)" translate="no"><a href="../../../curso/trilha2/modulo-2-7.html" hreflang="pt-BR" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">PT</a><a href="../../../en/curso/trilha2/modulo-2-7.html" hreflang="en" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">EN</a><a href="modulo-2-7.html" hreflang="es" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#1a1206;background:#E2A23B">ES</a></div>
+<!-- NAVIGATION -->
+<nav class="sticky top-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-600">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="flex justify-between items-center h-14">
+<div class="flex items-center space-x-4">
+<a class="flex items-center space-x-2 text-yellow-400 hover:text-yellow-300" href="../../index.html">
+<span class="text-2xl">🤖</span>
+<span class="font-bold text-lg hidden sm:inline">segROBOT</span>
+</a>
+<span class="text-neutral-600">|</span>
+<a class="text-sky-400 hover:text-sky-300 text-sm font-medium" href="https://inema.club" target="_blank">INEMA.CLUB</a>
+</div>
+<div class="flex items-center space-x-1 sm:space-x-2">
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-emerald-400 hover:bg-emerald-500/10 transition-colors" href="../trilha1/index.html">
+<span class="sm:hidden">T1</span>
+<span class="hidden sm:inline">Fundamentos</span>
+</a>
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-blue-400 bg-blue-500/10" href="index.html">
+<span class="sm:hidden">T2</span>
+<span class="hidden sm:inline">Acción</span>
+</a>
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-purple-400 hover:bg-purple-500/10 transition-colors" href="../trilha3/index.html">
+<span class="sm:hidden">T3</span>
+<span class="hidden sm:inline">Estratégico</span>
+</a>
+<button class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors ml-2" id="theme-toggle">
+<svg class="hidden w-5 h-5 text-neutral-300" fill="currentColor" id="theme-toggle-dark-icon" viewbox="0 0 20 20">
+<path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+</svg>
+<svg class="hidden w-5 h-5 text-neutral-300" fill="currentColor" id="theme-toggle-light-icon" viewbox="0 0 20 20">
+<path clip-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd"></path>
+</svg>
+</button>
+</div>
+</div>
+</div>
+</nav>
+<!-- BREADCRUMB -->
+<nav class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+<div class="flex items-center space-x-2 text-sm text-neutral-400">
+<a class="hover:text-blue-400" href="../../index.html">Inicio</a>
+<span>/</span>
+<a class="hover:text-blue-400" href="index.html">Ruta 2</a>
+<span>/</span>
+<span class="text-blue-400">Módulo 2.7</span>
+</div>
+</nav>
+<!-- HEADER -->
+<header class="bg-gradient-to-br from-blue-900/30 via-dark-800 to-dark-800 py-12 border-b border-dark-600">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+<span class="inline-block px-3 py-1 bg-blue-500/20 text-blue-400 text-xs font-semibold rounded-full mb-4">MÓDULO 2.7</span>
+<h1 class="text-3xl sm:text-4xl font-bold mb-4">🗣️ VLA: modelos de visión-lenguaje-acción</h1>
+<p class="text-lg text-neutral-400 max-w-3xl">
+        Un único modelo que ve, entiende la instrucción en lenguaje natural y genera la acción motora. El VLA es el «modelo fundacional» de la robótica —y desplaza la habilidad del trabajador de <strong class="text-blue-400">codificar movimiento</strong> para <strong class="text-blue-400">enseñar y supervisar el comportamiento</strong>.
+      </p>
+<div class="grid grid-cols-4 gap-4 mt-8 max-w-2xl">
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+<div class="text-xl font-bold text-blue-400">6</div>
+<div class="text-xs text-neutral-400">Temas</div>
+</div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+<div class="text-xl font-bold text-blue-400">45</div>
+<div class="text-xs text-neutral-400">Minutos</div>
+</div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+<div class="text-xl font-bold text-blue-400">Intermedio</div>
+<div class="text-xs text-neutral-400">Nivel</div>
+</div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+<div class="text-xl font-bold text-blue-400">Práctica</div>
+<div class="text-xs text-neutral-400">Tipo</div>
+</div>
+</div>
+</div>
+</header>
+<!-- CONTEUDO -->
+<main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+<!-- SVG FUTURISTA: pipeline VLA -->
+<div class="rounded-2xl border border-blue-500/30 bg-dark-900/40 p-3 sm:p-4 mb-12 overflow-hidden">
+<svg aria-label="Pipeline de un modelo VLA: la cámara proporciona la visión y la instrucción en lenguaje natural proporciona el comando; ambos ingresan al modelo VLA, que genera tokens de acción que controlan el robot" class="w-full h-auto" role="img" viewbox="0 0 1000 260">
+<defs>
+<lineargradient id="m27-grad" x1="0" x2="1" y1="0" y2="1">
+<stop offset="0" stop-color="#60a5fa"></stop><stop offset="1" stop-color="#3b82f6"></stop>
+</lineargradient>
+<filter height="180%" id="m27-glow" width="180%" x="-40%" y="-40%">
+<fegaussianblur result="b" stddeviation="1.8"></fegaussianblur><femerge><femergenode in="b"></femergenode><femergenode in="SourceGraphic"></femergenode></femerge>
+</filter>
+<pattern height="32" id="m27-grid" patternunits="userSpaceOnUse" width="32">
+<circle cx="1.3" cy="1.3" fill="#3b82f6" opacity="0.12" r="1.3"></circle>
+</pattern>
+<marker id="m27-ah" markerheight="9" markerwidth="9" orient="auto" refx="6.5" refy="4.5"><path d="M0,0 L8,4.5 L0,9 L2.4,4.5 Z" fill="#60a5fa"></path></marker>
+<marker id="m27-ahc" markerheight="9" markerwidth="9" orient="auto" refx="6.5" refy="4.5"><path d="M0,0 L8,4.5 L0,9 L2.4,4.5 Z" fill="#38bdf8"></path></marker>
+</defs>
+<rect fill="url(#m27-grid)" height="260" width="1000" x="0" y="0"></rect>
+<!-- entradas -> modelo -->
+<g fill="none" opacity="0.6" stroke="#60a5fa" stroke-width="2">
+<path d="M214,74 C320,74 350,130 432,130" marker-end="url(#m27-ah)"></path>
+<path d="M214,186 C320,186 350,130 432,130" marker-end="url(#m27-ah)"></path>
+</g>
+<!-- modelo -> tokens (ciano = acao) -->
+<g fill="none" opacity="0.55" stroke="#38bdf8" stroke-width="2">
+<path d="M604,130 L660,130" marker-end="url(#m27-ahc)"></path>
+</g>
+<!-- tokens -> robo -->
+<g fill="none" opacity="0.55" stroke="#38bdf8" stroke-width="2">
+<path d="M812,130 L856,130" marker-end="url(#m27-ahc)"></path>
+</g>
+<!-- entrada visao -->
+<g class="wf-a"><rect fill="#0e1b26" height="52" rx="11" stroke="#38bdf8" stroke-width="2" width="170" x="44" y="48"></rect><text fill="#bfe6ff" font-family="Inter,sans-serif" font-size="14" font-weight="600" text-anchor="middle" x="129" y="72">📷 Cámara</text><text fill="#9ad6ff" font-family="Inter,sans-serif" font-size="11.5" text-anchor="middle" x="129" y="90">visión</text></g>
+<!-- entrada linguagem -->
+<g class="wf-a"><rect fill="#0e1b26" height="52" rx="11" stroke="#38bdf8" stroke-width="2" width="170" x="44" y="160"></rect><text fill="#bfe6ff" font-family="Inter,sans-serif" font-size="14" font-weight="600" text-anchor="middle" x="129" y="184">🗣️ Instrucción</text><text fill="#9ad6ff" font-family="Inter,sans-serif" font-size="11.5" text-anchor="middle" x="129" y="202">lenguaje natural</text></g>
+<!-- modelo VLA (foco) -->
+<g filter="url(#m27-glow)"><rect fill="#0e1622" height="76" rx="14" stroke="url(#m27-grad)" stroke-width="2" width="172" x="432" y="92"></rect></g>
+<text fill="#60a5fa" font-family="Inter,sans-serif" font-size="18" font-weight="600" text-anchor="middle" x="518" y="124">Modelo VLA</text>
+<text fill="#bcd6fb" font-family="Inter,sans-serif" font-size="11.5" text-anchor="middle" x="518" y="146">end-to-end</text>
+<text fill="#bcd6fb" font-family="Inter,sans-serif" font-size="11.5" text-anchor="middle" x="518" y="160">percepción + razonamiento + control</text>
+<!-- tokens de acao -->
+<g><rect fill="#0e1b26" height="52" rx="11" stroke="#38bdf8" stroke-width="2" width="152" x="660" y="104"></rect><text fill="#bfe6ff" font-family="Inter,sans-serif" font-size="14" font-weight="600" text-anchor="middle" x="736" y="128">Tokens</text><text fill="#9ad6ff" font-family="Inter,sans-serif" font-size="11.5" text-anchor="middle" x="736" y="146">de acción</text></g>
+<!-- robo (foco) -->
+<g filter="url(#m27-glow)"><rect fill="#0e1622" height="76" rx="14" stroke="url(#m27-grad)" stroke-width="2" width="110" x="856" y="92"></rect></g>
+<text fill="#60a5fa" font-family="Inter,sans-serif" font-size="15" font-weight="600" text-anchor="middle" x="911" y="128">🤖 Robot</text>
+<text fill="#bcd6fb" font-family="Inter,sans-serif" font-size="11" text-anchor="middle" x="911" y="148">ejecuta</text>
+</svg>
+<p class="text-xs text-neutral-500 mt-2 text-center">Diagrama ilustrativo: imágenes (visión) + instrucciones en lenguaje entran en un único modelo end-to-end, que emite tokens de acción para que el robot los ejecute.</p>
+</div>
+<!-- TOPICO 1 -->
+<section class="mb-16" id="topico-1">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">1</span>
+<h2 class="text-2xl font-bold">🧩 Qué es un modelo VLA</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed">
+        VLA significa <strong class="text-blue-400">Visión-Lenguaje-Acción</strong>: un único modelo que recibe imágenes de la cámara junto con una instrucción en lenguaje natural y genera directamente las acciones motoras del robot — las llamadas <strong class="text-blue-400">tokens de acción</strong>. En lugar de tres sistemas separados (percepción, planificación y control) conectados a mano, el VLA une los tres en un modelo <strong class="text-blue-400">end-to-end</strong>.
+      </p>
+<div class="bg-gradient-to-br from-blue-900/30 to-dark-800 rounded-xl border border-blue-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-blue-400 mb-4 flex items-center">
+<span class="mr-2">🧠</span> El modelo fundacional de la robótica
+        </h3>
+<p class="text-neutral-300 mb-4">Así como un LLM es un modelo fundacional para texto, el VLA busca ser el modelo fundacional para la robótica: entrenado a gran escala, generaliza a tareas que nunca ha visto (zero-shot) y transfiere conocimiento entre tareas distintas.</p>
+<ul class="space-y-2 text-neutral-300">
+<li class="flex items-start space-x-2"><span class="text-blue-400 mt-1">•</span><span><strong>De extremo a extremo:</strong> una sola red va de la imagen + texto hasta el comando motor, sin etapas manuales entre ellas.</span></li>
+<li class="flex items-start space-x-2"><span class="text-blue-400 mt-1">•</span><span><strong>Tokens de acción:</strong> la acción motora se trata como una secuencia de tokens, igual que un modelo de lenguaje predice palabras.</span></li>
+<li class="flex items-start space-x-2"><span class="text-blue-400 mt-1">•</span><span><strong>Generalización zero-shot:</strong> capacidad de ejecutar instrucciones para objetos y escenas fuera del conjunto de entrenamiento.</span></li>
+</ul>
+</div>
+<div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-blue-400 mb-4 flex items-center">
+<span class="mr-2">📊</span> El salto conceptual
+        </h3>
+<ul class="space-y-2 text-neutral-300">
+<li><strong>3 sistemas → 1 modelo:</strong> la percepción, el razonamiento y el control dejan de ser módulos separados.</li>
+<li><strong>Imágenes + texto → tokens de acción:</strong> la misma arquitectura que genera palabras pasa a generar movimientos.</li>
+<li><strong>Transferencia entre tareas:</strong> aprender a "agarrar" ayuda a aprender a "apilar", reutilizando la representación.</li>
+</ul>
+</div>
+<div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
+<span class="mr-2">💡</span> Consejo práctico
+        </h3>
+<p class="text-neutral-300">Piensa en el VLA como «el ChatGPT del robot»: describes la tarea en español, este ve la escena a través de la cámara y actúa. Lo que cambia en tu trabajo es que la interfaz pasa a ser el lenguaje + ejemplos, no el código de trayectoria.</p>
+</div>
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-6">
+<h4 class="font-semibold text-white mb-4">Conceptos clave</h4>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+<div class="bg-dark-700/50 rounded-lg p-4"><div class="text-blue-400 font-bold mb-1">De extremo a extremo</div><div class="text-xs text-neutral-400">Imagen + texto → acción</div></div>
+<div class="bg-dark-700/50 rounded-lg p-4"><div class="text-blue-400 font-bold mb-1">Tokens de acción</div><div class="text-xs text-neutral-400">Acción como secuencia</div></div>
+<div class="bg-dark-700/50 rounded-lg p-4"><div class="text-blue-400 font-bold mb-1">Zero-shot</div><div class="text-xs text-neutral-400">Generaliza a lo nuevo</div></div>
+<div class="bg-dark-700/50 rounded-lg p-4"><div class="text-blue-400 font-bold mb-1">Modelo de fundación</div><div class="text-xs text-neutral-400">Base reutilizable</div></div>
+</div>
+</div>
+</section>
+<!-- TOPICO 2 -->
+<section class="mb-16" id="topico-2">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">2</span>
+<h2 class="text-2xl font-bold">🤖 Modelos de referencia</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed">
+        El campo VLA tuvo un auge entre 2023 y 2025. Conocer los modelos de referencia ayuda a entender su madurez y licencia; hay mucha variación entre <strong class="text-blue-400">open-source</strong> y es cerrado, y eso define lo que puedes usar en la práctica.
+      </p>
+<!-- TIMELINE: evolucao dos modelos VLA -->
+<div class="space-y-6 mb-6">
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-12 h-12 rounded-full bg-blue-500/20 flex items-center justify-center">
+<span class="text-blue-400 font-bold">1</span>
+</div>
+<div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+<h4 class="font-semibold text-white mb-2">Google RT-2 / RT-X (2023)</h4>
+<p class="text-sm text-neutral-400 mb-3">De la web al robot</p>
+<p class="text-neutral-300 text-sm">Los primeros VLA de gran escala de Google transfieren el conocimiento aprendido en la web al control del robot y muestran que los datos de visión y lenguaje de internet mejoran la acción motora.</p>
+</div>
+</div>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-12 h-12 rounded-full bg-blue-500/20 flex items-center justify-center">
+<span class="text-blue-400 font-bold">2</span>
+</div>
+<div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+<h4 class="font-semibold text-white mb-2">OpenVLA (2024)</h4>
+<p class="text-sm text-neutral-400 mb-3">~7B parámetros, de código abierto</p>
+<p class="text-neutral-300 text-sm">Modelo abierto de cerca de 7 mil millones de parámetros. Al ser open source, se convirtió en una base para que la comunidad haga fine-tuning local, democratizando el acceso a las VLAs.</p>
+</div>
+</div>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-12 h-12 rounded-full bg-blue-500/20 flex items-center justify-center">
+<span class="text-blue-400 font-bold">3</span>
+</div>
+<div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+<h4 class="font-semibold text-white mb-2">π0 — Physical Intelligence (2024)</h4>
+<p class="text-sm text-neutral-400 mb-3">Flow-matching</p>
+<p class="text-neutral-300 text-sm">El modelo π0 (pi-zero) usa flow-matching para generar acciones continuas y fluidas, en lugar de tokens discretos, lo que mejora la destreza en tareas manuales.</p>
+</div>
+</div>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-12 h-12 rounded-full bg-blue-500/20 flex items-center justify-center">
+<span class="text-blue-400 font-bold">4</span>
+</div>
+<div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+<h4 class="font-semibold text-white mb-2">Figure Helix (2025)</h4>
+<p class="text-sm text-neutral-400 mb-3">Humanoide en tiempo real</p>
+<p class="text-neutral-300 text-sm">VLA de Figure funcionando en un humanoide con control en tiempo real, lo que demuestra que el enfoque ya está pasando del laboratorio al hardware comercial.</p>
+</div>
+</div>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-12 h-12 rounded-full bg-blue-500/20 flex items-center justify-center">
+<span class="text-blue-400 font-bold">5</span>
+</div>
+<div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+<h4 class="font-semibold text-white mb-2">Google Gemini Robotics (2025)</h4>
+<p class="text-sm text-neutral-400 mb-3">Razonamiento + acción</p>
+<p class="text-neutral-300 text-sm">Une el razonamiento de un modelo fundacional multimodal con la acción robótica, acercando el «pensar» y el «hacer» en un mismo sistema.</p>
+</div>
+</div>
+</div>
+<div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-blue-400 mb-4 flex items-center">
+<span class="mr-2">📊</span> Madurez y licencia
+        </h3>
+<ul class="space-y-2 text-neutral-300">
+<li><strong>Abierto:</strong> OpenVLA (~7B) permite el fine-tuning local y la auditoría del modelo.</li>
+<li><strong>Cerrado / comercial:</strong> RT-2/RT-X, Figure Helix y Gemini Robotics quedan rezagados frente a las plataformas de los fabricantes.</li>
+<li><strong>Enfoque técnico:</strong> de tokens discretos (RT-2) a flow-matching continuo (π0) — afecta la destreza y la fluidez.</li>
+</ul>
+</div>
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-6">
+<h4 class="font-semibold text-white mb-4">Conceptos clave</h4>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+<div class="bg-dark-700/50 rounded-lg p-4"><div class="text-blue-400 font-bold mb-1">RT-2 / RT-X</div><div class="text-xs text-neutral-400">Web → robot (2023)</div></div>
+<div class="bg-dark-700/50 rounded-lg p-4"><div class="text-blue-400 font-bold mb-1">OpenVLA</div><div class="text-xs text-neutral-400">~7B de código abierto</div></div>
+<div class="bg-dark-700/50 rounded-lg p-4"><div class="text-blue-400 font-bold mb-1">π0</div><div class="text-xs text-neutral-400">Flow-matching</div></div>
+<div class="bg-dark-700/50 rounded-lg p-4"><div class="text-blue-400 font-bold mb-1">Helix / Gemini</div><div class="text-xs text-neutral-400">Humanoide + razonamiento</div></div>
+</div>
+</div>
+</section>
+<!-- TOPICO 3 -->
+<section class="mb-16" id="topico-3">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">3</span>
+<h2 class="text-2xl font-bold">🗣️ Cómo opera el trabajador</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed">
+        Con VLA, operar un robot deja de ser programar trayectorias. El trabajador da una <strong class="text-blue-400">instrucción en lenguaje natural</strong> y, cuando el robot se equivoca, corrige mediante <strong class="text-blue-400">demostración</strong> — el «mostrar una vez». La nueva habilidad es escribir un buen <strong class="text-blue-400">prompt de tarea</strong> y seleccionar ejemplos, no escribir código clásico.
+      </p>
+<!-- CAIXA MONOSPACE: instrucao -> acao -->
+<div class="bg-dark-800 rounded-xl border border-blue-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-blue-400 mb-4 flex items-center">
+<span class="mr-2">⌨️</span> Ejemplo ilustrativo: prompt → acción
+        </h3>
+<div class="font-mono text-sm bg-dark-900 rounded-lg p-4 border border-dark-600 overflow-x-auto leading-relaxed">
+<div class="text-neutral-500"># instrucción en lenguaje natural</div>
+<div class="text-blue-400">&gt; "toma la pieza roja y colócala en la caja azul"</div>
+<div class="mt-3 text-neutral-500"># tokens de acción que genera el VLA (ilustrativo)</div>
+<div class="text-neutral-300">1. localizar(pieza, color=rojo)      → [x,y,z]</div>
+<div class="text-neutral-300">2. mover_braco(alvo=peca)             → trayectoria</div>
+<div class="text-neutral-300">3. fechar_garra(forca=baixa)          → grasp</div>
+<div class="text-neutral-300">4. localizar(caixa, cor=azul)         → [x,y,z]</div>
+<div class="text-neutral-300">5. mover_braco(alvo=caixa)            → trayectoria</div>
+<div class="text-neutral-300">6. abrir_garra()                      → suelta</div>
+<div class="mt-3 text-neutral-500"># sin programación clásica: lenguaje + ejemplo</div>
+</div>
+<p class="text-xs text-neutral-500 mt-3">Recreación ilustrativa del flujo, no la salida literal de un modelo real.</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+<div class="bg-emerald-900/20 rounded-xl border border-emerald-500/30 p-6">
+<h4 class="font-bold text-emerald-400 mb-4">✓ Qué HACE ahora el operador</h4>
+<ul class="space-y-3 text-neutral-300">
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Escribe el prompt de tarea en lenguaje natural</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Demuestra la tarea mediante teleoperación («muéstrala una vez»)</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Hace correcciones en tiempo real cuando el robot se desvía</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Curar qué ejemplos se convierten en referentes de comportamiento</span></li>
+</ul>
+</div>
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+<h4 class="font-bold text-red-400 mb-4">✗ Qué DEJA de hacer el operador</h4>
+<ul class="space-y-3 text-neutral-300">
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Programar la trayectoria punto por punto a mano</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Reescribir la lógica de bajo nivel para cada pieza nueva</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Depender solo de un ingeniero para cambiar el comportamiento</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Tratar al robot como una máquina de ingresos fijos</span></li>
+</ul>
+</div>
+</div>
+<div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
+<span class="mr-2">💡</span> Consejo práctico
+        </h3>
+<p class="text-neutral-300">La fundamentación del lenguaje es clave: el robot necesita vincular la palabra «roja» con el píxel correcto. Cuando se equivoca, no reescribas código; repite la demostración o ajusta el prompt. Tú enseñas, no programas.</p>
+</div>
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-6">
+<h4 class="font-semibold text-white mb-4">Conceptos clave</h4>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+<div class="bg-dark-700/50 rounded-lg p-4"><div class="text-blue-400 font-bold mb-1">Prompting de tareas</div><div class="text-xs text-neutral-400">Instrucción en lenguaje</div></div>
+<div class="bg-dark-700/50 rounded-lg p-4"><div class="text-blue-400 font-bold mb-1">Teleoperación</div><div class="text-xs text-neutral-400">Demostrar la tarea</div></div>
+<div class="bg-dark-700/50 rounded-lg p-4"><div class="text-blue-400 font-bold mb-1">Corrección en línea</div><div class="text-xs text-neutral-400">Ajuste durante la acción</div></div>
+<div class="bg-dark-700/50 rounded-lg p-4"><div class="text-blue-400 font-bold mb-1">Fundamentación del lenguaje</div><div class="text-xs text-neutral-400">Palabra → píxel/objeto</div></div>
+</div>
+</div>
+</section>
+<!-- TOPICO 4 -->
+<section class="mb-16" id="topico-4">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">4</span>
+<h2 class="text-2xl font-bold">🎓 Capacitar y ajustar</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed">
+        Un VLA nace de <strong class="text-blue-400">conjuntos de datos gigantes</strong> — cómo el <strong class="text-blue-400">Open X-Embodiment</strong> — y luego es perfeccionado por <strong class="text-blue-400">fine-tuning</strong> con demostraciones locales de su operación. La persona queda en el centro del bucle (human-in-the-loop): recopila, valida y corrige. El cuello de botella no es el modelo, es el <strong class="text-blue-400">dato de calidad</strong>.
+      </p>
+<div class="bg-gradient-to-br from-blue-900/30 to-dark-800 rounded-xl border border-blue-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-blue-400 mb-4 flex items-center">
+<span class="mr-2">📚</span> Del dataset gigante al fine-tuning local
+        </h3>
+<p class="text-neutral-300 mb-4">El modelo base aprende patrones amplios en conjuntos de datos como Open X-Embodiment; el ajuste fino con demostraciones de tu línea lo especializa en las piezas y estaciones reales. Aprendizaje por imitación significa que el robot copia lo que demostró una persona.</p>
+<ul class="space-y-2 text-neutral-300">
+<li class="flex items-start space-x-2"><span class="text-blue-400 mt-1">•</span><span><strong>Aprendizaje por imitación:</strong> el modelo aprende imitando demostraciones humanas.</span></li>
+<li class="flex items-start space-x-2"><span class="text-blue-400 mt-1">•</span><span><strong>Data curation:</strong> elegir y depurar qué ejemplos se incluyen en el entrenamiento.</span></li>
+<li class="flex items-start space-x-2"><span class="text-blue-400 mt-1">•</span><span><strong>Cobertura de edge cases:</strong> garantizar ejemplos de las situaciones poco frecuentes que hacen fallar al robot.</span></li>
+</ul>
+</div>
+<div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-blue-400 mb-4 flex items-center">
+<span class="mr-2">📊</span> El cuello de botella son los datos
+        </h3>
+<ul class="space-y-2 text-neutral-300">
+<li><strong>Open X-Embodiment:</strong> conjunto de datos colaborativo que reúne demostraciones de muchos robots diferentes.</li>
+<li><strong>Ajuste fino local:</strong> pocas demostraciones buenas valen más que muchas demostraciones ruidosas.</li>
+<li><strong>Human-in-the-loop:</strong> la persona recopila y valida: es quien garantiza la calidad de los datos.</li>
+</ul>
+</div>
+<div class="bg-gradient-to-br from-blue-900/30 to-dark-800 rounded-xl border border-blue-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-blue-400 mb-3 flex items-center">
+<span class="mr-2">🧑‍🏫</span> Conexión con el puesto «AI Training Associate»
+        </h3>
+<p class="text-neutral-300">Surge un puesto dedicado: el <strong class="text-blue-400">AI Training Associate</strong>, responsable de recopilar demostraciones, depurar datos y validar el comportamiento del robot. Es el trabajo de quien alimenta y ajusta el VLA en el día a día, justo donde está el cuello de botella de los datos de calidad.</p>
+</div>
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-6">
+<h4 class="font-semibold text-white mb-4">Conceptos clave</h4>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+<div class="bg-dark-700/50 rounded-lg p-4"><div class="text-blue-400 font-bold mb-1">Open X-Embodiment</div><div class="text-xs text-neutral-400">Dataset gigante</div></div>
+<div class="bg-dark-700/50 rounded-lg p-4"><div class="text-blue-400 font-bold mb-1">Aprendizaje por imitación</div><div class="text-xs text-neutral-400">Aprende imitando</div></div>
+<div class="bg-dark-700/50 rounded-lg p-4"><div class="text-blue-400 font-bold mb-1">Data curation</div><div class="text-xs text-neutral-400">Dato de calidad</div></div>
+<div class="bg-dark-700/50 rounded-lg p-4"><div class="text-blue-400 font-bold mb-1">Casos límite</div><div class="text-xs text-neutral-400">Cubrir los casos poco frecuentes</div></div>
+</div>
+</div>
+</section>
+<!-- TOPICO 5 -->
+<section class="mb-16" id="topico-5">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">5</span>
+<h2 class="text-2xl font-bold">⚠️ Límites y riesgos</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed">
+        VLA es potente, pero falible. Fuera de la distribución de entrenamiento (<strong class="text-blue-400">out-of-distribution</strong>) el modelo se equivoca y, peor aún, puede equivocarse con confianza: la llamada <strong class="text-blue-400">alucinación motora</strong>, en la que ejecuta una acción incorrecta sin dudar. Por eso, las capas de seguridad y supervisión humana siguen <strong class="text-blue-400">obligatorias</strong>.
+      </p>
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-red-400 mb-3 flex items-center">
+<span class="mr-2">🚫</span> ALERTA: el VLA no prescinde de las capas de seguridad
+        </h3>
+<p class="text-neutral-300 mb-4">Un VLA seguro de sí mismo no es un VLA correcto. Cuando la escena se sale de lo que vio durante el entrenamiento, puede generar una acción peligrosa con mucha confianza —y no avisa que está equivocado. Las salvaguardas físicas y la norma siguen vigentes:</p>
+<ul class="space-y-2 text-neutral-300">
+<li class="flex items-start space-x-2"><span class="text-red-400 mt-1">•</span><span><strong>Límites de fuerza</strong> y la parada de emergencia (e-stop) por hardware, independientes del modelo.</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400 mt-1">•</span><span><strong>Supervisión humana</strong> activa: nadie entrega la operación al modelo al 100%.</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400 mt-1">•</span><span><strong>ISO 10218</strong> y el humano en el ciclo siguen siendo obligatorios, haya VLA o no.</span></li>
+</ul>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+<div class="bg-emerald-900/20 rounded-xl border border-emerald-500/30 p-6">
+<h4 class="font-bold text-emerald-400 mb-4">✓ Deploy responsable de VLA</h4>
+<ul class="space-y-3 text-neutral-300">
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Límites de fuerza y parada de emergencia en una capa independiente del modelo</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Supervisión humana con autoridad para detener</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Se mantiene el cumplimiento de ISO 10218</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Monitorear casos fuera de distribución y detenerse cuando haya incertidumbre</span></li>
+</ul>
+</div>
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+<h4 class="font-bold text-red-400 mb-4">✗ Errores que terminan en accidente</h4>
+<ul class="space-y-3 text-neutral-300">
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Confiar en la confianza del modelo como prueba de acierto</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Operar fuera de la distribución sin medidas de protección</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Eliminar la supervisión humana «porque el VLA es bueno»</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Tratar la norma de seguridad como opcional</span></li>
+</ul>
+</div>
+</div>
+<div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
+<span class="mr-2">💡</span> Consejo práctico
+        </h3>
+<p class="text-neutral-300">La pregunta correcta antes de confiar en una acción del VLA: "¿esta escena se parece a lo que entrenó?". Si no, está fuera de distribución (out-of-distribution): pide confirmación humana. La capa de seguridad física existe precisamente para el momento en que el modelo se equivoque con confianza.</p>
+</div>
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-6">
+<h4 class="font-semibold text-white mb-4">Conceptos clave</h4>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+<div class="bg-dark-700/50 rounded-lg p-4"><div class="text-blue-400 font-bold mb-1">Out-of-distribution</div><div class="text-xs text-neutral-400">Fuera de la capacitación</div></div>
+<div class="bg-dark-700/50 rounded-lg p-4"><div class="text-blue-400 font-bold mb-1">Alucinación motora</div><div class="text-xs text-neutral-400">Error con confianza</div></div>
+<div class="bg-dark-700/50 rounded-lg p-4"><div class="text-blue-400 font-bold mb-1">Capas de seguridad</div><div class="text-xs text-neutral-400">Fuerza + parada de emergencia</div></div>
+<div class="bg-dark-700/50 rounded-lg p-4"><div class="text-blue-400 font-bold mb-1">ISO 10218</div><div class="text-xs text-neutral-400">Norma obligatoria</div></div>
+</div>
+</div>
+</section>
+<!-- TOPICO 6 -->
+<section class="mb-16" id="topico-6">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">6</span>
+<h2 class="text-2xl font-bold">🔮 Qué cambia en el trabajo</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed">
+        El cambio de fondo: la habilidad pasa de <strong class="text-blue-400">codificar movimiento</strong> para <strong class="text-blue-400">enseñar y supervisar el comportamiento</strong>. Surge un nuevo rol — el <strong class="text-blue-400">"robot instructor"</strong> o operador de IA física (Physical AI) — y es él quien define el currículo de recalificación de esta ruta.
+      </p>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+<h4 class="font-bold text-red-400 mb-4">✗ La habilidad que pierde valor</h4>
+<ul class="space-y-3 text-neutral-300">
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Codificar trayectorias y lógica de movimiento punto a punto</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Reprogramar la máquina cada vez que cambie la pieza</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Pensar en el robot como ejecutor de una tarifa fija</span></li>
+</ul>
+</div>
+<div class="bg-emerald-900/20 rounded-xl border border-emerald-500/30 p-6">
+<h4 class="font-bold text-emerald-400 mb-4">✓ La habilidad que gana valor</h4>
+<ul class="space-y-3 text-neutral-300">
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Enseñar comportamientos mediante el lenguaje y la demostración</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Supervisar, validar y corregir lo que hace el VLA</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Curar datos y cubrir edge cases — papel de Physical AI</span></li>
+</ul>
+</div>
+</div>
+<div class="bg-gradient-to-br from-blue-900/30 to-dark-800 rounded-xl border border-blue-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-blue-400 mb-4 flex items-center">
+<span class="mr-2">🧑‍🔧</span> El nuevo rol: robot instructor / Physical AI
+        </h3>
+<p class="text-neutral-300 mb-4">Operar IA física es una profesión emergente: menos «programador de robots» y más «maestro y supervisor de robots». El currículo de recapacitación se organiza en torno a estas competencias.</p>
+<ul class="space-y-2 text-neutral-300">
+<li class="flex items-start space-x-2"><span class="text-blue-400 mt-1">•</span><span><strong>Robot instructor:</strong> enseña tareas mediante prompts y demostraciones.</span></li>
+<li class="flex items-start space-x-2"><span class="text-blue-400 mt-1">•</span><span><strong>Operador de IA física:</strong> supervisa el VLA en producción de forma segura.</span></li>
+<li class="flex items-start space-x-2"><span class="text-blue-400 mt-1">•</span><span><strong>Currículo de reconversión:</strong> prompting, demostración, curación de datos y supervisión.</span></li>
+</ul>
+</div>
+<div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
+<span class="mr-2">💡</span> Consejo práctico
+        </h3>
+<p class="text-neutral-300">Quien hoy «programa el robot» tiene el camino más corto para convertirse en robot instructor: ya entiende la tarea y la planta. Lo que le falta aprender es prompting de tareas, demostración y curación de datos, exactamente lo que ofrece esta ruta.</p>
+</div>
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-6">
+<h4 class="font-semibold text-white mb-4">Conceptos clave</h4>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+<div class="bg-dark-700/50 rounded-lg p-4"><div class="text-blue-400 font-bold mb-1">Robot instructor</div><div class="text-xs text-neutral-400">Enseña, no codifica</div></div>
+<div class="bg-dark-700/50 rounded-lg p-4"><div class="text-blue-400 font-bold mb-1">Physical AI</div><div class="text-xs text-neutral-400">Operador de IA física</div></div>
+<div class="bg-dark-700/50 rounded-lg p-4"><div class="text-blue-400 font-bold mb-1">Supervisar</div><div class="text-xs text-neutral-400">Validar el comportamiento</div></div>
+<div class="bg-dark-700/50 rounded-lg p-4"><div class="text-blue-400 font-bold mb-1">Recapacitación</div><div class="text-xs text-neutral-400">Nuevo currículo</div></div>
+</div>
+</div>
+</section>
+<!-- RESUMO -->
+<section class="mb-12">
+<div class="bg-gradient-to-br from-blue-900/40 via-dark-800 to-dark-800 rounded-xl border border-blue-500/30 p-8">
+<h2 class="text-2xl font-bold mb-6 flex items-center">
+<span class="mr-3">🏁</span> Resumen del módulo
+        </h2>
+<div class="space-y-4 mb-8">
+<div class="flex items-start space-x-3">
+<span class="text-blue-400 mt-1">✓</span>
+<div><strong class="text-white">VLA es un solo modelo</strong><span class="text-neutral-400"> - visión + lenguaje + acción de extremo a extremo; recibe una imagen + instrucción y emite tokens de acción. Modelo fundacional de robótica.</span></div>
+</div>
+<div class="flex items-start space-x-3">
+<span class="text-blue-400 mt-1">✓</span>
+<div><strong class="text-white">Referencias 2023-2025</strong><span class="text-neutral-400"> - RT-2/RT-X, OpenVLA (~7B abierto), π0 (flow-matching), Figure Helix y Gemini Robotics; la madurez y la licencia varían.</span></div>
+</div>
+<div class="flex items-start space-x-3">
+<span class="text-blue-400 mt-1">✓</span>
+<div><strong class="text-white">Operar = enseñar</strong><span class="text-neutral-400"> - instrucción en lenguaje natural + corrección por demostración; el prompt de tarea es language grounding, no código.</span></div>
+</div>
+<div class="flex items-start space-x-3">
+<span class="text-blue-400 mt-1">✓</span>
+<div><strong class="text-white">El cuello de botella son los datos</strong><span class="text-neutral-400"> - Open X-Embodiment + fine-tuning local, imitation learning y human-in-the-loop; nace el AI Training Associate.</span></div>
+</div>
+<div class="flex items-start space-x-3">
+<span class="text-blue-400 mt-1">✓</span>
+<div><strong class="text-white">Límites reales</strong><span class="text-neutral-400"> - la distribución fuera de dominio y las alucinaciones motoras exigen límites de fuerza, e-stop, supervisión e ISO 10218 obligatoria.</span></div>
+</div>
+<div class="flex items-start space-x-3">
+<span class="text-blue-400 mt-1">✓</span>
+<div><strong class="text-white">Nueva skill</strong><span class="text-neutral-400"> - de codificar movimientos a enseñar y supervisar; surge el instructor de robots / operador de Physical AI.</span></div>
+</div>
+</div>
+<div class="bg-dark-800/50 rounded-lg p-4 mb-8">
+<h3 class="font-semibold text-blue-400 mb-2">Próximo módulo: 2.8</h3>
+<p class="text-neutral-300">Continuamos la Ruta de Acción con el siguiente paso práctico después de dominar los modelos VLA.</p>
+</div>
+<div class="flex flex-col sm:flex-row gap-4">
+<a class="flex-1 text-center px-6 py-3 bg-dark-700 text-neutral-300 rounded-lg font-semibold hover:bg-dark-600 transition-colors" href="index.html">
+            ← Volver a la ruta
+          </a>
+<a class="flex-1 text-center px-6 py-3 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-500 transition-colors" href="modulo-2-8.html">
+            Próximo módulo →
+          </a>
+</div>
+</div>
+</section>
+</main>
+<!-- FOOTER -->
+<footer class="border-t border-dark-600 py-8 mt-16">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-neutral-500 text-sm">
+<p>segROBOT — INEMA.CLUB — 2026</p>
+</div>
+</footer>
+<!-- SCRIPTS -->
+<script>
+    const themeToggle = document.getElementById('theme-toggle');
+    const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
+    const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
+    const html = document.documentElement;
+    if (localStorage.getItem('theme') === 'light' || (!localStorage.getItem('theme') && !html.classList.contains('dark'))) {
+      themeToggleDarkIcon.classList.remove('hidden'); html.classList.remove('dark');
+    } else { themeToggleLightIcon.classList.remove('hidden'); }
+    themeToggle.addEventListener('click', () => {
+      themeToggleDarkIcon.classList.toggle('hidden'); themeToggleLightIcon.classList.toggle('hidden');
+      html.classList.toggle('dark'); localStorage.setItem('theme', html.classList.contains('dark') ? 'dark' : 'light');
+    });
+  </script>
+</body>
+</html>

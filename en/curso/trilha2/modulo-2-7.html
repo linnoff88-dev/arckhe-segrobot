@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Module 2.7 - VLA: Vision-Language-Action Models | segROBOT</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            primary: '#FACC15',
+            dark: { 900: '#111827', 800: '#1f2937', 700: '#374151', 600: '#4b5563' }
+          }
+        }
+      }
+    }
+  </script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<style>
+    body { font-family: 'Inter', sans-serif; }
+    .dark body { background-color: #111827; }
+    .topic-explanation { display: none; }
+    .topic-explanation.active { display: block; }
+
+    @keyframes wf-pulse { 0%,100% { opacity:.55 } 50% { opacity:1 } }
+    @media (prefers-reduced-motion: no-preference) {
+      .wf-a { animation: wf-pulse 2.6s ease-in-out infinite; }
+      .wf-a:nth-child(2){animation-delay:.25s} .wf-a:nth-child(3){animation-delay:.5s}
+      .wf-a:nth-child(4){animation-delay:.75s} .wf-a:nth-child(5){animation-delay:1s}
+    }
+
+    html:not(.dark) svg[role="img"] { filter: saturate(0.82) brightness(0.96); }
+
+    /* Light mode overrides - OBRIGATORIO */
+    html:not(.dark) body { background-color: #f8fafc; }
+    html:not(.dark) .bg-dark-900 { background-color: #ffffff; }
+    html:not(.dark) .bg-dark-800 { background-color: #f9fafb; }
+    html:not(.dark) .bg-dark-700 { background-color: #f3f4f6; }
+    html:not(.dark) .bg-dark-600 { background-color: #e5e7eb; }
+    html:not(.dark) .text-neutral-100 { color: #111827; }
+    html:not(.dark) .text-neutral-300 { color: #4b5563; }
+    html:not(.dark) .text-neutral-400 { color: #6b7280; }
+    html:not(.dark) .text-neutral-500 { color: #9ca3af; }
+    html:not(.dark) .border-dark-600 { border-color: #d1d5db; }
+    html:not(.dark) .border-dark-700 { border-color: #e5e7eb; }
+
+    /* Light mode - cores de acento (trilha blue) */
+    html:not(.dark) .text-blue-400 { color: #2563eb; }
+    html:not(.dark) .bg-blue-500\/20 { background-color: rgba(37, 99, 235, 0.12); }
+    html:not(.dark) .bg-blue-500\/10 { background-color: rgba(37, 99, 235, 0.08); }
+    html:not(.dark) .border-blue-500\/30 { border-color: rgba(37, 99, 235, 0.25); }
+    html:not(.dark) .hover\:bg-blue-500\/30:hover { background-color: rgba(37, 99, 235, 0.18); }
+    html:not(.dark) .hover\:bg-blue-500\/10:hover { background-color: rgba(37, 99, 235, 0.08); }
+    html:not(.dark) .hover\:text-blue-400:hover { color: #2563eb; }
+    html:not(.dark) .hover\:border-blue-500\/30:hover { border-color: rgba(37, 99, 235, 0.25); }
+    html:not(.dark) .group:hover .group-hover\:text-blue-400 { color: #2563eb; }
+
+    /* Light mode - outras trilhas no nav */
+    html:not(.dark) .hover\:text-emerald-400:hover { color: #059669; }
+    html:not(.dark) .hover\:bg-emerald-500\/10:hover { background-color: rgba(5, 150, 105, 0.08); }
+    html:not(.dark) .hover\:text-purple-400:hover { color: #7c3aed; }
+    html:not(.dark) .hover\:bg-purple-500\/10:hover { background-color: rgba(124, 58, 237, 0.08); }
+
+    /* Light mode - remove gradientes (fundo uniforme) */
+    html:not(.dark) [class*="bg-gradient-to"] { background-image: none !important; }
+
+    /* Light mode - cores especiais */
+    html:not(.dark) .text-primary { color: #a16207; }
+    html:not(.dark) .bg-primary\/10 { background-color: rgba(161, 98, 7, 0.08); }
+    html:not(.dark) .border-primary\/40 { border-color: rgba(161, 98, 7, 0.25); }
+    html:not(.dark) .text-sky-400 { color: #0369a1; }
+    html:not(.dark) .text-yellow-400 { color: #a16207; }
+    html:not(.dark) .hover\:text-sky-300:hover { color: #0284c7; }
+    html:not(.dark) .hover\:text-yellow-300:hover { color: #854d0e; }
+
+    /* Light mode - nav */
+    html:not(.dark) .bg-dark-900\/95 { background-color: rgba(255, 255, 255, 0.95); }
+
+    /* Dark mode - bordas e linhas divisorias mais suaves */
+    .dark .border-dark-600 { border-color: #374151; }
+    .dark .divide-dark-600 > :not([hidden]) ~ :not([hidden]) { border-color: #374151; }
+  </style>
+<link href="https://inematds.github.io/segrobot/curso/trilha2/modulo-2-7.html" hreflang="pt-BR" rel="alternate"/><link href="https://inematds.github.io/segrobot/en/curso/trilha2/modulo-2-7.html" hreflang="en" rel="alternate"/><link href="https://inematds.github.io/segrobot/es/curso/trilha2/modulo-2-7.html" hreflang="es" rel="alternate"/></head>
+<body class="bg-dark-900 text-neutral-100 min-h-screen"><div class="inema-lang" style="position:fixed;right:14px;bottom:14px;z-index:9999;display:flex;gap:2px;padding:4px;border-radius:10px;background:rgba(12,12,16,.82);border:1px solid rgba(226,162,59,.45);font:600 12px/1 Sora,Inter,system-ui,sans-serif;backdrop-filter:blur(8px)" translate="no"><a href="../../../curso/trilha2/modulo-2-7.html" hreflang="pt-BR" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">PT</a><a href="modulo-2-7.html" hreflang="en" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#1a1206;background:#E2A23B">EN</a><a href="../../../es/curso/trilha2/modulo-2-7.html" hreflang="es" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">ES</a></div>
+<!-- NAVIGATION -->
+<nav class="sticky top-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-600">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="flex justify-between items-center h-14">
+<div class="flex items-center space-x-4">
+<a class="flex items-center space-x-2 text-yellow-400 hover:text-yellow-300" href="../../index.html">
+<span class="text-2xl">🤖</span>
+<span class="font-bold text-lg hidden sm:inline">segROBOT</span>
+</a>
+<span class="text-neutral-600">|</span>
+<a class="text-sky-400 hover:text-sky-300 text-sm font-medium" href="https://inema.club" target="_blank">INEMA.CLUB</a>
+</div>
+<div class="flex items-center space-x-1 sm:space-x-2">
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-emerald-400 hover:bg-emerald-500/10 transition-colors" href="../trilha1/index.html">
+<span class="sm:hidden">T1</span>
+<span class="hidden sm:inline">Fundamentals</span>
+</a>
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-blue-400 bg-blue-500/10" href="index.html">
+<span class="sm:hidden">T2</span>
+<span class="hidden sm:inline">Action</span>
+</a>
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-purple-400 hover:bg-purple-500/10 transition-colors" href="../trilha3/index.html">
+<span class="sm:hidden">T3</span>
+<span class="hidden sm:inline">Strategic</span>
+</a>
+<button class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors ml-2" id="theme-toggle">
+<svg class="hidden w-5 h-5 text-neutral-300" fill="currentColor" id="theme-toggle-dark-icon" viewbox="0 0 20 20">
+<path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+</svg>
+<svg class="hidden w-5 h-5 text-neutral-300" fill="currentColor" id="theme-toggle-light-icon" viewbox="0 0 20 20">
+<path clip-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd"></path>
+</svg>
+</button>
+</div>
+</div>
+</div>
+</nav>
+<!-- BREADCRUMB -->
+<nav class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+<div class="flex items-center space-x-2 text-sm text-neutral-400">
+<a class="hover:text-blue-400" href="../../index.html">Start</a>
+<span>/</span>
+<a class="hover:text-blue-400" href="index.html">Track 2</a>
+<span>/</span>
+<span class="text-blue-400">Module 2.7</span>
+</div>
+</nav>
+<!-- HEADER -->
+<header class="bg-gradient-to-br from-blue-900/30 via-dark-800 to-dark-800 py-12 border-b border-dark-600">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+<span class="inline-block px-3 py-1 bg-blue-500/20 text-blue-400 text-xs font-semibold rounded-full mb-4">MODULE 2.7</span>
+<h1 class="text-3xl sm:text-4xl font-bold mb-4">🗣️ VLA: Vision-Language-Action Models</h1>
+<p class="text-lg text-neutral-400 max-w-3xl">
+        A single model that sees, understands natural language instructions, and generates motor actions. The VLA is the robotics “foundation model”—and it shifts workers’ skills from <strong class="text-blue-400">encode motion</strong> for <strong class="text-blue-400">teach and supervise behavior</strong>.
+      </p>
+<div class="grid grid-cols-4 gap-4 mt-8 max-w-2xl">
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+<div class="text-xl font-bold text-blue-400">6</div>
+<div class="text-xs text-neutral-400">Topics</div>
+</div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+<div class="text-xl font-bold text-blue-400">45</div>
+<div class="text-xs text-neutral-400">Minutes</div>
+</div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+<div class="text-xl font-bold text-blue-400">Intermediate</div>
+<div class="text-xs text-neutral-400">Level</div>
+</div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+<div class="text-xl font-bold text-blue-400">Practice</div>
+<div class="text-xs text-neutral-400">Type</div>
+</div>
+</div>
+</div>
+</header>
+<!-- CONTEUDO -->
+<main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+<!-- SVG FUTURISTA: pipeline VLA -->
+<div class="rounded-2xl border border-blue-500/30 bg-dark-900/40 p-3 sm:p-4 mb-12 overflow-hidden">
+<svg aria-label="Pipeline for a VLA model: the camera provides the vision and the natural language instruction provides the command; both go into the VLA model, which generates action tokens that control the robot" class="w-full h-auto" role="img" viewbox="0 0 1000 260">
+<defs>
+<lineargradient id="m27-grad" x1="0" x2="1" y1="0" y2="1">
+<stop offset="0" stop-color="#60a5fa"></stop><stop offset="1" stop-color="#3b82f6"></stop>
+</lineargradient>
+<filter height="180%" id="m27-glow" width="180%" x="-40%" y="-40%">
+<fegaussianblur result="b" stddeviation="1.8"></fegaussianblur><femerge><femergenode in="b"></femergenode><femergenode in="SourceGraphic"></femergenode></femerge>
+</filter>
+<pattern height="32" id="m27-grid" patternunits="userSpaceOnUse" width="32">
+<circle cx="1.3" cy="1.3" fill="#3b82f6" opacity="0.12" r="1.3"></circle>
+</pattern>
+<marker id="m27-ah" markerheight="9" markerwidth="9" orient="auto" refx="6.5" refy="4.5"><path d="M0,0 L8,4.5 L0,9 L2.4,4.5 Z" fill="#60a5fa"></path></marker>
+<marker id="m27-ahc" markerheight="9" markerwidth="9" orient="auto" refx="6.5" refy="4.5"><path d="M0,0 L8,4.5 L0,9 L2.4,4.5 Z" fill="#38bdf8"></path></marker>
+</defs>
+<rect fill="url(#m27-grid)" height="260" width="1000" x="0" y="0"></rect>
+<!-- entradas -> modelo -->
+<g fill="none" opacity="0.6" stroke="#60a5fa" stroke-width="2">
+<path d="M214,74 C320,74 350,130 432,130" marker-end="url(#m27-ah)"></path>
+<path d="M214,186 C320,186 350,130 432,130" marker-end="url(#m27-ah)"></path>
+</g>
+<!-- modelo -> tokens (ciano = acao) -->
+<g fill="none" opacity="0.55" stroke="#38bdf8" stroke-width="2">
+<path d="M604,130 L660,130" marker-end="url(#m27-ahc)"></path>
+</g>
+<!-- tokens -> robo -->
+<g fill="none" opacity="0.55" stroke="#38bdf8" stroke-width="2">
+<path d="M812,130 L856,130" marker-end="url(#m27-ahc)"></path>
+</g>
+<!-- entrada visao -->
+<g class="wf-a"><rect fill="#0e1b26" height="52" rx="11" stroke="#38bdf8" stroke-width="2" width="170" x="44" y="48"></rect><text fill="#bfe6ff" font-family="Inter,sans-serif" font-size="14" font-weight="600" text-anchor="middle" x="129" y="72">📷 Camera</text><text fill="#9ad6ff" font-family="Inter,sans-serif" font-size="11.5" text-anchor="middle" x="129" y="90">vision</text></g>
+<!-- entrada linguagem -->
+<g class="wf-a"><rect fill="#0e1b26" height="52" rx="11" stroke="#38bdf8" stroke-width="2" width="170" x="44" y="160"></rect><text fill="#bfe6ff" font-family="Inter,sans-serif" font-size="14" font-weight="600" text-anchor="middle" x="129" y="184">🗣️ Instruction</text><text fill="#9ad6ff" font-family="Inter,sans-serif" font-size="11.5" text-anchor="middle" x="129" y="202">natural language</text></g>
+<!-- modelo VLA (foco) -->
+<g filter="url(#m27-glow)"><rect fill="#0e1622" height="76" rx="14" stroke="url(#m27-grad)" stroke-width="2" width="172" x="432" y="92"></rect></g>
+<text fill="#60a5fa" font-family="Inter,sans-serif" font-size="18" font-weight="600" text-anchor="middle" x="518" y="124">VLA Model</text>
+<text fill="#bcd6fb" font-family="Inter,sans-serif" font-size="11.5" text-anchor="middle" x="518" y="146">end-to-end</text>
+<text fill="#bcd6fb" font-family="Inter,sans-serif" font-size="11.5" text-anchor="middle" x="518" y="160">perception + reasoning + control</text>
+<!-- tokens de acao -->
+<g><rect fill="#0e1b26" height="52" rx="11" stroke="#38bdf8" stroke-width="2" width="152" x="660" y="104"></rect><text fill="#bfe6ff" font-family="Inter,sans-serif" font-size="14" font-weight="600" text-anchor="middle" x="736" y="128">Tokens</text><text fill="#9ad6ff" font-family="Inter,sans-serif" font-size="11.5" text-anchor="middle" x="736" y="146">of action</text></g>
+<!-- robo (foco) -->
+<g filter="url(#m27-glow)"><rect fill="#0e1622" height="76" rx="14" stroke="url(#m27-grad)" stroke-width="2" width="110" x="856" y="92"></rect></g>
+<text fill="#60a5fa" font-family="Inter,sans-serif" font-size="15" font-weight="600" text-anchor="middle" x="911" y="128">🤖 Robot</text>
+<text fill="#bcd6fb" font-family="Inter,sans-serif" font-size="11" text-anchor="middle" x="911" y="148">executes</text>
+</svg>
+<p class="text-xs text-neutral-500 mt-2 text-center">Illustrative diagram: images (vision) + a language instruction go into a single end-to-end model, which outputs action tokens for the robot to execute.</p>
+</div>
+<!-- TOPICO 1 -->
+<section class="mb-16" id="topico-1">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">1</span>
+<h2 class="text-2xl font-bold">🧩 What is a VLA model</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed">
+        VLA stands for <strong class="text-blue-400">Vision-Language-Action</strong>: a single model that receives camera images plus an instruction in natural language and directly generates the robot’s motor actions — the so-called <strong class="text-blue-400">action tokens</strong>. Instead of three separate systems (perception, planning, and control) stitched together by hand, VLA combines all three in one model <strong class="text-blue-400">end-to-end</strong>.
+      </p>
+<div class="bg-gradient-to-br from-blue-900/30 to-dark-800 rounded-xl border border-blue-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-blue-400 mb-4 flex items-center">
+<span class="mr-2">🧠</span> The robotics foundation model
+        </h3>
+<p class="text-neutral-300 mb-4">Just as an LLM is a foundation model for text, the VLA aims to be a foundation model for robotics: trained at scale, it generalizes to tasks it has never seen (zero-shot) and transfers knowledge across distinct tasks.</p>
+<ul class="space-y-2 text-neutral-300">
+<li class="flex items-start space-x-2"><span class="text-blue-400 mt-1">•</span><span><strong>End-to-end:</strong> a single network goes from image + text to motor command, with no manual steps in between.</span></li>
+<li class="flex items-start space-x-2"><span class="text-blue-400 mt-1">•</span><span><strong>Action tokens:</strong> the motor action is treated as a sequence of tokens, just like a language model predicting words.</span></li>
+<li class="flex items-start space-x-2"><span class="text-blue-400 mt-1">•</span><span><strong>Zero-shot generalization:</strong> ability to execute instructions for objects and scenes outside the training set.</span></li>
+</ul>
+</div>
+<div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-blue-400 mb-4 flex items-center">
+<span class="mr-2">📊</span> The conceptual leap
+        </h3>
+<ul class="space-y-2 text-neutral-300">
+<li><strong>3 systems → 1 model:</strong> perception, reasoning, and control are no longer separate modules.</li>
+<li><strong>Images + text → action tokens:</strong> the same architecture that generates words starts generating movements.</li>
+<li><strong>Transfer between tasks:</strong> learning to "pick" helps you learn to "stack," reusing the representation.</li>
+</ul>
+</div>
+<div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
+<span class="mr-2">💡</span> Practical Tip
+        </h3>
+<p class="text-neutral-300">Think of the VLA as "the robot's ChatGPT": you describe the task in English, it sees the scene through the camera, and it acts. What changes in your work is that the interface becomes language + examples, not trajectory code.</p>
+</div>
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-6">
+<h4 class="font-semibold text-white mb-4">Key concepts</h4>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+<div class="bg-dark-700/50 rounded-lg p-4"><div class="text-blue-400 font-bold mb-1">End-to-end</div><div class="text-xs text-neutral-400">Image + text → action</div></div>
+<div class="bg-dark-700/50 rounded-lg p-4"><div class="text-blue-400 font-bold mb-1">Action tokens</div><div class="text-xs text-neutral-400">Action as a sequence</div></div>
+<div class="bg-dark-700/50 rounded-lg p-4"><div class="text-blue-400 font-bold mb-1">Zero-shot</div><div class="text-xs text-neutral-400">Generalizes to new situations</div></div>
+<div class="bg-dark-700/50 rounded-lg p-4"><div class="text-blue-400 font-bold mb-1">Foundation model</div><div class="text-xs text-neutral-400">Reusable foundation</div></div>
+</div>
+</div>
+</section>
+<!-- TOPICO 2 -->
+<section class="mb-16" id="topico-2">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">2</span>
+<h2 class="text-2xl font-bold">🤖 Reference Models</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed">
+        The VLA field exploded between 2023 and 2025. Knowing the leading models helps you understand their maturity and licensing—which vary widely across <strong class="text-blue-400">open-source</strong> is closed, and that determines what you can actually use.
+      </p>
+<!-- TIMELINE: evolucao dos modelos VLA -->
+<div class="space-y-6 mb-6">
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-12 h-12 rounded-full bg-blue-500/20 flex items-center justify-center">
+<span class="text-blue-400 font-bold">1</span>
+</div>
+<div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+<h4 class="font-semibold text-white mb-2">Google RT-2 / RT-X (2023)</h4>
+<p class="text-sm text-neutral-400 mb-3">From the web to the robot</p>
+<p class="text-neutral-300 text-sm">Google’s first large-scale VLAs: they transfer knowledge learned on the web to robot control, showing that internet vision-language data improves motor actions.</p>
+</div>
+</div>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-12 h-12 rounded-full bg-blue-500/20 flex items-center justify-center">
+<span class="text-blue-400 font-bold">2</span>
+</div>
+<div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+<h4 class="font-semibold text-white mb-2">OpenVLA (2024)</h4>
+<p class="text-sm text-neutral-400 mb-3">~7B parameters, open-source</p>
+<p class="text-neutral-300 text-sm">Open model with around 7 billion parameters. Because it is open-source, it became a foundation for the community to fine-tune locally — democratizing access to VLAs.</p>
+</div>
+</div>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-12 h-12 rounded-full bg-blue-500/20 flex items-center justify-center">
+<span class="text-blue-400 font-bold">3</span>
+</div>
+<div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+<h4 class="font-semibold text-white mb-2">π0 — Physical Intelligence (2024)</h4>
+<p class="text-sm text-neutral-400 mb-3">Flow matching</p>
+<p class="text-neutral-300 text-sm">The π0 (pi-zero) model uses flow matching to generate continuous, fluid actions instead of discrete tokens, improving dexterity in manual tasks.</p>
+</div>
+</div>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-12 h-12 rounded-full bg-blue-500/20 flex items-center justify-center">
+<span class="text-blue-400 font-bold">4</span>
+</div>
+<div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+<h4 class="font-semibold text-white mb-2">Figure Helix (2025)</h4>
+<p class="text-sm text-neutral-400 mb-3">Real-time humanoid</p>
+<p class="text-neutral-300 text-sm">Figure's VLA running on a humanoid with real-time control, showing that the approach is already moving from the lab to commercial hardware.</p>
+</div>
+</div>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-12 h-12 rounded-full bg-blue-500/20 flex items-center justify-center">
+<span class="text-blue-400 font-bold">5</span>
+</div>
+<div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+<h4 class="font-semibold text-white mb-2">Google Gemini Robotics (2025)</h4>
+<p class="text-sm text-neutral-400 mb-3">Reasoning + action</p>
+<p class="text-neutral-300 text-sm">It combines the reasoning of a multimodal foundation model with robotic action, bringing “thinking” and “doing” closer together in one system.</p>
+</div>
+</div>
+</div>
+<div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-blue-400 mb-4 flex items-center">
+<span class="mr-2">📊</span> Maturity and license
+        </h3>
+<ul class="space-y-2 text-neutral-300">
+<li><strong>Open:</strong> OpenVLA (~7B) enables local fine-tuning and model auditing.</li>
+<li><strong>Closed / commercial:</strong> RT-2/RT-X, Figure Helix, and Gemini Robotics lag behind manufacturers’ platforms.</li>
+<li><strong>Technical approach:</strong> discrete tokens (RT-2) to continuous flow matching (π0) — affects dexterity and fluidity.</li>
+</ul>
+</div>
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-6">
+<h4 class="font-semibold text-white mb-4">Key concepts</h4>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+<div class="bg-dark-700/50 rounded-lg p-4"><div class="text-blue-400 font-bold mb-1">RT-2 / RT-X</div><div class="text-xs text-neutral-400">Web → robot (2023)</div></div>
+<div class="bg-dark-700/50 rounded-lg p-4"><div class="text-blue-400 font-bold mb-1">OpenVLA</div><div class="text-xs text-neutral-400">~7B open-source</div></div>
+<div class="bg-dark-700/50 rounded-lg p-4"><div class="text-blue-400 font-bold mb-1">π0</div><div class="text-xs text-neutral-400">Flow matching</div></div>
+<div class="bg-dark-700/50 rounded-lg p-4"><div class="text-blue-400 font-bold mb-1">Helix / Gemini</div><div class="text-xs text-neutral-400">Humanoid + reasoning</div></div>
+</div>
+</div>
+</section>
+<!-- TOPICO 3 -->
+<section class="mb-16" id="topico-3">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">3</span>
+<h2 class="text-2xl font-bold">🗣️ How the Worker Operates</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed">
+        With VLA, operating a robot is no longer about programming trajectories. The worker gives a <strong class="text-blue-400">natural language instruction</strong> and, when the robot makes a mistake, corrects it by <strong class="text-blue-400">demonstration</strong> — the “show it once” approach. The new skill is writing a good <strong class="text-blue-400">task prompt</strong> is to curate examples, not write traditional code.
+      </p>
+<!-- CAIXA MONOSPACE: instrucao -> acao -->
+<div class="bg-dark-800 rounded-xl border border-blue-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-blue-400 mb-4 flex items-center">
+<span class="mr-2">⌨️</span> Illustrative example: prompt → action
+        </h3>
+<div class="font-mono text-sm bg-dark-900 rounded-lg p-4 border border-dark-600 overflow-x-auto leading-relaxed">
+<div class="text-neutral-500"># instruction in natural language</div>
+<div class="text-blue-400">&gt; "pick up the red part and place it in the blue box"</div>
+<div class="mt-3 text-neutral-500"># action tokens generated by the VLA (illustrative)</div>
+<div class="text-neutral-300">1. locate(part, color=red)      → [x,y,z]</div>
+<div class="text-neutral-300">2. move_arm(target=part)             → trajectory</div>
+<div class="text-neutral-300">3. fechar_garra(forca=baixa)          → grasp</div>
+<div class="text-neutral-300">4. localizar(caixa, cor=azul)         → [x,y,z]</div>
+<div class="text-neutral-300">5. mover_braco(alvo=caixa)            → trajetoria</div>
+<div class="text-neutral-300">6. open_gripper()                      → release</div>
+<div class="mt-3 text-neutral-500"># no traditional programming: language + example</div>
+</div>
+<p class="text-xs text-neutral-500 mt-3">Illustrative recreation of the flow, not the literal output of a real model.</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+<div class="bg-emerald-900/20 rounded-xl border border-emerald-500/30 p-6">
+<h4 class="font-bold text-emerald-400 mb-4">✓ What the operator DOES now</h4>
+<ul class="space-y-3 text-neutral-300">
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Write the task prompt in natural language</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Demonstrates the task through teleoperation (“show once”)</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Makes on-the-spot corrections when the robot deviates</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Curate which examples become behavioral models</span></li>
+</ul>
+</div>
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+<h4 class="font-bold text-red-400 mb-4">✗ What the operator STOPS doing</h4>
+<ul class="space-y-3 text-neutral-300">
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Program a trajectory point by point by hand</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Rewrite low-level logic for each new part</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Relying only on an engineer to change behavior</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Treating the robot as a fixed-revenue machine</span></li>
+</ul>
+</div>
+</div>
+<div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
+<span class="mr-2">💡</span> Practical Tip
+        </h3>
+<p class="text-neutral-300">Language grounding is key: the robot needs to connect the word "red" to the right pixel. When it gets it wrong, don't rewrite code—redo the demonstration or adjust the prompt. You teach; you don't program.</p>
+</div>
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-6">
+<h4 class="font-semibold text-white mb-4">Key concepts</h4>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+<div class="bg-dark-700/50 rounded-lg p-4"><div class="text-blue-400 font-bold mb-1">Task Prompting</div><div class="text-xs text-neutral-400">Natural language instruction</div></div>
+<div class="bg-dark-700/50 rounded-lg p-4"><div class="text-blue-400 font-bold mb-1">Teleoperation</div><div class="text-xs text-neutral-400">Demonstrate the task</div></div>
+<div class="bg-dark-700/50 rounded-lg p-4"><div class="text-blue-400 font-bold mb-1">In-line correction</div><div class="text-xs text-neutral-400">Adjustment during the action</div></div>
+<div class="bg-dark-700/50 rounded-lg p-4"><div class="text-blue-400 font-bold mb-1">Language grounding</div><div class="text-xs text-neutral-400">Word → pixel/object</div></div>
+</div>
+</div>
+</section>
+<!-- TOPICO 4 -->
+<section class="mb-16" id="topico-4">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">4</span>
+<h2 class="text-2xl font-bold">🎓 Train and Adjust</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed">
+        A VLA is built from <strong class="text-blue-400">massive datasets</strong> — like the <strong class="text-blue-400">Open X-Embodiment</strong> — and is then refined by <strong class="text-blue-400">fine-tuning</strong> with local demonstrations of its operation. The human stays at the center of the loop (human-in-the-loop): collecting, validating, and correcting. The bottleneck isn't the model, it's the <strong class="text-blue-400">quality data</strong>.
+      </p>
+<div class="bg-gradient-to-br from-blue-900/30 to-dark-800 rounded-xl border border-blue-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-blue-400 mb-4 flex items-center">
+<span class="mr-2">📚</span> From massive dataset to local fine-tuning
+        </h3>
+<p class="text-neutral-300 mb-4">The base model learns broad patterns from datasets such as Open X-Embodiment; fine-tuning with demonstrations from your line specializes it for real parts and stations. Imitation learning means the robot copies what a human demonstrated.</p>
+<ul class="space-y-2 text-neutral-300">
+<li class="flex items-start space-x-2"><span class="text-blue-400 mt-1">•</span><span><strong>Imitation learning:</strong> the model learns by imitating human demonstrations.</span></li>
+<li class="flex items-start space-x-2"><span class="text-blue-400 mt-1">•</span><span><strong>Data curation:</strong> choose and clean which examples go into training.</span></li>
+<li class="flex items-start space-x-2"><span class="text-blue-400 mt-1">•</span><span><strong>Edge case coverage:</strong> ensure examples of the rare situations that break the robot.</span></li>
+</ul>
+</div>
+<div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-blue-400 mb-4 flex items-center">
+<span class="mr-2">📊</span> The bottleneck is the data
+        </h3>
+<ul class="space-y-2 text-neutral-300">
+<li><strong>Open X-Embodiment:</strong> collaborative dataset that brings together demonstrations from many different robots.</li>
+<li><strong>Local fine-tuning:</strong> a few good demonstrations are worth more than many noisy ones.</li>
+<li><strong>Human-in-the-loop:</strong> the human collects and validates—and is responsible for data quality.</li>
+</ul>
+</div>
+<div class="bg-gradient-to-br from-blue-900/30 to-dark-800 rounded-xl border border-blue-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-blue-400 mb-3 flex items-center">
+<span class="mr-2">🧑‍🏫</span> Connection to the "AI Training Associate" role
+        </h3>
+<p class="text-neutral-300">A dedicated role emerges: the <strong class="text-blue-400">AI Training Associate</strong>, responsible for collecting demonstrations, curating data, and validating the robot’s behavior. This is the work of feeding and tuning the VLA day to day—exactly where the quality-data bottleneck lies.</p>
+</div>
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-6">
+<h4 class="font-semibold text-white mb-4">Key concepts</h4>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+<div class="bg-dark-700/50 rounded-lg p-4"><div class="text-blue-400 font-bold mb-1">Open X-Embodiment</div><div class="text-xs text-neutral-400">Huge dataset</div></div>
+<div class="bg-dark-700/50 rounded-lg p-4"><div class="text-blue-400 font-bold mb-1">Imitation learning</div><div class="text-xs text-neutral-400">Learns by imitating</div></div>
+<div class="bg-dark-700/50 rounded-lg p-4"><div class="text-blue-400 font-bold mb-1">Data curation</div><div class="text-xs text-neutral-400">Quality data</div></div>
+<div class="bg-dark-700/50 rounded-lg p-4"><div class="text-blue-400 font-bold mb-1">Edge cases</div><div class="text-xs text-neutral-400">Cover the rare cases</div></div>
+</div>
+</div>
+</section>
+<!-- TOPICO 5 -->
+<section class="mb-16" id="topico-5">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">5</span>
+<h2 class="text-2xl font-bold">⚠️ Limits and risks</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed">
+        VLA is powerful, but fallible. Outside the training distribution (<strong class="text-blue-400">out-of-distribution</strong>) the model makes a mistake, and worse: it may make a mistake confidently—the call <strong class="text-blue-400">motor hallucination</strong>, in which it performs an incorrect action without hesitation. That’s why safety layers and human supervision remain <strong class="text-blue-400">mandatory</strong>.
+      </p>
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-red-400 mb-3 flex items-center">
+<span class="mr-2">🚫</span> WARNING: VLA does not replace the safety layers
+        </h3>
+<p class="text-neutral-300 mb-4">A confident VLA is not a correct VLA. When the scene falls outside what it saw in training, it may generate a dangerous action with high confidence—and give no warning that it is wrong. Physical safeguards and the standard still apply:</p>
+<ul class="space-y-2 text-neutral-300">
+<li class="flex items-start space-x-2"><span class="text-red-400 mt-1">•</span><span><strong>Force Limits</strong> and hardware-based emergency stops (e-stops), independent of the model.</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400 mt-1">•</span><span><strong>Human Supervision</strong> active: no one hands over 100% of the operation to the model.</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400 mt-1">•</span><span><strong>ISO 10218</strong> and human-in-the-loop remain mandatory, VLA or not.</span></li>
+</ul>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+<div class="bg-emerald-900/20 rounded-xl border border-emerald-500/30 p-6">
+<h4 class="font-bold text-emerald-400 mb-4">✓ Responsible VLA deployment</h4>
+<ul class="space-y-3 text-neutral-300">
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Force limits and e-stop on a layer independent of the model</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Human supervision with the authority to interrupt</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Compliance with ISO 10218 maintained</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Monitor out-of-distribution cases and stop when uncertain</span></li>
+</ul>
+</div>
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+<h4 class="font-bold text-red-400 mb-4">✗ Mistakes that lead to accidents</h4>
+<ul class="space-y-3 text-neutral-300">
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Trusting the model's confidence as proof of correctness</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Operate outside the distribution without safeguards</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Remove human supervision “because the VLA is good”</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Treating the safety standard as optional</span></li>
+</ul>
+</div>
+</div>
+<div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
+<span class="mr-2">💡</span> Practical Tip
+        </h3>
+<p class="text-neutral-300">The right question before trusting a VLA action: “Does this scene look like what it was trained on?” If not, it's out of distribution—ask for human confirmation. The physical safety layer exists precisely for when the model makes a confident mistake.</p>
+</div>
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-6">
+<h4 class="font-semibold text-white mb-4">Key concepts</h4>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+<div class="bg-dark-700/50 rounded-lg p-4"><div class="text-blue-400 font-bold mb-1">Out-of-distribution</div><div class="text-xs text-neutral-400">Out of training</div></div>
+<div class="bg-dark-700/50 rounded-lg p-4"><div class="text-blue-400 font-bold mb-1">Motor Hallucination</div><div class="text-xs text-neutral-400">Confident error</div></div>
+<div class="bg-dark-700/50 rounded-lg p-4"><div class="text-blue-400 font-bold mb-1">Safety layers</div><div class="text-xs text-neutral-400">Force + e-stop</div></div>
+<div class="bg-dark-700/50 rounded-lg p-4"><div class="text-blue-400 font-bold mb-1">ISO 10218</div><div class="text-xs text-neutral-400">Mandatory standard</div></div>
+</div>
+</div>
+</section>
+<!-- TOPICO 6 -->
+<section class="mb-16" id="topico-6">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">6</span>
+<h2 class="text-2xl font-bold">🔮 What Changes at Work</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed">
+        The underlying shift: the skill moves from <strong class="text-blue-400">encode motion</strong> for <strong class="text-blue-400">teach and supervise behavior</strong>. A new role emerges—the <strong class="text-blue-400">"robot instructor"</strong> or Physical AI operator — and they're the ones who define the reskilling curriculum for this learning path.
+      </p>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+<h4 class="font-bold text-red-400 mb-4">✗ The skill that loses value</h4>
+<ul class="space-y-3 text-neutral-300">
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Code trajectories and movement logic point by point</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Reprogram the machine every time the part changes</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Think of the robot as a fixed-revenue executor</span></li>
+</ul>
+</div>
+<div class="bg-emerald-900/20 rounded-xl border border-emerald-500/30 p-6">
+<h4 class="font-bold text-emerald-400 mb-4">✓ The skill that gains value</h4>
+<ul class="space-y-3 text-neutral-300">
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Teach behavior through language and demonstration</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Supervise, validate, and correct what the VLA does</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Curate data and cover edge cases — the role of Physical AI</span></li>
+</ul>
+</div>
+</div>
+<div class="bg-gradient-to-br from-blue-900/30 to-dark-800 rounded-xl border border-blue-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-blue-400 mb-4 flex items-center">
+<span class="mr-2">🧑‍🔧</span> The new role: robot instructor / Physical AI
+        </h3>
+<p class="text-neutral-300 mb-4">Operating physical AI is an emerging profession: less “robot programmer,” more “robot teacher and supervisor.” The reskilling curriculum is organized around these competencies.</p>
+<ul class="space-y-2 text-neutral-300">
+<li class="flex items-start space-x-2"><span class="text-blue-400 mt-1">•</span><span><strong>Robot instructor:</strong> teaches tasks through prompts and demonstrations.</span></li>
+<li class="flex items-start space-x-2"><span class="text-blue-400 mt-1">•</span><span><strong>Physical AI operator:</strong> safely supervises the VLA in production.</span></li>
+<li class="flex items-start space-x-2"><span class="text-blue-400 mt-1">•</span><span><strong>Reskilling curriculum:</strong> prompting, demonstration, data curation, and supervision.</span></li>
+</ul>
+</div>
+<div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
+<span class="mr-2">💡</span> Practical Tip
+        </h3>
+<p class="text-neutral-300">Those who “program the robot” today have the shortest path to becoming a robot instructor: they already understand the task and the factory floor. What they still need to learn is task prompting, demonstration, and data curation—exactly what this learning path provides.</p>
+</div>
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-6">
+<h4 class="font-semibold text-white mb-4">Key concepts</h4>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+<div class="bg-dark-700/50 rounded-lg p-4"><div class="text-blue-400 font-bold mb-1">Robot instructor</div><div class="text-xs text-neutral-400">Teaches, doesn’t code</div></div>
+<div class="bg-dark-700/50 rounded-lg p-4"><div class="text-blue-400 font-bold mb-1">Physical AI</div><div class="text-xs text-neutral-400">Physical AI operator</div></div>
+<div class="bg-dark-700/50 rounded-lg p-4"><div class="text-blue-400 font-bold mb-1">Supervise</div><div class="text-xs text-neutral-400">Validate behavior</div></div>
+<div class="bg-dark-700/50 rounded-lg p-4"><div class="text-blue-400 font-bold mb-1">Reskilling</div><div class="text-xs text-neutral-400">New curriculum</div></div>
+</div>
+</div>
+</section>
+<!-- RESUMO -->
+<section class="mb-12">
+<div class="bg-gradient-to-br from-blue-900/40 via-dark-800 to-dark-800 rounded-xl border border-blue-500/30 p-8">
+<h2 class="text-2xl font-bold mb-6 flex items-center">
+<span class="mr-3">🏁</span> Module Summary
+        </h2>
+<div class="space-y-4 mb-8">
+<div class="flex items-start space-x-3">
+<span class="text-blue-400 mt-1">✓</span>
+<div><strong class="text-white">VLA is a single model</strong><span class="text-neutral-400"> - vision + language + action end-to-end; receives an image + instruction and emits action tokens. A foundation model for robotics.</span></div>
+</div>
+<div class="flex items-start space-x-3">
+<span class="text-blue-400 mt-1">✓</span>
+<div><strong class="text-white">References 2023-2025</strong><span class="text-neutral-400"> - RT-2/RT-X, OpenVLA (~7B open), π0 (flow matching), Figure Helix, and Gemini Robotics; maturity and licensing vary.</span></div>
+</div>
+<div class="flex items-start space-x-3">
+<span class="text-blue-400 mt-1">✓</span>
+<div><strong class="text-white">Operating = teaching</strong><span class="text-neutral-400"> - natural-language instruction + correction by demonstration; task prompts and language grounding, not code.</span></div>
+</div>
+<div class="flex items-start space-x-3">
+<span class="text-blue-400 mt-1">✓</span>
+<div><strong class="text-white">The bottleneck is the data</strong><span class="text-neutral-400"> - Open X-Embodiment + local fine-tuning, imitation learning, and human-in-the-loop; the AI Training Associate emerges.</span></div>
+</div>
+<div class="flex items-start space-x-3">
+<span class="text-blue-400 mt-1">✓</span>
+<div><strong class="text-white">Real Limits</strong><span class="text-neutral-400"> - out-of-distribution cases and motor hallucinations require force limits, an e-stop, supervision, and mandatory ISO 10218 compliance.</span></div>
+</div>
+<div class="flex items-start space-x-3">
+<span class="text-blue-400 mt-1">✓</span>
+<div><strong class="text-white">New skill</strong><span class="text-neutral-400"> - From coding movements to teaching and supervising; the robot instructor / Physical AI operator role emerges.</span></div>
+</div>
+</div>
+<div class="bg-dark-800/50 rounded-lg p-4 mb-8">
+<h3 class="font-semibold text-blue-400 mb-2">Next Module: 2.8</h3>
+<p class="text-neutral-300">We continue the Action Path with the next practical step after mastering VLA models.</p>
+</div>
+<div class="flex flex-col sm:flex-row gap-4">
+<a class="flex-1 text-center px-6 py-3 bg-dark-700 text-neutral-300 rounded-lg font-semibold hover:bg-dark-600 transition-colors" href="index.html">
+            ← Back to Track
+          </a>
+<a class="flex-1 text-center px-6 py-3 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-500 transition-colors" href="modulo-2-8.html">
+            Next Module →
+          </a>
+</div>
+</div>
+</section>
+</main>
+<!-- FOOTER -->
+<footer class="border-t border-dark-600 py-8 mt-16">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-neutral-500 text-sm">
+<p>segROBOT — INEMA.CLUB — 2026</p>
+</div>
+</footer>
+<!-- SCRIPTS -->
+<script>
+    const themeToggle = document.getElementById('theme-toggle');
+    const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
+    const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
+    const html = document.documentElement;
+    if (localStorage.getItem('theme') === 'light' || (!localStorage.getItem('theme') && !html.classList.contains('dark'))) {
+      themeToggleDarkIcon.classList.remove('hidden'); html.classList.remove('dark');
+    } else { themeToggleLightIcon.classList.remove('hidden'); }
+    themeToggle.addEventListener('click', () => {
+      themeToggleDarkIcon.classList.toggle('hidden'); themeToggleLightIcon.classList.toggle('hidden');
+      html.classList.toggle('dark'); localStorage.setItem('theme', html.classList.contains('dark') ? 'dark' : 'light');
+    });
+  </script>
+</body>
+</html>

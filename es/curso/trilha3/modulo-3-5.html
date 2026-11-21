@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="es">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Módulo 3.5 - Formación de formadores | segROBOT</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            primary: '#FACC15',
+            dark: { 900: '#111827', 800: '#1f2937', 700: '#374151', 600: '#4b5563' }
+          }
+        }
+      }
+    }
+  </script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<style>
+    body { font-family: 'Inter', sans-serif; }
+    .dark body { background-color: #111827; }
+    .topic-explanation { display: none; }
+    .topic-explanation.active { display: block; }
+
+    /* Light mode overrides */
+    html:not(.dark) body { background-color: #f8fafc; }
+    html:not(.dark) .bg-dark-900 { background-color: #ffffff; }
+    html:not(.dark) .bg-dark-800 { background-color: #f9fafb; }
+    html:not(.dark) .bg-dark-700 { background-color: #f3f4f6; }
+    html:not(.dark) .bg-dark-600 { background-color: #e5e7eb; }
+    html:not(.dark) .text-neutral-100 { color: #111827; }
+    html:not(.dark) .text-neutral-300 { color: #4b5563; }
+    html:not(.dark) .text-neutral-400 { color: #6b7280; }
+    html:not(.dark) .text-neutral-500 { color: #9ca3af; }
+    html:not(.dark) .border-dark-600 { border-color: #d1d5db; }
+    html:not(.dark) .border-dark-700 { border-color: #e5e7eb; }
+
+    /* Light mode - cores de acento (trilha purple) */
+    html:not(.dark) .text-purple-400 { color: #7c3aed; }
+    html:not(.dark) .bg-purple-500\/20 { background-color: rgba(124, 58, 237, 0.12); }
+    html:not(.dark) .bg-purple-500\/10 { background-color: rgba(124, 58, 237, 0.08); }
+    html:not(.dark) .border-purple-500\/30 { border-color: rgba(124, 58, 237, 0.25); }
+    html:not(.dark) .hover\:bg-purple-500\/30:hover { background-color: rgba(124, 58, 237, 0.18); }
+    html:not(.dark) .hover\:text-purple-400:hover { color: #7c3aed; }
+    html:not(.dark) .hover\:bg-purple-500\/10:hover { background-color: rgba(124, 58, 237, 0.08); }
+
+    /* Light mode - outras trilhas no nav */
+    html:not(.dark) .hover\:text-emerald-400:hover { color: #059669; }
+    html:not(.dark) .hover\:bg-emerald-500\/10:hover { background-color: rgba(5, 150, 105, 0.08); }
+    html:not(.dark) .hover\:text-blue-400:hover { color: #2563eb; }
+    html:not(.dark) .hover\:bg-blue-500\/10:hover { background-color: rgba(37, 99, 235, 0.08); }
+
+    /* Light mode - remove gradientes */
+    html:not(.dark) [class*="bg-gradient-to"] { background-image: none !important; }
+
+    /* Light mode - cores especiais */
+    html:not(.dark) .text-primary { color: #a16207; }
+    html:not(.dark) .bg-primary\/10 { background-color: rgba(161, 98, 7, 0.08); }
+    html:not(.dark) .border-primary\/40 { border-color: rgba(161, 98, 7, 0.25); }
+    html:not(.dark) .text-sky-400 { color: #0369a1; }
+    html:not(.dark) .text-yellow-400 { color: #a16207; }
+    html:not(.dark) .hover\:text-sky-300:hover { color: #0284c7; }
+    html:not(.dark) .hover\:text-yellow-300:hover { color: #854d0e; }
+
+    /* Light mode - nav */
+    html:not(.dark) .bg-dark-900\/95 { background-color: rgba(255, 255, 255, 0.95); }
+
+    /* Dark mode - bordas suaves */
+    .dark .border-dark-600 { border-color: #374151; }
+    .dark .divide-dark-600 > :not([hidden]) ~ :not([hidden]) { border-color: #374151; }
+
+    @keyframes wf-pulse { 0%,100% { opacity:.55 } 50% { opacity:1 } }
+    @media (prefers-reduced-motion: no-preference) {
+      .wf-a { animation: wf-pulse 2.6s ease-in-out infinite; }
+      .wf-a:nth-child(2){animation-delay:.25s} .wf-a:nth-child(3){animation-delay:.5s}
+      .wf-a:nth-child(4){animation-delay:.75s} .wf-a:nth-child(5){animation-delay:1s}
+    }
+  </style>
+<link href="https://inematds.github.io/segrobot/curso/trilha3/modulo-3-5.html" hreflang="pt-BR" rel="alternate"/><link href="https://inematds.github.io/segrobot/en/curso/trilha3/modulo-3-5.html" hreflang="en" rel="alternate"/><link href="https://inematds.github.io/segrobot/es/curso/trilha3/modulo-3-5.html" hreflang="es" rel="alternate"/></head>
+<body class="bg-dark-900 text-neutral-100 min-h-screen"><div class="inema-lang" style="position:fixed;right:14px;bottom:14px;z-index:9999;display:flex;gap:2px;padding:4px;border-radius:10px;background:rgba(12,12,16,.82);border:1px solid rgba(226,162,59,.45);font:600 12px/1 Sora,Inter,system-ui,sans-serif;backdrop-filter:blur(8px)" translate="no"><a href="../../../curso/trilha3/modulo-3-5.html" hreflang="pt-BR" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">PT</a><a href="../../../en/curso/trilha3/modulo-3-5.html" hreflang="en" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">EN</a><a href="modulo-3-5.html" hreflang="es" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#1a1206;background:#E2A23B">ES</a></div>
+<!-- NAVIGATION -->
+<nav class="sticky top-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-600">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="flex justify-between items-center h-14">
+<div class="flex items-center space-x-4">
+<a class="flex items-center space-x-2 text-yellow-400 hover:text-yellow-300" href="../../index.html">
+<span class="text-2xl">🤖</span>
+<span class="font-bold text-lg hidden sm:inline">segROBOT</span>
+</a>
+<span class="text-neutral-600">|</span>
+<a class="text-sky-400 hover:text-sky-300 text-sm font-medium" href="https://inema.club" target="_blank">INEMA.CLUB</a>
+</div>
+<div class="flex items-center space-x-1 sm:space-x-2">
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-emerald-400 hover:bg-emerald-500/10 transition-colors" href="../trilha1/index.html">
+<span class="sm:hidden">T1</span>
+<span class="hidden sm:inline">Fundamentos</span>
+</a>
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-blue-400 hover:bg-blue-500/10 transition-colors" href="../trilha2/index.html">
+<span class="sm:hidden">T2</span>
+<span class="hidden sm:inline">Acción</span>
+</a>
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-purple-400 bg-purple-500/10" href="index.html">
+<span class="sm:hidden">T3</span>
+<span class="hidden sm:inline">Estratégico</span>
+</a>
+<button class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors ml-2" id="theme-toggle">
+<svg class="hidden w-5 h-5 text-neutral-300" fill="currentColor" id="theme-toggle-dark-icon" viewbox="0 0 20 20">
+<path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+</svg>
+<svg class="hidden w-5 h-5 text-neutral-300" fill="currentColor" id="theme-toggle-light-icon" viewbox="0 0 20 20">
+<path clip-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd"></path>
+</svg>
+</button>
+</div>
+</div>
+</div>
+</nav>
+<!-- BREADCRUMB -->
+<nav class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+<div class="flex items-center space-x-2 text-sm text-neutral-400">
+<a class="hover:text-purple-400" href="../../index.html">Inicio</a>
+<span>/</span>
+<a class="hover:text-purple-400" href="index.html">Ruta 3</a>
+<span>/</span>
+<span class="text-purple-400">Módulo 3.5</span>
+</div>
+</nav>
+<!-- HEADER -->
+<header class="bg-gradient-to-br from-purple-900/30 via-dark-800 to-dark-800 py-12 border-b border-dark-600">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+<span class="inline-block px-3 py-1 bg-purple-500/20 text-purple-400 text-xs font-semibold rounded-full mb-4">MÓDULO 3.5</span>
+<h1 class="text-3xl sm:text-4xl font-bold mb-4">👨‍🏫 Formación de formadores: el cuello de botella real</h1>
+<p class="text-lg text-neutral-400 max-w-3xl">
+        La demanda de capacitación en robótica crece exponencialmente, pero la oferta de instructores calificados no alcanza. Ampliar la recualificación exige formar multiplicadores especializados, no depender de unos pocos expertos externos.
+      </p>
+<!-- Hero SVG: efeito multiplicador (1 expert -> N multiplicadores -> NxM operadores) -->
+<div class="rounded-2xl border border-purple-500/30 bg-dark-900/40 p-3 sm:p-4 mt-8 overflow-hidden">
+<svg aria-label="Modelo en cascada: un experto forma multiplicadores internos que, a su vez, capacitan a cientos de operadores, multiplicando el alcance de 1 a 1000" class="w-full h-auto" role="img" viewbox="0 0 1000 240">
+<defs>
+<lineargradient id="m35-grad" x1="0" x2="1" y1="0" y2="1">
+<stop offset="0" stop-color="#c084fc"></stop><stop offset="1" stop-color="#a855f7"></stop>
+</lineargradient>
+<filter height="180%" id="m35-glow" width="180%" x="-40%" y="-40%">
+<fegaussianblur result="b" stddeviation="3"></fegaussianblur><femerge><femergenode in="b"></femergenode><femergenode in="SourceGraphic"></femergenode></femerge>
+</filter>
+<pattern height="32" id="m35-grid" patternunits="userSpaceOnUse" width="32">
+<circle cx="1.3" cy="1.3" fill="#a855f7" opacity="0.12" r="1.3"></circle>
+</pattern>
+<marker id="m35-ah" markerheight="9" markerwidth="9" orient="auto" refx="6.5" refy="4.5"><path d="M0,0 L8,4.5 L0,9 L2.4,4.5 Z" fill="#c084fc"></path></marker>
+<marker id="m35-ahc" markerheight="9" markerwidth="9" orient="auto" refx="6.5" refy="4.5"><path d="M0,0 L8,4.5 L0,9 L2.4,4.5 Z" fill="#38bdf8"></path></marker>
+</defs>
+<rect fill="url(#m35-grid)" height="240" width="1000" x="0" y="0"></rect>
+<!-- Expert -> multiplicadores (purple) -->
+<g fill="none" opacity="0.65" stroke="#c084fc" stroke-width="2">
+<path d="M196,120 C300,120 320,50 452,50" marker-end="url(#m35-ah)"></path>
+<path d="M196,120 L452,120" marker-end="url(#m35-ah)"></path>
+<path d="M196,120 C300,120 320,190 452,190" marker-end="url(#m35-ah)"></path>
+</g>
+<!-- multiplicadores -> operadores (ciano) -->
+<g fill="none" opacity="0.5" stroke="#38bdf8" stroke-width="2">
+<path d="M588,50  C700,50 720,120 800,80" marker-end="url(#m35-ahc)"></path>
+<path d="M588,50  C700,50 720,120 800,120" marker-end="url(#m35-ahc)"></path>
+<path d="M588,120 L800,120" marker-end="url(#m35-ahc)"></path>
+<path d="M588,120 C700,120 720,120 800,160" marker-end="url(#m35-ahc)"></path>
+<path d="M588,190 C700,190 720,120 800,200" marker-end="url(#m35-ahc)"></path>
+</g>
+<!-- Expert -->
+<g filter="url(#m35-glow)"><rect fill="#1a1230" height="64" rx="14" stroke="url(#m35-grad)" stroke-width="2.5" width="156" x="40" y="88"></rect></g>
+<text fill="#c084fc" font-family="Inter,sans-serif" font-size="19" font-weight="700" text-anchor="middle" x="118" y="114">1 Expert</text>
+<text fill="#e9d5ff" font-family="Inter,sans-serif" font-size="12.5" text-anchor="middle" x="118" y="134">externo</text>
+<!-- Multiplicadores -->
+<g font-family="Inter,sans-serif" font-size="13" font-weight="600">
+<g class="wf-a"><rect fill="#0e1b26" height="32" rx="9" stroke="#38bdf8" stroke-width="2" width="136" x="452" y="34"></rect><text fill="#bfe6ff" text-anchor="middle" x="520" y="55">multiplicador</text></g>
+<g class="wf-a"><rect fill="#0e1b26" height="32" rx="9" stroke="#38bdf8" stroke-width="2" width="136" x="452" y="104"></rect><text fill="#bfe6ff" text-anchor="middle" x="520" y="125">multiplicador</text></g>
+<g class="wf-a"><rect fill="#0e1b26" height="32" rx="9" stroke="#38bdf8" stroke-width="2" width="136" x="452" y="174"></rect><text fill="#bfe6ff" text-anchor="middle" x="520" y="195">multiplicador</text></g>
+</g>
+<!-- Operadores -->
+<g font-family="Inter,sans-serif" font-size="11" font-weight="600">
+<rect fill="#1a1230" height="28" rx="8" stroke="#a855f7" stroke-width="1.5" width="120" x="800" y="64"></rect><text fill="#e9d5ff" text-anchor="middle" x="860" y="83">100 operadores</text>
+<rect fill="#1a1230" height="28" rx="8" stroke="#a855f7" stroke-width="1.5" width="120" x="800" y="106"></rect><text fill="#e9d5ff" text-anchor="middle" x="860" y="125">100 operadores</text>
+<rect fill="#1a1230" height="28" rx="8" stroke="#a855f7" stroke-width="1.5" width="120" x="800" y="148"></rect><text fill="#e9d5ff" text-anchor="middle" x="860" y="167">100 operadores</text>
+<rect fill="#1a1230" height="28" rx="8" stroke="#a855f7" stroke-width="1.5" width="120" x="800" y="190"></rect><text fill="#e9d5ff" text-anchor="middle" x="860" y="209">100 operadores</text>
+</g>
+<text fill="#c084fc" font-family="Inter,sans-serif" font-size="13" font-weight="700" text-anchor="middle" x="500" y="232">1 → 10 → 1.000  (efecto multiplicador)</text>
+</svg>
+<p class="text-xs text-neutral-500 mt-2 text-center">Diagrama ilustrativo del modelo de cascada de formación.</p>
+</div>
+<!-- Stats -->
+<div class="grid grid-cols-4 gap-4 mt-8 max-w-2xl">
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+<div class="text-xl font-bold text-purple-400">6</div>
+<div class="text-xs text-neutral-400">Temas</div>
+</div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+<div class="text-xl font-bold text-purple-400">45</div>
+<div class="text-xs text-neutral-400">Minutos</div>
+</div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+<div class="text-xl font-bold text-purple-400">Avanzado</div>
+<div class="text-xs text-neutral-400">Nivel</div>
+</div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+<div class="text-xl font-bold text-purple-400">Estrategia</div>
+<div class="text-xs text-neutral-400">Tipo</div>
+</div>
+</div>
+</div>
+</header>
+<!-- CONTEUDO -->
+<main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+<!-- TOPICO 1 -->
+<section class="mb-16" id="topico-1">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">1</span>
+<h2 class="text-2xl font-bold">🔒 El cuello de botella: ¿quién capacita a los capacitadores?</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed">
+        Existe una pregunta fundamental que casi nadie responde: la demanda de capacitación en robótica crece de forma <strong class="text-purple-400">exponencial</strong>, pero la oferta de instructores calificados crece de forma <strong class="text-purple-400">lineal</strong>. Esta brecha es el verdadero cuello de botella de la transformación: no la falta de robots ni de software.
+      </p>
+<div class="bg-gradient-to-br from-purple-900/30 to-dark-800 rounded-xl border border-purple-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-purple-400 mb-4 flex items-center"><span class="mr-2">📐</span> Concepto: demanda exponencial frente a oferta lineal</h3>
+<p class="text-neutral-300 mb-4">Una empresa con 5.000 operadores no puede depender de 2 instructores externos. Las cuentas simplemente no dan: el entrenamiento se convierte en una fila de espera y la transformación se atasca justo donde menos se esperaba.</p>
+<ul class="space-y-2 text-neutral-300">
+<li class="flex items-start space-x-2"><span class="text-purple-400 mt-1">•</span><span>La demanda se duplica con cada ola de automatización; la oferta de instructores crece lentamente.</span></li>
+<li class="flex items-start space-x-2"><span class="text-purple-400 mt-1">•</span><span>Sin multiplicadores, la capacitación <strong class="text-purple-400">no escala</strong> — se convierte en un cuello de botella permanente.</span></li>
+<li class="flex items-start space-x-2"><span class="text-purple-400 mt-1">•</span><span>El cuello de botella es humano, no tecnológico.</span></li>
+</ul>
+</div>
+<div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-primary mb-3 flex items-center"><span class="mr-2">💡</span> Consejo práctico</h3>
+<p class="text-neutral-300">Antes de comprar más robots, mapea tu capacidad de formación. Pregunta: "¿cuántos operadores puede capacitar cada instructor por trimestre?" Si la respuesta no coincide con el ritmo de implementación, el cuello de botella ya está instalado.</p>
+</div>
+<!-- Conceitos-chave -->
+<h3 class="text-sm font-semibold text-neutral-400 uppercase tracking-wide mb-3">Conceptos clave</h3>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-2">
+<div class="bg-dark-800 rounded-lg border border-dark-600 p-4"><div class="text-purple-400 font-semibold text-sm mb-1">Bottleneck</div><div class="text-xs text-neutral-400">Los instructores como cuello de botella</div></div>
+<div class="bg-dark-800 rounded-lg border border-dark-600 p-4"><div class="text-purple-400 font-semibold text-sm mb-1">Escalabilidad</div><div class="text-xs text-neutral-400">Formar a muchos sin perder calidad</div></div>
+<div class="bg-dark-800 rounded-lg border border-dark-600 p-4"><div class="text-purple-400 font-semibold text-sm mb-1">Demanda exponencial</div><div class="text-xs text-neutral-400">La necesidad se duplica con cada ola</div></div>
+<div class="bg-dark-800 rounded-lg border border-dark-600 p-4"><div class="text-purple-400 font-semibold text-sm mb-1">Oferta lineal</div><div class="text-xs text-neutral-400">Los instructores se incorporan uno a uno</div></div>
+</div>
+</section>
+<!-- TOPICO 2 -->
+<section class="mb-16" id="topico-2">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">2</span>
+<h2 class="text-2xl font-bold">💸 La brecha más costosa hasta 2030</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed">
+        La escasez de instructores especializados en robótica será la <strong class="text-purple-400">brecha más costosa</strong> de la industria hasta 2030 — más costoso que la falta de robots o de software. El motivo: invertir en robots sin invertir proporcionalmente en formadores genera activos inactivos.
+      </p>
+<div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-blue-400 mb-4 flex items-center"><span class="mr-2">📊</span> Proyección del sector hasta 2030</h3>
+<ul class="space-y-2 text-neutral-300">
+<li><strong>Escasez de instructores</strong> — la oferta de instructores especializados no sigue el ritmo de implementación de robots.</li>
+<li><strong>Activos varados</strong> — los robots comprados quedan inactivos por falta de operadores capacitados.</li>
+<li><strong>Costo de oportunidad</strong> — cada robot inactivo es capital inmovilizado sin retorno.</li>
+</ul>
+</div>
+<!-- Grid certo/errado -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+<div class="bg-emerald-900/20 rounded-xl border border-emerald-500/30 p-6">
+<h4 class="font-bold text-emerald-400 mb-4">✓ Inversión equilibrada</h4>
+<ul class="space-y-3 text-neutral-300">
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>El presupuesto para formadores crece junto con la flota de robots</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Los robots entran en operación con operadores ya capacitados</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>El retorno sobre el capital comienza dentro del plazo planificado</span></li>
+</ul>
+</div>
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+<h4 class="font-bold text-red-400 mb-4">✗ Inversión desequilibrada</h4>
+<ul class="space-y-3 text-neutral-300">
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Compra robots sin un plan de formación proporcional</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Los robots se convierten en <strong class="text-red-400">stranded assets</strong> parados en el piso</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>El costo de oportunidad se acumula cada trimestre</span></li>
+</ul>
+</div>
+</div>
+<!-- Conceitos-chave -->
+<h3 class="text-sm font-semibold text-neutral-400 uppercase tracking-wide mb-3">Conceptos clave</h3>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-2">
+<div class="bg-dark-800 rounded-lg border border-dark-600 p-4"><div class="text-purple-400 font-semibold text-sm mb-1">Escasez de instructores</div><div class="text-xs text-neutral-400">Escasez de instructores especializados</div></div>
+<div class="bg-dark-800 rounded-lg border border-dark-600 p-4"><div class="text-purple-400 font-semibold text-sm mb-1">Activos varados</div><div class="text-xs text-neutral-400">Robots detenidos por falta de operadores</div></div>
+<div class="bg-dark-800 rounded-lg border border-dark-600 p-4"><div class="text-purple-400 font-semibold text-sm mb-1">Costo de oportunidad</div><div class="text-xs text-neutral-400">Capital inmovilizado sin retorno</div></div>
+<div class="bg-dark-800 rounded-lg border border-dark-600 p-4"><div class="text-purple-400 font-semibold text-sm mb-1">Proyección 2030</div><div class="text-xs text-neutral-400">Brecha más costosa de la industria</div></div>
+</div>
+</section>
+<!-- TOPICO 3 -->
+<section class="mb-16" id="topico-3">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">3</span>
+<h2 class="text-2xl font-bold">🔄 Modelo en cascada: experto → multiplicador → operador</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed">
+        El modelo en cascada (train-the-trainer) organiza la formación en <strong class="text-purple-400">tres niveles</strong>: un experto externo forma a multiplicadores internos, que a su vez forman a los operadores. Cada nivel multiplica el alcance — y es el único modelo que realmente escala.
+      </p>
+<div class="bg-gradient-to-br from-purple-900/30 to-dark-800 rounded-xl border border-purple-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-purple-400 mb-4 flex items-center"><span class="mr-2">⚡</span> Las matemáticas del efecto multiplicador</h3>
+<p class="text-neutral-300">1 experto forma a 10 multiplicadores. Cada multiplicador forma a 100 operadores. Resultado: de 1 a 1.000. El alcance crece de forma geométrica mientras el número de expertos externos se mantiene al mínimo.</p>
+</div>
+<!-- Timeline dos niveis -->
+<div class="space-y-6 mb-6">
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-12 h-12 rounded-full bg-purple-500/20 flex items-center justify-center"><span class="text-purple-400 font-bold">1</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+<h4 class="font-semibold text-white mb-2">Nivel 1 — Experto externo</h4>
+<p class="text-sm text-neutral-400 mb-3">Especialista en robótica con profundidad técnica</p>
+<p class="text-neutral-300 text-sm">Forma un grupo selecto de multiplicadores internos. Inversión concentrada, alcance limitado en esta etapa, pero es la semilla de todo.</p>
+</div>
+</div>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-12 h-12 rounded-full bg-purple-500/20 flex items-center justify-center"><span class="text-purple-400 font-bold">2</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+<h4 class="font-semibold text-white mb-2">Nivel 2 — Multiplicador interno</h4>
+<p class="text-sm text-neutral-400 mb-3">Profesional de la organización capacitado por el experto</p>
+<p class="text-neutral-300 text-sm">Conoce el contexto de la operación y replica la capacitación a escala. 10 multiplicadores amplían el alcance en un orden de magnitud.</p>
+</div>
+</div>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-12 h-12 rounded-full bg-purple-500/20 flex items-center justify-center"><span class="text-purple-400 font-bold">3</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+<h4 class="font-semibold text-white mb-2">Nivel 3 — Operador</h4>
+<p class="text-sm text-neutral-400 mb-3">La planta de producción, al final de la cascada</p>
+<p class="text-neutral-300 text-sm">Cada multiplicador forma a 100 operadores. Se alcanza una escalabilidad de 1:1000 con un solo experto en la cima.</p>
+</div>
+</div>
+</div>
+<!-- Conceitos-chave -->
+<h3 class="text-sm font-semibold text-neutral-400 uppercase tracking-wide mb-3">Conceptos clave</h3>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-2">
+<div class="bg-dark-800 rounded-lg border border-dark-600 p-4"><div class="text-purple-400 font-semibold text-sm mb-1">Modelo en cascada</div><div class="text-xs text-neutral-400">Formación en tres niveles encadenados</div></div>
+<div class="bg-dark-800 rounded-lg border border-dark-600 p-4"><div class="text-purple-400 font-semibold text-sm mb-1">Train-the-trainer</div><div class="text-xs text-neutral-400">Formar a quienes formarán a otros</div></div>
+<div class="bg-dark-800 rounded-lg border border-dark-600 p-4"><div class="text-purple-400 font-semibold text-sm mb-1">Multiplicador interno</div><div class="text-xs text-neutral-400">Profesional de la organización que replica</div></div>
+<div class="bg-dark-800 rounded-lg border border-dark-600 p-4"><div class="text-purple-400 font-semibold text-sm mb-1">Escalabilidad 1:1000</div><div class="text-xs text-neutral-400">De 1 experto a mil operadores</div></div>
+</div>
+</section>
+<!-- TOPICO 4 -->
+<section class="mb-16" id="topico-4">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">4</span>
+<h2 class="text-2xl font-bold">🏢 Siemens: 2.5M jubilados y transferencia a la IA</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed">
+        Siemens usa el <strong class="text-purple-400">Copiloto industrial</strong> para capturar el conocimiento tácito de 2,5 millones de técnicos jubilados y transferirlo, mediante IA, a nuevos operadores. El conocimiento tácito desaparece con la jubilación; la IA puede hacerlo permanente y escalable.
+      </p>
+<div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-blue-400 mb-4 flex items-center"><span class="mr-2">📊</span> El caso de Siemens en cifras</h3>
+<ul class="space-y-2 text-neutral-300">
+<li><strong>2,5 millones</strong> de técnicos jubilados como fuente de conocimiento tácito.</li>
+<li><strong>Copiloto industrial</strong> como herramienta para recopilar y poner a disposición mediante IA.</li>
+<li><strong>Transferencia de conocimiento</strong> de forma escalable y permanente — no depende de una persona física.</li>
+</ul>
+</div>
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-red-400 mb-3 flex items-center"><span class="mr-2">⚠️</span> Atención: el conocimiento tácito que se pierde</h3>
+<p class="text-neutral-300">Cuando un técnico experimentado se jubila sin transmitir lo que sabe, la empresa pierde décadas de «cómo hacer las cosas» que nunca quedaron por escrito. Sin un repositorio vivo, humano o de IA, ese conocimiento simplemente se evapora.</p>
+</div>
+<div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-primary mb-3 flex items-center"><span class="mr-2">💡</span> Consejo práctico</h3>
+<p class="text-neutral-300">Empieza la captura ANTES de la jubilación, no después. Las sesiones grabadas, las entrevistas estructuradas y la documentación del «cómo» alimentan tanto a formadores humanos como a sistemas de IA del tipo Copilot.</p>
+</div>
+<!-- Conceitos-chave -->
+<h3 class="text-sm font-semibold text-neutral-400 uppercase tracking-wide mb-3">Conceptos clave</h3>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-2">
+<div class="bg-dark-800 rounded-lg border border-dark-600 p-4"><div class="text-purple-400 font-semibold text-sm mb-1">Transferencia de conocimiento</div><div class="text-xs text-neutral-400">Transferir conocimientos antes de que se pierdan</div></div>
+<div class="bg-dark-800 rounded-lg border border-dark-600 p-4"><div class="text-purple-400 font-semibold text-sm mb-1">Copiloto industrial</div><div class="text-xs text-neutral-400">IA de Siemens para capturar conocimiento</div></div>
+<div class="bg-dark-800 rounded-lg border border-dark-600 p-4"><div class="text-purple-400 font-semibold text-sm mb-1">Conocimiento tácito</div><div class="text-xs text-neutral-400">El «cómo hacerlo» no escrito</div></div>
+<div class="bg-dark-800 rounded-lg border border-dark-600 p-4"><div class="text-purple-400 font-semibold text-sm mb-1">IA como repositorio</div><div class="text-xs text-neutral-400">Conocimiento permanente y escalable</div></div>
+</div>
+</section>
+<!-- TOPICO 5 -->
+<section class="mb-16" id="topico-5">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">5</span>
+<h2 class="text-2xl font-bold">🤝 Mentoría y Liderazgo Medio: El Vínculo entre la Dirección y la Planta</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed">
+        Programas de mentoría entre <strong class="text-purple-400">adoptantes tempranos</strong> y los nuevos operadores, junto con contenido específico para los mandos medios (supervisores, coordinadores), sirven de puente entre la dirección y las operaciones. Las transformaciones mueren o cobran vida en los mandos medios.
+      </p>
+<div class="bg-gradient-to-br from-purple-900/30 to-dark-800 rounded-xl border border-purple-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-purple-400 mb-4 flex items-center"><span class="mr-2">🔗</span> Concepto: el puente entre la alta dirección y la planta</h3>
+<p class="text-neutral-300 mb-4">Son los supervisores y coordinadores quienes traducen la estrategia en acciones diarias. Sin su buy-in, nada de lo que decide la dirección llega de forma efectiva a la planta de producción.</p>
+<ul class="space-y-2 text-neutral-300">
+<li class="flex items-start space-x-2"><span class="text-purple-400 mt-1">•</span><span>Mentoría entre pares: los primeros en adoptar la tecnología forman y apoyan a los nuevos operadores.</span></li>
+<li class="flex items-start space-x-2"><span class="text-purple-400 mt-1">•</span><span>Contenido dedicado a la gerencia media, no solo a los operadores.</span></li>
+<li class="flex items-start space-x-2"><span class="text-purple-400 mt-1">•</span><span>Traducción estratégica: de la decisión de la dirección a la rutina del turno.</span></li>
+</ul>
+</div>
+<!-- Grid certo/errado -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+<div class="bg-emerald-900/20 rounded-xl border border-emerald-500/30 p-6">
+<h4 class="font-bold text-emerald-400 mb-4">✓ Con el buy-in de la gerencia media</h4>
+<ul class="space-y-3 text-neutral-300">
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>La estrategia se convierte en acción diaria durante el turno</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Los primeros en adoptar asesoran a los nuevos operadores</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Los supervisores defienden el cambio en el piso de planta</span></li>
+</ul>
+</div>
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+<h4 class="font-bold text-red-400 mb-4">✗ Sin buy-in de la gerencia media</h4>
+<ul class="space-y-3 text-neutral-300">
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>La decisión de la dirección no llega a la planta</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>La transformación «muere» en la gerencia media</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Los operadores sin mentoría vuelven a la forma de trabajo anterior</span></li>
+</ul>
+</div>
+</div>
+<div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-primary mb-3 flex items-center"><span class="mr-2">💡</span> Consejo práctico</h3>
+<p class="text-neutral-300">Identifica pronto a los primeros en adoptar y formaliza su papel de mentor. Ya superaron la curva de resistencia y hablan el idioma de la planta: son los multiplicadores más convincentes que tienes.</p>
+</div>
+<!-- Conceitos-chave -->
+<h3 class="text-sm font-semibold text-neutral-400 uppercase tracking-wide mb-3">Conceptos clave</h3>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-2">
+<div class="bg-dark-800 rounded-lg border border-dark-600 p-4"><div class="text-purple-400 font-semibold text-sm mb-1">Mentoría entre pares</div><div class="text-xs text-neutral-400">Mentoría entre los primeros usuarios y los nuevos</div></div>
+<div class="bg-dark-800 rounded-lg border border-dark-600 p-4"><div class="text-purple-400 font-semibold text-sm mb-1">Gerencia media</div><div class="text-xs text-neutral-400">Donde las transformaciones triunfan o fracasan</div></div>
+<div class="bg-dark-800 rounded-lg border border-dark-600 p-4"><div class="text-purple-400 font-semibold text-sm mb-1">Traducción estratégica</div><div class="text-xs text-neutral-400">La estrategia se convierte en acción diaria</div></div>
+<div class="bg-dark-800 rounded-lg border border-dark-600 p-4"><div class="text-purple-400 font-semibold text-sm mb-1">Link C-suite to floor</div><div class="text-xs text-neutral-400">Puente entre la dirección y la operación</div></div>
+</div>
+</section>
+<!-- TOPICO 6 -->
+<section class="mb-16" id="topico-6">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">6</span>
+<h2 class="text-2xl font-bold">🎓 Competencias del formador: técnica + psicología + andragogía</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed">
+        Quien forma en robótica debe dominar <strong class="text-purple-400">cuatro dimensiones</strong>: técnica (robots), psicología (miedo y resistencia), andragogía (educación de adultos) y seguridad (normas y riesgos). Es un perfil híbrido — raro y valioso.
+      </p>
+<div class="bg-gradient-to-br from-purple-900/30 to-dark-800 rounded-xl border border-purple-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-purple-400 mb-4 flex items-center"><span class="mr-2">🧩</span> Concepto: competencia cuádruple (formador en forma de T)</h3>
+<p class="text-neutral-300 mb-4">Un formador que solo sabe de técnica no convence. Quien solo sabe de teoría no resuelve. El perfil T-shaped combina profundidad técnica con amplitud en psicología, andragogía y seguridad.</p>
+<div class="grid grid-cols-2 gap-3">
+<div class="bg-dark-800/60 rounded-lg p-3 border border-dark-600"><div class="text-purple-400 font-semibold text-sm">🔧 Técnica</div><div class="text-xs text-neutral-400 mt-1">Dominio de los robots y del proceso</div></div>
+<div class="bg-dark-800/60 rounded-lg p-3 border border-dark-600"><div class="text-purple-400 font-semibold text-sm">🧠 Psicología</div><div class="text-xs text-neutral-400 mt-1">Lidiar con el miedo y la resistencia</div></div>
+<div class="bg-dark-800/60 rounded-lg p-3 border border-dark-600"><div class="text-purple-400 font-semibold text-sm">📚 Andragogía</div><div class="text-xs text-neutral-400 mt-1">Educación de adultos</div></div>
+<div class="bg-dark-800/60 rounded-lg p-3 border border-dark-600"><div class="text-purple-400 font-semibold text-sm">🦺 Seguridad</div><div class="text-xs text-neutral-400 mt-1">Normas y gestión de riesgos</div></div>
+</div>
+</div>
+<div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-blue-400 mb-4 flex items-center"><span class="mr-2">📊</span> Por qué el perfil híbrido es poco común</h3>
+<ul class="space-y-2 text-neutral-300">
+<li><strong>Técnica aislada</strong> — domina el robot, pero no convence a quienes le tienen miedo.</li>
+<li><strong>Teoría aislada</strong> — sabe enseñar, pero no resuelve el problema real de la planta.</li>
+<li><strong>Perfil en forma de T</strong> — suma las cuatro dimensiones; eso es lo que hace que el formador sea escaso y valioso.</li>
+</ul>
+</div>
+<!-- Conceitos-chave -->
+<h3 class="text-sm font-semibold text-neutral-400 uppercase tracking-wide mb-3">Conceptos clave</h3>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-2">
+<div class="bg-dark-800 rounded-lg border border-dark-600 p-4"><div class="text-purple-400 font-semibold text-sm mb-1">Competencia cuádruple</div><div class="text-xs text-neutral-400">Técnica, psicología, andragogía, seguridad</div></div>
+<div class="bg-dark-800 rounded-lg border border-dark-600 p-4"><div class="text-purple-400 font-semibold text-sm mb-1">Andragogía</div><div class="text-xs text-neutral-400">Cómo aprenden realmente los adultos</div></div>
+<div class="bg-dark-800 rounded-lg border border-dark-600 p-4"><div class="text-purple-400 font-semibold text-sm mb-1">Perfil híbrido</div><div class="text-xs text-neutral-400">Suma de dimensiones poco frecuentes juntas</div></div>
+<div class="bg-dark-800 rounded-lg border border-dark-600 p-4"><div class="text-purple-400 font-semibold text-sm mb-1">Formador T-shaped</div><div class="text-xs text-neutral-400">Profundidad técnica + amplitud humana</div></div>
+</div>
+</section>
+<!-- RESUMO -->
+<section class="mb-12">
+<div class="bg-gradient-to-br from-purple-900/40 via-dark-800 to-dark-800 rounded-xl border border-purple-500/30 p-8">
+<h2 class="text-2xl font-bold mb-6 flex items-center"><span class="mr-3">📋</span> Resumen del módulo</h2>
+<div class="space-y-4 mb-8">
+<div class="flex items-start space-x-3"><span class="text-purple-400 mt-1">✓</span><div><strong class="text-white">El cuello de botella es humano</strong><span class="text-neutral-400"> - demanda exponencial frente a oferta lineal de instructores.</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-purple-400 mt-1">✓</span><div><strong class="text-white">Brecha más costosa hasta 2030</strong><span class="text-neutral-400"> - los robots sin formadores se convierten en activos varados.</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-purple-400 mt-1">✓</span><div><strong class="text-white">El modelo en cascada escala</strong><span class="text-neutral-400"> - experto → multiplicador → operador, de 1 a 1.000.</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-purple-400 mt-1">✓</span><div><strong class="text-white">Siemens captura el conocimiento tácito</strong><span class="text-neutral-400"> - 2,5M de jubilados mediante Industrial Copilot.</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-purple-400 mt-1">✓</span><div><strong class="text-white">El liderazgo intermedio es el nexo</strong><span class="text-neutral-400"> - sin buy-in, la transformación muere a mitad de camino.</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-purple-400 mt-1">✓</span><div><strong class="text-white">Formador T-shaped</strong><span class="text-neutral-400"> - técnica + psicología + andragogía + seguridad.</span></div></div>
+</div>
+<div class="bg-dark-800/50 rounded-lg p-4 mb-8">
+<h3 class="font-semibold text-purple-400 mb-2">Próximo módulo:</h3>
+<p class="text-neutral-300">3.6 - El futuro de la recapacitación en entornos robotizados</p>
+</div>
+<div class="flex flex-col sm:flex-row gap-4">
+<a class="flex-1 text-center px-6 py-3 bg-dark-700 text-neutral-300 rounded-lg font-semibold hover:bg-dark-600 transition-colors" href="index.html">← Volver a la ruta</a>
+<a class="flex-1 text-center px-6 py-3 bg-purple-600 text-white rounded-lg font-semibold hover:bg-purple-500 transition-colors" href="modulo-3-6.html">Próximo módulo →</a>
+</div>
+</div>
+</section>
+</main>
+<!-- FOOTER -->
+<footer class="border-t border-dark-600 py-8 mt-16">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-neutral-500 text-sm">
+<p>segROBOT — INEMA.CLUB — 2026 | <a class="text-sky-400 hover:text-sky-300" href="https://inema.club" target="_blank">INEMA.CLUB</a></p>
+</div>
+</footer>
+<!-- SCRIPTS -->
+<script>
+    const themeToggle = document.getElementById('theme-toggle');
+    const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
+    const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
+    const html = document.documentElement;
+    if (localStorage.getItem('theme') === 'light') {
+      themeToggleDarkIcon.classList.remove('hidden');
+      html.classList.remove('dark');
+    } else {
+      themeToggleLightIcon.classList.remove('hidden');
+    }
+    themeToggle.addEventListener('click', () => {
+      themeToggleDarkIcon.classList.toggle('hidden');
+      themeToggleLightIcon.classList.toggle('hidden');
+      html.classList.toggle('dark');
+      localStorage.setItem('theme', html.classList.contains('dark') ? 'dark' : 'light');
+    });
+  </script>
+</body>
+</html>

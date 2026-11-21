@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="es">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Módulo 3.2 - Métricas para equipos híbridos | segROBOT</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            primary: '#FACC15',
+            dark: { 900: '#111827', 800: '#1f2937', 700: '#374151', 600: '#4b5563' }
+          }
+        }
+      }
+    }
+  </script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<style>
+    body { font-family: 'Inter', sans-serif; }
+    .dark body { background-color: #111827; }
+    .topic-explanation { display: none; }
+    .topic-explanation.active { display: block; }
+
+    /* Light mode overrides */
+    html:not(.dark) body { background-color: #f8fafc; }
+    html:not(.dark) .bg-dark-900 { background-color: #ffffff; }
+    html:not(.dark) .bg-dark-800 { background-color: #f9fafb; }
+    html:not(.dark) .bg-dark-700 { background-color: #f3f4f6; }
+    html:not(.dark) .bg-dark-600 { background-color: #e5e7eb; }
+    html:not(.dark) .text-neutral-100 { color: #111827; }
+    html:not(.dark) .text-neutral-300 { color: #4b5563; }
+    html:not(.dark) .text-neutral-400 { color: #6b7280; }
+    html:not(.dark) .text-neutral-500 { color: #9ca3af; }
+    html:not(.dark) .border-dark-600 { border-color: #d1d5db; }
+    html:not(.dark) .border-dark-700 { border-color: #e5e7eb; }
+
+    /* Light mode - cores de acento (trilha purple) */
+    html:not(.dark) .text-purple-400 { color: #7c3aed; }
+    html:not(.dark) .bg-purple-500\/20 { background-color: rgba(124, 58, 237, 0.12); }
+    html:not(.dark) .bg-purple-500\/10 { background-color: rgba(124, 58, 237, 0.08); }
+    html:not(.dark) .border-purple-500\/30 { border-color: rgba(124, 58, 237, 0.25); }
+    html:not(.dark) .hover\:bg-purple-500\/30:hover { background-color: rgba(124, 58, 237, 0.18); }
+    html:not(.dark) .hover\:text-purple-400:hover { color: #7c3aed; }
+    html:not(.dark) .hover\:bg-purple-500\/10:hover { background-color: rgba(124, 58, 237, 0.08); }
+
+    /* Light mode - outras trilhas no nav */
+    html:not(.dark) .hover\:text-emerald-400:hover { color: #059669; }
+    html:not(.dark) .hover\:bg-emerald-500\/10:hover { background-color: rgba(5, 150, 105, 0.08); }
+    html:not(.dark) .hover\:text-blue-400:hover { color: #2563eb; }
+    html:not(.dark) .hover\:bg-blue-500\/10:hover { background-color: rgba(37, 99, 235, 0.08); }
+
+    /* Light mode - remove gradientes */
+    html:not(.dark) [class*="bg-gradient-to"] { background-image: none !important; }
+
+    /* Light mode - cores especiais */
+    html:not(.dark) .text-primary { color: #a16207; }
+    html:not(.dark) .bg-primary\/10 { background-color: rgba(161, 98, 7, 0.08); }
+    html:not(.dark) .border-primary\/40 { border-color: rgba(161, 98, 7, 0.25); }
+    html:not(.dark) .text-sky-400 { color: #0369a1; }
+    html:not(.dark) .text-yellow-400 { color: #a16207; }
+    html:not(.dark) .hover\:text-sky-300:hover { color: #0284c7; }
+    html:not(.dark) .hover\:text-yellow-300:hover { color: #854d0e; }
+
+    /* Light mode - nav */
+    html:not(.dark) .bg-dark-900\/95 { background-color: rgba(255, 255, 255, 0.95); }
+
+    /* Dark mode - bordas suaves */
+    .dark .border-dark-600 { border-color: #374151; }
+    .dark .divide-dark-600 > :not([hidden]) ~ :not([hidden]) { border-color: #374151; }
+
+    @keyframes wf-pulse { 0%,100% { opacity:.55 } 50% { opacity:1 } }
+    @media (prefers-reduced-motion: no-preference) {
+      .wf-a { animation: wf-pulse 2.6s ease-in-out infinite; }
+      .wf-a:nth-child(2){animation-delay:.25s} .wf-a:nth-child(3){animation-delay:.5s}
+      .wf-a:nth-child(4){animation-delay:.75s} .wf-a:nth-child(5){animation-delay:1s}
+    }
+  </style>
+<link href="https://inematds.github.io/segrobot/curso/trilha3/modulo-3-2.html" hreflang="pt-BR" rel="alternate"/><link href="https://inematds.github.io/segrobot/en/curso/trilha3/modulo-3-2.html" hreflang="en" rel="alternate"/><link href="https://inematds.github.io/segrobot/es/curso/trilha3/modulo-3-2.html" hreflang="es" rel="alternate"/></head>
+<body class="bg-dark-900 text-neutral-100 min-h-screen"><div class="inema-lang" style="position:fixed;right:14px;bottom:14px;z-index:9999;display:flex;gap:2px;padding:4px;border-radius:10px;background:rgba(12,12,16,.82);border:1px solid rgba(226,162,59,.45);font:600 12px/1 Sora,Inter,system-ui,sans-serif;backdrop-filter:blur(8px)" translate="no"><a href="../../../curso/trilha3/modulo-3-2.html" hreflang="pt-BR" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">PT</a><a href="../../../en/curso/trilha3/modulo-3-2.html" hreflang="en" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">EN</a><a href="modulo-3-2.html" hreflang="es" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#1a1206;background:#E2A23B">ES</a></div>
+<!-- NAVIGATION -->
+<nav class="sticky top-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-600">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="flex justify-between items-center h-14">
+<div class="flex items-center space-x-4">
+<a class="flex items-center space-x-2 text-yellow-400 hover:text-yellow-300" href="../../index.html">
+<span class="text-2xl">🤖</span>
+<span class="font-bold text-lg hidden sm:inline">segROBOT</span>
+</a>
+<span class="text-neutral-600">|</span>
+<a class="text-sky-400 hover:text-sky-300 text-sm font-medium" href="https://inema.club" target="_blank">INEMA.CLUB</a>
+</div>
+<div class="flex items-center space-x-1 sm:space-x-2">
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-emerald-400 hover:bg-emerald-500/10 transition-colors" href="../trilha1/index.html">
+<span class="sm:hidden">T1</span>
+<span class="hidden sm:inline">Fundamentos</span>
+</a>
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-blue-400 hover:bg-blue-500/10 transition-colors" href="../trilha2/index.html">
+<span class="sm:hidden">T2</span>
+<span class="hidden sm:inline">Acción</span>
+</a>
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-purple-400 bg-purple-500/10" href="index.html">
+<span class="sm:hidden">T3</span>
+<span class="hidden sm:inline">Estratégico</span>
+</a>
+<button class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors ml-2" id="theme-toggle">
+<svg class="hidden w-5 h-5 text-neutral-300" fill="currentColor" id="theme-toggle-dark-icon" viewbox="0 0 20 20">
+<path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+</svg>
+<svg class="hidden w-5 h-5 text-neutral-300" fill="currentColor" id="theme-toggle-light-icon" viewbox="0 0 20 20">
+<path clip-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd"></path>
+</svg>
+</button>
+</div>
+</div>
+</div>
+</nav>
+<!-- BREADCRUMB -->
+<nav class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+<div class="flex items-center space-x-2 text-sm text-neutral-400">
+<a class="hover:text-purple-400" href="../../index.html">Inicio</a>
+<span>/</span>
+<a class="hover:text-purple-400" href="index.html">Ruta 3</a>
+<span>/</span>
+<span class="text-purple-400">Módulo 3.2</span>
+</div>
+</nav>
+<!-- HEADER -->
+<header class="bg-gradient-to-br from-purple-900/30 via-dark-800 to-dark-800 py-12 border-b border-dark-600">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+<span class="inline-block px-3 py-1 bg-purple-500/20 text-purple-400 text-xs font-semibold rounded-full mb-4">MÓDULO 3.2</span>
+<h1 class="text-3xl sm:text-4xl font-bold mb-4">📊 Métricas para equipos híbridos de humanos y robots</h1>
+<p class="text-lg text-neutral-400 max-w-3xl">
+        Diseñar KPI que midan el <strong class="text-purple-400">sistema sociotécnico</strong> — humano y robot
+        operando como una unidad integrada — y no humanos o robots aislados. Una métrica equivocada genera incentivos
+        perversos; una métrica correcta revela dónde está el valor real del operador en la era de las flotas.
+      </p>
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-4 mt-8 max-w-2xl">
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+<div class="text-xl font-bold text-purple-400">6</div>
+<div class="text-xs text-neutral-400">Temas</div>
+</div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+<div class="text-xl font-bold text-purple-400">50</div>
+<div class="text-xs text-neutral-400">Minutos</div>
+</div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+<div class="text-xl font-bold text-purple-400">Avanzado</div>
+<div class="text-xs text-neutral-400">Nivel</div>
+</div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+<div class="text-xl font-bold text-purple-400">Estrategia</div>
+<div class="text-xs text-neutral-400">Tipo</div>
+</div>
+</div>
+</div>
+</header>
+<!-- CONTEUDO -->
+<main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+<!-- SVG FUTURISTA: Dashboard de metricas da equipe hibrida -->
+<div class="rounded-2xl border border-purple-500/30 bg-dark-900/40 p-3 sm:p-4 mb-12 overflow-hidden">
+<svg aria-label="Dashboard de métricas de un equipo híbrido: throughput del sistema, exception rate, fleet uptime y MTTR convergen desde el operador humano y la flota de robots en un único panel de KPIs" class="w-full h-auto" role="img" viewbox="0 0 1000 300">
+<defs>
+<lineargradient id="m32-grad" x1="0" x2="1" y1="0" y2="1">
+<stop offset="0" stop-color="#c084fc"></stop><stop offset="1" stop-color="#a855f7"></stop>
+</lineargradient>
+<filter height="180%" id="m32-glow" width="180%" x="-40%" y="-40%">
+<fegaussianblur result="b" stddeviation="3"></fegaussianblur><femerge><femergenode in="b"></femergenode><femergenode in="SourceGraphic"></femergenode></femerge>
+</filter>
+<pattern height="32" id="m32-grid" patternunits="userSpaceOnUse" width="32">
+<circle cx="1.3" cy="1.3" fill="#a855f7" opacity="0.12" r="1.3"></circle>
+</pattern>
+<marker id="m32-ah" markerheight="9" markerwidth="9" orient="auto" refx="6.5" refy="4.5"><path d="M0,0 L8,4.5 L0,9 L2.4,4.5 Z" fill="#c084fc"></path></marker>
+<marker id="m32-ahc" markerheight="9" markerwidth="9" orient="auto" refx="6.5" refy="4.5"><path d="M0,0 L8,4.5 L0,9 L2.4,4.5 Z" fill="#38bdf8"></path></marker>
+</defs>
+<rect fill="url(#m32-grid)" height="300" width="1000" x="0" y="0"></rect>
+<!-- Fontes de dados -->
+<g filter="url(#m32-glow)"><rect fill="#1a1230" height="64" rx="14" stroke="url(#m32-grad)" stroke-width="2.5" width="170" x="36" y="70"></rect></g>
+<text fill="#c084fc" font-family="Inter,sans-serif" font-size="18" font-weight="700" text-anchor="middle" x="121" y="98">Operador</text>
+<text fill="#e0c8ff" font-family="Inter,sans-serif" font-size="12" text-anchor="middle" x="121" y="118">exception handler</text>
+<g><rect fill="#0e1b26" height="64" rx="14" stroke="#38bdf8" stroke-width="2" width="170" x="36" y="168"></rect></g>
+<text fill="#bfe6ff" font-family="Inter,sans-serif" font-size="18" font-weight="700" text-anchor="middle" x="121" y="196">Flota de AMR</text>
+<text fill="#9ad6ff" font-family="Inter,sans-serif" font-size="12" text-anchor="middle" x="121" y="216">10+ robots</text>
+<!-- Setas convergindo para os KPIs -->
+<g fill="none" opacity="0.65" stroke="#c084fc" stroke-width="2">
+<path d="M206,102 C300,102 320,150 420,150" marker-end="url(#m32-ah)"></path>
+</g>
+<g fill="none" opacity="0.55" stroke="#38bdf8" stroke-width="2">
+<path d="M206,200 C300,200 320,150 420,150" marker-end="url(#m32-ahc)"></path>
+</g>
+<!-- Coluna de KPIs (cards de metrica) -->
+<g font-family="Inter,sans-serif">
+<g class="wf-a"><rect fill="#1a1230" height="46" rx="9" stroke="#c084fc" stroke-width="1.8" width="180" x="420" y="46"></rect><text fill="#e0c8ff" font-size="12.5" x="436" y="68">Throughput</text><text fill="#c084fc" font-size="18" font-weight="700" text-anchor="end" x="584" y="76">↑</text></g>
+<g class="wf-a"><rect fill="#1a1230" height="46" rx="9" stroke="#c084fc" stroke-width="1.8" width="180" x="420" y="100"></rect><text fill="#e0c8ff" font-size="12.5" x="436" y="122">Exception/h</text><text fill="#c084fc" font-size="18" font-weight="700" text-anchor="end" x="584" y="130">↓</text></g>
+<g class="wf-a"><rect fill="#1a1230" height="46" rx="9" stroke="#c084fc" stroke-width="1.8" width="180" x="420" y="154"></rect><text fill="#e0c8ff" font-size="12.5" x="436" y="176">Disponibilidad de la flota</text><text fill="#c084fc" font-size="14" font-weight="700" text-anchor="end" x="584" y="184">99%</text></g>
+<g class="wf-a"><rect fill="#1a1230" height="46" rx="9" stroke="#c084fc" stroke-width="1.8" width="180" x="420" y="208"></rect><text fill="#e0c8ff" font-size="12.5" x="436" y="230">MTTR</text><text fill="#c084fc" font-size="14" font-weight="700" text-anchor="end" x="584" y="238">min</text></g>
+</g>
+<!-- Seta para o painel final -->
+<g fill="none" opacity="0.65" stroke="#c084fc" stroke-width="2">
+<path d="M600,150 L760,150" marker-end="url(#m32-ah)"></path>
+</g>
+<!-- Painel KPI integrado -->
+<g filter="url(#m32-glow)"><rect fill="#1a1230" height="128" rx="16" stroke="url(#m32-grad)" stroke-width="2.5" width="200" x="762" y="86"></rect></g>
+<text fill="#c084fc" font-family="Inter,sans-serif" font-size="18" font-weight="700" text-anchor="middle" x="862" y="120">System KPI</text>
+<text fill="#e0c8ff" font-family="Inter,sans-serif" font-size="12" text-anchor="middle" x="862" y="144">sociotécnico</text>
+<rect fill="#2a2140" height="8" rx="4" width="152" x="786" y="160"></rect><rect fill="#a855f7" height="8" rx="4" width="120" x="786" y="160"></rect>
+<rect fill="#2a2140" height="8" rx="4" width="152" x="786" y="178"></rect><rect fill="#38bdf8" height="8" rx="4" width="92" x="786" y="178"></rect>
+<text fill="#9ad6ff" font-family="Inter,sans-serif" font-size="11" text-anchor="middle" x="862" y="204">resultado integrado</text>
+</svg>
+<p class="text-xs text-neutral-500 mt-2 text-center">Diagrama ilustrativo: el operador (exception handler) y la flota de AMR alimentan un único panel de KPI del sistema, no métricas aisladas.</p>
+</div>
+<!-- TOPICO 1 -->
+<section class="mb-16" id="topico-1">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">1</span>
+<h2 class="text-2xl font-bold">❌ El error clásico: UPH individual con AMR</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed">
+        La métrica heredada más común en un almacén es el <strong class="text-purple-400">Units Per Hour (UPH) individual</strong>:
+        cuenta cuántas unidades procesa cada operador por hora. En una operación manual tenía sentido. Con
+        <strong class="text-purple-400">AMR (robots móviles autónomos)</strong> en la operación, se vuelve activamente
+        perjudicial: penaliza precisamente a quienes realizan el trabajo más crítico.
+      </p>
+<div class="bg-gradient-to-br from-purple-900/30 to-dark-800 rounded-xl border border-purple-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-purple-400 mb-4 flex items-center"><span class="mr-2">🎯</span> El incentivo perverso</h3>
+<p class="text-neutral-300 mb-4">
+          El operador que se detiene para resolver una excepción del robot <strong class="text-purple-400">pierde UPH</strong> —
+          pero sin él, toda la flota se detiene. La métrica premia a quien ignora el problema y realiza tareas sencillas, y castiga
+          a quien mantiene el sistema en funcionamiento.
+        </p>
+<ul class="space-y-2 text-neutral-300">
+<li class="flex items-start space-x-2"><span class="text-purple-400 mt-1">•</span><span>Mide la parte, ignora el todo</span></li>
+<li class="flex items-start space-x-2"><span class="text-purple-400 mt-1">•</span><span>Penaliza a quien gestiona las excepciones — el rol de mayor valor</span></li>
+<li class="flex items-start space-x-2"><span class="text-purple-400 mt-1">•</span><span>Crea competencia donde debería haber colaboración entre el humano y la flota</span></li>
+</ul>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+<div class="bg-emerald-900/20 rounded-xl border border-emerald-500/30 p-6">
+<h4 class="font-bold text-emerald-400 mb-4">✓ Qué DEBE recompensar la métrica</h4>
+<ul class="space-y-3 text-neutral-300">
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Mantener la flota en funcionamiento sin interrupciones</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Resolver excepciones rápido y bien</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Resultado total del sistema humano + robots</span></li>
+</ul>
+</div>
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+<h4 class="font-bold text-red-400 mb-4">✗ Qué hace el UPH individual</h4>
+<ul class="space-y-3 text-neutral-300">
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Cuenta unidades de UN operador aislado</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Castiga a quien se detiene para salvar la flota</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Premia las tareas simples por encima del trabajo crítico</span></li>
+</ul>
+</div>
+</div>
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-6">
+<h4 class="font-semibold text-neutral-100 mb-4">Conceptos clave</h4>
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+<div class="bg-dark-700/50 rounded-lg p-3 border border-dark-600"><div class="text-purple-400 font-semibold text-sm">UPH individual</div><div class="text-xs text-neutral-400 mt-1">Métrica legacy</div></div>
+<div class="bg-dark-700/50 rounded-lg p-3 border border-dark-600"><div class="text-purple-400 font-semibold text-sm">Incentivo perverso</div><div class="text-xs text-neutral-400 mt-1">Premia lo incorrecto</div></div>
+<div class="bg-dark-700/50 rounded-lg p-3 border border-dark-600"><div class="text-purple-400 font-semibold text-sm">Exception handler</div><div class="text-xs text-neutral-400 mt-1">Rol de mayor valor</div></div>
+<div class="bg-dark-700/50 rounded-lg p-3 border border-dark-600"><div class="text-purple-400 font-semibold text-sm">Métrica de la parte</div><div class="text-xs text-neutral-400 mt-1">Ignora el sistema</div></div>
+</div>
+</div>
+</section>
+<!-- TOPICO 2 -->
+<section class="mb-16" id="topico-2">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">2</span>
+<h2 class="text-2xl font-bold">📈 System Throughput: producción de todo el sistema</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed">
+        O <strong class="text-purple-400">System Throughput</strong> mide la producción total del sistema humano-robot como
+        una <strong class="text-purple-400">unidad integrada</strong> — no la suma de las partes individuales. El valor de la
+        operación moderna no está en cuánto carga cada persona, está en la <strong class="text-purple-400">sinergia</strong>
+        entre quien opera y la flota que mantiene.
+      </p>
+<div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-blue-400 mb-4 flex items-center"><span class="mr-2">📊</span> El dato que cambia la conversación</h3>
+<ul class="space-y-2 text-neutral-300">
+<li class="flex items-start space-x-2"><span class="text-blue-400 mt-1">•</span><span>Un operador que mantiene <strong>10 AMR</strong> en funcionamiento genera más rendimiento que <strong>10 operadores</strong> haciendo picking manual.</span></li>
+<li class="flex items-start space-x-2"><span class="text-blue-400 mt-1">•</span><span>El beneficio proviene de la <strong>sinergia humano-máquina</strong>, no del esfuerzo individual sumado.</span></li>
+</ul>
+</div>
+<div class="bg-dark-900/60 rounded-xl border border-purple-500/30 p-5 mb-6 font-mono text-sm overflow-x-auto">
+<div class="flex items-center justify-between mb-3 pb-3 border-b border-dark-600">
+<div class="flex space-x-2"><span class="w-3 h-3 rounded-full bg-red-400/70"></span><span class="w-3 h-3 rounded-full bg-yellow-400/70"></span><span class="w-3 h-3 rounded-full bg-emerald-400/70"></span></div>
+<span class="text-neutral-500 text-xs">panel /throughput — recreación ilustrativa</span>
+</div>
+<div class="space-y-1.5 text-neutral-300">
+<div><span class="text-neutral-500">$</span> medir el resultado del SISTEMA, no de las personas</div>
+<div class="text-purple-400">System Throughput = unidades_totales / hora_operacion</div>
+<div class="pl-2 text-neutral-400">10 operadores manuales .......... 1.000 un/h</div>
+<div class="pl-2 text-purple-400">1 operador + 10 AMR ........... 1.450 un/h  ↑</div>
+<div class="text-neutral-500 pt-1"># sinergia &gt; suma de las partes</div>
+</div>
+</div>
+<div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-primary mb-3 flex items-center"><span class="mr-2">💡</span> Consejo práctico</h3>
+<p class="text-neutral-300">Antes de evaluar a una persona, pregunta: «¿cuál era el resultado del sistema con ella presente frente a cuando estaba ausente?». Si la flota cae sin el operador, su rendimiento es enorme, aunque su UPH individual sea bajo.</p>
+</div>
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-6">
+<h4 class="font-semibold text-neutral-100 mb-4">Conceptos clave</h4>
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+<div class="bg-dark-700/50 rounded-lg p-3 border border-dark-600"><div class="text-purple-400 font-semibold text-sm">System throughput</div><div class="text-xs text-neutral-400 mt-1">Resultado integrado</div></div>
+<div class="bg-dark-700/50 rounded-lg p-3 border border-dark-600"><div class="text-purple-400 font-semibold text-sm">Métrica sociotécnica</div><div class="text-xs text-neutral-400 mt-1">Persona + robot</div></div>
+<div class="bg-dark-700/50 rounded-lg p-3 border border-dark-600"><div class="text-purple-400 font-semibold text-sm">Sinergia</div><div class="text-xs text-neutral-400 mt-1">&gt; suma de las partes</div></div>
+<div class="bg-dark-700/50 rounded-lg p-3 border border-dark-600"><div class="text-purple-400 font-semibold text-sm">Unidad integrada</div><div class="text-xs text-neutral-400 mt-1">Sistema como uno solo</div></div>
+</div>
+</div>
+</section>
+<!-- TOPICO 3 -->
+<section class="mb-16" id="topico-3">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">3</span>
+<h2 class="text-2xl font-bold">🔧 Tasa de excepciones: intervenciones por hora</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed">
+        O <strong class="text-purple-400">Exception Rate</strong> cuenta el número de intervenciones humanas necesarias por
+        hora de operación robótica. Es la métrica que mide la <strong class="text-purple-400">calidad de la integración</strong>
+        entre el humano y el robot — y es la más reveladora de la madurez del sistema.
+      </p>
+<div class="bg-gradient-to-br from-purple-900/30 to-dark-800 rounded-xl border border-purple-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-purple-400 mb-4 flex items-center"><span class="mr-2">🔍</span> Qué te está diciendo una exception rate alta</h3>
+<p class="text-neutral-300 mb-4">Una exception rate alta no es culpa del operador: es un síntoma. Apunta a problemas anteriores en el proceso:</p>
+<ul class="space-y-2 text-neutral-300">
+<li class="flex items-start space-x-2"><span class="text-purple-400 mt-1">•</span><span><strong>Configuración deficiente:</strong> diseño, señalización o acoplamiento mal configurados</span></li>
+<li class="flex items-start space-x-2"><span class="text-purple-400 mt-1">•</span><span><strong>Capacitación insuficiente:</strong> el operador no previene, solo apaga incendios</span></li>
+<li class="flex items-start space-x-2"><span class="text-purple-400 mt-1">•</span><span><strong>Diseño del flujo:</strong> rutas que provocan colisiones o bloqueos recurrentes</span></li>
+</ul>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+<div class="bg-emerald-900/20 rounded-xl border border-emerald-500/30 p-6">
+<h4 class="font-bold text-emerald-400 mb-4">✓ Usa la tasa de excepciones para</h4>
+<ul class="space-y-3 text-neutral-300">
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Encontrar la causa raíz de las excepciones recurrentes</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Medir la madurez de la integración a lo largo del tiempo</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Priorizar dónde invertir en configuración y capacitación</span></li>
+</ul>
+</div>
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+<h4 class="font-bold text-red-400 mb-4">✗ NO uses la tasa de excepciones para</h4>
+<ul class="space-y-3 text-neutral-300">
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Culpar al operador que resuelve las excepciones</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Ignorar la causa raíz y solo exigir resultados</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Comparar áreas con diseños diferentes sin contexto</span></li>
+</ul>
+</div>
+</div>
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-6">
+<h4 class="font-semibold text-neutral-100 mb-4">Conceptos clave</h4>
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+<div class="bg-dark-700/50 rounded-lg p-3 border border-dark-600"><div class="text-purple-400 font-semibold text-sm">Excepciones/hora</div><div class="text-xs text-neutral-400 mt-1">Intervenciones</div></div>
+<div class="bg-dark-700/50 rounded-lg p-3 border border-dark-600"><div class="text-purple-400 font-semibold text-sm">Intervención humana</div><div class="text-xs text-neutral-400 mt-1">Calidad de la integración</div></div>
+<div class="bg-dark-700/50 rounded-lg p-3 border border-dark-600"><div class="text-purple-400 font-semibold text-sm">Madurez</div><div class="text-xs text-neutral-400 mt-1">De la integración</div></div>
+<div class="bg-dark-700/50 rounded-lg p-3 border border-dark-600"><div class="text-purple-400 font-semibold text-sm">Causa raíz</div><div class="text-xs text-neutral-400 mt-1">De excepciones</div></div>
+</div>
+</div>
+</section>
+<!-- TOPICO 4 -->
+<section class="mb-16" id="topico-4">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">4</span>
+<h2 class="text-2xl font-bold">⏱️ Fleet Uptime y MTTR: responsabilidad del operador</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed">
+        Dos métricas que por fin <strong class="text-purple-400">valoran el papel humano</strong>:
+        <strong class="text-purple-400">Fleet Uptime</strong> (% del tiempo que la flota opera normalmente) y
+        <strong class="text-purple-400">MTTR — Mean Time to Resolve</strong> (cuánto tiempo tarda el operador en
+        resolver cada excepción). El uptime es responsabilidad directa del operador; el MTTR revela competencia y se puede entrenar.
+      </p>
+<div class="space-y-6 mb-6">
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-12 h-12 rounded-full bg-purple-500/20 flex items-center justify-center"><span class="text-purple-400 font-bold">1</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+<h4 class="font-semibold text-neutral-100 mb-2">Fleet Uptime %</h4>
+<p class="text-sm text-neutral-400 mb-3">Porcentaje de tiempo que la flota opera con normalidad</p>
+<p class="text-neutral-300 text-sm">Responsabilidad directa del operador: cuanto más rápido previene y resuelve, más productiva es la flota. Es el KPI central del operador de flota.</p>
+</div>
+</div>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-12 h-12 rounded-full bg-purple-500/20 flex items-center justify-center"><span class="text-purple-400 font-bold">2</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+<h4 class="font-semibold text-neutral-100 mb-2">MTTR de excepciones</h4>
+<p class="text-sm text-neutral-400 mb-3">Tiempo promedio para resolver cada excepción</p>
+<p class="text-neutral-300 text-sm">Revela competencia para resolver problemas — y, a diferencia del «talento», se puede entrenar. Un operador capacitado reduce el MTTR y aumenta el uptime simultáneamente.</p>
+</div>
+</div>
+</div>
+<div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-primary mb-3 flex items-center"><span class="mr-2">💡</span> Consejo práctico</h3>
+<p class="text-neutral-300">El uptime y el MTTR están vinculados: quien reduce el MTTR casi siempre aumenta el uptime. Entrena la resolución de excepciones específicas (acoplamiento, bloqueo, lectura de código) y ambas métricas mejoran a la vez —ese es el argumento concreto de que la recalificación tiene un retorno medible.</p>
+</div>
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-6">
+<h4 class="font-semibold text-neutral-100 mb-4">Conceptos clave</h4>
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+<div class="bg-dark-700/50 rounded-lg p-3 border border-dark-600"><div class="text-purple-400 font-semibold text-sm">Disponibilidad de la flota %</div><div class="text-xs text-neutral-400 mt-1">Flota productiva</div></div>
+<div class="bg-dark-700/50 rounded-lg p-3 border border-dark-600"><div class="text-purple-400 font-semibold text-sm">MTTR</div><div class="text-xs text-neutral-400 mt-1">Tiempo de resolución</div></div>
+<div class="bg-dark-700/50 rounded-lg p-3 border border-dark-600"><div class="text-purple-400 font-semibold text-sm">Competencia</div><div class="text-xs text-neutral-400 mt-1">Capacitable</div></div>
+<div class="bg-dark-700/50 rounded-lg p-3 border border-dark-600"><div class="text-purple-400 font-semibold text-sm">KPI del operador</div><div class="text-xs text-neutral-400 mt-1">De flota</div></div>
+</div>
+</div>
+</section>
+<!-- TOPICO 5 -->
+<section class="mb-16" id="topico-5">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">5</span>
+<h2 class="text-2xl font-bold">🎯 Cero errores en handoffs: transiciones críticas</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed">
+<strong class="text-purple-400">Transferencias</strong> son los puntos de transferencia entre humano y robot — y los
+        momentos de <strong class="text-purple-400">mayor riesgo</strong> en operaciones híbridas. La meta es
+        <strong class="text-purple-400">cero fallas (objetivo de cero defectos)</strong> en estos puntos específicos, porque es
+        allí donde se concentran los accidentes y las pérdidas.
+      </p>
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-red-400 mb-3 flex items-center"><span class="mr-2">⚠️</span> Por qué la transferencia es el punto débil</h3>
+<p class="text-neutral-300">Ocurren accidentes y pérdidas <strong>principalmente en los traspasos</strong> — cuando la responsabilidad pasa de una persona a un robot o viceversa. Medir y capacitar en esos puntos específicos de transición reduce drásticamente el riesgo.</p>
+</div>
+<div class="space-y-6 mb-6">
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-12 h-12 rounded-full bg-purple-500/20 flex items-center justify-center"><span class="text-purple-400 font-bold">1</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+<h4 class="font-semibold text-neutral-100 mb-2">Identificar cada transferencia crítica</h4>
+<p class="text-neutral-300 text-sm">Mapear todos los puntos donde el control o la carga pasa de una persona a un robot. Cada transferencia es un punto que se debe medir.</p>
+</div>
+</div>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-12 h-12 rounded-full bg-purple-500/20 flex items-center justify-center"><span class="text-purple-400 font-bold">2</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+<h4 class="font-semibold text-neutral-100 mb-2">Definir el objetivo de cero defectos</h4>
+<p class="text-neutral-300 text-sm">Establecer una meta de cero fallas por handoff y contar las desviaciones. A diferencia de una métrica de promedio, aquí cuenta cualquier falla.</p>
+</div>
+</div>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-12 h-12 rounded-full bg-purple-500/20 flex items-center justify-center"><span class="text-purple-400 font-bold">3</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+<h4 class="font-semibold text-neutral-100 mb-2">Capacitación específica para la transición</h4>
+<p class="text-neutral-300 text-sm">Capacita en el gesto exacto de la transferencia, no en el trabajo en general. La práctica enfocada en el punto de riesgo reduce las fallas donde más cuestan.</p>
+</div>
+</div>
+</div>
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-6">
+<h4 class="font-semibold text-neutral-100 mb-4">Conceptos clave</h4>
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+<div class="bg-dark-700/50 rounded-lg p-3 border border-dark-600"><div class="text-purple-400 font-semibold text-sm">Transferencia crítica</div><div class="text-xs text-neutral-400 mt-1">Punto de riesgo</div></div>
+<div class="bg-dark-700/50 rounded-lg p-3 border border-dark-600"><div class="text-purple-400 font-semibold text-sm">Punto de transferencia</div><div class="text-xs text-neutral-400 mt-1">Persona ↔ robot</div></div>
+<div class="bg-dark-700/50 rounded-lg p-3 border border-dark-600"><div class="text-purple-400 font-semibold text-sm">Objetivo de cero defectos</div><div class="text-xs text-neutral-400 mt-1">Meta de cero fallas</div></div>
+<div class="bg-dark-700/50 rounded-lg p-3 border border-dark-600"><div class="text-purple-400 font-semibold text-sm">Práctica de transición</div><div class="text-xs text-neutral-400 mt-1">Específico</div></div>
+</div>
+</div>
+</section>
+<!-- TOPICO 6 -->
+<section class="mb-16" id="topico-6">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">6</span>
+<h2 class="text-2xl font-bold">🧠 Framework 92.5%: reconocimiento de intenciones</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed">
+        La próxima generación de métricas HRC (Human-Robot Collaboration) parte de robots que entienden la
+        <strong class="text-purple-400">intención humana</strong>. Un framework de investigación (arxiv, 2025) alcanza
+        <strong class="text-purple-400">92.5% de precisión</strong> en el reconocimiento de intenciones humanas en
+        entornos colaborativos — y eso cambia lo que se puede medir.
+      </p>
+<div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-blue-400 mb-4 flex items-center"><span class="mr-2">📊</span> Datos de investigación</h3>
+<ul class="space-y-2 text-neutral-300">
+<li class="flex items-start space-x-2"><span class="text-blue-400 mt-1">•</span><span><strong>92.5%</strong> de accuracy en el reconocimiento de la intención humana (arxiv 2025).</span></li>
+<li class="flex items-start space-x-2"><span class="text-blue-400 mt-1">•</span><span>Robots que anticipan la intención <strong>reducen las excepciones</strong> antes de que ocurran.</span></li>
+<li class="flex items-start space-x-2"><span class="text-blue-400 mt-1">•</span><span>Colaboración más natural y segura: menos transferencias fallidas.</span></li>
+</ul>
+</div>
+<div class="bg-gradient-to-br from-purple-900/30 to-dark-800 rounded-xl border border-purple-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-purple-400 mb-4 flex items-center"><span class="mr-2">🚀</span> Por qué esto es el futuro de la métrica HRC</h3>
+<p class="text-neutral-300 mb-4">
+          Cuando el robot reconoce la intención, las métricas de los temas anteriores mejoran en cascada: menos
+          excepciones (tema 3), más uptime (tema 4) y handoffs más seguros (tema 5). El intent recognition
+          es la palanca que impulsa casi todo lo demás.
+        </p>
+<ul class="space-y-2 text-neutral-300">
+<li class="flex items-start space-x-2"><span class="text-purple-400 mt-1">•</span><span>Reduce las excepciones desde el origen, no solo al resolverlas</span></li>
+<li class="flex items-start space-x-2"><span class="text-purple-400 mt-1">•</span><span>Aumenta la seguridad en los puntos de transición</span></li>
+<li class="flex items-start space-x-2"><span class="text-purple-400 mt-1">•</span><span>Hace más natural la colaboración entre humanos y robots</span></li>
+</ul>
+</div>
+<div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-primary mb-3 flex items-center"><span class="mr-2">💡</span> Consejo práctico</h3>
+<p class="text-neutral-300">Usa el framework como horizonte, no como requisito previo. Empieza midiendo el throughput, la tasa de excepciones, el tiempo de actividad/MTTR y los handoffs actuales. El reconocimiento de intención (92.5%) es el siguiente paso que mejora estructuralmente estas métricas.</p>
+</div>
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-6">
+<h4 class="font-semibold text-neutral-100 mb-4">Conceptos clave</h4>
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+<div class="bg-dark-700/50 rounded-lg p-3 border border-dark-600"><div class="text-purple-400 font-semibold text-sm">Reconocimiento de intención</div><div class="text-xs text-neutral-400 mt-1">Anticipa la intención</div></div>
+<div class="bg-dark-700/50 rounded-lg p-3 border border-dark-600"><div class="text-purple-400 font-semibold text-sm">92.5% accuracy</div><div class="text-xs text-neutral-400 mt-1">arxiv 2025</div></div>
+<div class="bg-dark-700/50 rounded-lg p-3 border border-dark-600"><div class="text-purple-400 font-semibold text-sm">Framework HRC</div><div class="text-xs text-neutral-400 mt-1">Colaboración humano-robot</div></div>
+<div class="bg-dark-700/50 rounded-lg p-3 border border-dark-600"><div class="text-purple-400 font-semibold text-sm">Próxima generación</div><div class="text-xs text-neutral-400 mt-1">De métricas</div></div>
+</div>
+</div>
+</section>
+<!-- RESUMO -->
+<section class="mb-12">
+<div class="bg-gradient-to-br from-purple-900/40 via-dark-800 to-dark-800 rounded-xl border border-purple-500/30 p-8">
+<h2 class="text-2xl font-bold mb-6 flex items-center"><span class="mr-3">📌</span> Resumen del módulo</h2>
+<div class="space-y-4 mb-8">
+<div class="flex items-start space-x-3"><span class="text-purple-400 mt-1">✓</span><div><strong class="text-neutral-100">UPH individual y trampa</strong><span class="text-neutral-400"> - con AMR, premia las tareas sencillas y penaliza al encargado de gestionar excepciones.</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-purple-400 mt-1">✓</span><div><strong class="text-neutral-100">System Throughput</strong><span class="text-neutral-400"> - mide el output del sistema integrado; 1 operador + 10 AMRs &gt; 10 operadores manuales.</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-purple-400 mt-1">✓</span><div><strong class="text-neutral-100">Exception Rate</strong><span class="text-neutral-400"> - las intervenciones por hora revelan la madurez de la integración; busca la causa raíz, no culpes al operador.</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-purple-400 mt-1">✓</span><div><strong class="text-neutral-100">Disponibilidad de la flota y MTTR</strong><span class="text-neutral-400"> - KPIs que valoran a las personas; competencia entrenable que mejora ambos a la vez.</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-purple-400 mt-1">✓</span><div><strong class="text-neutral-100">Cero errores en los traspasos</strong><span class="text-neutral-400"> - las transiciones son el punto débil; objetivo de cero defectos + capacitación específica.</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-purple-400 mt-1">✓</span><div><strong class="text-neutral-100">Framework del 92.5%</strong><span class="text-neutral-400"> - intent recognition (arxiv 2025) es la próxima generación de métricas HRC.</span></div></div>
+</div>
+<div class="bg-dark-800/50 rounded-lg p-4 mb-8">
+<h3 class="font-semibold text-purple-400 mb-2">Próximo módulo:</h3>
+<p class="text-neutral-300">3.3 - Caso de negocio: vender la recapacitación para la robótica</p>
+</div>
+<div class="flex flex-col sm:flex-row gap-4">
+<a class="flex-1 text-center px-6 py-3 bg-dark-700 text-neutral-300 rounded-lg font-semibold hover:bg-dark-600 transition-colors" href="index.html">← Volver a la ruta</a>
+<a class="flex-1 text-center px-6 py-3 bg-purple-600 text-white rounded-lg font-semibold hover:bg-purple-500 transition-colors" href="modulo-3-3.html">Próximo módulo →</a>
+</div>
+</div>
+</section>
+</main>
+<!-- FOOTER -->
+<footer class="border-t border-dark-600 py-8 mt-16">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-neutral-500 text-sm">
+<p>segROBOT — INEMA.CLUB — 2026</p>
+</div>
+</footer>
+<!-- SCRIPTS -->
+<script>
+    const themeToggle = document.getElementById('theme-toggle');
+    const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
+    const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
+    const html = document.documentElement;
+
+    if (localStorage.getItem('theme') === 'light' || (!localStorage.getItem('theme') && !html.classList.contains('dark'))) {
+      themeToggleDarkIcon.classList.remove('hidden');
+      html.classList.remove('dark');
+    } else {
+      themeToggleLightIcon.classList.remove('hidden');
+    }
+
+    themeToggle.addEventListener('click', () => {
+      themeToggleDarkIcon.classList.toggle('hidden');
+      themeToggleLightIcon.classList.toggle('hidden');
+      html.classList.toggle('dark');
+      localStorage.setItem('theme', html.classList.contains('dark') ? 'dark' : 'light');
+    });
+  </script>
+</body>
+</html>

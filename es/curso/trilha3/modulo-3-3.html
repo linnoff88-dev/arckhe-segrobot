@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="es">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Módulo 3.3 - Caso de negocio: cómo vender la recalificación | segROBOT</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            primary: '#FACC15',
+            dark: { 900: '#111827', 800: '#1f2937', 700: '#374151', 600: '#4b5563' }
+          }
+        }
+      }
+    }
+  </script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<style>
+    body { font-family: 'Inter', sans-serif; }
+    .dark body { background-color: #111827; }
+    .topic-explanation { display: none; }
+    .topic-explanation.active { display: block; }
+
+    /* Light mode overrides */
+    html:not(.dark) body { background-color: #f8fafc; }
+    html:not(.dark) .bg-dark-900 { background-color: #ffffff; }
+    html:not(.dark) .bg-dark-800 { background-color: #f9fafb; }
+    html:not(.dark) .bg-dark-700 { background-color: #f3f4f6; }
+    html:not(.dark) .bg-dark-600 { background-color: #e5e7eb; }
+    html:not(.dark) .text-neutral-100 { color: #111827; }
+    html:not(.dark) .text-neutral-300 { color: #4b5563; }
+    html:not(.dark) .text-neutral-400 { color: #6b7280; }
+    html:not(.dark) .text-neutral-500 { color: #9ca3af; }
+    html:not(.dark) .border-dark-600 { border-color: #d1d5db; }
+    html:not(.dark) .border-dark-700 { border-color: #e5e7eb; }
+
+    /* Light mode - cores de acento (trilha purple) */
+    html:not(.dark) .text-purple-400 { color: #7c3aed; }
+    html:not(.dark) .bg-purple-500\/20 { background-color: rgba(124, 58, 237, 0.12); }
+    html:not(.dark) .bg-purple-500\/10 { background-color: rgba(124, 58, 237, 0.08); }
+    html:not(.dark) .border-purple-500\/30 { border-color: rgba(124, 58, 237, 0.25); }
+    html:not(.dark) .hover\:bg-purple-500\/30:hover { background-color: rgba(124, 58, 237, 0.18); }
+    html:not(.dark) .hover\:text-purple-400:hover { color: #7c3aed; }
+    html:not(.dark) .hover\:bg-purple-500\/10:hover { background-color: rgba(124, 58, 237, 0.08); }
+
+    /* Light mode - outras trilhas no nav */
+    html:not(.dark) .hover\:text-emerald-400:hover { color: #059669; }
+    html:not(.dark) .hover\:bg-emerald-500\/10:hover { background-color: rgba(5, 150, 105, 0.08); }
+    html:not(.dark) .hover\:text-blue-400:hover { color: #2563eb; }
+    html:not(.dark) .hover\:bg-blue-500\/10:hover { background-color: rgba(37, 99, 235, 0.08); }
+
+    /* Light mode - remove gradientes */
+    html:not(.dark) [class*="bg-gradient-to"] { background-image: none !important; }
+
+    /* Light mode - cores especiais */
+    html:not(.dark) .text-primary { color: #a16207; }
+    html:not(.dark) .bg-primary\/10 { background-color: rgba(161, 98, 7, 0.08); }
+    html:not(.dark) .border-primary\/40 { border-color: rgba(161, 98, 7, 0.25); }
+    html:not(.dark) .text-sky-400 { color: #0369a1; }
+    html:not(.dark) .text-yellow-400 { color: #a16207; }
+    html:not(.dark) .hover\:text-sky-300:hover { color: #0284c7; }
+    html:not(.dark) .hover\:text-yellow-300:hover { color: #854d0e; }
+
+    /* Light mode - nav */
+    html:not(.dark) .bg-dark-900\/95 { background-color: rgba(255, 255, 255, 0.95); }
+
+    /* Dark mode - bordas suaves */
+    .dark .border-dark-600 { border-color: #374151; }
+    .dark .divide-dark-600 > :not([hidden]) ~ :not([hidden]) { border-color: #374151; }
+
+    @keyframes wf-pulse { 0%,100% { opacity:.55 } 50% { opacity:1 } }
+    @media (prefers-reduced-motion: no-preference) {
+      .wf-a { animation: wf-pulse 2.6s ease-in-out infinite; }
+    }
+  </style>
+<link href="https://inematds.github.io/segrobot/curso/trilha3/modulo-3-3.html" hreflang="pt-BR" rel="alternate"/><link href="https://inematds.github.io/segrobot/en/curso/trilha3/modulo-3-3.html" hreflang="en" rel="alternate"/><link href="https://inematds.github.io/segrobot/es/curso/trilha3/modulo-3-3.html" hreflang="es" rel="alternate"/></head>
+<body class="bg-dark-900 text-neutral-100 min-h-screen"><div class="inema-lang" style="position:fixed;right:14px;bottom:14px;z-index:9999;display:flex;gap:2px;padding:4px;border-radius:10px;background:rgba(12,12,16,.82);border:1px solid rgba(226,162,59,.45);font:600 12px/1 Sora,Inter,system-ui,sans-serif;backdrop-filter:blur(8px)" translate="no"><a href="../../../curso/trilha3/modulo-3-3.html" hreflang="pt-BR" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">PT</a><a href="../../../en/curso/trilha3/modulo-3-3.html" hreflang="en" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">EN</a><a href="modulo-3-3.html" hreflang="es" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#1a1206;background:#E2A23B">ES</a></div>
+<!-- NAVIGATION -->
+<nav class="sticky top-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-600">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="flex justify-between items-center h-14">
+<div class="flex items-center space-x-4">
+<a class="flex items-center space-x-2 text-yellow-400 hover:text-yellow-300" href="../../index.html">
+<span class="text-2xl">🤖</span>
+<span class="font-bold text-lg hidden sm:inline">segROBOT</span>
+</a>
+<span class="text-neutral-600">|</span>
+<a class="text-sky-400 hover:text-sky-300 text-sm font-medium" href="https://inema.club" target="_blank">INEMA.CLUB</a>
+</div>
+<div class="flex items-center space-x-1 sm:space-x-2">
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-emerald-400 hover:bg-emerald-500/10 transition-colors" href="../trilha1/index.html">
+<span class="sm:hidden">T1</span>
+<span class="hidden sm:inline">Fundamentos</span>
+</a>
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-blue-400 hover:bg-blue-500/10 transition-colors" href="../trilha2/index.html">
+<span class="sm:hidden">T2</span>
+<span class="hidden sm:inline">Acción</span>
+</a>
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-purple-400 bg-purple-500/10" href="index.html">
+<span class="sm:hidden">T3</span>
+<span class="hidden sm:inline">Estratégico</span>
+</a>
+<button class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors ml-2" id="theme-toggle">
+<svg class="hidden w-5 h-5 text-neutral-300" fill="currentColor" id="theme-toggle-dark-icon" viewbox="0 0 20 20">
+<path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+</svg>
+<svg class="hidden w-5 h-5 text-neutral-300" fill="currentColor" id="theme-toggle-light-icon" viewbox="0 0 20 20">
+<path clip-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd"></path>
+</svg>
+</button>
+</div>
+</div>
+</div>
+</nav>
+<!-- BREADCRUMB -->
+<nav class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+<div class="flex items-center space-x-2 text-sm text-neutral-400">
+<a class="hover:text-purple-400" href="../../index.html">Inicio</a>
+<span>/</span>
+<a class="hover:text-purple-400" href="index.html">Ruta 3</a>
+<span>/</span>
+<span class="text-purple-400">Módulo 3.3</span>
+</div>
+</nav>
+<!-- HEADER -->
+<header class="bg-gradient-to-br from-purple-900/30 via-dark-800 to-dark-800 py-12 border-b border-dark-600">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+<span class="inline-block px-3 py-1 bg-purple-500/20 text-purple-400 text-xs font-semibold rounded-full mb-4">
+        MÓDULO 3.3
+      </span>
+<h1 class="text-3xl sm:text-4xl font-bold mb-4">💼 Caso de negocio: cómo vender la recapacitación en robótica</h1>
+<p class="text-lg text-neutral-400 max-w-3xl">
+        Cómo construir y presentar el caso de negocio para programas de recapacitación humana en entornos robotizados. Al terminar, sabrás convertir la capacitación de «costo» en «inversión que se recupera en meses», con cifras, precios y anclaje regulatorio.
+      </p>
+<!-- Stats Banner -->
+<div class="grid grid-cols-4 gap-4 mt-8 max-w-2xl">
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+<div class="text-xl font-bold text-purple-400">6</div>
+<div class="text-xs text-neutral-400">Temas</div>
+</div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+<div class="text-xl font-bold text-purple-400">50</div>
+<div class="text-xs text-neutral-400">Minutos</div>
+</div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+<div class="text-xl font-bold text-purple-400">Avanzado</div>
+<div class="text-xs text-neutral-400">Nivel</div>
+</div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+<div class="text-xl font-bold text-purple-400">Estrategia</div>
+<div class="text-xs text-neutral-400">Tipo</div>
+</div>
+</div>
+</div>
+</header>
+<!-- CONTEUDO -->
+<main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+<!-- SVG FUTURISTA: custo do treinamento vs custo da falha -> ROI -->
+<div class="rounded-2xl border border-purple-500/30 bg-dark-900/40 p-3 sm:p-4 mb-12 overflow-hidden">
+<svg aria-label="Comparación entre el costo de la capacitación y el costo de una transformación fallida, que converge en el cálculo del ROI del caso de negocio respaldado por una norma regulatoria" class="w-full h-auto" role="img" viewbox="0 0 1000 270">
+<defs>
+<lineargradient id="m33-grad" x1="0" x2="1" y1="0" y2="1">
+<stop offset="0" stop-color="#c084fc"></stop><stop offset="1" stop-color="#a855f7"></stop>
+</lineargradient>
+<filter height="180%" id="m33-glow" width="180%" x="-40%" y="-40%">
+<fegaussianblur result="b" stddeviation="3"></fegaussianblur><femerge><femergenode in="b"></femergenode><femergenode in="SourceGraphic"></femergenode></femerge>
+</filter>
+<pattern height="32" id="m33-grid" patternunits="userSpaceOnUse" width="32">
+<circle cx="1.3" cy="1.3" fill="#a855f7" opacity="0.12" r="1.3"></circle>
+</pattern>
+<marker id="m33-ah" markerheight="9" markerwidth="9" orient="auto" refx="6.5" refy="4.5"><path d="M0,0 L8,4.5 L0,9 L2.4,4.5 Z" fill="#c084fc"></path></marker>
+<marker id="m33-ahc" markerheight="9" markerwidth="9" orient="auto" refx="6.5" refy="4.5"><path d="M0,0 L8,4.5 L0,9 L2.4,4.5 Z" fill="#38bdf8"></path></marker>
+</defs>
+<rect fill="url(#m33-grid)" height="270" width="1000" x="0" y="0"></rect>
+<text fill="#c084fc" font-family="Inter,sans-serif" font-size="17" font-weight="700" text-anchor="middle" x="500" y="28">La ecuación del caso de negocio</text>
+<!-- caixa custo do treinamento (purple) -->
+<g filter="url(#m33-glow)"><rect fill="#1a1230" height="130" rx="14" stroke="url(#m33-grad)" stroke-width="2.5" width="220" x="40" y="70"></rect></g>
+<text fill="#c084fc" font-family="Inter,sans-serif" font-size="16" font-weight="700" text-anchor="middle" x="150" y="100">Costo de la capacitación</text>
+<text fill="#e9d5ff" font-family="Inter,sans-serif" font-size="13" text-anchor="middle" x="150" y="128">predecible, finito</text>
+<text fill="#e9d5ff" font-family="Inter,sans-serif" font-size="13" text-anchor="middle" x="150" y="152">-38% del tiempo de incorporación</text>
+<text fill="#e9d5ff" font-family="Inter,sans-serif" font-size="13" text-anchor="middle" x="150" y="176">se paga en meses</text>
+<!-- caixa custo da falha (ciano) -->
+<rect fill="#0e1b26" height="130" rx="14" stroke="#38bdf8" stroke-width="2.5" width="220" x="740" y="70"></rect>
+<text fill="#38bdf8" font-family="Inter,sans-serif" font-size="16" font-weight="700" text-anchor="middle" x="850" y="100">Costo de la falla</text>
+<text fill="#bfe6ff" font-family="Inter,sans-serif" font-size="13" text-anchor="middle" x="850" y="128">70% de las transformaciones</text>
+<text fill="#bfe6ff" font-family="Inter,sans-serif" font-size="13" text-anchor="middle" x="850" y="152">robots parados, rotación de personal</text>
+<text fill="#bfe6ff" font-family="Inter,sans-serif" font-size="13" text-anchor="middle" x="850" y="176">accidentes, retrabajo</text>
+<!-- setas para o nucleo ROI -->
+<g fill="none" opacity="0.7" stroke="#c084fc" stroke-width="2">
+<path d="M260,135 C360,135 380,135 432,135" marker-end="url(#m33-ah)"></path>
+</g>
+<g fill="none" opacity="0.65" stroke="#38bdf8" stroke-width="2">
+<path d="M740,135 C640,135 620,135 568,135" marker-end="url(#m33-ahc)"></path>
+</g>
+<!-- nucleo ROI -->
+<g filter="url(#m33-glow)"><rect fill="#1a1230" height="86" rx="16" stroke="url(#m33-grad)" stroke-width="3" width="136" x="432" y="92"></rect></g>
+<text fill="#c084fc" font-family="Inter,sans-serif" font-size="24" font-weight="700" text-anchor="middle" x="500" y="128">ROI</text>
+<text fill="#e9d5ff" font-family="Inter,sans-serif" font-size="12" text-anchor="middle" x="500" y="152">caso de negocio</text>
+<!-- ancora regulatoria -->
+<g class="wf-a"><rect fill="#0e1b26" height="34" rx="9" stroke="#38bdf8" stroke-width="2" width="260" x="370" y="216"></rect><text fill="#bfe6ff" font-family="Inter,sans-serif" font-size="13" font-weight="600" text-anchor="middle" x="500" y="238">ISO 10218:2025 — el ancla que sostiene</text></g>
+<path d="M500,178 L500,216" fill="none" marker-end="url(#m33-ahc)" opacity="0.55" stroke="#38bdf8" stroke-width="2"></path>
+</svg>
+<p class="text-xs text-neutral-500 mt-2 text-center">Diagrama ilustrativo: el argumento de venta no es el costo de la capacitación, sino el costo de NO capacitarse.</p>
+</div>
+<!-- ===================== TOPICO 1 ===================== -->
+<section class="mb-16" id="topico-1">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">1</span>
+<h2 class="text-2xl font-bold">💰 ROI de la recapacitación</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed">
+        El retorno sobre la inversión de un programa de recapacitación es <strong class="text-purple-400">medible</strong>, y eso es lo que la transforma de «gasto» en «inversión». La capacitación con realidad virtual reduce el tiempo de onboarding en <strong class="text-purple-400">38%</strong>, reduce los accidentes y acelera la adopción tecnológica: tres factores que inciden directamente en el cálculo del payback.
+      </p>
+<div class="bg-gradient-to-br from-purple-900/30 to-dark-800 rounded-xl border border-purple-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-purple-400 mb-4 flex items-center">
+<span class="mr-2">🎯</span> Concepto central: el ROI cambia las reglas del juego
+        </h3>
+<p class="text-neutral-300 mb-4">Sin un ROI cuantificado, la recapacitación se percibe como un costo y se recorta ante la primera presión presupuestaria. Con ROI, se convierte en una inversión que se amortiza en meses — y la conversación cambia de «¿podemos pagarlo?» a «¿podemos dejar de hacerlo?».</p>
+<ul class="space-y-2 text-neutral-300">
+<li class="flex items-start space-x-2"><span class="text-purple-400 mt-1">•</span><span><strong>Reducción de tiempo:</strong> -38% en la incorporación con VR</span></li>
+<li class="flex items-start space-x-2"><span class="text-purple-400 mt-1">•</span><span><strong>Reducción de accidentes:</strong> menos interrupciones, menos costos de seguro y ausencias laborales</span></li>
+<li class="flex items-start space-x-2"><span class="text-purple-400 mt-1">•</span><span><strong>Aceleración de la adopción:</strong> robot produciendo antes, recuperación de la inversión anticipada</span></li>
+</ul>
+</div>
+<div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-blue-400 mb-4 flex items-center">
+<span class="mr-2">📊</span> Números que fundamentan el ROI
+        </h3>
+<ul class="space-y-2 text-neutral-300">
+<li><strong class="text-blue-400">38%</strong> — reducción del tiempo de capacitación con realidad virtual</li>
+<li><strong class="text-blue-400">Meses</strong> — período de recuperación típico cuando el robot entra en producción antes</li>
+<li><strong class="text-blue-400">3 vectores</strong> — el tiempo, los accidentes y la adopción componen el cálculo</li>
+</ul>
+</div>
+<div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
+<span class="mr-2">💡</span> Consejo práctico
+        </h3>
+<p class="text-neutral-300">Presenta siempre el ROI como <strong>período de recuperación de la inversión</strong>, no como porcentaje abstracto. «Se amortiza en 4 meses» convence a un director financiero más rápido que «ROI del 280%».</p>
+</div>
+<!-- Conceitos-chave -->
+<h3 class="text-lg font-semibold mb-4">Conceptos clave</h3>
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+<div class="bg-dark-800 rounded-lg border border-dark-600 p-4"><div class="text-purple-400 font-bold mb-1">ROI de la capacitación</div><p class="text-xs text-neutral-400">Retorno medible del programa</p></div>
+<div class="bg-dark-800 rounded-lg border border-dark-600 p-4"><div class="text-purple-400 font-bold mb-1">-38% de tiempo</div><p class="text-xs text-neutral-400">Reducción del tiempo de onboarding con VR</p></div>
+<div class="bg-dark-800 rounded-lg border border-dark-600 p-4"><div class="text-purple-400 font-bold mb-1">Reducción de accidentes</div><p class="text-xs text-neutral-400">Menos paradas y ausencias</p></div>
+<div class="bg-dark-800 rounded-lg border border-dark-600 p-4"><div class="text-purple-400 font-bold mb-1">Período de recuperación de la inversión</div><p class="text-xs text-neutral-400">Tiempo hasta recuperar la inversión</p></div>
+</div>
+</section>
+<!-- ===================== TOPICO 2 ===================== -->
+<section class="mb-16" id="topico-2">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">2</span>
+<h2 class="text-2xl font-bold">📉 Costo de NO capacitar</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed">
+        El argumento más sólido de un caso de negocio no es el costo de la capacitación, sino el <strong class="text-purple-400">costo del fracaso</strong>. Cerca de <strong class="text-purple-400">70% de las transformaciones tecnológicas fracasan</strong> cuando no se aborda el factor humano. Los robots parados, la rotación de personal, los accidentes y el retrabajo convierten la inversión en un activo varado.
+      </p>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+<div class="bg-emerald-900/20 rounded-xl border border-emerald-500/30 p-6">
+<h4 class="font-bold text-emerald-400 mb-4">✓ Con recalificación</h4>
+<ul class="space-y-3 text-neutral-300">
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>El robot entra en producción a tiempo</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>El equipo asimila la tecnología</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Disminuyen los accidentes y el retrabajo</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>La inversión se amortiza (payback)</span></li>
+</ul>
+</div>
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+<h4 class="font-bold text-red-400 mb-4">✗ Sin recalificación</h4>
+<ul class="space-y-3 text-neutral-300">
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>70% de probabilidad de fracaso de la transformación</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Robots detenidos (inversión varada)</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Rotación de quienes no se adaptaron</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Costos ocultos que nadie presupuestó</span></li>
+</ul>
+</div>
+</div>
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-red-400 mb-3 flex items-center">
+<span class="mr-2">⚠️</span> Atención: el costo de oportunidad es invisible
+        </h3>
+<p class="text-neutral-300">Un robot que cuesta cientos de miles y está parado por falta de operadores capacitados no aparece como una partida de gastos —aparece como una meta de producción incumplida. Ese <strong>stranded investment</strong> y es el costo que más teme el comprador y el que menos ve.</p>
+</div>
+<!-- Conceitos-chave -->
+<h3 class="text-lg font-semibold mb-4">Conceptos clave</h3>
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+<div class="bg-dark-800 rounded-lg border border-dark-600 p-4"><div class="text-purple-400 font-bold mb-1">Costo de oportunidad</div><p class="text-xs text-neutral-400">Producción no realizada</p></div>
+<div class="bg-dark-800 rounded-lg border border-dark-600 p-4"><div class="text-purple-400 font-bold mb-1">Fracaso del 70%</div><p class="text-xs text-neutral-400">Transformaciones que fracasan sin el factor humano</p></div>
+<div class="bg-dark-800 rounded-lg border border-dark-600 p-4"><div class="text-purple-400 font-bold mb-1">Costos ocultos</div><p class="text-xs text-neutral-400">Costos ocultos no presupuestados</p></div>
+<div class="bg-dark-800 rounded-lg border border-dark-600 p-4"><div class="text-purple-400 font-bold mb-1">Inversión varada</div><p class="text-xs text-neutral-400">Activo varado, robot detenido</p></div>
+</div>
+</section>
+<!-- ===================== TOPICO 3 ===================== -->
+<section class="mb-16" id="topico-3">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">3</span>
+<h2 class="text-2xl font-bold">🏷️ Modelo de precios</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed">
+        Un precio único no funciona. Un hospital y un almacén tienen necesidades, riesgos y presupuestos <strong class="text-purple-400">completamente diferentes</strong>. El pricing debe segmentarse por vertical (salud, logística, agro), por tamaño de la empresa y por el nivel de compliance exigido.
+      </p>
+<div class="bg-gradient-to-br from-purple-900/30 to-dark-800 rounded-xl border border-purple-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-purple-400 mb-4 flex items-center">
+<span class="mr-2">🧱</span> Tres ejes de segmentación
+        </h3>
+<ul class="space-y-2 text-neutral-300">
+<li class="flex items-start space-x-2"><span class="text-purple-400 mt-1">•</span><span><strong>Vertical:</strong> salud, logística y agro tienen riesgos y regulaciones distintas</span></li>
+<li class="flex items-start space-x-2"><span class="text-purple-400 mt-1">•</span><span><strong>Tamaño:</strong> capacidad de pago y volumen de operadores</span></li>
+<li class="flex items-start space-x-2"><span class="text-purple-400 mt-1">•</span><span><strong>Cumplimiento:</strong> los entornos regulados pagan un precio premium por la documentación</span></li>
+</ul>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+<div class="bg-emerald-900/20 rounded-xl border border-emerald-500/30 p-6">
+<h4 class="font-bold text-emerald-400 mb-4">✓ Pricing que funciona</h4>
+<ul class="space-y-3 text-neutral-300">
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Niveles según el tamaño de la empresa</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Prima por cumplimiento normativo regulado</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Basado en el valor: cobra por el valor entregado</span></li>
+</ul>
+</div>
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+<h4 class="font-bold text-red-400 mb-4">✗ Pricing que rompe el modelo</h4>
+<ul class="space-y-3 text-neutral-300">
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Precio único para todos los clientes</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Cobrar por hora de capacitación (commodity)</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Ignorar el riesgo regulatorio del sector</span></li>
+</ul>
+</div>
+</div>
+<div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
+<span class="mr-2">💡</span> Consejo práctico
+        </h3>
+<p class="text-neutral-300">Usa <strong>precios basados en el valor</strong>: ancla el precio al costo de la falla que evitas, no a tu costo de entrega. Si la falla cuesta millones, un programa de decenas de miles es barato, y el cliente lo entiende.</p>
+</div>
+<!-- Conceitos-chave -->
+<h3 class="text-lg font-semibold mb-4">Conceptos clave</h3>
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+<div class="bg-dark-800 rounded-lg border border-dark-600 p-4"><div class="text-purple-400 font-bold mb-1">Por vertical</div><p class="text-xs text-neutral-400">Salud, logística, agro</p></div>
+<div class="bg-dark-800 rounded-lg border border-dark-600 p-4"><div class="text-purple-400 font-bold mb-1">Precios por niveles</div><p class="text-xs text-neutral-400">Rangos por tamaño</p></div>
+<div class="bg-dark-800 rounded-lg border border-dark-600 p-4"><div class="text-purple-400 font-bold mb-1">Cumplimiento premium</div><p class="text-xs text-neutral-400">Los entornos regulados pagan más</p></div>
+<div class="bg-dark-800 rounded-lg border border-dark-600 p-4"><div class="text-purple-400 font-bold mb-1">Precios basados en el valor</div><p class="text-xs text-neutral-400">Precio anclado al valor</p></div>
+</div>
+</section>
+<!-- ===================== TOPICO 4 ===================== -->
+<section class="mb-16" id="topico-4">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">4</span>
+<h2 class="text-2xl font-bold">🔑 Diferencial competitivo</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed">
+        La diferencia no está en enseñar «cómo usar el robot X», sino en enseñar «cómo la <strong class="text-purple-400">la organización absorbe</strong> el robot". Se trata de una transformación organizacional, no de capacitación técnica. Los fabricantes ya enseñan a operar sus robots; nadie enseña a la organización a cambiar. Esa es la brecha del mercado.
+      </p>
+<div class="bg-gradient-to-br from-purple-900/30 to-dark-800 rounded-xl border border-purple-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-purple-400 mb-4 flex items-center">
+<span class="mr-2">🌊</span> Blue ocean: absorción, no operación
+        </h3>
+<p class="text-neutral-300 mb-4">Mientras todos compiten en el «cómo operar», el océano azul está en el «cómo adaptarse». Vender capacidad de cambio organizacional posiciona el programa fuera de la competencia por el precio de la capacitación técnica.</p>
+<ul class="space-y-2 text-neutral-300">
+<li class="flex items-start space-x-2"><span class="text-purple-400 mt-1">•</span><span><strong>Operación</strong> = commodity, el fabricante ya lo entrega</span></li>
+<li class="flex items-start space-x-2"><span class="text-purple-400 mt-1">•</span><span><strong>Absorción</strong> = capacidad duradera de la organización</span></li>
+</ul>
+</div>
+<!-- Timeline: da operacao a absorcao -->
+<div class="space-y-6 mb-6">
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-12 h-12 rounded-full bg-purple-500/20 flex items-center justify-center"><span class="text-purple-400 font-bold">1</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+<h4 class="font-semibold text-white mb-2">Capacitación técnica (lo que hace el mercado)</h4>
+<p class="text-sm text-neutral-400 mb-3">Nivel commodity</p>
+<p class="text-neutral-300 text-sm">El fabricante enseña a presionar botones. Se puede cobrar por ello, pero es sustituible y compite por precio.</p>
+</div>
+</div>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-12 h-12 rounded-full bg-purple-500/20 flex items-center justify-center"><span class="text-purple-400 font-bold">2</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+<h4 class="font-semibold text-white mb-2">Capacidad de cambio (la brecha)</h4>
+<p class="text-sm text-neutral-400 mb-3">Nivel intermedio</p>
+<p class="text-neutral-300 text-sm">La organización aprende a integrar procesos, rediseñar funciones y gestionar la transición de las personas.</p>
+</div>
+</div>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-12 h-12 rounded-full bg-purple-500/20 flex items-center justify-center"><span class="text-purple-400 font-bold">3</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+<h4 class="font-semibold text-white mb-2">Absorción organizacional (el diferencial)</h4>
+<p class="text-sm text-neutral-400 mb-3">Nivel estratégico — océano azul</p>
+<p class="text-neutral-300 text-sm">La empresa podrá incorporar cualquier robot futuro con menos fricción. Vendiste una capacidad duradera, no una sesión.</p>
+</div>
+</div>
+</div>
+<!-- Conceitos-chave -->
+<h3 class="text-lg font-semibold mb-4">Conceptos clave</h3>
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+<div class="bg-dark-800 rounded-lg border border-dark-600 p-4"><div class="text-purple-400 font-bold mb-1">Absorción organizacional</div><p class="text-xs text-neutral-400">La empresa incorpora el robot</p></div>
+<div class="bg-dark-800 rounded-lg border border-dark-600 p-4"><div class="text-purple-400 font-bold mb-1">Capacidad de cambio</div><p class="text-xs text-neutral-400">Capacidad de cambiar</p></div>
+<div class="bg-dark-800 rounded-lg border border-dark-600 p-4"><div class="text-purple-400 font-bold mb-1">Diferencial de mercado</div><p class="text-xs text-neutral-400">Qué no entrega nadie</p></div>
+<div class="bg-dark-800 rounded-lg border border-dark-600 p-4"><div class="text-purple-400 font-bold mb-1">Blue ocean</div><p class="text-xs text-neutral-400">Fuera de la competencia de precios</p></div>
+</div>
+</section>
+<!-- ===================== TOPICO 5 ===================== -->
+<section class="mb-16" id="topico-5">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">5</span>
+<h2 class="text-2xl font-bold">🌍 Mercado direccionable</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed">
+        Toda empresa que compra un cobot necesita capacitar a su equipo. El mercado direccionable crece en la <strong class="text-purple-400">misma proporción</strong> del mercado de robots, y la demanda de reconversión profesional es <strong class="text-purple-400">derivada</strong>: cada dólar gastado en un robot genera demanda de capacitación.
+      </p>
+<div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-blue-400 mb-4 flex items-center">
+<span class="mr-2">📈</span> Tamaño del mercado (cobots)
+        </h3>
+<ul class="space-y-2 text-neutral-300">
+<li><strong class="text-blue-400">USD 1.4–3.4 mil millones</strong> — mercado de cobots en 2025</li>
+<li><strong class="text-blue-400">USD 7–32 mil millones</strong> — proyección para 2030</li>
+<li><strong class="text-blue-400">Demanda derivada</strong> — cada dólar invertido en robots impulsa la demanda de capacitación</li>
+</ul>
+</div>
+<div class="bg-gradient-to-br from-purple-900/30 to-dark-800 rounded-xl border border-purple-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-purple-400 mb-4 flex items-center">
+<span class="mr-2">🎯</span> TAM / SAM / SOM
+        </h3>
+<ul class="space-y-2 text-neutral-300">
+<li class="flex items-start space-x-2"><span class="text-purple-400 mt-1">•</span><span><strong>TAM:</strong> todo comprador de robots en el mundo necesita capacitación</span></li>
+<li class="flex items-start space-x-2"><span class="text-purple-400 mt-1">•</span><span><strong>SAM:</strong> verticales y regiones que puedes atender</span></li>
+<li class="flex items-start space-x-2"><span class="text-purple-400 mt-1">•</span><span><strong>SOM:</strong> porción realista a corto plazo, mediante attach rate</span></li>
+</ul>
+</div>
+<div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
+<span class="mr-2">💡</span> Consejo práctico
+        </h3>
+<p class="text-neutral-300">Presenta tu mercado mediante <strong>tasa de adopción</strong>: "por cada robot vendido en la región, X% necesita capacitación documentada". Esto vincula tu crecimiento al crecimiento (rápido) del mercado de cobots.</p>
+</div>
+<!-- Conceitos-chave -->
+<h3 class="text-lg font-semibold mb-4">Conceptos clave</h3>
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+<div class="bg-dark-800 rounded-lg border border-dark-600 p-4"><div class="text-purple-400 font-bold mb-1">TAM/SAM/SOM</div><p class="text-xs text-neutral-400">Capas de mercado</p></div>
+<div class="bg-dark-800 rounded-lg border border-dark-600 p-4"><div class="text-purple-400 font-bold mb-1">Mercado de cobots</div><p class="text-xs text-neutral-400">USD 1.4–3.4 mil millones → 7–32 mil millones</p></div>
+<div class="bg-dark-800 rounded-lg border border-dark-600 p-4"><div class="text-purple-400 font-bold mb-1">Demanda derivada</div><p class="text-xs text-neutral-400">Impulsada por la venta de robots</p></div>
+<div class="bg-dark-800 rounded-lg border border-dark-600 p-4"><div class="text-purple-400 font-bold mb-1">Attach rate</div><p class="text-xs text-neutral-400">% que necesita capacitación</p></div>
+</div>
+</section>
+<!-- ===================== TOPICO 6 ===================== -->
+<section class="mb-16" id="topico-6">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">6</span>
+<h2 class="text-2xl font-bold">📋 Anclaje regulatorio</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed">
+        A <strong class="text-purple-400">ISO 10218:2025</strong> exige capacitación documentada para operadores de robots colaborativos. El cumplimiento no es opcional — es la regulación que convierte la capacitación de «nice to have» en <strong class="text-purple-400">obligatorio</strong>. Ese es el ancla que sostiene todo el caso de negocio.
+      </p>
+<div class="bg-gradient-to-br from-purple-900/30 to-dark-800 rounded-xl border border-purple-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-purple-400 mb-4 flex items-center">
+<span class="mr-2">⚖️</span> Regulación = obligatoriedad
+        </h3>
+<p class="text-neutral-300 mb-4">Cuando la capacitación es exigida por una norma, sale del presupuesto discrecional y entra en el presupuesto de compliance, que rara vez se recorta. El argumento pasa de «¿vale la pena?» a «¿cómo cumplimos con la normativa?».</p>
+<ul class="space-y-2 text-neutral-300">
+<li class="flex items-start space-x-2"><span class="text-purple-400 mt-1">•</span><span><strong>ISO 10218:2025</strong> — capacitación documentada para cobots</span></li>
+<li class="flex items-start space-x-2"><span class="text-purple-400 mt-1">•</span><span><strong>NR-12</strong> — seguridad en máquinas y equipos (Brasil)</span></li>
+</ul>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+<div class="bg-emerald-900/20 rounded-xl border border-emerald-500/30 p-6">
+<h4 class="font-bold text-emerald-400 mb-4">✓ Con ancla regulatoria</h4>
+<ul class="space-y-3 text-neutral-300">
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>La capacitación se vuelve una obligación, no una opción</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>El presupuesto de compliance está protegido</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>La documentación se convierte en un entregable facturable</span></li>
+</ul>
+</div>
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+<h4 class="font-bold text-red-400 mb-4">✗ Sin referencia regulatoria</h4>
+<ul class="space-y-3 text-neutral-300">
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>La capacitación puede interrumpirse en cualquier momento</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>La venta depende solo de convencer sobre el ROI</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>El riesgo de auditoría queda subestimado</span></li>
+</ul>
+</div>
+</div>
+<div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
+<span class="mr-2">💡</span> Consejo práctico
+        </h3>
+<p class="text-neutral-300">Combina los tres pilares en la presentación: <strong>ROI</strong> (vale la pena), <strong>costo de la falla</strong> (costoso no hacerlo) y <strong>regulación</strong> (obligatorio hacerlo). Juntos, dejan el "no" sin argumentos.</p>
+</div>
+<!-- Conceitos-chave -->
+<h3 class="text-lg font-semibold mb-4">Conceptos clave</h3>
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+<div class="bg-dark-800 rounded-lg border border-dark-600 p-4"><div class="text-purple-400 font-bold mb-1">ISO 10218:2025</div><p class="text-xs text-neutral-400">Capacitación documentada</p></div>
+<div class="bg-dark-800 rounded-lg border border-dark-600 p-4"><div class="text-purple-400 font-bold mb-1">Capacitación obligatoria</div><p class="text-xs text-neutral-400">Sale de lo discrecional</p></div>
+<div class="bg-dark-800 rounded-lg border border-dark-600 p-4"><div class="text-purple-400 font-bold mb-1">Ancla regulatoria</div><p class="text-xs text-neutral-400">Sustenta el caso de negocio</p></div>
+<div class="bg-dark-800 rounded-lg border border-dark-600 p-4"><div class="text-purple-400 font-bold mb-1">NR-12</div><p class="text-xs text-neutral-400">Seguridad de máquinas (BR)</p></div>
+</div>
+</section>
+<!-- RESUMO DO MODULO -->
+<section class="mb-12">
+<div class="bg-gradient-to-br from-purple-900/40 via-dark-800 to-dark-800 rounded-xl border border-purple-500/30 p-8">
+<h2 class="text-2xl font-bold mb-6 flex items-center">
+<span class="mr-3">✅</span> Resumen del módulo
+        </h2>
+<div class="space-y-4 mb-8">
+<div class="flex items-start space-x-3"><span class="text-purple-400 mt-1">✓</span><div><strong class="text-white">ROI cuantificado</strong><span class="text-neutral-400"> - VR reduce el tiempo en un 38%, reduce los accidentes y acelera la adopción; preséntalo como período de recuperación de la inversión.</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-purple-400 mt-1">✓</span><div><strong class="text-white">Costo de NO capacitar</strong><span class="text-neutral-400"> - 70% de las transformaciones fracasan sin el factor humano; el miedo a la inversión varada vende.</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-purple-400 mt-1">✓</span><div><strong class="text-white">Precios segmentados</strong><span class="text-neutral-400"> - por sector, tamaño y compliance; basado en valor, no por hora.</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-purple-400 mt-1">✓</span><div><strong class="text-white">Diferencial = absorción</strong><span class="text-neutral-400"> - vender el cambio organizacional, no la operación técnica (océano azul).</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-purple-400 mt-1">✓</span><div><strong class="text-white">Mercado derivado</strong><span class="text-neutral-400"> - crece con los cobots (USD 1.4–3.4 bi → 7–32 bi); usa attach rate.</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-purple-400 mt-1">✓</span><div><strong class="text-white">Ancla regulatoria</strong><span class="text-neutral-400"> - ISO 10218:2025 y NR-12 hacen que la capacitación sea obligatoria.</span></div></div>
+</div>
+<div class="bg-dark-800/50 rounded-lg p-4 mb-8">
+<h3 class="font-semibold text-purple-400 mb-2">Próximo módulo:</h3>
+<p class="text-neutral-300">3.4 - Sigue construyendo la capa estratégica de la recapacitación.</p>
+</div>
+<div class="flex flex-col sm:flex-row gap-4">
+<a class="flex-1 text-center px-6 py-3 bg-dark-700 text-neutral-300 rounded-lg font-semibold hover:bg-dark-600 transition-colors" href="index.html">
+            ← Volver a la ruta
+          </a>
+<a class="flex-1 text-center px-6 py-3 bg-purple-600 text-white rounded-lg font-semibold hover:bg-purple-500 transition-colors" href="modulo-3-4.html">
+            Próximo módulo →
+          </a>
+</div>
+</div>
+</section>
+</main>
+<!-- FOOTER -->
+<footer class="border-t border-dark-600 py-8 mt-16">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-neutral-500 text-sm">
+<p>segROBOT — INEMA.CLUB — 2026</p>
+</div>
+</footer>
+<!-- SCRIPTS -->
+<script>
+    const themeToggle = document.getElementById('theme-toggle');
+    const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
+    const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
+    const html = document.documentElement;
+
+    if (localStorage.getItem('theme') === 'light' || (!localStorage.getItem('theme') && !html.classList.contains('dark'))) {
+      themeToggleDarkIcon.classList.remove('hidden');
+      html.classList.remove('dark');
+    } else {
+      themeToggleLightIcon.classList.remove('hidden');
+    }
+
+    themeToggle.addEventListener('click', () => {
+      themeToggleDarkIcon.classList.toggle('hidden');
+      themeToggleLightIcon.classList.toggle('hidden');
+      html.classList.toggle('dark');
+      localStorage.setItem('theme', html.classList.contains('dark') ? 'dark' : 'light');
+    });
+  </script>
+</body>
+</html>

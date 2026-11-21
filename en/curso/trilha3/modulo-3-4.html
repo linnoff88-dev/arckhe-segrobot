@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Module 3.4 - Certifications and Compliance | segROBOT</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            primary: '#FACC15',
+            dark: { 900: '#111827', 800: '#1f2937', 700: '#374151', 600: '#4b5563' }
+          }
+        }
+      }
+    }
+  </script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<style>
+    body { font-family: 'Inter', sans-serif; }
+    .dark body { background-color: #111827; }
+    .topic-explanation { display: none; }
+    .topic-explanation.active { display: block; }
+
+    /* Light mode overrides */
+    html:not(.dark) body { background-color: #f8fafc; }
+    html:not(.dark) .bg-dark-900 { background-color: #ffffff; }
+    html:not(.dark) .bg-dark-800 { background-color: #f9fafb; }
+    html:not(.dark) .bg-dark-700 { background-color: #f3f4f6; }
+    html:not(.dark) .bg-dark-600 { background-color: #e5e7eb; }
+    html:not(.dark) .text-neutral-100 { color: #111827; }
+    html:not(.dark) .text-neutral-300 { color: #4b5563; }
+    html:not(.dark) .text-neutral-400 { color: #6b7280; }
+    html:not(.dark) .text-neutral-500 { color: #9ca3af; }
+    html:not(.dark) .border-dark-600 { border-color: #d1d5db; }
+    html:not(.dark) .border-dark-700 { border-color: #e5e7eb; }
+
+    /* Light mode - cores de acento (trilha purple) */
+    html:not(.dark) .text-purple-400 { color: #7c3aed; }
+    html:not(.dark) .bg-purple-500\/20 { background-color: rgba(124, 58, 237, 0.12); }
+    html:not(.dark) .bg-purple-500\/10 { background-color: rgba(124, 58, 237, 0.08); }
+    html:not(.dark) .border-purple-500\/30 { border-color: rgba(124, 58, 237, 0.25); }
+    html:not(.dark) .hover\:bg-purple-500\/30:hover { background-color: rgba(124, 58, 237, 0.18); }
+    html:not(.dark) .hover\:text-purple-400:hover { color: #7c3aed; }
+    html:not(.dark) .hover\:bg-purple-500\/10:hover { background-color: rgba(124, 58, 237, 0.08); }
+
+    /* Light mode - outras trilhas no nav */
+    html:not(.dark) .hover\:text-emerald-400:hover { color: #059669; }
+    html:not(.dark) .hover\:bg-emerald-500\/10:hover { background-color: rgba(5, 150, 105, 0.08); }
+    html:not(.dark) .hover\:text-blue-400:hover { color: #2563eb; }
+    html:not(.dark) .hover\:bg-blue-500\/10:hover { background-color: rgba(37, 99, 235, 0.08); }
+
+    /* Light mode - remove gradientes */
+    html:not(.dark) [class*="bg-gradient-to"] { background-image: none !important; }
+
+    /* Light mode - cores especiais */
+    html:not(.dark) .text-primary { color: #a16207; }
+    html:not(.dark) .bg-primary\/10 { background-color: rgba(161, 98, 7, 0.08); }
+    html:not(.dark) .border-primary\/40 { border-color: rgba(161, 98, 7, 0.25); }
+    html:not(.dark) .text-sky-400 { color: #0369a1; }
+    html:not(.dark) .text-yellow-400 { color: #a16207; }
+    html:not(.dark) .hover\:text-sky-300:hover { color: #0284c7; }
+    html:not(.dark) .hover\:text-yellow-300:hover { color: #854d0e; }
+
+    /* Light mode - nav */
+    html:not(.dark) .bg-dark-900\/95 { background-color: rgba(255, 255, 255, 0.95); }
+
+    /* Dark mode - bordas suaves */
+    .dark .border-dark-600 { border-color: #374151; }
+    .dark .divide-dark-600 > :not([hidden]) ~ :not([hidden]) { border-color: #374151; }
+
+    @keyframes wf-pulse { 0%,100% { opacity:.55 } 50% { opacity:1 } }
+    @media (prefers-reduced-motion: no-preference) {
+      .wf-a { animation: wf-pulse 2.6s ease-in-out infinite; }
+      .wf-a:nth-child(2){animation-delay:.25s} .wf-a:nth-child(3){animation-delay:.5s}
+      .wf-a:nth-child(4){animation-delay:.75s} .wf-a:nth-child(5){animation-delay:1s}
+    }
+  </style>
+<link href="https://inematds.github.io/segrobot/curso/trilha3/modulo-3-4.html" hreflang="pt-BR" rel="alternate"/><link href="https://inematds.github.io/segrobot/en/curso/trilha3/modulo-3-4.html" hreflang="en" rel="alternate"/><link href="https://inematds.github.io/segrobot/es/curso/trilha3/modulo-3-4.html" hreflang="es" rel="alternate"/></head>
+<body class="bg-dark-900 text-neutral-100 min-h-screen"><div class="inema-lang" style="position:fixed;right:14px;bottom:14px;z-index:9999;display:flex;gap:2px;padding:4px;border-radius:10px;background:rgba(12,12,16,.82);border:1px solid rgba(226,162,59,.45);font:600 12px/1 Sora,Inter,system-ui,sans-serif;backdrop-filter:blur(8px)" translate="no"><a href="../../../curso/trilha3/modulo-3-4.html" hreflang="pt-BR" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">PT</a><a href="modulo-3-4.html" hreflang="en" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#1a1206;background:#E2A23B">EN</a><a href="../../../es/curso/trilha3/modulo-3-4.html" hreflang="es" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">ES</a></div>
+<!-- NAVIGATION -->
+<nav class="sticky top-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-600">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="flex justify-between items-center h-14">
+<div class="flex items-center space-x-4">
+<a class="flex items-center space-x-2 text-yellow-400 hover:text-yellow-300" href="../../index.html">
+<span class="text-2xl">🤖</span>
+<span class="font-bold text-lg hidden sm:inline">segROBOT</span>
+</a>
+<span class="text-neutral-600">|</span>
+<a class="text-sky-400 hover:text-sky-300 text-sm font-medium" href="https://inema.club" target="_blank">INEMA.CLUB</a>
+</div>
+<div class="flex items-center space-x-1 sm:space-x-2">
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-emerald-400 hover:bg-emerald-500/10 transition-colors" href="../trilha1/index.html">
+<span class="sm:hidden">T1</span>
+<span class="hidden sm:inline">Fundamentals</span>
+</a>
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-blue-400 hover:bg-blue-500/10 transition-colors" href="../trilha2/index.html">
+<span class="sm:hidden">T2</span>
+<span class="hidden sm:inline">Action</span>
+</a>
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-purple-400 bg-purple-500/10" href="index.html">
+<span class="sm:hidden">T3</span>
+<span class="hidden sm:inline">Strategic</span>
+</a>
+<button class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors ml-2" id="theme-toggle">
+<svg class="hidden w-5 h-5 text-neutral-300" fill="currentColor" id="theme-toggle-dark-icon" viewbox="0 0 20 20">
+<path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+</svg>
+<svg class="hidden w-5 h-5 text-neutral-300" fill="currentColor" id="theme-toggle-light-icon" viewbox="0 0 20 20">
+<path clip-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd"></path>
+</svg>
+</button>
+</div>
+</div>
+</div>
+</nav>
+<!-- BREADCRUMB -->
+<nav class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+<div class="flex items-center space-x-2 text-sm text-neutral-400">
+<a class="hover:text-purple-400" href="../../index.html">Start</a>
+<span>/</span>
+<a class="hover:text-purple-400" href="index.html">Track 3</a>
+<span>/</span>
+<span class="text-purple-400">Module 3.4</span>
+</div>
+</nav>
+<!-- HEADER -->
+<header class="bg-gradient-to-br from-purple-900/30 via-dark-800 to-dark-800 py-12 border-b border-dark-600">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+<span class="inline-block px-3 py-1 bg-purple-500/20 text-purple-400 text-xs font-semibold rounded-full mb-4">
+        MODULE 3.4
+      </span>
+<h1 class="text-4xl sm:text-5xl font-bold mb-4">📜 Certifications and Compliance</h1>
+<p class="text-lg text-neutral-400 max-w-3xl">
+        Map the certifications that already exist for robotics, understand which ones have become hiring requirements, and identify the gap where no certification exists yet — because that is exactly where the greatest strategic opportunity lies.
+      </p>
+<!-- Stats Banner -->
+<div class="grid grid-cols-4 gap-4 mt-8 max-w-2xl">
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+<div class="text-xl font-bold text-purple-400">6</div>
+<div class="text-xs text-neutral-400">Topics</div>
+</div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+<div class="text-xl font-bold text-purple-400">45</div>
+<div class="text-xs text-neutral-400">Minutes</div>
+</div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+<div class="text-xl font-bold text-purple-400">Advanced</div>
+<div class="text-xs text-neutral-400">Level</div>
+</div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+<div class="text-xl font-bold text-purple-400">Strategy</div>
+<div class="text-xs text-neutral-400">Type</div>
+</div>
+</div>
+</div>
+</header>
+<!-- CONTEUDO -->
+<main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+<!-- SVG HERO: stack de certificacoes -->
+<div class="rounded-2xl border border-purple-500/30 bg-dark-900/40 p-3 sm:p-4 mb-12 overflow-hidden">
+<svg aria-label="Robotics certification stack: from entry-level SME RMF and OSHA, through manufacturer certifications FANUC IPC NIMS, to the top where no fleet supervision certification exists; alongside, NR-12 as a precedent for a legal prerequisite" class="w-full h-auto" role="img" viewbox="0 0 1000 280">
+<defs>
+<lineargradient id="m34-grad" x1="0" x2="1" y1="0" y2="1">
+<stop offset="0" stop-color="#c084fc"></stop><stop offset="1" stop-color="#a855f7"></stop>
+</lineargradient>
+<filter height="180%" id="m34-glow" width="180%" x="-40%" y="-40%">
+<fegaussianblur result="b" stddeviation="3"></fegaussianblur><femerge><femergenode in="b"></femergenode><femergenode in="SourceGraphic"></femergenode></femerge>
+</filter>
+<pattern height="32" id="m34-grid" patternunits="userSpaceOnUse" width="32">
+<circle cx="1.3" cy="1.3" fill="#a855f7" opacity="0.12" r="1.3"></circle>
+</pattern>
+<marker id="m34-ah" markerheight="9" markerwidth="9" orient="auto" refx="6.5" refy="4.5"><path d="M0,0 L8,4.5 L0,9 L2.4,4.5 Z" fill="#c084fc"></path></marker>
+<marker id="m34-ahc" markerheight="9" markerwidth="9" orient="auto" refx="6.5" refy="4.5"><path d="M0,0 L8,4.5 L0,9 L2.4,4.5 Z" fill="#38bdf8"></path></marker>
+</defs>
+<rect fill="url(#m34-grid)" height="280" width="1000" x="0" y="0"></rect>
+<!-- eixo de progressao vertical -->
+<path d="M70,250 L70,40" fill="none" marker-end="url(#m34-ahc)" opacity="0.7" stroke="#38bdf8" stroke-dasharray="8 8" stroke-width="2.5"></path>
+<text fill="#9ad6ff" font-family="Inter,sans-serif" font-size="12" text-anchor="middle" transform="rotate(-90 46 150)" x="46" y="150">career maturity</text>
+<!-- Degrau 1 - base: entrada -->
+<rect fill="#0e1b26" height="56" rx="12" stroke="#38bdf8" stroke-width="2" width="230" x="130" y="196"></rect>
+<text fill="#bfe6ff" font-family="Inter,sans-serif" font-size="16" font-weight="700" text-anchor="middle" x="245" y="222">SME RMF + OSHA 10/30</text>
+<text fill="#9ad6ff" font-family="Inter,sans-serif" font-size="12" text-anchor="middle" x="245" y="240">entry-level — fundamentals and safety</text>
+<!-- Degrau 2 - fabricante -->
+<rect fill="#0e1b26" height="56" rx="12" stroke="#38bdf8" stroke-width="2" width="230" x="310" y="128"></rect>
+<text fill="#bfe6ff" font-family="Inter,sans-serif" font-size="16" font-weight="700" text-anchor="middle" x="425" y="154">FANUC / IPC / NIMS</text>
+<text fill="#9ad6ff" font-family="Inter,sans-serif" font-size="12" text-anchor="middle" x="425" y="172">manufacturer—already a job requirement</text>
+<!-- Degrau 3 - topo: gap (cor da trilha, glow) -->
+<g filter="url(#m34-glow)"><rect fill="#1a1230" height="60" rx="14" stroke="url(#m34-grad)" stroke-width="2.5" width="270" x="490" y="56"></rect></g>
+<text fill="#c084fc" font-family="Inter,sans-serif" font-size="17" font-weight="700" text-anchor="middle" x="625" y="82">GAP: fleet supervision</text>
+<text fill="#e6cffb" font-family="Inter,sans-serif" font-size="12" text-anchor="middle" x="625" y="102">no certification exists — an opportunity</text>
+<!-- setas entre degraus -->
+<path d="M360,210 C405,210 425,190 425,184" fill="none" marker-end="url(#m34-ahc)" opacity="0.6" stroke="#38bdf8" stroke-width="2"></path>
+<path d="M540,142 C590,142 615,122 625,116" fill="none" marker-end="url(#m34-ah)" opacity="0.7" stroke="#c084fc" stroke-width="2"></path>
+<!-- destino: NR-12 como precedente -->
+<g filter="url(#m34-glow)"><rect fill="#1a1230" height="60" rx="14" stroke="url(#m34-grad)" stroke-width="2.5" width="160" x="800" y="56"></rect></g>
+<text fill="#c084fc" font-family="Inter,sans-serif" font-size="16" font-weight="700" text-anchor="middle" x="880" y="82">How NR-12</text>
+<text fill="#e6cffb" font-family="Inter,sans-serif" font-size="12" text-anchor="middle" x="880" y="102">legal prerequisite</text>
+<path d="M760,86 L800,86" fill="none" marker-end="url(#m34-ah)" opacity="0.7" stroke="#c084fc" stroke-width="2"></path>
+</svg>
+<p class="text-xs text-neutral-500 mt-2 text-center">Illustrative diagram — the robotics certification stack: an entry-level foundation, a manufacturer layer, and the empty top where the opportunity lies.</p>
+</div>
+<!-- TOPICO 1 -->
+<section class="mb-16" id="topico-1">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">1</span>
+<h2 class="text-2xl font-bold">🏭 SME RMF — Robotics in Manufacturing</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed">
+        A <strong class="text-purple-400">SME RMF</strong> (Society of Manufacturing Engineers — Robotics in
+        Manufacturing Fundamentals) is the industry's most recognized entry-level certification. It covers the
+        fundamentals of <strong class="text-purple-400">programming, safety, and integration</strong> of robots
+        in manufacturing. It is the first credential that confirms you know the basics.
+      </p>
+<div class="bg-gradient-to-br from-purple-900/30 to-dark-800 rounded-xl border border-purple-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-purple-400 mb-4 flex items-center">
+<span class="mr-2">🎯</span> Key concept
+        </h3>
+<p class="text-neutral-300 mb-4">
+          The SME RMF works as the <strong>entry point</strong> of the certification ecosystem: validates
+          foundational knowledge and opens the door to manufacturer specializations.
+        </p>
+<ul class="space-y-2 text-neutral-300">
+<li class="flex items-start space-x-2"><span class="text-purple-400 mt-1">•</span><span>Industrial robot programming fundamentals</span></li>
+<li class="flex items-start space-x-2"><span class="text-purple-400 mt-1">•</span><span>Safety principles for robotic cells</span></li>
+<li class="flex items-start space-x-2"><span class="text-purple-400 mt-1">•</span><span>Factory-floor robot integration</span></li>
+</ul>
+</div>
+<div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
+<span class="mr-2">💡</span> Practical tip
+        </h3>
+<p class="text-neutral-300">
+          Treat the SME RMF as the <strong>first item on your certification roadmap</strong>, not as the
+          last one. On its own, it doesn’t guarantee a job, but it’s the implicit prerequisite that opens doors to
+          specializations that set you apart.
+        </p>
+</div>
+<!-- Conceitos-chave -->
+<div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+<div class="bg-dark-800 rounded-lg border border-dark-600 p-4"><div class="text-purple-400 font-bold text-sm mb-1">SME</div><p class="text-xs text-neutral-400">Society that issues the certification</p></div>
+<div class="bg-dark-800 rounded-lg border border-dark-600 p-4"><div class="text-purple-400 font-bold text-sm mb-1">RMF</div><p class="text-xs text-neutral-400">Robotics in Manufacturing</p></div>
+<div class="bg-dark-800 rounded-lg border border-dark-600 p-4"><div class="text-purple-400 font-bold text-sm mb-1">Entry</div><p class="text-xs text-neutral-400">Recognized foundational certification</p></div>
+<div class="bg-dark-800 rounded-lg border border-dark-600 p-4"><div class="text-purple-400 font-bold text-sm mb-1">Fundamentals</div><p class="text-xs text-neutral-400">Programming, safety, integration</p></div>
+</div>
+</section>
+<!-- TOPICO 2 -->
+<section class="mb-16" id="topico-2">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">2</span>
+<h2 class="text-2xl font-bold">🦺 OSHA 10/30 for robotics — Mandatory safety</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed">
+        The certifications <strong class="text-purple-400">OSHA 10-hour and OSHA 30-hour</strong> of occupational safety,
+        adapted for environments with robots, cover specific risks of <strong class="text-purple-400">HRC
+        (human-robot collaboration)</strong>. OSHA is a legal requirement in the U.S. and a global reference — versions
+        adapted for robotics will be required as regulations tighten.
+      </p>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+<div class="bg-emerald-900/20 rounded-xl border border-emerald-500/30 p-6">
+<h4 class="font-bold text-emerald-400 mb-4">✓ What adapted OSHA covers</h4>
+<ul class="space-y-3 text-neutral-300">
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Risks specific to robot cells</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Safety procedures in HRC</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Safety compliance required by law</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>10h (operator) and 30h (supervisor) levels</span></li>
+</ul>
+</div>
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+<h4 class="font-bold text-red-400 mb-4">✗ Mistakes made by those who ignore</h4>
+<ul class="space-y-3 text-neutral-300">
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Treating OSHA as optional bureaucracy</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Using generic OSHA guidance in an environment with robots</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Wait until regulations make it mandatory</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Confusing 10-hour training with 30-hour supervision</span></li>
+</ul>
+</div>
+</div>
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-red-400 mb-3 flex items-center">
+<span class="mr-2">⚠️</span> Legal risk alert
+        </h3>
+<p class="text-neutral-300">
+          OSHA is <strong>legal requirement in the US</strong>. Operating a robotic cell without adequate
+          safety training exposes the company to fines, shutdowns, and civil liability in the event of an
+          accident. As regulations tighten, the version adapted for robotics stops being a
+          differentiator and becomes a requirement for operating.
+        </p>
+</div>
+<!-- Conceitos-chave -->
+<div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+<div class="bg-dark-800 rounded-lg border border-dark-600 p-4"><div class="text-purple-400 font-bold text-sm mb-1">OSHA 10</div><p class="text-xs text-neutral-400">Operator level (10h)</p></div>
+<div class="bg-dark-800 rounded-lg border border-dark-600 p-4"><div class="text-purple-400 font-bold text-sm mb-1">OSHA 30</div><p class="text-xs text-neutral-400">Supervisor level (30h)</p></div>
+<div class="bg-dark-800 rounded-lg border border-dark-600 p-4"><div class="text-purple-400 font-bold text-sm mb-1">HRC</div><p class="text-xs text-neutral-400">Risks of human-robot collaboration</p></div>
+<div class="bg-dark-800 rounded-lg border border-dark-600 p-4"><div class="text-purple-400 font-bold text-sm mb-1">Compliance</div><p class="text-xs text-neutral-400">Legal requirement and global reference</p></div>
+</div>
+</section>
+<!-- TOPICO 3 -->
+<section class="mb-16" id="topico-3">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">3</span>
+<h2 class="text-2xl font-bold">🤖 FANUC NOCTI — Partnerships with colleges</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed">
+        The program <strong class="text-purple-400">FANUC through NOCTI</strong> (National Occupational Competency
+        Testing Institute) integrates manufacturer certification with colleges and technical schools. It is a model for
+        <strong class="text-purple-400">industry-education partnership</strong> that scales training: students graduate
+        certified by the manufacturer itself, ready for the job market.
+      </p>
+<div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-blue-400 mb-4 flex items-center">
+<span class="mr-2">📊</span> How the pipeline model works
+        </h3>
+<ul class="space-y-2 text-neutral-300">
+<li><strong>Manufacturer (FANUC)</strong> — defines competencies and the assessment standard</li>
+<li><strong>NOCTI</strong> — applies the national occupational competency test</li>
+<li><strong>College / technical school</strong> — integrates the program into the curriculum</li>
+<li><strong>Student</strong> — graduates with manufacturer certification, ready for the job market</li>
+</ul>
+</div>
+<!-- Timeline do pipeline -->
+<div class="space-y-6 mb-6">
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-12 h-12 rounded-full bg-purple-500/20 flex items-center justify-center"><span class="text-purple-400 font-bold">1</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+<h4 class="font-semibold text-white mb-2">Industry-academia agreement</h4>
+<p class="text-sm text-neutral-400 mb-3">FANUC + educational institution</p>
+<p class="text-neutral-300 text-sm">The manufacturer brings equipment and competency standards into the technical school or college.</p>
+</div>
+</div>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-12 h-12 rounded-full bg-purple-500/20 flex items-center justify-center"><span class="text-purple-400 font-bold">2</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+<h4 class="font-semibold text-white mb-2">Assessment via NOCTI</h4>
+<p class="text-sm text-neutral-400 mb-3">National competency test</p>
+<p class="text-neutral-300 text-sm">Students are assessed against a nationally recognized standard, not just the course’s internal grade.</p>
+</div>
+</div>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-12 h-12 rounded-full bg-purple-500/20 flex items-center justify-center"><span class="text-purple-400 font-bold">3</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+<h4 class="font-semibold text-white mb-2">Talent pipeline</h4>
+<p class="text-sm text-neutral-400 mb-3">Certified Student → Market</p>
+<p class="text-neutral-300 text-sm">Graduates enter the job market already holding the manufacturer’s certification, shortening the time to productivity.</p>
+</div>
+</div>
+</div>
+<!-- Conceitos-chave -->
+<div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+<div class="bg-dark-800 rounded-lg border border-dark-600 p-4"><div class="text-purple-400 font-bold text-sm mb-1">FANUC</div><p class="text-xs text-neutral-400">Manufacturer certification</p></div>
+<div class="bg-dark-800 rounded-lg border border-dark-600 p-4"><div class="text-purple-400 font-bold text-sm mb-1">NOCTI</div><p class="text-xs text-neutral-400">National competency test</p></div>
+<div class="bg-dark-800 rounded-lg border border-dark-600 p-4"><div class="text-purple-400 font-bold text-sm mb-1">Partnership</div><p class="text-xs text-neutral-400">Industry + academia</p></div>
+<div class="bg-dark-800 rounded-lg border border-dark-600 p-4"><div class="text-purple-400 font-bold text-sm mb-1">Pipeline</div><p class="text-xs text-neutral-400">Market-ready talent</p></div>
+</div>
+</section>
+<!-- TOPICO 4 -->
+<section class="mb-16" id="topico-4">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">4</span>
+<h2 class="text-2xl font-bold">📋 IPC / NIMS in Job Postings — Hiring Requirement</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed">
+        The certifications <strong class="text-purple-400">IPC</strong> (electronics) and <strong class="text-purple-400">NIMS</strong>
+        (machining) already appear as <strong class="text-purple-400">requirement in job descriptions</strong>
+        related to robotics and automation. The signal is clear: certifications are shifting from a differentiator to
+        a prerequisite—those without them are left out of the hiring pipeline.
+      </p>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+<div class="bg-emerald-900/20 rounded-xl border border-emerald-500/30 p-6">
+<h4 class="font-bold text-emerald-400 mb-4">✓ Certificate enters the funnel</h4>
+<ul class="space-y-3 text-neutral-300">
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Passes the automated screening filter</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Signals competence validated by a third party</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Competes for robotics and automation jobs</span></li>
+</ul>
+</div>
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+<h4 class="font-bold text-red-400 mb-4">✗ Without certification, you're blocked</h4>
+<ul class="space-y-3 text-neutral-300">
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Filtered out before any interview</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Experience alone does not meet the requirement</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Gets screened out of the hiring pipeline</span></li>
+</ul>
+</div>
+</div>
+<div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
+<span class="mr-2">💡</span> Practical tip
+        </h3>
+<p class="text-neutral-300">
+          Read job postings as <strong>trend radar</strong>: when a certification goes from
+          "desirable" to "required" in several job postings, it's time to get it—before the whole market
+          has it and it becomes a baseline, not a differentiator.
+        </p>
+</div>
+<!-- Conceitos-chave -->
+<div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+<div class="bg-dark-800 rounded-lg border border-dark-600 p-4"><div class="text-purple-400 font-bold text-sm mb-1">IPC</div><p class="text-xs text-neutral-400">Electronics certification</p></div>
+<div class="bg-dark-800 rounded-lg border border-dark-600 p-4"><div class="text-purple-400 font-bold text-sm mb-1">NIMS</div><p class="text-xs text-neutral-400">Machining certification</p></div>
+<div class="bg-dark-800 rounded-lg border border-dark-600 p-4"><div class="text-purple-400 font-bold text-sm mb-1">Filter</div><p class="text-xs text-neutral-400">Certification as a job screening criterion</p></div>
+<div class="bg-dark-800 rounded-lg border border-dark-600 p-4"><div class="text-purple-400 font-bold text-sm mb-1">Employability</div><p class="text-xs text-neutral-400">Prerequisite, not a differentiator</p></div>
+</div>
+</section>
+<!-- TOPICO 5 -->
+<section class="mb-16" id="topico-5">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">5</span>
+<h2 class="text-2xl font-bold">❓ What DOES NOT exist — Certification gaps</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed">
+        There is no certification for <strong class="text-purple-400">robot fleet supervision</strong>,
+        <strong class="text-purple-400">HRC team management</strong> or <strong class="text-purple-400">robotics transformation
+        leadership</strong>. The gap is enormous—and where there’s no certification, there’s
+        opportunity: whoever creates the standard first defines the market.
+      </p>
+<div class="bg-gradient-to-br from-purple-900/30 to-dark-800 rounded-xl border border-purple-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-purple-400 mb-4 flex items-center">
+<span class="mr-2">🕳️</span> The map of the gaps
+        </h3>
+<p class="text-neutral-300 mb-4">
+          The existing certifications cover the <strong>operator</strong> e o <strong>integrator</strong>. No one
+          certifies the functions of <strong>supervision and leadership</strong> that the robotics fleet will require:
+        </p>
+<ul class="space-y-2 text-neutral-300">
+<li class="flex items-start space-x-2"><span class="text-purple-400 mt-1">•</span><span>Robotic Fleet Supervision (Multiple Robots, Multiple Shifts)</span></li>
+<li class="flex items-start space-x-2"><span class="text-purple-400 mt-1">•</span><span>Team management in an HRC environment</span></li>
+<li class="flex items-start space-x-2"><span class="text-purple-400 mt-1">•</span><span>Robotics Transformation Leadership</span></li>
+</ul>
+</div>
+<div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
+<span class="mr-2">🚀</span> Where there is no certification, there is opportunity
+        </h3>
+<p class="text-neutral-300">
+          The gap isn’t a failure — it’s a <strong>first-mover advantage</strong>. Whoever establishes the
+          fleet supervision standard first doesn’t just get certified: they go on to define what "competent" means
+          for the entire market.
+        </p>
+</div>
+<!-- Conceitos-chave -->
+<div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+<div class="bg-dark-800 rounded-lg border border-dark-600 p-4"><div class="text-purple-400 font-bold text-sm mb-1">Gap</div><p class="text-xs text-neutral-400">No certification</p></div>
+<div class="bg-dark-800 rounded-lg border border-dark-600 p-4"><div class="text-purple-400 font-bold text-sm mb-1">Fleet Supervision</div><p class="text-xs text-neutral-400">Function without a defined standard</p></div>
+<div class="bg-dark-800 rounded-lg border border-dark-600 p-4"><div class="text-purple-400 font-bold text-sm mb-1">HRC management</div><p class="text-xs text-neutral-400">Human-Robot Team Leadership</p></div>
+<div class="bg-dark-800 rounded-lg border border-dark-600 p-4"><div class="text-purple-400 font-bold text-sm mb-1">First-mover</div><p class="text-xs text-neutral-400">Whoever creates the standard wins</p></div>
+</div>
+</section>
+<!-- TOPICO 6 -->
+<section class="mb-16" id="topico-6">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">6</span>
+<h2 class="text-2xl font-bold">🚀 Opportunity: Create the Certification — A Prerequisite Like NR-12</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed">
+        The strategic outlook is clear: the <strong class="text-purple-400">robotics certification will be a
+        hiring prerequisite</strong>, as does <strong class="text-purple-400">NR-12</strong> already a
+        requirement for machine safety in Brazil. Creating the market's standard certification is the greatest
+        strategic opportunity in this module—whoever gets there first sets the rules.
+      </p>
+<div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-blue-400 mb-4 flex items-center">
+<span class="mr-2">📊</span> NR-12 as a regulatory precedent
+        </h3>
+<ul class="space-y-2 text-neutral-300">
+<li><strong>NR-12</strong> — Brazilian standard for machinery and equipment safety</li>
+<li><strong>Trajectory</strong> — it started as a recommendation; today, it is a legal operating requirement</li>
+<li><strong>Parallel</strong> — the same curve tends to repeat with robotics certification</li>
+</ul>
+</div>
+<!-- Timeline da trajetoria regulatoria -->
+<div class="space-y-6 mb-6">
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-12 h-12 rounded-full bg-purple-500/20 flex items-center justify-center"><span class="text-purple-400 font-bold">1</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+<h4 class="font-semibold text-white mb-2">Today: differentiator</h4>
+<p class="text-sm text-neutral-400 mb-3">Robotics certification</p>
+<p class="text-neutral-300 text-sm">Certification is still seen as an optional competitive advantage for professionals.</p>
+</div>
+</div>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-12 h-12 rounded-full bg-purple-500/20 flex items-center justify-center"><span class="text-purple-400 font-bold">2</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+<h4 class="font-semibold text-white mb-2">In transition: job requirement</h4>
+<p class="text-sm text-neutral-400 mb-3">How IPC/NIMS already are</p>
+<p class="text-neutral-300 text-sm">Certification shifts from “preferred” to “required” in job descriptions.</p>
+</div>
+</div>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-12 h-12 rounded-full bg-purple-500/20 flex items-center justify-center"><span class="text-purple-400 font-bold">3</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+<h4 class="font-semibold text-white mb-2">Future: legal requirement</h4>
+<p class="text-sm text-neutral-400 mb-3">How NR-12 already is</p>
+<p class="text-neutral-300 text-sm">Certification becomes a legal requirement to operate—the people who set the standard reap the rewards of the market it creates.</p>
+</div>
+</div>
+</div>
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-red-400 mb-3 flex items-center">
+<span class="mr-2">⚠️</span> Risk of arriving too late
+        </h3>
+<p class="text-neutral-300">
+          The window for <strong>market creation</strong> is short. When the regulation formalizes the prerequisite
+          (as happened with NR-12), the standard will already have an owner. Those who wait for the certification to exist before reacting
+          trade the position of someone who <strong>defines the rules</strong> by those who only <strong>meets</strong> other people's rules.
+        </p>
+</div>
+<!-- Conceitos-chave -->
+<div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+<div class="bg-dark-800 rounded-lg border border-dark-600 p-4"><div class="text-purple-400 font-bold text-sm mb-1">NR-12</div><p class="text-xs text-neutral-400">Brazilian regulatory precedent</p></div>
+<div class="bg-dark-800 rounded-lg border border-dark-600 p-4"><div class="text-purple-400 font-bold text-sm mb-1">Standard</div><p class="text-xs text-neutral-400">Industry-standard certification</p></div>
+<div class="bg-dark-800 rounded-lg border border-dark-600 p-4"><div class="text-purple-400 font-bold text-sm mb-1">Market creation</div><p class="text-xs text-neutral-400">Create the market, don’t just compete</p></div>
+<div class="bg-dark-800 rounded-lg border border-dark-600 p-4"><div class="text-purple-400 font-bold text-sm mb-1">Trajectory</div><p class="text-xs text-neutral-400">Differentiator → requirement → law</p></div>
+</div>
+</section>
+<!-- RESUMO -->
+<section class="mb-12">
+<div class="bg-gradient-to-br from-purple-900/40 via-dark-800 to-dark-800 rounded-xl border border-purple-500/30 p-8">
+<h2 class="text-2xl font-bold mb-6 flex items-center">
+<span class="mr-3">✅</span> Module Summary
+        </h2>
+<div class="space-y-4 mb-8">
+<div class="flex items-start space-x-3"><span class="text-purple-400 mt-1">✓</span><div><strong class="text-white">SME RMF</strong><span class="text-neutral-400"> - An entry-level certification that validates programming, safety, and integration fundamentals.</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-purple-400 mt-1">✓</span><div><strong class="text-white">OSHA 10/30 for robotics</strong><span class="text-neutral-400"> - mandatory safety with HRC-specific risks; a legal requirement in the U.S.</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-purple-400 mt-1">✓</span><div><strong class="text-white">FANUC NOCTI</strong><span class="text-neutral-400"> - an industry-academia partnership that delivers students already certified by the manufacturer.</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-purple-400 mt-1">✓</span><div><strong class="text-white">IPC / NIMS in job postings</strong><span class="text-neutral-400"> - Certifications have already become a hiring filter in robotics and automation.</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-purple-400 mt-1">✓</span><div><strong class="text-white">Certification gaps</strong><span class="text-neutral-400"> - fleet supervision, HRC management, and leadership have no standard: a first-mover opportunity.</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-purple-400 mt-1">✓</span><div><strong class="text-white">Create the certification</strong><span class="text-neutral-400"> - likely to become a legal prerequisite like NR-12; whoever gets there first sets the rules.</span></div></div>
+</div>
+<div class="bg-dark-800/50 rounded-lg p-4 mb-8">
+<h3 class="font-semibold text-purple-400 mb-2">Next Module:</h3>
+<p class="text-neutral-300">3.5 - Continuation of Learning Path 3 (Strategic)</p>
+</div>
+<div class="flex flex-col sm:flex-row gap-4">
+<a class="flex-1 text-center px-6 py-3 bg-dark-700 text-neutral-300 rounded-lg font-semibold hover:bg-dark-600 transition-colors" href="index.html">
+            ← Back to Track
+          </a>
+<a class="flex-1 text-center px-6 py-3 bg-purple-600 text-white rounded-lg font-semibold hover:bg-purple-500 transition-colors" href="modulo-3-5.html">
+            Next Module →
+          </a>
+</div>
+</div>
+</section>
+</main>
+<!-- FOOTER -->
+<footer class="border-t border-dark-600 py-8 mt-16">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-neutral-500 text-sm">
+<p>segROBOT — INEMA.CLUB — 2026</p>
+</div>
+</footer>
+<!-- SCRIPTS -->
+<script>
+    const themeToggle = document.getElementById('theme-toggle');
+    const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
+    const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
+    const html = document.documentElement;
+
+    if (localStorage.getItem('theme') === 'light' || (!localStorage.getItem('theme') && !html.classList.contains('dark'))) {
+      themeToggleDarkIcon.classList.remove('hidden');
+      html.classList.remove('dark');
+    } else {
+      themeToggleLightIcon.classList.remove('hidden');
+    }
+
+    themeToggle.addEventListener('click', () => {
+      themeToggleDarkIcon.classList.toggle('hidden');
+      themeToggleLightIcon.classList.toggle('hidden');
+      html.classList.toggle('dark');
+      localStorage.setItem('theme', html.classList.contains('dark') ? 'dark' : 'light');
+    });
+  </script>
+</body>
+</html>

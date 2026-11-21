@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Module 3.3 - Business Case: Making the Case for Reskilling | segROBOT</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            primary: '#FACC15',
+            dark: { 900: '#111827', 800: '#1f2937', 700: '#374151', 600: '#4b5563' }
+          }
+        }
+      }
+    }
+  </script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<style>
+    body { font-family: 'Inter', sans-serif; }
+    .dark body { background-color: #111827; }
+    .topic-explanation { display: none; }
+    .topic-explanation.active { display: block; }
+
+    /* Light mode overrides */
+    html:not(.dark) body { background-color: #f8fafc; }
+    html:not(.dark) .bg-dark-900 { background-color: #ffffff; }
+    html:not(.dark) .bg-dark-800 { background-color: #f9fafb; }
+    html:not(.dark) .bg-dark-700 { background-color: #f3f4f6; }
+    html:not(.dark) .bg-dark-600 { background-color: #e5e7eb; }
+    html:not(.dark) .text-neutral-100 { color: #111827; }
+    html:not(.dark) .text-neutral-300 { color: #4b5563; }
+    html:not(.dark) .text-neutral-400 { color: #6b7280; }
+    html:not(.dark) .text-neutral-500 { color: #9ca3af; }
+    html:not(.dark) .border-dark-600 { border-color: #d1d5db; }
+    html:not(.dark) .border-dark-700 { border-color: #e5e7eb; }
+
+    /* Light mode - cores de acento (trilha purple) */
+    html:not(.dark) .text-purple-400 { color: #7c3aed; }
+    html:not(.dark) .bg-purple-500\/20 { background-color: rgba(124, 58, 237, 0.12); }
+    html:not(.dark) .bg-purple-500\/10 { background-color: rgba(124, 58, 237, 0.08); }
+    html:not(.dark) .border-purple-500\/30 { border-color: rgba(124, 58, 237, 0.25); }
+    html:not(.dark) .hover\:bg-purple-500\/30:hover { background-color: rgba(124, 58, 237, 0.18); }
+    html:not(.dark) .hover\:text-purple-400:hover { color: #7c3aed; }
+    html:not(.dark) .hover\:bg-purple-500\/10:hover { background-color: rgba(124, 58, 237, 0.08); }
+
+    /* Light mode - outras trilhas no nav */
+    html:not(.dark) .hover\:text-emerald-400:hover { color: #059669; }
+    html:not(.dark) .hover\:bg-emerald-500\/10:hover { background-color: rgba(5, 150, 105, 0.08); }
+    html:not(.dark) .hover\:text-blue-400:hover { color: #2563eb; }
+    html:not(.dark) .hover\:bg-blue-500\/10:hover { background-color: rgba(37, 99, 235, 0.08); }
+
+    /* Light mode - remove gradientes */
+    html:not(.dark) [class*="bg-gradient-to"] { background-image: none !important; }
+
+    /* Light mode - cores especiais */
+    html:not(.dark) .text-primary { color: #a16207; }
+    html:not(.dark) .bg-primary\/10 { background-color: rgba(161, 98, 7, 0.08); }
+    html:not(.dark) .border-primary\/40 { border-color: rgba(161, 98, 7, 0.25); }
+    html:not(.dark) .text-sky-400 { color: #0369a1; }
+    html:not(.dark) .text-yellow-400 { color: #a16207; }
+    html:not(.dark) .hover\:text-sky-300:hover { color: #0284c7; }
+    html:not(.dark) .hover\:text-yellow-300:hover { color: #854d0e; }
+
+    /* Light mode - nav */
+    html:not(.dark) .bg-dark-900\/95 { background-color: rgba(255, 255, 255, 0.95); }
+
+    /* Dark mode - bordas suaves */
+    .dark .border-dark-600 { border-color: #374151; }
+    .dark .divide-dark-600 > :not([hidden]) ~ :not([hidden]) { border-color: #374151; }
+
+    @keyframes wf-pulse { 0%,100% { opacity:.55 } 50% { opacity:1 } }
+    @media (prefers-reduced-motion: no-preference) {
+      .wf-a { animation: wf-pulse 2.6s ease-in-out infinite; }
+    }
+  </style>
+<link href="https://inematds.github.io/segrobot/curso/trilha3/modulo-3-3.html" hreflang="pt-BR" rel="alternate"/><link href="https://inematds.github.io/segrobot/en/curso/trilha3/modulo-3-3.html" hreflang="en" rel="alternate"/><link href="https://inematds.github.io/segrobot/es/curso/trilha3/modulo-3-3.html" hreflang="es" rel="alternate"/></head>
+<body class="bg-dark-900 text-neutral-100 min-h-screen"><div class="inema-lang" style="position:fixed;right:14px;bottom:14px;z-index:9999;display:flex;gap:2px;padding:4px;border-radius:10px;background:rgba(12,12,16,.82);border:1px solid rgba(226,162,59,.45);font:600 12px/1 Sora,Inter,system-ui,sans-serif;backdrop-filter:blur(8px)" translate="no"><a href="../../../curso/trilha3/modulo-3-3.html" hreflang="pt-BR" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">PT</a><a href="modulo-3-3.html" hreflang="en" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#1a1206;background:#E2A23B">EN</a><a href="../../../es/curso/trilha3/modulo-3-3.html" hreflang="es" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">ES</a></div>
+<!-- NAVIGATION -->
+<nav class="sticky top-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-600">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="flex justify-between items-center h-14">
+<div class="flex items-center space-x-4">
+<a class="flex items-center space-x-2 text-yellow-400 hover:text-yellow-300" href="../../index.html">
+<span class="text-2xl">🤖</span>
+<span class="font-bold text-lg hidden sm:inline">segROBOT</span>
+</a>
+<span class="text-neutral-600">|</span>
+<a class="text-sky-400 hover:text-sky-300 text-sm font-medium" href="https://inema.club" target="_blank">INEMA.CLUB</a>
+</div>
+<div class="flex items-center space-x-1 sm:space-x-2">
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-emerald-400 hover:bg-emerald-500/10 transition-colors" href="../trilha1/index.html">
+<span class="sm:hidden">T1</span>
+<span class="hidden sm:inline">Fundamentals</span>
+</a>
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-blue-400 hover:bg-blue-500/10 transition-colors" href="../trilha2/index.html">
+<span class="sm:hidden">T2</span>
+<span class="hidden sm:inline">Action</span>
+</a>
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-purple-400 bg-purple-500/10" href="index.html">
+<span class="sm:hidden">T3</span>
+<span class="hidden sm:inline">Strategic</span>
+</a>
+<button class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors ml-2" id="theme-toggle">
+<svg class="hidden w-5 h-5 text-neutral-300" fill="currentColor" id="theme-toggle-dark-icon" viewbox="0 0 20 20">
+<path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+</svg>
+<svg class="hidden w-5 h-5 text-neutral-300" fill="currentColor" id="theme-toggle-light-icon" viewbox="0 0 20 20">
+<path clip-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd"></path>
+</svg>
+</button>
+</div>
+</div>
+</div>
+</nav>
+<!-- BREADCRUMB -->
+<nav class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+<div class="flex items-center space-x-2 text-sm text-neutral-400">
+<a class="hover:text-purple-400" href="../../index.html">Start</a>
+<span>/</span>
+<a class="hover:text-purple-400" href="index.html">Track 3</a>
+<span>/</span>
+<span class="text-purple-400">Module 3.3</span>
+</div>
+</nav>
+<!-- HEADER -->
+<header class="bg-gradient-to-br from-purple-900/30 via-dark-800 to-dark-800 py-12 border-b border-dark-600">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+<span class="inline-block px-3 py-1 bg-purple-500/20 text-purple-400 text-xs font-semibold rounded-full mb-4">
+        MODULE 3.3
+      </span>
+<h1 class="text-3xl sm:text-4xl font-bold mb-4">💼 Business Case: Selling Robotics Reskilling</h1>
+<p class="text-lg text-neutral-400 max-w-3xl">
+        How to build and present the business case for human reskilling programs in robotic environments. You’ll leave knowing how to turn training from a “cost” into an “investment that pays for itself in months”—with numbers, pricing, and regulatory grounding.
+      </p>
+<!-- Stats Banner -->
+<div class="grid grid-cols-4 gap-4 mt-8 max-w-2xl">
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+<div class="text-xl font-bold text-purple-400">6</div>
+<div class="text-xs text-neutral-400">Topics</div>
+</div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+<div class="text-xl font-bold text-purple-400">50</div>
+<div class="text-xs text-neutral-400">Minutes</div>
+</div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+<div class="text-xl font-bold text-purple-400">Advanced</div>
+<div class="text-xs text-neutral-400">Level</div>
+</div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+<div class="text-xl font-bold text-purple-400">Strategy</div>
+<div class="text-xs text-neutral-400">Type</div>
+</div>
+</div>
+</div>
+</header>
+<!-- CONTEUDO -->
+<main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+<!-- SVG FUTURISTA: custo do treinamento vs custo da falha -> ROI -->
+<div class="rounded-2xl border border-purple-500/30 bg-dark-900/40 p-3 sm:p-4 mb-12 overflow-hidden">
+<svg aria-label="Comparison of training costs and the cost of transformation failure, converging in the ROI calculation for a business case grounded in regulatory standards" class="w-full h-auto" role="img" viewbox="0 0 1000 270">
+<defs>
+<lineargradient id="m33-grad" x1="0" x2="1" y1="0" y2="1">
+<stop offset="0" stop-color="#c084fc"></stop><stop offset="1" stop-color="#a855f7"></stop>
+</lineargradient>
+<filter height="180%" id="m33-glow" width="180%" x="-40%" y="-40%">
+<fegaussianblur result="b" stddeviation="3"></fegaussianblur><femerge><femergenode in="b"></femergenode><femergenode in="SourceGraphic"></femergenode></femerge>
+</filter>
+<pattern height="32" id="m33-grid" patternunits="userSpaceOnUse" width="32">
+<circle cx="1.3" cy="1.3" fill="#a855f7" opacity="0.12" r="1.3"></circle>
+</pattern>
+<marker id="m33-ah" markerheight="9" markerwidth="9" orient="auto" refx="6.5" refy="4.5"><path d="M0,0 L8,4.5 L0,9 L2.4,4.5 Z" fill="#c084fc"></path></marker>
+<marker id="m33-ahc" markerheight="9" markerwidth="9" orient="auto" refx="6.5" refy="4.5"><path d="M0,0 L8,4.5 L0,9 L2.4,4.5 Z" fill="#38bdf8"></path></marker>
+</defs>
+<rect fill="url(#m33-grid)" height="270" width="1000" x="0" y="0"></rect>
+<text fill="#c084fc" font-family="Inter,sans-serif" font-size="17" font-weight="700" text-anchor="middle" x="500" y="28">The business case equation</text>
+<!-- caixa custo do treinamento (purple) -->
+<g filter="url(#m33-glow)"><rect fill="#1a1230" height="130" rx="14" stroke="url(#m33-grad)" stroke-width="2.5" width="220" x="40" y="70"></rect></g>
+<text fill="#c084fc" font-family="Inter,sans-serif" font-size="16" font-weight="700" text-anchor="middle" x="150" y="100">Training cost</text>
+<text fill="#e9d5ff" font-family="Inter,sans-serif" font-size="13" text-anchor="middle" x="150" y="128">predictable, finite</text>
+<text fill="#e9d5ff" font-family="Inter,sans-serif" font-size="13" text-anchor="middle" x="150" y="152">-38% onboarding time</text>
+<text fill="#e9d5ff" font-family="Inter,sans-serif" font-size="13" text-anchor="middle" x="150" y="176">pays for itself in months</text>
+<!-- caixa custo da falha (ciano) -->
+<rect fill="#0e1b26" height="130" rx="14" stroke="#38bdf8" stroke-width="2.5" width="220" x="740" y="70"></rect>
+<text fill="#38bdf8" font-family="Inter,sans-serif" font-size="16" font-weight="700" text-anchor="middle" x="850" y="100">Cost of failure</text>
+<text fill="#bfe6ff" font-family="Inter,sans-serif" font-size="13" text-anchor="middle" x="850" y="128">70% of transformations</text>
+<text fill="#bfe6ff" font-family="Inter,sans-serif" font-size="13" text-anchor="middle" x="850" y="152">idle robots, turnover</text>
+<text fill="#bfe6ff" font-family="Inter,sans-serif" font-size="13" text-anchor="middle" x="850" y="176">accidents, rework</text>
+<!-- setas para o nucleo ROI -->
+<g fill="none" opacity="0.7" stroke="#c084fc" stroke-width="2">
+<path d="M260,135 C360,135 380,135 432,135" marker-end="url(#m33-ah)"></path>
+</g>
+<g fill="none" opacity="0.65" stroke="#38bdf8" stroke-width="2">
+<path d="M740,135 C640,135 620,135 568,135" marker-end="url(#m33-ahc)"></path>
+</g>
+<!-- nucleo ROI -->
+<g filter="url(#m33-glow)"><rect fill="#1a1230" height="86" rx="16" stroke="url(#m33-grad)" stroke-width="3" width="136" x="432" y="92"></rect></g>
+<text fill="#c084fc" font-family="Inter,sans-serif" font-size="24" font-weight="700" text-anchor="middle" x="500" y="128">ROI</text>
+<text fill="#e9d5ff" font-family="Inter,sans-serif" font-size="12" text-anchor="middle" x="500" y="152">business case</text>
+<!-- ancora regulatoria -->
+<g class="wf-a"><rect fill="#0e1b26" height="34" rx="9" stroke="#38bdf8" stroke-width="2" width="260" x="370" y="216"></rect><text fill="#bfe6ff" font-family="Inter,sans-serif" font-size="13" font-weight="600" text-anchor="middle" x="500" y="238">ISO 10218:2025 — the anchor that holds it all together</text></g>
+<path d="M500,178 L500,216" fill="none" marker-end="url(#m33-ahc)" opacity="0.55" stroke="#38bdf8" stroke-width="2"></path>
+</svg>
+<p class="text-xs text-neutral-500 mt-2 text-center">Illustrative diagram — the sales argument isn’t the cost of training; it’s the cost of NOT training.</p>
+</div>
+<!-- ===================== TOPICO 1 ===================== -->
+<section class="mb-16" id="topico-1">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">1</span>
+<h2 class="text-2xl font-bold">💰 Reskilling ROI</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed">
+        The return on investment of a reskilling program is <strong class="text-purple-400">measurable</strong>, and that’s what turns it from an “expense” into an “investment.” Virtual reality training reduces onboarding time by <strong class="text-purple-400">38%</strong>, reduces accidents, and speeds up technology adoption—three factors that directly affect the payback calculation.
+      </p>
+<div class="bg-gradient-to-br from-purple-900/30 to-dark-800 rounded-xl border border-purple-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-purple-400 mb-4 flex items-center">
+<span class="mr-2">🎯</span> Core concept: ROI changes the game
+        </h3>
+<p class="text-neutral-300 mb-4">Without a quantified ROI, reskilling is perceived as a cost and cut at the first budget squeeze. With ROI, it becomes an investment that pays for itself in months—and the conversation shifts from “Can we afford it?” to “Can we afford not to?”</p>
+<ul class="space-y-2 text-neutral-300">
+<li class="flex items-start space-x-2"><span class="text-purple-400 mt-1">•</span><span><strong>Time reduction:</strong> -38% in VR onboarding</span></li>
+<li class="flex items-start space-x-2"><span class="text-purple-400 mt-1">•</span><span><strong>Accident reduction:</strong> less downtime, lower insurance costs, and fewer absences</span></li>
+<li class="flex items-start space-x-2"><span class="text-purple-400 mt-1">•</span><span><strong>Adoption acceleration:</strong> robot producing earlier, payback brought forward</span></li>
+</ul>
+</div>
+<div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-blue-400 mb-4 flex items-center">
+<span class="mr-2">📊</span> Numbers That Anchor ROI
+        </h3>
+<ul class="space-y-2 text-neutral-300">
+<li><strong class="text-blue-400">38%</strong> — reduction in training time with virtual reality</li>
+<li><strong class="text-blue-400">Months</strong> — typical payback period when the robot enters production before</li>
+<li><strong class="text-blue-400">3 vectors</strong> — time, accidents, and adoption factor into the calculation</li>
+</ul>
+</div>
+<div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
+<span class="mr-2">💡</span> Practical tip
+        </h3>
+<p class="text-neutral-300">Always present ROI as <strong>payback period</strong>, not as an abstract percentage. “It pays for itself in 4 months” convinces a finance director faster than “280% ROI.”</p>
+</div>
+<!-- Conceitos-chave -->
+<h3 class="text-lg font-semibold mb-4">Key concepts</h3>
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+<div class="bg-dark-800 rounded-lg border border-dark-600 p-4"><div class="text-purple-400 font-bold mb-1">Training ROI</div><p class="text-xs text-neutral-400">Measurable program return</p></div>
+<div class="bg-dark-800 rounded-lg border border-dark-600 p-4"><div class="text-purple-400 font-bold mb-1">-38% time</div><p class="text-xs text-neutral-400">Reduced onboarding time with VR</p></div>
+<div class="bg-dark-800 rounded-lg border border-dark-600 p-4"><div class="text-purple-400 font-bold mb-1">Accident reduction</div><p class="text-xs text-neutral-400">Fewer stoppages and absences</p></div>
+<div class="bg-dark-800 rounded-lg border border-dark-600 p-4"><div class="text-purple-400 font-bold mb-1">Payback period</div><p class="text-xs text-neutral-400">Time until the investment pays for itself</p></div>
+</div>
+</section>
+<!-- ===================== TOPICO 2 ===================== -->
+<section class="mb-16" id="topico-2">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">2</span>
+<h2 class="text-2xl font-bold">📉 Cost of NOT Training</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed">
+        The strongest argument in a business case isn’t the cost of training—it’s the <strong class="text-purple-400">cost of failure</strong>. About <strong class="text-purple-400">70% of technological transformations fail</strong> when the human factor is not addressed. Idle robots, turnover, accidents, and rework turn the investment into a stranded asset.
+      </p>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+<div class="bg-emerald-900/20 rounded-xl border border-emerald-500/30 p-6">
+<h4 class="font-bold text-emerald-400 mb-4">✓ With reskilling</h4>
+<ul class="space-y-3 text-neutral-300">
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Robot enters production on schedule</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>The team absorbs the technology</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Accidents and rework decrease</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Investment pays for itself (payback)</span></li>
+</ul>
+</div>
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+<h4 class="font-bold text-red-400 mb-4">✗ No reskilling</h4>
+<ul class="space-y-3 text-neutral-300">
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>70% chance of transformation failure</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Stranded robots (stranded investment)</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Turnover among those who didn't adapt</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Hidden costs no one budgeted for</span></li>
+</ul>
+</div>
+</div>
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-red-400 mb-3 flex items-center">
+<span class="mr-2">⚠️</span> Attention: the opportunity cost is invisible
+        </h3>
+<p class="text-neutral-300">A robot costing hundreds of thousands sitting idle because of a lack of trained operators doesn’t show up as an expense line—it shows up as an unmet production target. This <strong>stranded investment</strong> is the cost buyers fear most and see least.</p>
+</div>
+<!-- Conceitos-chave -->
+<h3 class="text-lg font-semibold mb-4">Key concepts</h3>
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+<div class="bg-dark-800 rounded-lg border border-dark-600 p-4"><div class="text-purple-400 font-bold mb-1">Opportunity cost</div><p class="text-xs text-neutral-400">Uncompleted production</p></div>
+<div class="bg-dark-800 rounded-lg border border-dark-600 p-4"><div class="text-purple-400 font-bold mb-1">70% failure</div><p class="text-xs text-neutral-400">Transformations that fail without the human factor</p></div>
+<div class="bg-dark-800 rounded-lg border border-dark-600 p-4"><div class="text-purple-400 font-bold mb-1">Hidden costs</div><p class="text-xs text-neutral-400">Unbudgeted hidden costs</p></div>
+<div class="bg-dark-800 rounded-lg border border-dark-600 p-4"><div class="text-purple-400 font-bold mb-1">Stranded investment</div><p class="text-xs text-neutral-400">Stranded asset, stopped robot</p></div>
+</div>
+</section>
+<!-- ===================== TOPICO 3 ===================== -->
+<section class="mb-16" id="topico-3">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">3</span>
+<h2 class="text-2xl font-bold">🏷️ Pricing Model</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed">
+        One price doesn’t work. A hospital and a warehouse have different needs, risks, and budgets <strong class="text-purple-400">completely different</strong>. Pricing should be segmented by vertical (healthcare, logistics, agriculture), company size, and the required level of compliance.
+      </p>
+<div class="bg-gradient-to-br from-purple-900/30 to-dark-800 rounded-xl border border-purple-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-purple-400 mb-4 flex items-center">
+<span class="mr-2">🧱</span> Three segmentation dimensions
+        </h3>
+<ul class="space-y-2 text-neutral-300">
+<li class="flex items-start space-x-2"><span class="text-purple-400 mt-1">•</span><span><strong>Vertical:</strong> healthcare, logistics, and agriculture have distinct risks and regulations</span></li>
+<li class="flex items-start space-x-2"><span class="text-purple-400 mt-1">•</span><span><strong>Size:</strong> ability to pay and number of operators</span></li>
+<li class="flex items-start space-x-2"><span class="text-purple-400 mt-1">•</span><span><strong>Compliance:</strong> regulated environments pay a premium for documentation</span></li>
+</ul>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+<div class="bg-emerald-900/20 rounded-xl border border-emerald-500/30 p-6">
+<h4 class="font-bold text-emerald-400 mb-4">✓ Pricing that works</h4>
+<ul class="space-y-3 text-neutral-300">
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Tiers by company size</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Premium for regulated compliance</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Value-based: charges for the value delivered</span></li>
+</ul>
+</div>
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+<h4 class="font-bold text-red-400 mb-4">✗ Pricing that breaks</h4>
+<ul class="space-y-3 text-neutral-300">
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>One price for all customers</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Charge by the hour for training (commodity)</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Ignore the industry’s regulatory risk</span></li>
+</ul>
+</div>
+</div>
+<div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
+<span class="mr-2">💡</span> Practical tip
+        </h3>
+<p class="text-neutral-300">Use <strong>value-based pricing</strong>: anchor the price to the cost of the failure you prevent, not your delivery cost. If the failure costs millions, a program costing tens of thousands is cheap—and the client understands.</p>
+</div>
+<!-- Conceitos-chave -->
+<h3 class="text-lg font-semibold mb-4">Key concepts</h3>
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+<div class="bg-dark-800 rounded-lg border border-dark-600 p-4"><div class="text-purple-400 font-bold mb-1">By vertical</div><p class="text-xs text-neutral-400">Healthcare, logistics, agriculture</p></div>
+<div class="bg-dark-800 rounded-lg border border-dark-600 p-4"><div class="text-purple-400 font-bold mb-1">Tier pricing</div><p class="text-xs text-neutral-400">Ranges by size</p></div>
+<div class="bg-dark-800 rounded-lg border border-dark-600 p-4"><div class="text-purple-400 font-bold mb-1">Premium compliance</div><p class="text-xs text-neutral-400">Regulated Environments Pay More</p></div>
+<div class="bg-dark-800 rounded-lg border border-dark-600 p-4"><div class="text-purple-400 font-bold mb-1">Value-based pricing</div><p class="text-xs text-neutral-400">Value-anchored price</p></div>
+</div>
+</section>
+<!-- ===================== TOPICO 4 ===================== -->
+<section class="mb-16" id="topico-4">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">4</span>
+<h2 class="text-2xl font-bold">🔑 Competitive Advantage</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed">
+        The differentiator isn’t teaching “how to use robot X”—it’s teaching “how the <strong class="text-purple-400">organization absorbs</strong> the robot". This is organizational transformation, not technical training. Manufacturers already teach people how to operate their robots; no one teaches the organization how to change. That's the market gap.
+      </p>
+<div class="bg-gradient-to-br from-purple-900/30 to-dark-800 rounded-xl border border-purple-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-purple-400 mb-4 flex items-center">
+<span class="mr-2">🌊</span> Blue ocean: absorption, not operation
+        </h3>
+<p class="text-neutral-300 mb-4">While everyone competes on “how to operate,” the blue ocean lies in “how to absorb.” Selling organizational change capacity positions the program outside the technical training price war.</p>
+<ul class="space-y-2 text-neutral-300">
+<li class="flex items-start space-x-2"><span class="text-purple-400 mt-1">•</span><span><strong>Operation</strong> = commodity, already provided by the manufacturer</span></li>
+<li class="flex items-start space-x-2"><span class="text-purple-400 mt-1">•</span><span><strong>Absorption</strong> = the organization’s durable capability</span></li>
+</ul>
+</div>
+<!-- Timeline: da operacao a absorcao -->
+<div class="space-y-6 mb-6">
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-12 h-12 rounded-full bg-purple-500/20 flex items-center justify-center"><span class="text-purple-400 font-bold">1</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+<h4 class="font-semibold text-white mb-2">Technical training (what the market does)</h4>
+<p class="text-sm text-neutral-400 mb-3">Commodity level</p>
+<p class="text-neutral-300 text-sm">The manufacturer teaches you to press buttons. It can be billed for, but it is replaceable and competed on price.</p>
+</div>
+</div>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-12 h-12 rounded-full bg-purple-500/20 flex items-center justify-center"><span class="text-purple-400 font-bold">2</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+<h4 class="font-semibold text-white mb-2">Change capability (the gap)</h4>
+<p class="text-sm text-neutral-400 mb-3">Intermediate level</p>
+<p class="text-neutral-300 text-sm">The organization learns to integrate processes, redesign roles, and manage people's transition.</p>
+</div>
+</div>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-12 h-12 rounded-full bg-purple-500/20 flex items-center justify-center"><span class="text-purple-400 font-bold">3</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+<h4 class="font-semibold text-white mb-2">Organizational absorption (the differentiator)</h4>
+<p class="text-sm text-neutral-400 mb-3">Strategic level — blue ocean</p>
+<p class="text-neutral-300 text-sm">The company can adopt any future robot with less friction. You sold a lasting capability, not a session.</p>
+</div>
+</div>
+</div>
+<!-- Conceitos-chave -->
+<h3 class="text-lg font-semibold mb-4">Key concepts</h3>
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+<div class="bg-dark-800 rounded-lg border border-dark-600 p-4"><div class="text-purple-400 font-bold mb-1">Organizational absorption</div><p class="text-xs text-neutral-400">The company absorbs the robot</p></div>
+<div class="bg-dark-800 rounded-lg border border-dark-600 p-4"><div class="text-purple-400 font-bold mb-1">Change capability</div><p class="text-xs text-neutral-400">Ability to change</p></div>
+<div class="bg-dark-800 rounded-lg border border-dark-600 p-4"><div class="text-purple-400 font-bold mb-1">Market differentiator</div><p class="text-xs text-neutral-400">What No One Delivers</p></div>
+<div class="bg-dark-800 rounded-lg border border-dark-600 p-4"><div class="text-purple-400 font-bold mb-1">Blue ocean</div><p class="text-xs text-neutral-400">Out of the price war</p></div>
+</div>
+</section>
+<!-- ===================== TOPICO 5 ===================== -->
+<section class="mb-16" id="topico-5">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">5</span>
+<h2 class="text-2xl font-bold">🌍 Addressable market</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed">
+        Every company that buys a cobot needs to train its team. The addressable market grows in <strong class="text-purple-400">same proportion</strong> of the robot market — and the demand for reskilling is <strong class="text-purple-400">derivative</strong>: every dollar spent on a robot generates demand for training.
+      </p>
+<div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-blue-400 mb-4 flex items-center">
+<span class="mr-2">📈</span> Market size (cobots)
+        </h3>
+<ul class="space-y-2 text-neutral-300">
+<li><strong class="text-blue-400">USD 1.4–3.4 bn</strong> — cobot market in 2025</li>
+<li><strong class="text-blue-400">USD 7–32 billion</strong> — projection for 2030</li>
+<li><strong class="text-blue-400">Derived demand</strong> — every dollar invested in robots drives demand for training</li>
+</ul>
+</div>
+<div class="bg-gradient-to-br from-purple-900/30 to-dark-800 rounded-xl border border-purple-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-purple-400 mb-4 flex items-center">
+<span class="mr-2">🎯</span> TAM / SAM / SOM
+        </h3>
+<ul class="space-y-2 text-neutral-300">
+<li class="flex items-start space-x-2"><span class="text-purple-400 mt-1">•</span><span><strong>TAM:</strong> every robot buyer in the world needs training</span></li>
+<li class="flex items-start space-x-2"><span class="text-purple-400 mt-1">•</span><span><strong>SAM:</strong> verticals and regions you can serve</span></li>
+<li class="flex items-start space-x-2"><span class="text-purple-400 mt-1">•</span><span><strong>SOM:</strong> realistic short-term share, via attach rate</span></li>
+</ul>
+</div>
+<div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
+<span class="mr-2">💡</span> Practical tip
+        </h3>
+<p class="text-neutral-300">Present your market through the <strong>attach rate</strong>: "for every robot sold in the region, X% need documented training." This ties your growth to the (rapid) growth of the cobot market.</p>
+</div>
+<!-- Conceitos-chave -->
+<h3 class="text-lg font-semibold mb-4">Key concepts</h3>
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+<div class="bg-dark-800 rounded-lg border border-dark-600 p-4"><div class="text-purple-400 font-bold mb-1">TAM/SAM/SOM</div><p class="text-xs text-neutral-400">Market layers</p></div>
+<div class="bg-dark-800 rounded-lg border border-dark-600 p-4"><div class="text-purple-400 font-bold mb-1">Cobot market</div><p class="text-xs text-neutral-400">USD 1.4–3.4 bn → 7–32 bn</p></div>
+<div class="bg-dark-800 rounded-lg border border-dark-600 p-4"><div class="text-purple-400 font-bold mb-1">Derived demand</div><p class="text-xs text-neutral-400">Driven by robot sales</p></div>
+<div class="bg-dark-800 rounded-lg border border-dark-600 p-4"><div class="text-purple-400 font-bold mb-1">Attach rate</div><p class="text-xs text-neutral-400">% that needs training</p></div>
+</div>
+</section>
+<!-- ===================== TOPICO 6 ===================== -->
+<section class="mb-16" id="topico-6">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">6</span>
+<h2 class="text-2xl font-bold">📋 Regulatory Foundation</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed">
+        A <strong class="text-purple-400">ISO 10218:2025</strong> requires documented training for collaborative robot operators. Compliance is not optional—it’s the regulation that turns training from “nice to have” into <strong class="text-purple-400">mandatory</strong>. This is the anchor that supports the entire business case.
+      </p>
+<div class="bg-gradient-to-br from-purple-900/30 to-dark-800 rounded-xl border border-purple-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-purple-400 mb-4 flex items-center">
+<span class="mr-2">⚖️</span> Regulation = mandatory requirement
+        </h3>
+<p class="text-neutral-300 mb-4">When training is required by regulation, it moves from the discretionary budget to the compliance budget—which is rarely cut. The argument shifts from “is it worth it?” to “how do we stay compliant?”</p>
+<ul class="space-y-2 text-neutral-300">
+<li class="flex items-start space-x-2"><span class="text-purple-400 mt-1">•</span><span><strong>ISO 10218:2025</strong> — documented training for cobots</span></li>
+<li class="flex items-start space-x-2"><span class="text-purple-400 mt-1">•</span><span><strong>NR-12</strong> — safety in machinery and equipment (Brazil)</span></li>
+</ul>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+<div class="bg-emerald-900/20 rounded-xl border border-emerald-500/30 p-6">
+<h4 class="font-bold text-emerald-400 mb-4">✓ With a regulatory anchor</h4>
+<ul class="space-y-3 text-neutral-300">
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Training becomes mandatory, not optional</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>The compliance budget is protected</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Documentation becomes a billable deliverable</span></li>
+</ul>
+</div>
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+<h4 class="font-bold text-red-400 mb-4">✗ No regulatory anchor</h4>
+<ul class="space-y-3 text-neutral-300">
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Training can be cut at any time</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Sale depends solely on convincing the customer of the ROI</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Audit risk is underestimated</span></li>
+</ul>
+</div>
+</div>
+<div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
+<span class="mr-2">💡</span> Practical tip
+        </h3>
+<p class="text-neutral-300">Combine the three pillars in the presentation: <strong>ROI</strong> (worth it), <strong>cost of failure</strong> (costly not to do) and <strong>regulation</strong> (mandatory to do). Together, they leave no room for "no."</p>
+</div>
+<!-- Conceitos-chave -->
+<h3 class="text-lg font-semibold mb-4">Key concepts</h3>
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+<div class="bg-dark-800 rounded-lg border border-dark-600 p-4"><div class="text-purple-400 font-bold mb-1">ISO 10218:2025</div><p class="text-xs text-neutral-400">Documented training</p></div>
+<div class="bg-dark-800 rounded-lg border border-dark-600 p-4"><div class="text-purple-400 font-bold mb-1">Mandatory training</div><p class="text-xs text-neutral-400">Falls outside discretion</p></div>
+<div class="bg-dark-800 rounded-lg border border-dark-600 p-4"><div class="text-purple-400 font-bold mb-1">Regulatory anchor</div><p class="text-xs text-neutral-400">Supports the business case</p></div>
+<div class="bg-dark-800 rounded-lg border border-dark-600 p-4"><div class="text-purple-400 font-bold mb-1">NR-12</div><p class="text-xs text-neutral-400">Machine safety (BR)</p></div>
+</div>
+</section>
+<!-- RESUMO DO MODULO -->
+<section class="mb-12">
+<div class="bg-gradient-to-br from-purple-900/40 via-dark-800 to-dark-800 rounded-xl border border-purple-500/30 p-8">
+<h2 class="text-2xl font-bold mb-6 flex items-center">
+<span class="mr-3">✅</span> Module Summary
+        </h2>
+<div class="space-y-4 mb-8">
+<div class="flex items-start space-x-3"><span class="text-purple-400 mt-1">✓</span><div><strong class="text-white">Quantified ROI</strong><span class="text-neutral-400"> - VR reduces time by 38%, cuts accidents, and accelerates adoption; present it as payback period.</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-purple-400 mt-1">✓</span><div><strong class="text-white">Cost of NOT training</strong><span class="text-neutral-400"> - 70% of transformations fail without the human factor; fear of stranded investment sells.</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-purple-400 mt-1">✓</span><div><strong class="text-white">Segmented pricing</strong><span class="text-neutral-400"> - by vertical, company size, and compliance; value-based, not hourly.</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-purple-400 mt-1">✓</span><div><strong class="text-white">Differentiator = absorption</strong><span class="text-neutral-400"> - sell organizational change, not technical operations (blue ocean).</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-purple-400 mt-1">✓</span><div><strong class="text-white">Derived market</strong><span class="text-neutral-400"> - Grows with cobots (USD 1.4–3.4 bn → 7–32 bn); use attach rate.</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-purple-400 mt-1">✓</span><div><strong class="text-white">Regulatory Anchor</strong><span class="text-neutral-400"> - ISO 10218:2025 and NR-12 make training mandatory.</span></div></div>
+</div>
+<div class="bg-dark-800/50 rounded-lg p-4 mb-8">
+<h3 class="font-semibold text-purple-400 mb-2">Next Module:</h3>
+<p class="text-neutral-300">3.4 - Continue building the strategic reskilling layer.</p>
+</div>
+<div class="flex flex-col sm:flex-row gap-4">
+<a class="flex-1 text-center px-6 py-3 bg-dark-700 text-neutral-300 rounded-lg font-semibold hover:bg-dark-600 transition-colors" href="index.html">
+            ← Back to Track
+          </a>
+<a class="flex-1 text-center px-6 py-3 bg-purple-600 text-white rounded-lg font-semibold hover:bg-purple-500 transition-colors" href="modulo-3-4.html">
+            Next Module →
+          </a>
+</div>
+</div>
+</section>
+</main>
+<!-- FOOTER -->
+<footer class="border-t border-dark-600 py-8 mt-16">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-neutral-500 text-sm">
+<p>segROBOT — INEMA.CLUB — 2026</p>
+</div>
+</footer>
+<!-- SCRIPTS -->
+<script>
+    const themeToggle = document.getElementById('theme-toggle');
+    const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
+    const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
+    const html = document.documentElement;
+
+    if (localStorage.getItem('theme') === 'light' || (!localStorage.getItem('theme') && !html.classList.contains('dark'))) {
+      themeToggleDarkIcon.classList.remove('hidden');
+      html.classList.remove('dark');
+    } else {
+      themeToggleLightIcon.classList.remove('hidden');
+    }
+
+    themeToggle.addEventListener('click', () => {
+      themeToggleDarkIcon.classList.toggle('hidden');
+      themeToggleLightIcon.classList.toggle('hidden');
+      html.classList.toggle('dark');
+      localStorage.setItem('theme', html.classList.contains('dark') ? 'dark' : 'light');
+    });
+  </script>
+</body>
+</html>

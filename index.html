@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="pt-BR">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>segROBOT — Requalificação Humana para Ambientes Robotizados</title>
+<meta content="Curso completo: preparar pessoas e organizações para trabalhar com robôs e sistemas autônomos. 3 trilhas, 18 módulos, baseado em pesquisa e normas ISO." name="description"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+tailwind.config = {
+  darkMode: 'class',
+  theme: {
+    extend: {
+      colors: {
+        dark: { 600:'#4b5563', 700:'#374151', 800:'#1f2937', 900:'#111827' },
+        primary: '#FACC15'
+      }
+    }
+  }
+}
+</script>
+<style>
+  body { font-family: 'Inter', sans-serif; }
+
+  /* Grid background (dark only) */
+  .grid-bg {
+    background-image:
+      radial-gradient(circle at 15% 25%, rgba(5,150,105,.10), transparent 45%),
+      radial-gradient(circle at 85% 35%, rgba(37,99,235,.10), transparent 45%),
+      radial-gradient(circle at 50% 90%, rgba(124,58,237,.08), transparent 45%),
+      linear-gradient(rgba(255,255,255,.025) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,.025) 1px, transparent 1px);
+    background-size: auto, auto, auto, 42px 42px, 42px 42px;
+  }
+
+  .chip { display:inline-flex; align-items:center; gap:.4rem; padding:.25rem .7rem; border-radius:999px; font-size:.72rem; font-weight:600; }
+  .dot { width:.5rem; height:.5rem; border-radius:999px; background:#ef4444; box-shadow:0 0 0 0 rgba(239,68,68,.7); animation: pulse 1.6s infinite; }
+  @keyframes pulse { 0%{box-shadow:0 0 0 0 rgba(239,68,68,.7)} 70%{box-shadow:0 0 0 10px rgba(239,68,68,0)} 100%{box-shadow:0 0 0 0 rgba(239,68,68,0)} }
+
+  .lift { transition: transform .25s, border-color .25s, box-shadow .25s; }
+  .lift:hover { transform: translateY(-4px); }
+
+  /* Dark mode - bordas suaves */
+  .dark .border-dark-600 { border-color: #374151; }
+  .dark .divide-dark-600 > :not([hidden]) ~ :not([hidden]) { border-color: #374151; }
+
+  /* ── LIGHT MODE ── */
+  html:not(.dark) body { background-color: #f8fafc; color: #111827; }
+  html:not(.dark) .bg-dark-900 { background-color: #ffffff; }
+  html:not(.dark) .bg-dark-800 { background-color: #f9fafb; }
+  html:not(.dark) .bg-dark-700 { background-color: #f3f4f6; }
+  html:not(.dark) .bg-dark-600 { background-color: #e5e7eb; }
+  html:not(.dark) .text-neutral-100 { color: #111827; }
+  html:not(.dark) .text-neutral-300 { color: #4b5563; }
+  html:not(.dark) .text-neutral-400 { color: #6b7280; }
+  html:not(.dark) .text-neutral-500 { color: #9ca3af; }
+  html:not(.dark) .border-dark-600 { border-color: #d1d5db; }
+  html:not(.dark) .border-dark-700 { border-color: #e5e7eb; }
+
+  /* Light mode - accent colors (all trails) */
+  html:not(.dark) .text-emerald-400 { color: #059669; }
+  html:not(.dark) .bg-emerald-500\/20 { background-color: rgba(5,150,105,0.12); }
+  html:not(.dark) .bg-emerald-500\/10 { background-color: rgba(5,150,105,0.08); }
+  html:not(.dark) .border-emerald-500\/30 { border-color: rgba(5,150,105,0.25); }
+
+  html:not(.dark) .text-blue-400 { color: #2563eb; }
+  html:not(.dark) .bg-blue-500\/20 { background-color: rgba(37,99,235,0.12); }
+  html:not(.dark) .bg-blue-500\/10 { background-color: rgba(37,99,235,0.08); }
+  html:not(.dark) .border-blue-500\/30 { border-color: rgba(37,99,235,0.25); }
+
+  html:not(.dark) .text-purple-400 { color: #7c3aed; }
+  html:not(.dark) .bg-purple-500\/20 { background-color: rgba(124,58,237,0.12); }
+  html:not(.dark) .bg-purple-500\/10 { background-color: rgba(124,58,237,0.08); }
+  html:not(.dark) .border-purple-500\/30 { border-color: rgba(124,58,237,0.25); }
+
+  /* Light mode - special colors */
+  html:not(.dark) .text-primary { color: #a16207; }
+  html:not(.dark) .text-sky-400 { color: #0369a1; }
+  html:not(.dark) .text-yellow-400 { color: #a16207; }
+  html:not(.dark) .text-red-400 { color: #dc2626; }
+  html:not(.dark) .text-red-300 { color: #b91c1c; }
+  html:not(.dark) .hover\:text-sky-300:hover { color: #0284c7; }
+
+  /* Light mode - remove gradients */
+  html:not(.dark) [class*="bg-gradient-to"] { background-image: none !important; }
+  html:not(.dark) .grid-bg { background-image: none; }
+
+  /* Light mode - nav */
+  html:not(.dark) .bg-dark-900\/95 { background-color: rgba(255,255,255,0.95); }
+  html:not(.dark) nav { background-color: rgba(255,255,255,0.9) !important; border-color: #e5e7eb !important; }
+  html:not(.dark) .text-gray-100 { color: #111827; }
+  html:not(.dark) .text-gray-300 { color: #374151; }
+  html:not(.dark) .text-gray-400 { color: #6b7280; }
+  html:not(.dark) .text-gray-500 { color: #9ca3af; }
+  html:not(.dark) .bg-red-500\/10 { background-color: rgba(220,38,38,0.08); }
+  html:not(.dark) .border-red-500\/30 { border-color: rgba(220,38,38,0.25); }
+  html:not(.dark) .bg-sky-500\/10 { background-color: rgba(3,105,161,0.08); }
+  html:not(.dark) .bg-purple-500\/10 { background-color: rgba(124,58,237,0.08); }
+  html:not(.dark) .border-line { border-color: #e5e7eb; }
+  html:not(.dark) .bg-panel { background-color: #ffffff; }
+  html:not(.dark) .bg-panel\/60 { background-color: rgba(255,255,255,0.6); }
+  html:not(.dark) footer { color: #9ca3af; }
+</style>
+<link href="https://inematds.github.io/segrobot/" hreflang="pt-BR" rel="alternate"/><link href="https://inematds.github.io/segrobot/en/" hreflang="en" rel="alternate"/><link href="https://inematds.github.io/segrobot/es/" hreflang="es" rel="alternate"/></head>
+<body class="bg-dark-900 text-gray-100"><div class="inema-lang" style="position:fixed;right:14px;bottom:14px;z-index:9999;display:flex;gap:2px;padding:4px;border-radius:10px;background:rgba(12,12,16,.82);border:1px solid rgba(226,162,59,.45);font:600 12px/1 Sora,Inter,system-ui,sans-serif;backdrop-filter:blur(8px)" translate="no"><a href="./" hreflang="pt-BR" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#1a1206;background:#E2A23B">PT</a><a href="en/" hreflang="en" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">EN</a><a href="es/" hreflang="es" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">ES</a></div>
+<!-- NAV -->
+<nav class="sticky top-0 z-40 backdrop-blur bg-dark-900/95 border-b border-dark-600">
+<div class="max-w-7xl mx-auto px-6 py-3 flex items-center justify-between gap-4">
+<a class="flex items-center gap-2 font-bold shrink-0" href="./">
+<span class="w-8 h-8 rounded-lg bg-red-500 text-white grid place-items-center text-sm">🤖</span>
+      seg<span class="text-red-400">ROBOT</span>
+</a>
+<div class="flex items-center gap-1 text-sm flex-wrap justify-end">
+<a class="px-3 py-2 rounded text-emerald-400 hover:bg-emerald-500/10" href="curso/trilha1/">Fundamentos</a>
+<a class="px-3 py-2 rounded text-blue-400 hover:bg-blue-500/10" href="curso/trilha2/">Ação</a>
+<a class="px-3 py-2 rounded text-purple-400 hover:bg-purple-500/10" href="curso/trilha3/">Estratégico</a>
+<span class="text-gray-500 mx-1">|</span>
+<a class="text-sky-400 hover:text-sky-300 text-sm font-medium px-2" href="https://inema.club" rel="noopener" target="_blank">INEMA.CLUB</a>
+<!-- Theme toggle -->
+<button aria-label="Alternar tema" class="ml-2 w-9 h-9 rounded-lg border border-dark-600 hover:bg-dark-700 flex items-center justify-center text-sm" onclick="document.documentElement.classList.toggle('dark');localStorage.setItem('theme',document.documentElement.classList.contains('dark')?'dark':'light')">
+<span class="dark:hidden">🌙</span><span class="hidden dark:inline">☀️</span>
+</button>
+</div>
+</div>
+</nav>
+<!-- HERO -->
+<header class="grid-bg border-b border-dark-600">
+<div class="max-w-6xl mx-auto px-6 py-24 text-center">
+<span class="chip bg-red-500/10 text-red-400 border border-red-500/30">
+<span class="dot"></span> pesquisa profunda · 50+ fontes · ISO 10218:2025
+    </span>
+<h1 class="mt-6 text-4xl sm:text-5xl md:text-6xl font-bold leading-tight max-w-4xl mx-auto">
+<span class="text-red-400">Requalificação Humana</span> para<br/>
+      Ambientes <span class="text-sky-400">Robotizados</span>
+</h1>
+<p class="mt-6 text-gray-400 text-lg max-w-2xl mx-auto">
+      Quando robôs entram na operação, o impacto não é só técnico. Muda cargo, fluxo, responsabilidade, risco, cultura e gestão.
+      Este curso prepara pessoas e organizações para essa transição.
+    </p>
+<div class="mt-8 flex flex-wrap justify-start gap-3 max-w-md mx-auto">
+<a class="px-6 py-3 rounded-lg bg-red-500 text-white font-semibold hover:bg-red-400" href="curso/trilha1/">Iniciar Curso</a>
+<a class="px-6 py-3 rounded-lg border border-dark-600 hover:bg-dark-800" href="#trilhas">Ver Trilhas</a>
+</div>
+<!-- stats -->
+<div class="mt-14 grid grid-cols-2 md:grid-cols-4 gap-4 max-w-3xl mx-auto text-sm">
+<div class="bg-dark-800 border border-dark-600 rounded-xl p-4"><div class="text-2xl font-bold text-red-400">3</div><div class="text-gray-500">trilhas</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-xl p-4"><div class="text-2xl font-bold text-sky-400">18</div><div class="text-gray-500">módulos</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-xl p-4"><div class="text-2xl font-bold text-emerald-400">50+</div><div class="text-gray-500">fontes citadas</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-xl p-4"><div class="text-2xl font-bold text-purple-400">~8h</div><div class="text-gray-500">conteúdo</div></div>
+</div>
+</div>
+</header>
+<!-- TRILHAS -->
+<section class="py-20 border-b border-dark-600" id="trilhas">
+<div class="max-w-7xl mx-auto px-6">
+<h2 class="text-3xl font-bold text-center mb-4">3 Trilhas de Formação</h2>
+<p class="text-center text-gray-400 mb-12 max-w-2xl mx-auto">De fundamentos a estratégia. Cada trilha é independente, mas a sequência constrói competência completa.</p>
+<div class="grid md:grid-cols-3 gap-6">
+<!-- Trilha 1 -->
+<a class="lift bg-dark-800 border border-dark-600 rounded-2xl p-8 block hover:border-emerald-500/50" href="curso/trilha1/">
+<div class="text-3xl mb-3">📐</div>
+<h3 class="text-xl font-bold text-emerald-400 mb-2">Trilha 1 — Fundamentos</h3>
+<p class="text-gray-400 text-sm mb-4">O cenário mundial, normas ISO, mercado de cobots, psicologia da mudança e o gap de requalificação.</p>
+<div class="flex flex-wrap gap-2 text-xs">
+<span class="bg-emerald-500/10 text-emerald-400 px-2 py-1 rounded border border-emerald-500/30">6 módulos</span>
+<span class="bg-emerald-500/10 text-emerald-400 px-2 py-1 rounded border border-emerald-500/30">~2.5h</span>
+<span class="bg-emerald-500/10 text-emerald-400 px-2 py-1 rounded border border-emerald-500/30">Base teórica</span>
+</div>
+</a>
+<!-- Trilha 2 -->
+<a class="lift bg-dark-800 border border-dark-600 rounded-2xl p-8 block hover:border-blue-500/50" href="curso/trilha2/">
+<div class="text-3xl mb-3">⚡</div>
+<h3 class="text-xl font-bold text-blue-400 mb-2">Trilha 2 — Ação</h3>
+<p class="text-gray-400 text-sm mb-4">Supervisão de sistemas autônomos, segurança HRC, simuladores VR e treinamento por função.</p>
+<div class="flex flex-wrap gap-2 text-xs">
+<span class="bg-blue-500/10 text-blue-400 px-2 py-1 rounded border border-blue-500/30">6 módulos</span>
+<span class="bg-blue-500/10 text-blue-400 px-2 py-1 rounded border border-blue-500/30">~3h</span>
+<span class="bg-blue-500/10 text-blue-400 px-2 py-1 rounded border border-blue-500/30">Prática</span>
+</div>
+</a>
+<!-- Trilha 3 -->
+<a class="lift bg-dark-800 border border-dark-600 rounded-2xl p-8 block hover:border-purple-500/50" href="curso/trilha3/">
+<div class="text-3xl mb-3">🎯</div>
+<h3 class="text-xl font-bold text-purple-400 mb-2">Trilha 3 — Estratégico</h3>
+<p class="text-gray-400 text-sm mb-4">Business case, gestão da mudança, certificações, formação de formadores e modelo de negócio.</p>
+<div class="flex flex-wrap gap-2 text-xs">
+<span class="bg-purple-500/10 text-purple-400 px-2 py-1 rounded border border-purple-500/30">6 módulos</span>
+<span class="bg-purple-500/10 text-purple-400 px-2 py-1 rounded border border-purple-500/30">~2.5h</span>
+<span class="bg-purple-500/10 text-purple-400 px-2 py-1 rounded border border-purple-500/30">Liderança</span>
+</div>
+</a>
+</div>
+</div>
+</section>
+<!-- CONTEXTO -->
+<section class="py-20 border-b border-dark-600">
+<div class="max-w-4xl mx-auto px-6">
+<h2 class="text-3xl font-bold text-center mb-8">Por que este curso existe</h2>
+<div class="grid md:grid-cols-2 gap-6 text-sm">
+<div class="bg-dark-800 border border-dark-600 rounded-xl p-6">
+<div class="text-2xl mb-2">📊</div>
+<h4 class="font-bold text-emerald-400 mb-2">170M novos empregos até 2030</h4>
+<p class="text-gray-400">O WEF projeta 170 milhões de novos empregos e 92 milhões deslocados. O saldo é positivo, mas a velocidade de requalificação não acompanha.</p>
+</div>
+<div class="bg-dark-800 border border-dark-600 rounded-xl p-6">
+<div class="text-2xl mb-2">🇧🇷</div>
+<h4 class="font-bold text-blue-400 mb-2">Brasil: 18 robôs / 10k trabalhadores</h4>
+<p class="text-gray-400">Média global: 151. Coreia: 1.012. O Brasil cresce 52% ao ano em robotização, mas sem programa sistêmico de requalificação.</p>
+</div>
+<div class="bg-dark-800 border border-dark-600 rounded-xl p-6">
+<div class="text-2xl mb-2">⚠️</div>
+<h4 class="font-bold text-yellow-400 mb-2">70% das transformações falham</h4>
+<p class="text-gray-400">Não por tecnologia. Por fator humano: resistência, medo, falta de preparo da liderança, métricas erradas.</p>
+</div>
+<div class="bg-dark-800 border border-dark-600 rounded-xl p-6">
+<div class="text-2xl mb-2">🔐</div>
+<h4 class="font-bold text-purple-400 mb-2">ISO 10218:2025 mudou tudo</h4>
+<p class="text-gray-400">A maior revisão em 14 anos. "Cobots" não existem mais como categoria. Colaboração agora é aplicação. Novos requisitos de validação, certificação e cibersegurança.</p>
+</div>
+</div>
+</div>
+</section>
+<!-- TESE -->
+<section class="py-20 border-b border-dark-600">
+<div class="max-w-3xl mx-auto px-6">
+<h2 class="text-2xl md:text-3xl font-bold mb-6">A Tese Central</h2>
+<blockquote class="text-xl md:text-2xl text-gray-300 italic border-l-4 border-red-500 pl-6 text-left">
+      "Treinamento tradicional perde valor quando a tecnologia fica autônoma. Mas treinamento para adaptação humana em ambientes autônomos ganha valor."
+    </blockquote>
+<p class="mt-6 text-gray-400">
+      A questão é sair de "capacitar para executar tarefas" e ir para "capacitar para conviver, supervisionar e decidir em sistemas automatizados".
+    </p>
+</div>
+</section>
+<!-- FOOTER -->
+<footer class="py-10 text-center text-gray-500 text-sm">
+<p>segROBOT — Projeto <a class="text-sky-400 hover:text-sky-300" href="https://inema.club">INEMA.CLUB</a></p>
+<p class="mt-1">Pesquisa: maio 2026 · 50+ fontes acadêmicas e industriais</p>
+</footer>
+<!-- Theme persistence -->
+<script>
+if (localStorage.getItem('theme') === 'light') {
+  document.documentElement.classList.remove('dark');
+}
+</script>
+</body>
+</html>

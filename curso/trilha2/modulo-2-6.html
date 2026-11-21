@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="pt-BR">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Modulo 2.6 - Agro, Seguranca e Outros Verticais | segROBOT</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            primary: '#FACC15',
+            dark: { 900: '#111827', 800: '#1f2937', 700: '#374151', 600: '#4b5563' }
+          }
+        }
+      }
+    }
+  </script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<style>
+    body { font-family: 'Inter', sans-serif; }
+    .dark body { background-color: #111827; }
+    .topic-explanation { display: none; }
+    .topic-explanation.active { display: block; }
+
+    @keyframes wf-pulse { 0%,100% { opacity:.55 } 50% { opacity:1 } }
+    @media (prefers-reduced-motion: no-preference) {
+      .wf-a { animation: wf-pulse 2.6s ease-in-out infinite; }
+      .wf-a:nth-child(2){animation-delay:.25s} .wf-a:nth-child(3){animation-delay:.5s}
+      .wf-a:nth-child(4){animation-delay:.75s} .wf-a:nth-child(5){animation-delay:1s}
+    }
+
+    /* Light mode overrides - OBRIGATORIO */
+    html:not(.dark) body { background-color: #f8fafc; }
+    html:not(.dark) .bg-dark-900 { background-color: #ffffff; }
+    html:not(.dark) .bg-dark-800 { background-color: #f9fafb; }
+    html:not(.dark) .bg-dark-700 { background-color: #f3f4f6; }
+    html:not(.dark) .bg-dark-600 { background-color: #e5e7eb; }
+    html:not(.dark) .text-neutral-100 { color: #111827; }
+    html:not(.dark) .text-neutral-300 { color: #4b5563; }
+    html:not(.dark) .text-neutral-400 { color: #6b7280; }
+    html:not(.dark) .text-neutral-500 { color: #9ca3af; }
+    html:not(.dark) .border-dark-600 { border-color: #d1d5db; }
+    html:not(.dark) .border-dark-700 { border-color: #e5e7eb; }
+
+    /* Light mode - cores de acento (trilha blue) */
+    html:not(.dark) .text-blue-400 { color: #2563eb; }
+    html:not(.dark) .bg-blue-500\/20 { background-color: rgba(37, 99, 235, 0.12); }
+    html:not(.dark) .bg-blue-500\/10 { background-color: rgba(37, 99, 235, 0.08); }
+    html:not(.dark) .border-blue-500\/30 { border-color: rgba(37, 99, 235, 0.25); }
+    html:not(.dark) .hover\:bg-blue-500\/30:hover { background-color: rgba(37, 99, 235, 0.18); }
+    html:not(.dark) .hover\:bg-blue-500\/10:hover { background-color: rgba(37, 99, 235, 0.08); }
+    html:not(.dark) .hover\:text-blue-400:hover { color: #2563eb; }
+    html:not(.dark) .hover\:border-blue-500\/30:hover { border-color: rgba(37, 99, 235, 0.25); }
+    html:not(.dark) .group:hover .group-hover\:text-blue-400 { color: #2563eb; }
+
+    /* Light mode - outras trilhas no nav */
+    html:not(.dark) .hover\:text-emerald-400:hover { color: #059669; }
+    html:not(.dark) .hover\:bg-emerald-500\/10:hover { background-color: rgba(5, 150, 105, 0.08); }
+    html:not(.dark) .hover\:text-purple-400:hover { color: #7c3aed; }
+    html:not(.dark) .hover\:bg-purple-500\/10:hover { background-color: rgba(124, 58, 237, 0.08); }
+
+    /* Light mode - remove gradientes (fundo uniforme) */
+    html:not(.dark) [class*="bg-gradient-to"] { background-image: none !important; }
+
+    /* Light mode - cores especiais */
+    html:not(.dark) .text-primary { color: #a16207; }
+    html:not(.dark) .bg-primary\/10 { background-color: rgba(161, 98, 7, 0.08); }
+    html:not(.dark) .border-primary\/40 { border-color: rgba(161, 98, 7, 0.25); }
+    html:not(.dark) .text-sky-400 { color: #0369a1; }
+    html:not(.dark) .text-yellow-400 { color: #a16207; }
+    html:not(.dark) .hover\:text-sky-300:hover { color: #0284c7; }
+    html:not(.dark) .hover\:text-yellow-300:hover { color: #854d0e; }
+
+    /* Light mode - nav */
+    html:not(.dark) .bg-dark-900\/95 { background-color: rgba(255, 255, 255, 0.95); }
+
+    /* Dark mode - bordas e linhas divisorias mais suaves */
+    .dark .border-dark-600 { border-color: #374151; }
+    .dark .divide-dark-600 > :not([hidden]) ~ :not([hidden]) { border-color: #374151; }
+  </style>
+<link href="https://inematds.github.io/segrobot/curso/trilha2/modulo-2-6.html" hreflang="pt-BR" rel="alternate"/><link href="https://inematds.github.io/segrobot/en/curso/trilha2/modulo-2-6.html" hreflang="en" rel="alternate"/><link href="https://inematds.github.io/segrobot/es/curso/trilha2/modulo-2-6.html" hreflang="es" rel="alternate"/></head>
+<body class="bg-dark-900 text-neutral-100 min-h-screen"><div class="inema-lang" style="position:fixed;right:14px;bottom:14px;z-index:9999;display:flex;gap:2px;padding:4px;border-radius:10px;background:rgba(12,12,16,.82);border:1px solid rgba(226,162,59,.45);font:600 12px/1 Sora,Inter,system-ui,sans-serif;backdrop-filter:blur(8px)" translate="no"><a href="modulo-2-6.html" hreflang="pt-BR" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#1a1206;background:#E2A23B">PT</a><a href="../../en/curso/trilha2/modulo-2-6.html" hreflang="en" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">EN</a><a href="../../es/curso/trilha2/modulo-2-6.html" hreflang="es" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">ES</a></div>
+<!-- NAVIGATION -->
+<nav class="sticky top-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-600">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="flex justify-between items-center h-14">
+<div class="flex items-center space-x-4">
+<a class="flex items-center space-x-2 text-yellow-400 hover:text-yellow-300" href="../../index.html">
+<span class="text-2xl">🤖</span>
+<span class="font-bold text-lg hidden sm:inline">segROBOT</span>
+</a>
+<span class="text-neutral-600">|</span>
+<a class="text-sky-400 hover:text-sky-300 text-sm font-medium" href="https://inema.club" target="_blank">INEMA.CLUB</a>
+</div>
+<div class="flex items-center space-x-1 sm:space-x-2">
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-emerald-400 hover:bg-emerald-500/10 transition-colors" href="../trilha1/index.html">
+<span class="sm:hidden">T1</span>
+<span class="hidden sm:inline">Fundamentos</span>
+</a>
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-blue-400 bg-blue-500/10" href="index.html">
+<span class="sm:hidden">T2</span>
+<span class="hidden sm:inline">Acao</span>
+</a>
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-purple-400 hover:bg-purple-500/10 transition-colors" href="../trilha3/index.html">
+<span class="sm:hidden">T3</span>
+<span class="hidden sm:inline">Estrategico</span>
+</a>
+<button class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors ml-2" id="theme-toggle">
+<svg class="hidden w-5 h-5 text-neutral-300" fill="currentColor" id="theme-toggle-dark-icon" viewbox="0 0 20 20">
+<path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+</svg>
+<svg class="hidden w-5 h-5 text-neutral-300" fill="currentColor" id="theme-toggle-light-icon" viewbox="0 0 20 20">
+<path clip-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd"></path>
+</svg>
+</button>
+</div>
+</div>
+</div>
+</nav>
+<!-- BREADCRUMB -->
+<nav class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+<div class="flex items-center space-x-2 text-sm text-neutral-400">
+<a class="hover:text-blue-400" href="../../index.html">Inicio</a>
+<span>/</span>
+<a class="hover:text-blue-400" href="index.html">Trilha 2</a>
+<span>/</span>
+<span class="text-blue-400">Modulo 2.6</span>
+</div>
+</nav>
+<!-- HEADER -->
+<header class="bg-gradient-to-br from-blue-900/30 via-dark-800 to-dark-800 py-12 border-b border-dark-600">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+<span class="inline-block px-3 py-1 bg-blue-500/20 text-blue-400 text-xs font-semibold rounded-full mb-4">MODULO 2.6</span>
+<h1 class="text-3xl sm:text-4xl font-bold mb-4">🌾 Agro, Seguranca e Outros Verticais</h1>
+<p class="text-lg text-neutral-400 max-w-3xl">
+        Os verticais que fecham a Trilha de Acao: do campo (agro de USD 14.7bi para 48bi com John Deere autonomo de 2a geracao) ao perimetro (Knightscope K5, Spot, Figure 02 na BMW), passando por LGPD e pelos protocolos de coordenacao humano-robo em crise que valem para todos eles.
+      </p>
+<div class="grid grid-cols-4 gap-4 mt-8 max-w-2xl">
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+<div class="text-xl font-bold text-blue-400">6</div>
+<div class="text-xs text-neutral-400">Topicos</div>
+</div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+<div class="text-xl font-bold text-blue-400">45</div>
+<div class="text-xs text-neutral-400">Minutos</div>
+</div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+<div class="text-xl font-bold text-blue-400">Intermediario</div>
+<div class="text-xs text-neutral-400">Nivel</div>
+</div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+<div class="text-xl font-bold text-blue-400">Pratica</div>
+<div class="text-xs text-neutral-400">Tipo</div>
+</div>
+</div>
+</div>
+</header>
+<!-- CONTEUDO -->
+<main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+<!-- SVG FUTURISTA: mapa dos verticais -->
+<div class="rounded-2xl border border-blue-500/30 bg-dark-900/40 p-3 sm:p-4 mb-12 overflow-hidden">
+<svg aria-label="Uma plataforma de operacao distribui robos para tres verticais — agro, seguranca e manufatura — que convergem para um protocolo unico de coordenacao humano-robo" class="w-full h-auto" role="img" viewbox="0 0 1000 260">
+<defs>
+<lineargradient id="m26-grad" x1="0" x2="1" y1="0" y2="1">
+<stop offset="0" stop-color="#60a5fa"></stop><stop offset="1" stop-color="#3b82f6"></stop>
+</lineargradient>
+<filter height="180%" id="m26-glow" width="180%" x="-40%" y="-40%">
+<fegaussianblur result="b" stddeviation="3"></fegaussianblur><femerge><femergenode in="b"></femergenode><femergenode in="SourceGraphic"></femergenode></femerge>
+</filter>
+<pattern height="32" id="m26-grid" patternunits="userSpaceOnUse" width="32">
+<circle cx="1.3" cy="1.3" fill="#3b82f6" opacity="0.12" r="1.3"></circle>
+</pattern>
+<marker id="m26-ah" markerheight="9" markerwidth="9" orient="auto" refx="6.5" refy="4.5"><path d="M0,0 L8,4.5 L0,9 L2.4,4.5 Z" fill="#60a5fa"></path></marker>
+<marker id="m26-ahc" markerheight="9" markerwidth="9" orient="auto" refx="6.5" refy="4.5"><path d="M0,0 L8,4.5 L0,9 L2.4,4.5 Z" fill="#38bdf8"></path></marker>
+</defs>
+<rect fill="url(#m26-grid)" height="260" width="1000" x="0" y="0"></rect>
+<!-- origem -> verticais -->
+<g fill="none" opacity="0.65" stroke="#60a5fa" stroke-width="2">
+<path d="M206,130 C310,130 330,52 452,52" marker-end="url(#m26-ah)"></path>
+<path d="M206,130 L452,130" marker-end="url(#m26-ah)"></path>
+<path d="M206,130 C310,130 330,208 452,208" marker-end="url(#m26-ah)"></path>
+</g>
+<!-- verticais -> protocolo (ciano = coordenacao) -->
+<g fill="none" opacity="0.55" stroke="#38bdf8" stroke-width="2">
+<path d="M604,52  C720,52 740,130 812,130" marker-end="url(#m26-ahc)"></path>
+<path d="M604,130 L812,130" marker-end="url(#m26-ahc)"></path>
+<path d="M604,208 C720,208 740,130 812,130" marker-end="url(#m26-ahc)"></path>
+</g>
+<!-- origem -->
+<g filter="url(#m26-glow)"><rect fill="#0e1622" height="68" rx="14" stroke="url(#m26-grad)" stroke-width="2.5" width="162" x="44" y="96"></rect></g>
+<text fill="#60a5fa" font-family="Inter,sans-serif" font-size="18" font-weight="700" text-anchor="middle" x="125" y="124">Operacao</text>
+<text fill="#bcd6fb" font-family="Inter,sans-serif" font-size="12.5" text-anchor="middle" x="125" y="146">multi-vertical</text>
+<!-- verticais -->
+<g font-family="Inter,sans-serif" font-size="14" font-weight="600">
+<g class="wf-a"><rect fill="#0e1b26" height="40" rx="10" stroke="#38bdf8" stroke-width="2" width="152" x="452" y="32"></rect><text fill="#bfe6ff" text-anchor="middle" x="528" y="57">🚜 Agro</text></g>
+<g class="wf-a"><rect fill="#0e1b26" height="40" rx="10" stroke="#38bdf8" stroke-width="2" width="152" x="452" y="110"></rect><text fill="#bfe6ff" text-anchor="middle" x="528" y="135">🛡️ Seguranca</text></g>
+<g class="wf-a"><rect fill="#0e1b26" height="40" rx="10" stroke="#38bdf8" stroke-width="2" width="152" x="452" y="188"></rect><text fill="#bfe6ff" text-anchor="middle" x="528" y="213">🏭 Manufatura</text></g>
+</g>
+<!-- protocolo -->
+<g filter="url(#m26-glow)"><rect fill="#0e1622" height="76" rx="14" stroke="url(#m26-grad)" stroke-width="2.5" width="156" x="812" y="92"></rect></g>
+<text fill="#60a5fa" font-family="Inter,sans-serif" font-size="15" font-weight="700" text-anchor="middle" x="890" y="124">Protocolo</text>
+<text fill="#bcd6fb" font-family="Inter,sans-serif" font-size="11.5" text-anchor="middle" x="890" y="144">humano-robo</text>
+<text fill="#bcd6fb" font-family="Inter,sans-serif" font-size="11.5" text-anchor="middle" x="890" y="158">em crise</text>
+</svg>
+<p class="text-xs text-neutral-500 mt-2 text-center">Diagrama ilustrativo: cada vertical envia robos a campo, mas todos convergem para o mesmo protocolo de coordenacao em crise.</p>
+</div>
+<!-- TOPICO 1 -->
+<section class="mb-16" id="topico-1">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">1</span>
+<h2 class="text-2xl font-bold">🚜 Agro: de USD 14.7bi para 48bi</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed">
+        O mercado de robotica agricola cresce de <strong class="text-blue-400">USD 14.7 bilhoes para 48 bilhoes</strong>. A <strong class="text-blue-400">John Deere</strong> lidera com tratores autonomos de segunda geracao, drones de pulverizacao e sensoriamento por IA. Agro nao adota robotica por modismo: e o setor com o maior gap de mao de obra do planeta.
+      </p>
+<div class="bg-gradient-to-br from-blue-900/30 to-dark-800 rounded-xl border border-blue-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-blue-400 mb-4 flex items-center">
+<span class="mr-2">🌱</span> O salto da agricultura de precisao
+        </h3>
+<p class="text-neutral-300 mb-4">A John Deere de 2a geracao combina tres camadas: maquinas autonomas, drones e sensores, orquestrados por IA para decidir onde plantar, irrigar e pulverizar com precisao centimetrica.</p>
+<ul class="space-y-2 text-neutral-300">
+<li class="flex items-start space-x-2"><span class="text-blue-400 mt-1">•</span><span><strong>John Deere autonomous:</strong> tratores que aram e plantam sem operador na cabine.</span></li>
+<li class="flex items-start space-x-2"><span class="text-blue-400 mt-1">•</span><span><strong>Drones + sensores:</strong> mapeamento de pragas, deficiencia hidrica e estresse de cultura.</span></li>
+<li class="flex items-start space-x-2"><span class="text-blue-400 mt-1">•</span><span><strong>Ecossistema de startups:</strong> Blue River e Bear Flag aceleram o avanco do setor.</span></li>
+</ul>
+</div>
+<div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-blue-400 mb-4 flex items-center">
+<span class="mr-2">📊</span> Dados do mercado agro
+        </h3>
+<ul class="space-y-2 text-neutral-300">
+<li><strong>USD 14.7bi → 48bi</strong> - crescimento projetado do mercado de robotica agricola.</li>
+<li><strong>58 anos</strong> - idade media do produtor rural nos EUA, mostrando o gap de mao de obra.</li>
+<li><strong>2a geracao</strong> - estagio atual dos autonomos John Deere, ja em uso comercial.</li>
+</ul>
+</div>
+<div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
+<span class="mr-2">💡</span> Dica Pratica
+        </h3>
+<p class="text-neutral-300">No agro, robotica e sobrevivencia da producao alimentar, nao luxo. Quem opera maquinas hoje deve aprender a supervisionar frotas autonomas: o cargo muda de "dirigir o trator" para "gerenciar a operacao por dados".</p>
+</div>
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-6">
+<h4 class="font-semibold text-white mb-4">Conceitos-chave</h4>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+<div class="bg-dark-700/50 rounded-lg p-4"><div class="text-blue-400 font-bold mb-1">John Deere</div><div class="text-xs text-neutral-400">Autonomos 2a gen</div></div>
+<div class="bg-dark-700/50 rounded-lg p-4"><div class="text-blue-400 font-bold mb-1">Precision ag</div><div class="text-xs text-neutral-400">Drones + sensores</div></div>
+<div class="bg-dark-700/50 rounded-lg p-4"><div class="text-blue-400 font-bold mb-1">Age gap</div><div class="text-xs text-neutral-400">Idade media 58</div></div>
+<div class="bg-dark-700/50 rounded-lg p-4"><div class="text-blue-400 font-bold mb-1">Startups</div><div class="text-xs text-neutral-400">Blue River, Bear Flag</div></div>
+</div>
+</div>
+</section>
+<!-- TOPICO 2 -->
+<section class="mb-16" id="topico-2">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">2</span>
+<h2 class="text-2xl font-bold">🛡️ Seguranca Patrimonial: K5 e Spot</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed">
+        Dois robos, dois paradigmas. O <strong class="text-blue-400">Knightscope K5</strong> faz patrulha autonoma de shopping e campus. O <strong class="text-blue-400">Boston Dynamics Spot</strong> e um quadrupede versatil de inspecao industrial e seguranca perimetral. Saber a diferenca define onde cada um agrega valor — e onde fracassa.
+      </p>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+<div class="bg-emerald-900/20 rounded-xl border border-emerald-500/30 p-6">
+<h4 class="font-bold text-emerald-400 mb-4">✓ Onde a seguranca robotica ENTREGA</h4>
+<ul class="space-y-3 text-neutral-300">
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Patrulha 24/7 de areas amplas e repetitivas (K5)</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Inspecao em ambientes perigosos ou de dificil acesso (Spot)</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Sensores LiDAR, cameras e termal alimentando a central</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Reducao de exposicao humana a risco fisico</span></li>
+</ul>
+</div>
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+<h4 class="font-bold text-red-400 mb-4">✗ Onde a seguranca robotica FALHA</h4>
+<ul class="space-y-3 text-neutral-300">
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Substituir totalmente o julgamento humano em situacao ambigua</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Operar sem integracao com a central de seguranca</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Terreno irregular ou escadas estreitas (limita o K5)</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Deploy sem protocolo operacional definido</span></li>
+</ul>
+</div>
+</div>
+<div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-blue-400 mb-4 flex items-center">
+<span class="mr-2">🔍</span> K5 vs Spot
+        </h3>
+<ul class="space-y-2 text-neutral-300">
+<li><strong>K5:</strong> patrulha autonoma fixa, formato "cone", ideal para shopping e campus.</li>
+<li><strong>Spot:</strong> quadrupede versatil, sobe escadas e terreno irregular, inspecao industrial.</li>
+<li><strong>Comum aos dois:</strong> sensores (LiDAR, cameras, termal) e integracao com central.</li>
+</ul>
+</div>
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-6">
+<h4 class="font-semibold text-white mb-4">Conceitos-chave</h4>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+<div class="bg-dark-700/50 rounded-lg p-4"><div class="text-blue-400 font-bold mb-1">K5</div><div class="text-xs text-neutral-400">Patrulha autonoma</div></div>
+<div class="bg-dark-700/50 rounded-lg p-4"><div class="text-blue-400 font-bold mb-1">Spot</div><div class="text-xs text-neutral-400">Quadrupede versatil</div></div>
+<div class="bg-dark-700/50 rounded-lg p-4"><div class="text-blue-400 font-bold mb-1">Sensores</div><div class="text-xs text-neutral-400">LiDAR, cameras, termal</div></div>
+<div class="bg-dark-700/50 rounded-lg p-4"><div class="text-blue-400 font-bold mb-1">Central</div><div class="text-xs text-neutral-400">Integracao operacional</div></div>
+</div>
+</div>
+</section>
+<!-- TOPICO 3 -->
+<section class="mb-16" id="topico-3">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">3</span>
+<h2 class="text-2xl font-bold">⚠️ NYPD K5 e Spot em Massachusetts</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed">
+        Dois casos reais e opostos. O <strong class="text-blue-400">NYPD removeu o K5</strong> por falha de procedimento operacional — nao do robo. O <strong class="text-blue-400">Spot levou tiro</strong> durante operacao policial em Massachusetts (2024) e continuou funcionando. A licao e clara: o problema raramente e o hardware.
+      </p>
+<div class="space-y-6 mb-6">
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-12 h-12 rounded-full bg-blue-500/20 flex items-center justify-center">
+<span class="text-blue-400 font-bold">1</span>
+</div>
+<div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+<h4 class="font-semibold text-white mb-2">NYPD remove o K5</h4>
+<p class="text-sm text-neutral-400 mb-3">Falha de processo, nao de produto</p>
+<p class="text-neutral-300 text-sm">O robo foi retirado de operacao por falha de protocolo operacional e atrito de aceitacao publica — nao por defeito tecnico. Tecnologia sem processo definido falha mesmo quando o hardware funciona.</p>
+</div>
+</div>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-12 h-12 rounded-full bg-blue-500/20 flex items-center justify-center">
+<span class="text-blue-400 font-bold">2</span>
+</div>
+<div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+<h4 class="font-semibold text-white mb-2">Spot leva tiro em Massachusetts (2024)</h4>
+<p class="text-sm text-neutral-400 mb-3">Resiliencia fisica</p>
+<p class="text-neutral-300 text-sm">Durante operacao policial, o Spot foi baleado e continuou funcionando. O caso demonstra resiliencia mecanica e o valor de colocar a maquina na linha de risco no lugar do humano.</p>
+</div>
+</div>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-12 h-12 rounded-full bg-blue-500/20 flex items-center justify-center">
+<span class="text-blue-400 font-bold">3</span>
+</div>
+<div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+<h4 class="font-semibold text-white mb-2">A licao cross-vertical</h4>
+<p class="text-sm text-neutral-400 mb-3">Processo &gt; produto</p>
+<p class="text-neutral-300 text-sm">Falha de processo derruba um deploy; resiliencia de hardware sustenta outro. O ROI de seguranca robotica depende de protocolo operacional, nao apenas de specs.</p>
+</div>
+</div>
+</div>
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-red-400 mb-3 flex items-center">
+<span class="mr-2">🚫</span> Atencao
+        </h3>
+<p class="text-neutral-300">A maioria dos fracassos de seguranca robotica e atribuida ao robo na imprensa, mas a causa raiz costuma ser falha de processo: protocolo ausente, treinamento insuficiente ou ausencia de aceitacao publica. Diagnosticar errado leva a trocar o robo quando o que falta e o procedimento.</p>
+</div>
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-6">
+<h4 class="font-semibold text-white mb-4">Conceitos-chave</h4>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+<div class="bg-dark-700/50 rounded-lg p-4"><div class="text-blue-400 font-bold mb-1">Processo vs produto</div><div class="text-xs text-neutral-400">Causa raiz real</div></div>
+<div class="bg-dark-700/50 rounded-lg p-4"><div class="text-blue-400 font-bold mb-1">Protocolo</div><div class="text-xs text-neutral-400">Operacional definido</div></div>
+<div class="bg-dark-700/50 rounded-lg p-4"><div class="text-blue-400 font-bold mb-1">Resiliencia</div><div class="text-xs text-neutral-400">Hardware fisico</div></div>
+<div class="bg-dark-700/50 rounded-lg p-4"><div class="text-blue-400 font-bold mb-1">Aceitacao</div><div class="text-xs text-neutral-400">Publica e ROI</div></div>
+</div>
+</div>
+</section>
+<!-- TOPICO 4 -->
+<section class="mb-16" id="topico-4">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">4</span>
+<h2 class="text-2xl font-bold">🏭 Figure 02 na BMW</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed">
+        O <strong class="text-blue-400">Figure 02</strong>, humanoide de segunda geracao da Figure AI, esta em operacao piloto na fabrica da <strong class="text-blue-400">BMW</strong>. Realiza tarefas de montagem que exigem destreza manual em espacos projetados para humanos. A BMW e a primeira montadora a integrar humanoides em producao — e o modelo vai se replicar.
+      </p>
+<div class="bg-gradient-to-br from-blue-900/30 to-dark-800 rounded-xl border border-blue-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-blue-400 mb-4 flex items-center">
+<span class="mr-2">🤝</span> Por que o humanoide na manufatura importa
+        </h3>
+<p class="text-neutral-300 mb-4">O humanoide nao exige reprojetar a fabrica: ele opera no mesmo espaco e nas mesmas estacoes feitas para humanos. Isso muda a economia da automacao — em vez de linhas dedicadas, voce insere robos onde ja ha pessoas.</p>
+<ul class="space-y-2 text-neutral-300">
+<li class="flex items-start space-x-2"><span class="text-blue-400 mt-1">•</span><span><strong>Manipulacao bimanual:</strong> tarefas que exigem duas maos coordenadas.</span></li>
+<li class="flex items-start space-x-2"><span class="text-blue-400 mt-1">•</span><span><strong>Workspace sharing:</strong> dividir a estacao com trabalhadores humanos.</span></li>
+<li class="flex items-start space-x-2"><span class="text-blue-400 mt-1">•</span><span><strong>Treinamento por demonstracao:</strong> aprender a tarefa observando, nao programando.</span></li>
+</ul>
+</div>
+<div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
+<span class="mr-2">💡</span> Dica Pratica
+        </h3>
+<p class="text-neutral-300">Trabalhadores de montagem nao serao "substituidos de uma vez": vao coexistir com humanoides na mesma estacao. O diferencial profissional passa a ser saber treinar o robo por demonstracao e supervisionar o workspace compartilhado.</p>
+</div>
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-6">
+<h4 class="font-semibold text-white mb-4">Conceitos-chave</h4>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+<div class="bg-dark-700/50 rounded-lg p-4"><div class="text-blue-400 font-bold mb-1">Figure 02</div><div class="text-xs text-neutral-400">Humanoide 2a gen</div></div>
+<div class="bg-dark-700/50 rounded-lg p-4"><div class="text-blue-400 font-bold mb-1">Bimanual</div><div class="text-xs text-neutral-400">Duas maos coordenadas</div></div>
+<div class="bg-dark-700/50 rounded-lg p-4"><div class="text-blue-400 font-bold mb-1">Workspace sharing</div><div class="text-xs text-neutral-400">Estacao compartilhada</div></div>
+<div class="bg-dark-700/50 rounded-lg p-4"><div class="text-blue-400 font-bold mb-1">Demonstracao</div><div class="text-xs text-neutral-400">Treino por observacao</div></div>
+</div>
+</div>
+</section>
+<!-- TOPICO 5 -->
+<section class="mb-16" id="topico-5">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">5</span>
+<h2 class="text-2xl font-bold">⚖️ Protocolos Legais e LGPD</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed">
+        Robos coletam dados: cameras, sensores biometricos, tracking de trabalhadores. A <strong class="text-blue-400">LGPD</strong> no Brasil e a <strong class="text-blue-400">GDPR</strong> na Europa impactam diretamente o deployment. Um robo de seguranca com camera facial sem consentimento viola a LGPD — e multas chegam a 2% do faturamento.
+      </p>
+<div class="bg-gradient-to-br from-blue-900/30 to-dark-800 rounded-xl border border-blue-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-blue-400 mb-4 flex items-center">
+<span class="mr-2">📜</span> O que o operador precisa garantir
+        </h3>
+<p class="text-neutral-300 mb-4">Quem opera o robo precisa saber o que ele coleta e por que. A conformidade nao e so do juridico: e do dia a dia da operacao.</p>
+<ul class="space-y-2 text-neutral-300">
+<li class="flex items-start space-x-2"><span class="text-blue-400 mt-1">•</span><span><strong>Base legal (LGPD Art. 7):</strong> todo tratamento de dado precisa de fundamento.</span></li>
+<li class="flex items-start space-x-2"><span class="text-blue-400 mt-1">•</span><span><strong>Minimizacao de dados:</strong> coletar so o necessario para a finalidade.</span></li>
+<li class="flex items-start space-x-2"><span class="text-blue-400 mt-1">•</span><span><strong>Retencao e anonimizacao:</strong> imagens nao podem ficar guardadas para sempre.</span></li>
+</ul>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+<div class="bg-emerald-900/20 rounded-xl border border-emerald-500/30 p-6">
+<h4 class="font-bold text-emerald-400 mb-4">✓ Deploy em conformidade</h4>
+<ul class="space-y-3 text-neutral-300">
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Base legal definida (consentimento ou legitimo interesse)</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>DPO envolvido e audit trail das coletas</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Politica de retencao e anonimizacao de imagens</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Sinalizacao clara de que a area e monitorada</span></li>
+</ul>
+</div>
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+<h4 class="font-bold text-red-400 mb-4">✗ Deploy que vira passivo legal</h4>
+<ul class="space-y-3 text-neutral-300">
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Camera facial sem consentimento ou base legal</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Coletar mais dados do que a finalidade exige</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Reter imagens indefinidamente, sem politica</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Tracking biometrico de trabalhadores sem transparencia</span></li>
+</ul>
+</div>
+</div>
+<div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
+<span class="mr-2">💡</span> Dica Pratica
+        </h3>
+<p class="text-neutral-300">Antes de ligar um robo com camera, responda tres perguntas: qual a base legal, por quanto tempo os dados ficam guardados, e quem responde por eles (DPO). Sem essas respostas, o deploy e um risco de multa de ate 2% do faturamento.</p>
+</div>
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-6">
+<h4 class="font-semibold text-white mb-4">Conceitos-chave</h4>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+<div class="bg-dark-700/50 rounded-lg p-4"><div class="text-blue-400 font-bold mb-1">LGPD Art. 7</div><div class="text-xs text-neutral-400">Base legal</div></div>
+<div class="bg-dark-700/50 rounded-lg p-4"><div class="text-blue-400 font-bold mb-1">Minimizacao</div><div class="text-xs text-neutral-400">Coletar so o preciso</div></div>
+<div class="bg-dark-700/50 rounded-lg p-4"><div class="text-blue-400 font-bold mb-1">DPO</div><div class="text-xs text-neutral-400">Responsavel por dados</div></div>
+<div class="bg-dark-700/50 rounded-lg p-4"><div class="text-blue-400 font-bold mb-1">Retencao</div><div class="text-xs text-neutral-400">Anonimizacao e audit</div></div>
+</div>
+</div>
+</section>
+<!-- TOPICO 6 -->
+<section class="mb-16" id="topico-6">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">6</span>
+<h2 class="text-2xl font-bold">🚨 Coordenacao Humano-Robo em Crise</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed">
+        Em incendio, desastre natural, intruso ou falha de energia, os robos podem <strong class="text-blue-400">ajudar</strong> (reconhecimento, transporte) ou <strong class="text-blue-400">atrapalhar</strong> (obstruir saidas, continuar operando). O protocolo de emergencia define qual comportamento prevalece — e isso vale para todos os verticais.
+      </p>
+<div class="bg-gradient-to-br from-blue-900/30 to-dark-800 rounded-xl border border-blue-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-blue-400 mb-4 flex items-center">
+<span class="mr-2">🧭</span> Emergency behavior modes
+        </h3>
+<p class="text-neutral-300 mb-4">Todo robo deve ter um comportamento de emergencia explicito. Sem ele, a maquina segue a rotina normal num momento em que isso pode custar vidas.</p>
+<ul class="space-y-2 text-neutral-300">
+<li class="flex items-start space-x-2"><span class="text-blue-400 mt-1">•</span><span><strong>Halt:</strong> parar imediatamente para nao virar obstaculo.</span></li>
+<li class="flex items-start space-x-2"><span class="text-blue-400 mt-1">•</span><span><strong>Retreat:</strong> recuar para uma safe harbor zone fora do caminho.</span></li>
+<li class="flex items-start space-x-2"><span class="text-blue-400 mt-1">•</span><span><strong>Assist:</strong> ajudar com reconhecimento ou transporte quando seguro.</span></li>
+</ul>
+</div>
+<div class="space-y-6 mb-6">
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-12 h-12 rounded-full bg-blue-500/20 flex items-center justify-center">
+<span class="text-blue-400 font-bold">1</span>
+</div>
+<div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+<h4 class="font-semibold text-white mb-2">Deteccao e modo de emergencia</h4>
+<p class="text-sm text-neutral-400 mb-3">Gatilho do protocolo</p>
+<p class="text-neutral-300 text-sm">O robo identifica a crise (alarme, sensor, comando) e troca da rotina para o modo de emergencia definido: halt, retreat ou assist.</p>
+</div>
+</div>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-12 h-12 rounded-full bg-blue-500/20 flex items-center justify-center">
+<span class="text-blue-400 font-bold">2</span>
+</div>
+<div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+<h4 class="font-semibold text-white mb-2">Comunicacao humano-robo sob stress</h4>
+<p class="text-sm text-neutral-400 mb-3">Clareza em meio ao caos</p>
+<p class="text-neutral-300 text-sm">A interface precisa ser legivel em situacao de stress: sinais simples e safe harbor zones definidas para que humanos saibam onde o robo vai estar.</p>
+</div>
+</div>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-12 h-12 rounded-full bg-blue-500/20 flex items-center justify-center">
+<span class="text-blue-400 font-bold">3</span>
+</div>
+<div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+<h4 class="font-semibold text-white mb-2">Recovery e lessons learned</h4>
+<p class="text-sm text-neutral-400 mb-3">Fechar o ciclo</p>
+<p class="text-neutral-300 text-sm">Apos a crise, a recovery sequence devolve o robo a operacao normal e o lessons learned framework registra o que ajustar — o mesmo ciclo serve agro, seguranca e manufatura.</p>
+</div>
+</div>
+</div>
+<div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
+<span class="mr-2">💡</span> Dica Pratica
+        </h3>
+<p class="text-neutral-300">O protocolo de crise e o componente mais cross-vertical de todos: muda o cenario (campo, perimetro, fabrica), mas a logica halt/retreat/assist + safe harbor + recovery e a mesma. Aprenda uma vez, aplique em qualquer vertical.</p>
+</div>
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-6">
+<h4 class="font-semibold text-white mb-4">Conceitos-chave</h4>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+<div class="bg-dark-700/50 rounded-lg p-4"><div class="text-blue-400 font-bold mb-1">Behavior modes</div><div class="text-xs text-neutral-400">Halt / retreat / assist</div></div>
+<div class="bg-dark-700/50 rounded-lg p-4"><div class="text-blue-400 font-bold mb-1">Safe harbor</div><div class="text-xs text-neutral-400">Zona segura definida</div></div>
+<div class="bg-dark-700/50 rounded-lg p-4"><div class="text-blue-400 font-bold mb-1">Recovery</div><div class="text-xs text-neutral-400">Sequence de retorno</div></div>
+<div class="bg-dark-700/50 rounded-lg p-4"><div class="text-blue-400 font-bold mb-1">Lessons learned</div><div class="text-xs text-neutral-400">Framework de ajuste</div></div>
+</div>
+</div>
+</section>
+<!-- RESUMO -->
+<section class="mb-12">
+<div class="bg-gradient-to-br from-blue-900/40 via-dark-800 to-dark-800 rounded-xl border border-blue-500/30 p-8">
+<h2 class="text-2xl font-bold mb-6 flex items-center">
+<span class="mr-3">🏁</span> Resumo do Modulo
+        </h2>
+<div class="space-y-4 mb-8">
+<div class="flex items-start space-x-3">
+<span class="text-blue-400 mt-1">✓</span>
+<div><strong class="text-white">Agro de 14.7bi para 48bi</strong><span class="text-neutral-400"> - John Deere autonomo 2a gen e a resposta ao gap de mao de obra (idade media 58).</span></div>
+</div>
+<div class="flex items-start space-x-3">
+<span class="text-blue-400 mt-1">✓</span>
+<div><strong class="text-white">K5 e Spot</strong><span class="text-neutral-400"> - dois paradigmas de seguranca: patrulha autonoma fixa vs quadrupede versatil.</span></div>
+</div>
+<div class="flex items-start space-x-3">
+<span class="text-blue-400 mt-1">✓</span>
+<div><strong class="text-white">NYPD e Massachusetts</strong><span class="text-neutral-400"> - falha de processo derruba deploy; resiliencia de hardware sustenta. O problema raramente e o robo.</span></div>
+</div>
+<div class="flex items-start space-x-3">
+<span class="text-blue-400 mt-1">✓</span>
+<div><strong class="text-white">Figure 02 na BMW</strong><span class="text-neutral-400"> - humanoides em producao, workspace sharing e treino por demonstracao.</span></div>
+</div>
+<div class="flex items-start space-x-3">
+<span class="text-blue-400 mt-1">✓</span>
+<div><strong class="text-white">LGPD e GDPR</strong><span class="text-neutral-400"> - base legal, minimizacao, DPO e retencao; multa de ate 2% do faturamento.</span></div>
+</div>
+<div class="flex items-start space-x-3">
+<span class="text-blue-400 mt-1">✓</span>
+<div><strong class="text-white">Coordenacao em crise</strong><span class="text-neutral-400"> - halt/retreat/assist, safe harbor e recovery: o protocolo cross-vertical que fecha a trilha.</span></div>
+</div>
+</div>
+<div class="bg-dark-800/50 rounded-lg p-4 mb-8">
+<h3 class="font-semibold text-blue-400 mb-2">Proximo Modulo: 2.7</h3>
+<p class="text-neutral-300">VLA: Modelos Visao-Linguagem-Acao — robos que entendem ordem em linguagem natural.</p>
+</div>
+<div class="flex flex-col sm:flex-row gap-4">
+<a class="flex-1 text-center px-6 py-3 bg-dark-700 text-neutral-300 rounded-lg font-semibold hover:bg-dark-600 transition-colors" href="index.html">
+            ← Voltar para Trilha
+          </a>
+<a class="flex-1 text-center px-6 py-3 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-500 transition-colors" href="modulo-2-7.html">
+            Proximo Modulo →
+          </a>
+</div>
+</div>
+</section>
+</main>
+<!-- FOOTER -->
+<footer class="border-t border-dark-600 py-8 mt-16">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-neutral-500 text-sm">
+<p>segROBOT — INEMA.CLUB — 2026</p>
+</div>
+</footer>
+<!-- SCRIPTS -->
+<script>
+    const themeToggle = document.getElementById('theme-toggle');
+    const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
+    const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
+    const html = document.documentElement;
+    if (localStorage.getItem('theme') === 'light' || (!localStorage.getItem('theme') && !html.classList.contains('dark'))) {
+      themeToggleDarkIcon.classList.remove('hidden'); html.classList.remove('dark');
+    } else { themeToggleLightIcon.classList.remove('hidden'); }
+    themeToggle.addEventListener('click', () => {
+      themeToggleDarkIcon.classList.toggle('hidden'); themeToggleLightIcon.classList.toggle('hidden');
+      html.classList.toggle('dark'); localStorage.setItem('theme', html.classList.contains('dark') ? 'dark' : 'light');
+    });
+  </script>
+</body>
+</html>

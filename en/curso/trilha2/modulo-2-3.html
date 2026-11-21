@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Module 2.3 - Simulators, VR, and Digital Twins | segROBOT</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            primary: '#FACC15',
+            dark: { 900: '#111827', 800: '#1f2937', 700: '#374151', 600: '#4b5563' }
+          }
+        }
+      }
+    }
+  </script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<style>
+    body { font-family: 'Inter', sans-serif; }
+    .dark body { background-color: #111827; }
+    .topic-explanation { display: none; }
+    .topic-explanation.active { display: block; }
+
+    @keyframes wf-pulse { 0%,100% { opacity:.55 } 50% { opacity:1 } }
+    @media (prefers-reduced-motion: no-preference) {
+      .wf-a { animation: wf-pulse 2.6s ease-in-out infinite; }
+      .wf-a:nth-child(2){animation-delay:.25s} .wf-a:nth-child(3){animation-delay:.5s}
+      .wf-a:nth-child(4){animation-delay:.75s} .wf-a:nth-child(5){animation-delay:1s}
+    }
+
+    /* Light mode overrides - OBRIGATORIO */
+    html:not(.dark) body { background-color: #f8fafc; }
+    html:not(.dark) .bg-dark-900 { background-color: #ffffff; }
+    html:not(.dark) .bg-dark-800 { background-color: #f9fafb; }
+    html:not(.dark) .bg-dark-700 { background-color: #f3f4f6; }
+    html:not(.dark) .bg-dark-600 { background-color: #e5e7eb; }
+    html:not(.dark) .text-neutral-100 { color: #111827; }
+    html:not(.dark) .text-neutral-300 { color: #4b5563; }
+    html:not(.dark) .text-neutral-400 { color: #6b7280; }
+    html:not(.dark) .text-neutral-500 { color: #9ca3af; }
+    html:not(.dark) .border-dark-600 { border-color: #d1d5db; }
+    html:not(.dark) .border-dark-700 { border-color: #e5e7eb; }
+
+    /* Light mode - cores de acento (trilha blue) */
+    html:not(.dark) .text-blue-400 { color: #2563eb; }
+    html:not(.dark) .bg-blue-500\/20 { background-color: rgba(37, 99, 235, 0.12); }
+    html:not(.dark) .bg-blue-500\/10 { background-color: rgba(37, 99, 235, 0.08); }
+    html:not(.dark) .border-blue-500\/30 { border-color: rgba(37, 99, 235, 0.25); }
+    html:not(.dark) .hover\:bg-blue-500\/30:hover { background-color: rgba(37, 99, 235, 0.18); }
+    html:not(.dark) .hover\:bg-blue-500\/10:hover { background-color: rgba(37, 99, 235, 0.08); }
+    html:not(.dark) .hover\:text-blue-400:hover { color: #2563eb; }
+    html:not(.dark) .hover\:border-blue-500\/30:hover { border-color: rgba(37, 99, 235, 0.25); }
+    html:not(.dark) .group:hover .group-hover\:text-blue-400 { color: #2563eb; }
+
+    /* Light mode - outras trilhas no nav */
+    html:not(.dark) .hover\:text-emerald-400:hover { color: #059669; }
+    html:not(.dark) .hover\:bg-emerald-500\/10:hover { background-color: rgba(5, 150, 105, 0.08); }
+    html:not(.dark) .hover\:text-purple-400:hover { color: #7c3aed; }
+    html:not(.dark) .hover\:bg-purple-500\/10:hover { background-color: rgba(124, 58, 237, 0.08); }
+
+    /* Light mode - remove gradientes (fundo uniforme) */
+    html:not(.dark) [class*="bg-gradient-to"] { background-image: none !important; }
+
+    /* Light mode - cores especiais */
+    html:not(.dark) .text-primary { color: #a16207; }
+    html:not(.dark) .bg-primary\/10 { background-color: rgba(161, 98, 7, 0.08); }
+    html:not(.dark) .border-primary\/40 { border-color: rgba(161, 98, 7, 0.25); }
+    html:not(.dark) .border-primary\/30 { border-color: rgba(161, 98, 7, 0.25); }
+    html:not(.dark) .text-sky-400 { color: #0369a1; }
+    html:not(.dark) .text-yellow-400 { color: #a16207; }
+    html:not(.dark) .hover\:text-sky-300:hover { color: #0284c7; }
+    html:not(.dark) .hover\:text-yellow-300:hover { color: #854d0e; }
+
+    /* Light mode - nav */
+    html:not(.dark) .bg-dark-900\/95 { background-color: rgba(255, 255, 255, 0.95); }
+
+    /* Dark mode - bordas e linhas divisorias mais suaves */
+    .dark .border-dark-600 { border-color: #374151; }
+    .dark .divide-dark-600 > :not([hidden]) ~ :not([hidden]) { border-color: #374151; }
+  </style>
+<link href="https://inematds.github.io/segrobot/curso/trilha2/modulo-2-3.html" hreflang="pt-BR" rel="alternate"/><link href="https://inematds.github.io/segrobot/en/curso/trilha2/modulo-2-3.html" hreflang="en" rel="alternate"/><link href="https://inematds.github.io/segrobot/es/curso/trilha2/modulo-2-3.html" hreflang="es" rel="alternate"/></head>
+<body class="bg-dark-900 text-neutral-100 min-h-screen"><div class="inema-lang" style="position:fixed;right:14px;bottom:14px;z-index:9999;display:flex;gap:2px;padding:4px;border-radius:10px;background:rgba(12,12,16,.82);border:1px solid rgba(226,162,59,.45);font:600 12px/1 Sora,Inter,system-ui,sans-serif;backdrop-filter:blur(8px)" translate="no"><a href="../../../curso/trilha2/modulo-2-3.html" hreflang="pt-BR" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">PT</a><a href="modulo-2-3.html" hreflang="en" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#1a1206;background:#E2A23B">EN</a><a href="../../../es/curso/trilha2/modulo-2-3.html" hreflang="es" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">ES</a></div>
+<!-- NAVIGATION -->
+<nav class="sticky top-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-600">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="flex justify-between items-center h-14">
+<div class="flex items-center space-x-4">
+<a class="flex items-center space-x-2 text-yellow-400 hover:text-yellow-300" href="../../index.html">
+<span class="text-2xl">🤖</span>
+<span class="font-bold text-lg hidden sm:inline">segROBOT</span>
+</a>
+<span class="text-neutral-600">|</span>
+<a class="text-sky-400 hover:text-sky-300 text-sm font-medium" href="https://inema.club" target="_blank">INEMA.CLUB</a>
+</div>
+<div class="flex items-center space-x-1 sm:space-x-2">
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-emerald-400 hover:bg-emerald-500/10 transition-colors" href="../trilha1/index.html">
+<span class="sm:hidden">T1</span>
+<span class="hidden sm:inline">Fundamentals</span>
+</a>
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-blue-400 bg-blue-500/10" href="index.html">
+<span class="sm:hidden">T2</span>
+<span class="hidden sm:inline">Action</span>
+</a>
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-purple-400 hover:bg-purple-500/10 transition-colors" href="../trilha3/index.html">
+<span class="sm:hidden">T3</span>
+<span class="hidden sm:inline">Strategic</span>
+</a>
+<button class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors ml-2" id="theme-toggle">
+<svg class="hidden w-5 h-5 text-neutral-300" fill="currentColor" id="theme-toggle-dark-icon" viewbox="0 0 20 20">
+<path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+</svg>
+<svg class="hidden w-5 h-5 text-neutral-300" fill="currentColor" id="theme-toggle-light-icon" viewbox="0 0 20 20">
+<path clip-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd"></path>
+</svg>
+</button>
+</div>
+</div>
+</div>
+</nav>
+<!-- BREADCRUMB -->
+<nav class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+<div class="flex items-center space-x-2 text-sm text-neutral-400">
+<a class="hover:text-blue-400" href="../../index.html">Start</a>
+<span>/</span>
+<a class="hover:text-blue-400" href="index.html">Track 2</a>
+<span>/</span>
+<span class="text-blue-400">Module 2.3</span>
+</div>
+</nav>
+<!-- HEADER -->
+<header class="bg-gradient-to-br from-blue-900/30 via-dark-800 to-dark-800 py-12 border-b border-dark-600">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+<span class="inline-block px-3 py-1 bg-blue-500/20 text-blue-400 text-xs font-semibold rounded-full mb-4">MODULE 2.3</span>
+<h1 class="text-3xl sm:text-4xl font-bold mb-4">🥽 Simulators, VR, and Digital Twins for Training</h1>
+<p class="text-lg text-neutral-400 max-w-3xl">
+        Training moves out of the classroom and into virtual space. The automotive digital twin market jumps from USD 2.1bi to 28.7bi (CAGR 30%), VR reduces task execution time by 38%, and critical scenarios that are impossible to rehearse in real life become a safe routine. Platforms, physiology, and emergency simulation.
+      </p>
+<!-- Hero SVG: mundo fisico <-> gemeo virtual em tempo real -->
+<div class="rounded-2xl border border-blue-500/30 bg-dark-900/40 p-3 sm:p-4 mt-8 overflow-hidden">
+<svg aria-label="Digital twin diagram: a physical robotic cell synchronizes real-time data with its virtual twin, which supports VR training" class="w-full h-auto" role="img" viewbox="0 0 1000 250">
+<defs>
+<lineargradient id="m23-grad" x1="0" x2="1" y1="0" y2="1">
+<stop offset="0" stop-color="#60a5fa"></stop><stop offset="1" stop-color="#3b82f6"></stop>
+</lineargradient>
+<filter height="180%" id="m23-glow" width="180%" x="-40%" y="-40%">
+<fegaussianblur result="b" stddeviation="3"></fegaussianblur><femerge><femergenode in="b"></femergenode><femergenode in="SourceGraphic"></femergenode></femerge>
+</filter>
+<pattern height="32" id="m23-grid" patternunits="userSpaceOnUse" width="32">
+<circle cx="1.3" cy="1.3" fill="#3b82f6" opacity="0.12" r="1.3"></circle>
+</pattern>
+<marker id="m23-ah" markerheight="9" markerwidth="9" orient="auto" refx="6.5" refy="4.5"><path d="M0,0 L8,4.5 L0,9 L2.4,4.5 Z" fill="#60a5fa"></path></marker>
+<marker id="m23-ahc" markerheight="9" markerwidth="9" orient="auto" refx="6.5" refy="4.5"><path d="M0,0 L8,4.5 L0,9 L2.4,4.5 Z" fill="#38bdf8"></path></marker>
+</defs>
+<rect fill="url(#m23-grid)" height="250" width="1000" x="0" y="0"></rect>
+<!-- Mundo fisico -->
+<g filter="url(#m23-glow)"><rect fill="#0e1622" height="94" rx="16" stroke="url(#m23-grad)" stroke-width="2.5" width="200" x="40" y="78"></rect></g>
+<text fill="#60a5fa" font-family="Inter,sans-serif" font-size="17" font-weight="700" text-anchor="middle" x="140" y="108">Physical World</text>
+<text fill="#93bbfc" font-family="Inter,sans-serif" font-size="12.5" text-anchor="middle" x="140" y="132">real robotic cell</text>
+<text fill="#93bbfc" font-family="Inter,sans-serif" font-size="12.5" text-anchor="middle" x="140" y="152">sensors + telemetry</text>
+<!-- Sincronizacao bidirecional -->
+<g fill="none" opacity="0.8" stroke="#38bdf8" stroke-width="2.5">
+<path d="M242,108 L398,108" marker-end="url(#m23-ahc)"></path>
+<path d="M398,142 L242,142" marker-end="url(#m23-ahc)"></path>
+</g>
+<text fill="#9ad6ff" font-family="Inter,sans-serif" font-size="11.5" text-anchor="middle" x="320" y="98">actual state</text>
+<text fill="#9ad6ff" font-family="Inter,sans-serif" font-size="11.5" text-anchor="middle" x="320" y="162">commands &lt;100ms</text>
+<!-- Gemeo virtual -->
+<g filter="url(#m23-glow)"><rect fill="#0e1622" height="94" rx="16" stroke="url(#m23-grad)" stroke-width="2.5" width="200" x="400" y="78"></rect></g>
+<text fill="#60a5fa" font-family="Inter,sans-serif" font-size="17" font-weight="700" text-anchor="middle" x="500" y="108">Digital Twin</text>
+<text fill="#93bbfc" font-family="Inter,sans-serif" font-size="12.5" text-anchor="middle" x="500" y="132">synchronized replica</text>
+<text fill="#93bbfc" font-family="Inter,sans-serif" font-size="12.5" text-anchor="middle" x="500" y="152">physics + behavior</text>
+<!-- Arrows to VR training -->
+<g fill="none" opacity="0.65" stroke="#60a5fa" stroke-width="2">
+<path d="M600,100 C700,100 720,52 800,52" marker-end="url(#m23-ah)"></path>
+<path d="M600,125 L800,125" marker-end="url(#m23-ah)"></path>
+<path d="M600,150 C700,150 720,198 800,198" marker-end="url(#m23-ah)"></path>
+</g>
+<!-- VR cenarios -->
+<g font-family="Inter,sans-serif" font-size="12.5" font-weight="600">
+<g class="wf-a"><rect fill="#0e1b26" height="32" rx="9" stroke="#38bdf8" stroke-width="2" width="160" x="800" y="36"></rect><text fill="#bfe6ff" text-anchor="middle" x="880" y="57">VR routine training</text></g>
+<g class="wf-a"><rect fill="#0e1b26" height="32" rx="9" stroke="#38bdf8" stroke-width="2" width="160" x="800" y="109"></rect><text fill="#bfe6ff" text-anchor="middle" x="880" y="130">rare scenario</text></g>
+<g class="wf-a"><rect fill="#0e1b26" height="32" rx="9" stroke="#38bdf8" stroke-width="2" width="160" x="800" y="182"></rect><text fill="#bfe6ff" text-anchor="middle" x="880" y="203">emergency</text></g>
+</g>
+</svg>
+<p class="text-xs text-neutral-500 mt-2 text-center">Illustrative diagram: the virtual twin synchronizes in real time with the physical cell and feeds VR training scenarios.</p>
+</div>
+<!-- Stats Banner -->
+<div class="grid grid-cols-4 gap-4 mt-8 max-w-2xl">
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+<div class="text-xl font-bold text-blue-400">6</div>
+<div class="text-xs text-neutral-400">Topics</div>
+</div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+<div class="text-xl font-bold text-blue-400">50</div>
+<div class="text-xs text-neutral-400">Minutes</div>
+</div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+<div class="text-xl font-bold text-blue-400">Intermediate</div>
+<div class="text-xs text-neutral-400">Level</div>
+</div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+<div class="text-xl font-bold text-blue-400">Practice</div>
+<div class="text-xs text-neutral-400">Type</div>
+</div>
+</div>
+</div>
+</header>
+<!-- CONTEUDO -->
+<main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+<!-- ============ TOPICO 1 ============ -->
+<section class="mb-16" id="topico-1">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">1</span>
+<h2 class="text-2xl font-bold">📈 Automotive Digital Twin Market</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed">
+        A <strong class="text-blue-400">digital twin</strong> is a virtual replica of a physical asset that synchronizes data in real time. It's not a static CAD model or an animation: it's a living mirror that reflects the real machine's state at every moment. In the automotive industry, this market grows from <strong class="text-blue-400">USD 2.1 billion to 28.7 billion by 2030</strong>, a 30% CAGR.
+      </p>
+<!-- Box conceito gradiente -->
+<div class="bg-gradient-to-br from-blue-900/30 to-dark-800 rounded-xl border border-blue-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-blue-400 mb-4 flex items-center">
+<span class="mr-2">🔁</span> What Sets a Twin Apart from a Simulation
+        </h3>
+<p class="text-neutral-300 mb-4">The difference lies in the connection to the real world. The simulation runs in isolation; the digital twin is coupled to the physical asset.</p>
+<ul class="space-y-2 text-neutral-300">
+<li class="flex items-start space-x-2"><span class="text-blue-400 mt-1">•</span><span><strong>Two-way synchronization:</strong> the twin receives the real state and can send commands back.</span></li>
+<li class="flex items-start space-x-2"><span class="text-blue-400 mt-1">•</span><span><strong>Acceptable latency (&lt;100ms):</strong> below that, the operator perceives the twin as "instantaneous."</span></li>
+<li class="flex items-start space-x-2"><span class="text-blue-400 mt-1">•</span><span><strong>Model fidelity:</strong> physics, kinematics, and behavior need to match reality.</span></li>
+</ul>
+</div>
+<!-- Box dados blue -->
+<div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-blue-400 mb-4 flex items-center">
+<span class="mr-2">📊</span> Market data
+        </h3>
+<ul class="space-y-2 text-neutral-300">
+<li><strong>USD 2.1bn → 28.7bn</strong> - automotive digital twin market size by 2030.</li>
+<li><strong>CAGR 30%</strong> - segment compound annual growth rate.</li>
+<li><strong>&lt;100ms</strong> - target latency for synchronization perceived as real time.</li>
+</ul>
+</div>
+<!-- Tip box primary -->
+<div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
+<span class="mr-2">💡</span> Practical Tip
+        </h3>
+<p class="text-neutral-300">Digital twin training allows <strong>make mistakes without physical consequences</strong>. The professional rehearses rare scenarios—catastrophic failure, multi-robot collision—that they would never encounter in practice until it was too late. The ROI comes from preventing a single accident.</p>
+</div>
+<!-- Conceitos-chave -->
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-blue-400 font-semibold text-sm mb-1">Digital twin vs. simulation</div><p class="text-xs text-neutral-400">Live, coupled mirror vs. isolated model.</p></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-blue-400 font-semibold text-sm mb-1">Synchronization</div><p class="text-xs text-neutral-400">Bidirectional, state, and commands.</p></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-blue-400 font-semibold text-sm mb-1">Latency</div><p class="text-xs text-neutral-400">&lt;100ms for a real-time feel.</p></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-blue-400 font-semibold text-sm mb-1">Virtual ROI</div><p class="text-xs text-neutral-400">Safe practice of rare scenarios.</p></div>
+</div>
+</section>
+<!-- ============ TOPICO 2 ============ -->
+<section class="mb-16" id="topico-2">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">2</span>
+<h2 class="text-2xl font-bold">🕶️ VR Reduces Execution Time by 38%</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed">
+        Training <strong class="text-blue-400">Immersive VR reduces execution time</strong> of robotic tasks in up to <strong class="text-blue-400">38%</strong> compared with conventional classroom training. The explanation lies in the <em>motor learning</em>: the body learns the movement, not just the theory.
+      </p>
+<!-- Box dados blue -->
+<div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-blue-400 mb-4 flex items-center">
+<span class="mr-2">⏱️</span> Empirical evidence
+        </h3>
+<ul class="space-y-2 text-neutral-300">
+<li><strong>-38%</strong> - reduced task execution time after VR training.</li>
+<li><strong>1h VR ≈ 2.5h in person</strong> - In terms of retention and practical application.</li>
+<li><strong>Months, not years</strong> - VR investment payback period.</li>
+</ul>
+</div>
+<!-- Grid Fazer vs Evitar (1) -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+<div class="bg-emerald-900/20 rounded-xl border border-emerald-500/30 p-6">
+<h4 class="font-bold text-emerald-400 mb-4">✓ What to DO in VR training</h4>
+<ul class="space-y-3 text-neutral-300">
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Using haptic feedback to reinforce the correct gesture.</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Measure VR-to-real-world transfer using equivalent tasks.</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Repeat until the learning curve stabilizes.</span></li>
+</ul>
+</div>
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+<h4 class="font-bold text-red-400 mb-4">✗ What NOT to do</h4>
+<ul class="space-y-3 text-neutral-300">
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Treating VR as passive video with no interaction.</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Assessing only through the trainee’s subjective perception.</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Ignore the simulator’s physical fidelity.</span></li>
+</ul>
+</div>
+</div>
+<!-- Conceitos-chave -->
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-blue-400 font-semibold text-sm mb-1">Motor learning</div><p class="text-xs text-neutral-400">Learning through hands-on practice, not just theory.</p></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-blue-400 font-semibold text-sm mb-1">Haptic feedback</div><p class="text-xs text-neutral-400">Tactile feedback reinforces the movement.</p></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-blue-400 font-semibold text-sm mb-1">Transfer</div><p class="text-xs text-neutral-400">VR skill transfers to the real world.</p></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-blue-400 font-semibold text-sm mb-1">VR Metrics</div><p class="text-xs text-neutral-400">Learning curve and assessment.</p></div>
+</div>
+</section>
+<!-- ============ TOPICO 3 ============ -->
+<section class="mb-16" id="topico-3">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">3</span>
+<h2 class="text-2xl font-bold">🏫 Virginia Tech 2025: Integrated Twins + VR</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed">
+        The study of <strong class="text-blue-400">Virginia Tech (2025)</strong> demonstrated the integration of digital twins with VR to train industrial robot operators, measuring effectiveness by <strong class="text-blue-400">biometrics</strong>. It is the leading academic reference that validates the hybrid training model — twin + VR + biometrics — directly applicable to corporate programs.
+      </p>
+<!-- Box conceito gradiente -->
+<div class="bg-gradient-to-br from-blue-900/30 to-dark-800 rounded-xl border border-blue-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-blue-400 mb-4 flex items-center">
+<span class="mr-2">🔬</span> The validated hybrid model
+        </h3>
+<p class="text-neutral-300 mb-4">Three reinforcing layers: the twin generates a faithful scenario, VR puts the body in the scene, and biometrics measure effectiveness without relying on the trainee’s account.</p>
+<ul class="space-y-2 text-neutral-300">
+<li class="flex items-start space-x-2"><span class="text-blue-400 mt-1">•</span><span><strong>Digital twin:</strong> scenario with physics and behavior that faithfully reflect reality.</span></li>
+<li class="flex items-start space-x-2"><span class="text-blue-400 mt-1">•</span><span><strong>VR:</strong> immersion that activates the motor learning.</span></li>
+<li class="flex items-start space-x-2"><span class="text-blue-400 mt-1">•</span><span><strong>Biometrics:</strong> objective measure of effectiveness and transfer.</span></li>
+</ul>
+</div>
+<!-- Timeline -->
+<h3 class="text-xl font-bold mb-4">4-Step Evaluation Protocol</h3>
+<div class="space-y-6 mb-6">
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-12 h-12 rounded-full bg-blue-500/20 flex items-center justify-center"><span class="text-blue-400 font-bold">1</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+<h4 class="font-semibold text-white mb-2">Baseline</h4>
+<p class="text-sm text-neutral-400 mb-3">Before training</p>
+<p class="text-neutral-300 text-sm">Performance and biometrics are measured at baseline to serve as a reference.</p>
+</div>
+</div>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-12 h-12 rounded-full bg-blue-500/20 flex items-center justify-center"><span class="text-blue-400 font-bold">2</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+<h4 class="font-semibold text-white mb-2">Twin + VR training</h4>
+<p class="text-sm text-neutral-400 mb-3">Immersive sessions</p>
+<p class="text-neutral-300 text-sm">The trainee performs tasks in the virtual twin while sensors record stress and attention.</p>
+</div>
+</div>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-12 h-12 rounded-full bg-blue-500/20 flex items-center justify-center"><span class="text-blue-400 font-bold">3</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+<h4 class="font-semibold text-white mb-2">Biometric measurement</h4>
+<p class="text-sm text-neutral-400 mb-3">During and after</p>
+<p class="text-neutral-300 text-sm">Efficacy data compares the actual gains between sessions.</p>
+</div>
+</div>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-12 h-12 rounded-full bg-blue-500/20 flex items-center justify-center"><span class="text-blue-400 font-bold">4</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+<h4 class="font-semibold text-white mb-2">Transfer to the real world</h4>
+<p class="text-sm text-neutral-400 mb-3">Final validation</p>
+<p class="text-neutral-300 text-sm">The operator performs the same task in the physical environment to confirm the skill transfer.</p>
+</div>
+</div>
+</div>
+<!-- Conceitos-chave -->
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-blue-400 font-semibold text-sm mb-1">Twin-VR integration</div><p class="text-xs text-neutral-400">Faithful scenario within the immersive experience.</p></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-blue-400 font-semibold text-sm mb-1">Biometrics</div><p class="text-xs text-neutral-400">Objective measure of effectiveness.</p></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-blue-400 font-semibold text-sm mb-1">Protocol</div><p class="text-xs text-neutral-400">Baseline → training → validation.</p></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-blue-400 font-semibold text-sm mb-1">Cost vs. benefit</div><p class="text-xs text-neutral-400">Model applicable to the corporate environment.</p></div>
+</div>
+</section>
+<!-- ============ TOPICO 4 ============ -->
+<section class="mb-16" id="topico-4">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">4</span>
+<h2 class="text-2xl font-bold">❤️ Physiological Monitoring in VR</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed">
+        Physiological sensors during VR training measure <strong class="text-blue-400">stress, attention, posture, and fatigue</strong> in real time. The data reveal what the trainee can’t verbalize: hidden stress, distraction, and cognitive fatigue. And <strong class="text-blue-400">objective, not subjective, feedback</strong>.
+      </p>
+<!-- Box monospace: leitura de sensores -->
+<div class="bg-dark-900 rounded-xl border border-blue-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-blue-400 mb-3 flex items-center">
+<span class="mr-2">📟</span> Physiological telemetry dashboard <span class="ml-2 text-xs text-neutral-500 font-normal">(illustrative recreation, not a real screenshot)</span>
+</h3>
+<pre class="font-mono text-sm text-neutral-300 overflow-x-auto leading-relaxed"><span class="text-blue-400">[trainee#07]</span> sessao=evacuacao_celula_3   t=04:12
+HRV   ......... <span class="text-emerald-400">62 ms</span>   estresse: <span class="text-emerald-400">normal</span>
+gaze  ......... <span class="text-blue-400">fixacao 78%</span>  saccade: <span class="text-blue-400">22%</span>
+GSR   ......... <span class="text-primary">elevado</span>      pico em E-stop
+postura ....... <span class="text-emerald-400">estavel</span>
+cybersickness . <span class="text-emerald-400">0.2 / limite 0.6</span></pre>
+</div>
+<!-- Box dados blue -->
+<div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-blue-400 mb-4 flex items-center">
+<span class="mr-2">🩺</span> What Each Sensor Measures
+        </h3>
+<ul class="space-y-2 text-neutral-300">
+<li><strong>HRV (heart rate variability):</strong> stress level and workload.</li>
+<li><strong>Eye-tracking:</strong> fixation vs. saccades reveal attention and visual search.</li>
+<li><strong>GSR (galvanic skin response):</strong> emotional response/arousal.</li>
+<li><strong>Posture analysis:</strong> ergonomics and physical fatigue.</li>
+</ul>
+</div>
+<!-- Tip box primary -->
+<div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
+<span class="mr-2">⚠️</span> Attention to cybersickness
+        </h3>
+<p class="text-neutral-300">Always monitor the <strong>cybersickness limit</strong>. When motion sickness symptoms pass the threshold, the session loses training value and can lead to VR aversion. Pause and adjust visual fidelity before pushing on.</p>
+</div>
+<!-- Conceitos-chave -->
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-blue-400 font-semibold text-sm mb-1">HRV</div><p class="text-xs text-neutral-400">Heart rate variability = stress.</p></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-blue-400 font-semibold text-sm mb-1">Eye-tracking</div><p class="text-xs text-neutral-400">Fixation vs. saccade = attention.</p></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-blue-400 font-semibold text-sm mb-1">GSR</div><p class="text-xs text-neutral-400">Galvanic skin response.</p></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-blue-400 font-semibold text-sm mb-1">Cybersickness</div><p class="text-xs text-neutral-400">Nausea threshold to respect.</p></div>
+</div>
+</section>
+<!-- ============ TOPICO 5 ============ -->
+<section class="mb-16" id="topico-5">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">5</span>
+<h2 class="text-2xl font-bold">🚨 Emergency Evacuation with Robots</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed">
+        The VR simulation stages evacuation scenarios in environments with <strong class="text-blue-400">active robots</strong>: fire in a robotic cell, communication failure, robot blocking the escape route. <strong class="text-blue-400">No one trains for evacuations with real robots in motion</strong> — VR is the only safe way to practice when robots interact with panicked humans.
+      </p>
+<!-- Grid Fazer vs Evitar (2) -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+<div class="bg-emerald-900/20 rounded-xl border border-emerald-500/30 p-6">
+<h4 class="font-bold text-emerald-400 mb-4">✓ In an evacuation with robots</h4>
+<ul class="space-y-3 text-neutral-300">
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Know escape routes that avoid robotic zones.</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Ensure the E-stop is accessible along the route.</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Shut down the area before crossing.</span></li>
+</ul>
+</div>
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+<h4 class="font-bold text-red-400 mb-4">✗ Mistakes that kill</h4>
+<ul class="space-y-3 text-neutral-300">
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Cross into an energized robot zone to take a shortcut.</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Assume that the robot "will stop on its own."</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Ignore communication failure as a cascade trigger.</span></li>
+</ul>
+</div>
+</div>
+<!-- Box de alerta red -->
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-red-400 mb-3 flex items-center">
+<span class="mr-2">🔥</span> Cascade scenarios
+        </h3>
+<p class="text-neutral-300">The danger is rarely an isolated event. A fire takes down the network, a communications failure prevents remote shutdown, and the robot keeps moving along the evacuation route. Training <strong>cascade</strong> — not just the initial event — that’s what makes a simulation useful.</p>
+</div>
+<!-- Conceitos-chave -->
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-blue-400 font-semibold text-sm mb-1">Routes vs. zones</div><p class="text-xs text-neutral-400">Escape route that avoids the robotic area.</p></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-blue-400 font-semibold text-sm mb-1">Accessible E-stop</div><p class="text-xs text-neutral-400">Emergency stop along the way.</p></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-blue-400 font-semibold text-sm mb-1">Shutdown</div><p class="text-xs text-neutral-400">Cut power to the area.</p></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-blue-400 font-semibold text-sm mb-1">Cascade</div><p class="text-xs text-neutral-400">Cascading failures, not isolated ones.</p></div>
+</div>
+</section>
+<!-- ============ TOPICO 6 ============ -->
+<section class="mb-16" id="topico-6">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">6</span>
+<h2 class="text-2xl font-bold">🛠️ Commercial Platforms</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed">
+        Commercial tools create and operate digital twins and VR training. Knowing <strong class="text-blue-400">which platform to use for each case</strong> avoids paying a high price for capacity that goes unused: <strong class="text-blue-400">Siemens, PTC, Scope AR, and RoboDK</strong> solve different problems.
+      </p>
+<!-- Box conceito gradiente -->
+<div class="bg-gradient-to-br from-blue-900/30 to-dark-800 rounded-xl border border-blue-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-blue-400 mb-4 flex items-center">
+<span class="mr-2">🧰</span> Each platform, its use case
+        </h3>
+<ul class="space-y-2 text-neutral-300">
+<li class="flex items-start space-x-2"><span class="text-blue-400 mt-1">•</span><span><strong>Siemens Xcelerator (enterprise):</strong> complete production lines.</span></li>
+<li class="flex items-start space-x-2"><span class="text-blue-400 mt-1">•</span><span><strong>PTC Vuforia (AR+IoT):</strong> maintenance with augmented reality instructions.</span></li>
+<li class="flex items-start space-x-2"><span class="text-blue-400 mt-1">•</span><span><strong>Scope AR (step-by-step):</strong> guided step-by-step instructions.</span></li>
+<li class="flex items-start space-x-2"><span class="text-blue-400 mt-1">•</span><span><strong>RoboDK (offline programming):</strong> robot simulation and offline programming.</span></li>
+</ul>
+</div>
+<!-- Tip box primary -->
+<div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
+<span class="mr-2">💡</span> Selection criterion
+        </h3>
+<p class="text-neutral-300">Start with the right question: <strong>is it a full production line, maintenance, field service, or robot programming?</strong> The cost per license varies widely—Siemens is a major enterprise investment; RoboDK handles offline programming for a fraction of the cost. Matching the tool to the use case is what determines ROI.</p>
+</div>
+<!-- Conceitos-chave -->
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-blue-400 font-semibold text-sm mb-1">Siemens Xcelerator</div><p class="text-xs text-neutral-400">Complete lines (enterprise).</p></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-blue-400 font-semibold text-sm mb-1">PTC Vuforia</div><p class="text-xs text-neutral-400">AR + IoT maintenance.</p></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-blue-400 font-semibold text-sm mb-1">Scope AR</div><p class="text-xs text-neutral-400">Step-by-step instructions.</p></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-blue-400 font-semibold text-sm mb-1">RoboDK</div><p class="text-xs text-neutral-400">Offline robot programming.</p></div>
+</div>
+</section>
+<!-- ============ RESUMO ============ -->
+<section class="mb-12">
+<div class="bg-gradient-to-br from-blue-900/40 via-dark-800 to-dark-800 rounded-xl border border-blue-500/30 p-8">
+<h2 class="text-2xl font-bold mb-6 flex items-center">
+<span class="mr-3">✅</span> Module Summary
+        </h2>
+<div class="space-y-4 mb-8">
+<div class="flex items-start space-x-3"><span class="text-blue-400 mt-1">✓</span><div><strong class="text-white">Digital twin synchronizes in real time</strong><span class="text-neutral-400"> - market USD 2.1bi → 28.7bi, latency &lt;100ms.</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-blue-400 mt-1">✓</span><div><strong class="text-white">VR reduces execution time by 38%</strong><span class="text-neutral-400"> - 1 hour of VR ≈ 2.5 hours in person.</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-blue-400 mt-1">✓</span><div><strong class="text-white">Virginia Tech validated the hybrid model</strong><span class="text-neutral-400"> - twin + VR + biometrics.</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-blue-400 mt-1">✓</span><div><strong class="text-white">Sensors provide objective feedback</strong><span class="text-neutral-400"> - HRV, eye-tracking, GSR, posture, cybersickness.</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-blue-400 mt-1">✓</span><div><strong class="text-white">VR is the only safe way to train for evacuations</strong><span class="text-neutral-400"> - routes, E-stop, cascading scenarios.</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-blue-400 mt-1">✓</span><div><strong class="text-white">Each platform addresses one use case</strong><span class="text-neutral-400"> - Siemens, PTC, Scope AR, RoboDK.</span></div></div>
+</div>
+<div class="bg-dark-800/50 rounded-lg p-4 mb-8">
+<h3 class="font-semibold text-blue-400 mb-2">Next Module:</h3>
+<p class="text-neutral-300">2.4 - Healthcare: Nurses and Hospital Teams with Robots</p>
+</div>
+<div class="flex flex-col sm:flex-row gap-4">
+<a class="flex-1 text-center px-6 py-3 bg-dark-700 text-neutral-300 rounded-lg font-semibold hover:bg-dark-600 transition-colors" href="index.html">
+            ← Back to Track
+          </a>
+<a class="flex-1 text-center px-6 py-3 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-500 transition-colors" href="modulo-2-4.html">
+            Next Module →
+          </a>
+</div>
+</div>
+</section>
+</main>
+<!-- FOOTER -->
+<footer class="border-t border-dark-600 py-8 mt-16">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-neutral-500 text-sm">
+<p>segROBOT — INEMA.CLUB — 2026</p>
+</div>
+</footer>
+<!-- SCRIPTS -->
+<script>
+    const themeToggle = document.getElementById('theme-toggle');
+    const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
+    const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
+    const html = document.documentElement;
+    if (localStorage.getItem('theme') === 'light' || (!localStorage.getItem('theme') && !html.classList.contains('dark'))) {
+      themeToggleDarkIcon.classList.remove('hidden'); html.classList.remove('dark');
+    } else { themeToggleLightIcon.classList.remove('hidden'); }
+    themeToggle.addEventListener('click', () => {
+      themeToggleDarkIcon.classList.toggle('hidden'); themeToggleLightIcon.classList.toggle('hidden');
+      html.classList.toggle('dark'); localStorage.setItem('theme', html.classList.contains('dark') ? 'dark' : 'light');
+    });
+  </script>
+</body>
+</html>

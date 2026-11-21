@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="pt-BR">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Modulo 1.6 — Programas de Referencia Mundial | segROBOT</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            primary: '#FACC15',
+            dark: { 900: '#111827', 800: '#1f2937', 700: '#374151', 600: '#4b5563' }
+          }
+        }
+      }
+    }
+  </script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<style>
+    body { font-family: 'Inter', sans-serif; }
+    .dark body { background-color: #111827; }
+    .topic-explanation { display: none; }
+    .topic-explanation.active { display: block; }
+
+    /* Light mode overrides */
+    html:not(.dark) body { background-color: #f8fafc; }
+    html:not(.dark) .bg-dark-900 { background-color: #ffffff; }
+    html:not(.dark) .bg-dark-800 { background-color: #f9fafb; }
+    html:not(.dark) .bg-dark-700 { background-color: #f3f4f6; }
+    html:not(.dark) .bg-dark-600 { background-color: #e5e7eb; }
+    html:not(.dark) .text-neutral-100 { color: #111827; }
+    html:not(.dark) .text-neutral-300 { color: #4b5563; }
+    html:not(.dark) .text-neutral-400 { color: #6b7280; }
+    html:not(.dark) .text-neutral-500 { color: #9ca3af; }
+    html:not(.dark) .border-dark-600 { border-color: #d1d5db; }
+    html:not(.dark) .border-dark-700 { border-color: #e5e7eb; }
+
+    /* Light mode - cores de acento (trilha emerald) */
+    html:not(.dark) .text-emerald-400 { color: #059669; }
+    html:not(.dark) .bg-emerald-500\/20 { background-color: rgba(5, 150, 105, 0.12); }
+    html:not(.dark) .bg-emerald-500\/10 { background-color: rgba(5, 150, 105, 0.08); }
+    html:not(.dark) .border-emerald-500\/30 { border-color: rgba(5, 150, 105, 0.25); }
+    html:not(.dark) .hover\:bg-emerald-500\/30:hover { background-color: rgba(5, 150, 105, 0.18); }
+    html:not(.dark) .hover\:border-emerald-500\/30:hover { border-color: rgba(5, 150, 105, 0.25); }
+    html:not(.dark) .hover\:text-emerald-400:hover { color: #059669; }
+    html:not(.dark) .group:hover .group-hover\:text-emerald-400 { color: #059669; }
+
+    /* Light mode - remove gradientes */
+    html:not(.dark) [class*="bg-gradient-to"] { background-image: none !important; }
+
+    /* Light mode - cores especiais */
+    html:not(.dark) .text-primary { color: #a16207; }
+    html:not(.dark) .bg-primary\/10 { background-color: rgba(161, 98, 7, 0.08); }
+    html:not(.dark) .border-primary\/30 { border-color: rgba(161, 98, 7, 0.25); }
+    html:not(.dark) .border-primary\/40 { border-color: rgba(161, 98, 7, 0.25); }
+    html:not(.dark) .text-sky-400 { color: #0369a1; }
+    html:not(.dark) .text-yellow-400 { color: #a16207; }
+    html:not(.dark) .hover\:text-sky-300:hover { color: #0284c7; }
+    html:not(.dark) .hover\:text-yellow-300:hover { color: #854d0e; }
+
+    /* Light mode - nav */
+    html:not(.dark) .bg-dark-900\/95 { background-color: rgba(255, 255, 255, 0.95); }
+
+    /* Dark mode - bordas suaves */
+    .dark .border-dark-600 { border-color: #374151; }
+    .dark .divide-dark-600 > :not([hidden]) ~ :not([hidden]) { border-color: #374151; }
+
+    /* SVG pulse */
+    @keyframes wf-pulse { 0%,100% { opacity:.55 } 50% { opacity:1 } }
+    @media (prefers-reduced-motion: no-preference) {
+      .wf-a { animation: wf-pulse 2.6s ease-in-out infinite; }
+      .wf-a:nth-child(2){animation-delay:.25s} .wf-a:nth-child(3){animation-delay:.5s}
+      .wf-a:nth-child(4){animation-delay:.75s} .wf-a:nth-child(5){animation-delay:1s}
+    }
+  </style>
+<link href="https://inematds.github.io/segrobot/curso/trilha1/modulo-1-6.html" hreflang="pt-BR" rel="alternate"/><link href="https://inematds.github.io/segrobot/en/curso/trilha1/modulo-1-6.html" hreflang="en" rel="alternate"/><link href="https://inematds.github.io/segrobot/es/curso/trilha1/modulo-1-6.html" hreflang="es" rel="alternate"/></head>
+<body class="bg-dark-900 text-neutral-100 min-h-screen"><div class="inema-lang" style="position:fixed;right:14px;bottom:14px;z-index:9999;display:flex;gap:2px;padding:4px;border-radius:10px;background:rgba(12,12,16,.82);border:1px solid rgba(226,162,59,.45);font:600 12px/1 Sora,Inter,system-ui,sans-serif;backdrop-filter:blur(8px)" translate="no"><a href="modulo-1-6.html" hreflang="pt-BR" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#1a1206;background:#E2A23B">PT</a><a href="../../en/curso/trilha1/modulo-1-6.html" hreflang="en" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">EN</a><a href="../../es/curso/trilha1/modulo-1-6.html" hreflang="es" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">ES</a></div>
+<!-- NAVIGATION -->
+<nav class="sticky top-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-600">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="flex justify-between items-center h-14">
+<div class="flex items-center space-x-4">
+<a class="flex items-center space-x-2 text-yellow-400 hover:text-yellow-300" href="../../index.html">
+<span class="text-2xl">🤖</span>
+<span class="font-bold text-lg hidden sm:inline">segROBOT</span>
+</a>
+<span class="text-neutral-600">|</span>
+<a class="text-sky-400 hover:text-sky-300 text-sm font-medium" href="https://inema.club" target="_blank">INEMA.CLUB</a>
+</div>
+<div class="flex items-center space-x-1 sm:space-x-2">
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-emerald-400 bg-emerald-500/10" href="index.html">
+<span class="sm:hidden">T1</span>
+<span class="hidden sm:inline">Fundamentos</span>
+</a>
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-blue-400 hover:bg-blue-500/10 transition-colors" href="../trilha2/index.html">
+<span class="sm:hidden">T2</span>
+<span class="hidden sm:inline">Acao</span>
+</a>
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-purple-400 hover:bg-purple-500/10 transition-colors" href="../trilha3/index.html">
+<span class="sm:hidden">T3</span>
+<span class="hidden sm:inline">Estrategico</span>
+</a>
+<button class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors ml-2" id="theme-toggle">
+<svg class="hidden w-5 h-5 text-neutral-300" fill="currentColor" id="theme-toggle-dark-icon" viewbox="0 0 20 20">
+<path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+</svg>
+<svg class="hidden w-5 h-5 text-neutral-300" fill="currentColor" id="theme-toggle-light-icon" viewbox="0 0 20 20">
+<path clip-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd"></path>
+</svg>
+</button>
+</div>
+</div>
+</div>
+</nav>
+<!-- BREADCRUMB -->
+<nav class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+<div class="flex items-center space-x-2 text-sm text-neutral-400">
+<a class="hover:text-emerald-400" href="../../index.html">Inicio</a>
+<span>/</span>
+<a class="hover:text-emerald-400" href="index.html">Trilha 1</a>
+<span>/</span>
+<span class="text-emerald-400">Modulo 1.6</span>
+</div>
+</nav>
+<!-- HEADER -->
+<header class="bg-gradient-to-br from-emerald-900/30 via-dark-800 to-dark-800 py-12 border-b border-dark-600">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+<span class="inline-block px-3 py-1 bg-emerald-500/20 text-emerald-400 text-xs font-semibold rounded-full mb-4">
+        MODULO 1.6
+      </span>
+<h1 class="text-4xl sm:text-5xl font-bold mb-4">🎓 Programas de Referencia Mundial</h1>
+<p class="text-lg text-neutral-400 max-w-3xl">
+        O mundo ja resolveu o problema de qualificar pessoas para trabalhar ao lado de robos. Amazon, Alemanha,
+        Carolina do Norte, ABB, FANUC, KUKA, CMU e Siemens construiram modelos que funcionam. Este modulo disseca
+        os melhores programas do planeta para que o Brasil nao precise reinventar a roda.
+      </p>
+<!-- Stats Banner -->
+<div class="grid grid-cols-4 gap-4 mt-8 max-w-2xl">
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+<div class="text-xl font-bold text-emerald-400">6</div>
+<div class="text-xs text-neutral-400">Topicos</div>
+</div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+<div class="text-xl font-bold text-emerald-400">45</div>
+<div class="text-xs text-neutral-400">Minutos</div>
+</div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+<div class="text-xl font-bold text-emerald-400">Basico</div>
+<div class="text-xs text-neutral-400">Nivel</div>
+</div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+<div class="text-xl font-bold text-emerald-400">Teoria</div>
+<div class="text-xs text-neutral-400">Tipo</div>
+</div>
+</div>
+</div>
+</header>
+<!-- CONTEUDO -->
+<main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+<!-- SVG ILUSTRATIVO -->
+<div class="rounded-2xl border border-emerald-500/30 bg-dark-900/40 p-3 sm:p-4 mb-12 overflow-hidden">
+<svg aria-label="Comparativo de tres modelos de referencia mundial de requalificacao: Amazon corporativo, Alemanha sistema dual e Carnegie Mellon academico, todos convergindo em forca de trabalho qualificada para robotica" class="w-full h-auto" role="img" viewbox="0 0 1000 260">
+<defs>
+<lineargradient id="m16-grad" x1="0" x2="1" y1="0" y2="1">
+<stop offset="0" stop-color="#34d399"></stop><stop offset="1" stop-color="#10b981"></stop>
+</lineargradient>
+<filter height="180%" id="m16-glow" width="180%" x="-40%" y="-40%">
+<fegaussianblur result="b" stddeviation="3"></fegaussianblur><femerge><femergenode in="b"></femergenode><femergenode in="SourceGraphic"></femergenode></femerge>
+</filter>
+<pattern height="32" id="m16-grid" patternunits="userSpaceOnUse" width="32">
+<circle cx="1.3" cy="1.3" fill="#10b981" opacity="0.12" r="1.3"></circle>
+</pattern>
+<marker id="m16-ah" markerheight="9" markerwidth="9" orient="auto" refx="6.5" refy="4.5"><path d="M0,0 L8,4.5 L0,9 L2.4,4.5 Z" fill="#34d399"></path></marker>
+<marker id="m16-ahc" markerheight="9" markerwidth="9" orient="auto" refx="6.5" refy="4.5"><path d="M0,0 L8,4.5 L0,9 L2.4,4.5 Z" fill="#38bdf8"></path></marker>
+</defs>
+<rect fill="url(#m16-grid)" height="260" width="1000" x="0" y="0"></rect>
+<!-- 3 modelos -> resultado -->
+<g fill="none" opacity="0.6" stroke="#38bdf8" stroke-width="2">
+<path d="M300,60  C470,60 520,130 660,130" marker-end="url(#m16-ahc)"></path>
+<path d="M300,130 L660,130" marker-end="url(#m16-ahc)"></path>
+<path d="M300,200 C470,200 520,130 660,130" marker-end="url(#m16-ahc)"></path>
+</g>
+<!-- caixas dos 3 modelos -->
+<g font-family="Inter,sans-serif">
+<g class="wf-a"><rect fill="#0e1b26" height="60" rx="12" stroke="#38bdf8" stroke-width="2" width="260" x="40" y="30"></rect>
+<text fill="#bfe6ff" font-size="16" font-weight="700" text-anchor="middle" x="170" y="55">Modelo Corporativo</text>
+<text fill="#9ad6ff" font-size="12.5" text-anchor="middle" x="170" y="76">Amazon — USD 1.2bi / 700k</text></g>
+<g class="wf-a"><rect fill="#0e1b26" height="60" rx="12" stroke="#38bdf8" stroke-width="2" width="260" x="40" y="100"></rect>
+<text fill="#bfe6ff" font-size="16" font-weight="700" text-anchor="middle" x="170" y="125">Sistema Dual</text>
+<text fill="#9ad6ff" font-size="12.5" text-anchor="middle" x="170" y="146">Alemanha — 4 anos / Meister</text></g>
+<g class="wf-a"><rect fill="#0e1b26" height="60" rx="12" stroke="#38bdf8" stroke-width="2" width="260" x="40" y="170"></rect>
+<text fill="#bfe6ff" font-size="16" font-weight="700" text-anchor="middle" x="170" y="195">Modelo Academico</text>
+<text fill="#9ad6ff" font-size="12.5" text-anchor="middle" x="170" y="216">CMU — 35k escolas</text></g>
+</g>
+<!-- resultado -->
+<g filter="url(#m16-glow)"><rect fill="#0e2018" height="76" rx="16" stroke="url(#m16-grad)" stroke-width="2.5" width="280" x="660" y="92"></rect></g>
+<text fill="#34d399" font-family="Inter,sans-serif" font-size="18" font-weight="700" text-anchor="middle" x="800" y="125">Forca de trabalho</text>
+<text fill="#a7f3d0" font-family="Inter,sans-serif" font-size="13" text-anchor="middle" x="800" y="150">qualificada para robotica</text>
+</svg>
+<p class="text-xs text-neutral-500 mt-2 text-center">Diagrama ilustrativo — tres familias de modelos de requalificacao convergem no mesmo resultado.</p>
+</div>
+<!-- TOPICO 1 -->
+<section class="mb-16" id="topico-1">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-xl">1</span>
+<h2 class="text-2xl font-bold">📦 Amazon Upskilling — Career Choice</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed">
+        A Amazon montou o <strong class="text-emerald-400">maior programa corporativo de upskilling do mundo</strong>:
+        USD 1.2 bilhoes para requalificar 700 mil funcionarios ate 2025, em areas como robotica, cloud e healthcare.
+        E a prova de que investir em pessoas ao lado de robos da retorno mensuravel.
+      </p>
+<div class="bg-gradient-to-br from-emerald-900/30 to-dark-800 rounded-xl border border-emerald-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-emerald-400 mb-4 flex items-center">
+<span class="mr-2">🎯</span> Como funciona o Career Choice
+        </h3>
+<p class="text-neutral-300 mb-4">O programa cobre a maior parte do custo de formacao e oferece trilhas internas de robotica e cloud.</p>
+<ul class="space-y-2 text-neutral-300">
+<li class="flex items-start space-x-2"><span class="text-emerald-400 mt-1">•</span><span><strong>Career Choice</strong> paga 95% da mensalidade de cursos elegiveis.</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400 mt-1">•</span><span><strong>Mechatronics and Robotics Apprenticeship</strong> — programa interno de robotica.</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400 mt-1">•</span><span><strong>AWS re/Start</strong> — trilha de qualificacao em cloud.</span></li>
+</ul>
+</div>
+<div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-blue-400 mb-4 flex items-center">
+<span class="mr-2">📊</span> Dados de Pesquisa
+        </h3>
+<ul class="space-y-2 text-neutral-300">
+<li><strong>USD 1.2 bilhoes</strong> — investimento comprometido ate 2025.</li>
+<li><strong>700 mil</strong> — funcionarios alvo de requalificacao.</li>
+<li><strong>-25%</strong> — queda de turnover entre participantes do programa.</li>
+<li><strong>95%</strong> — percentual da mensalidade coberto pelo Career Choice.</li>
+</ul>
+</div>
+<div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
+<span class="mr-2">💡</span> Dica Pratica
+        </h3>
+<p class="text-neutral-300">A licao replicavel nao e o valor gasto, e a estrutura: pagar o custo de formacao adiantado, oferecer trilhas claras (robotica, cloud) e medir turnover como KPI. Empresas brasileiras podem copiar o desenho, mesmo em escala menor.</p>
+</div>
+<!-- Conceitos-chave -->
+<h3 class="text-lg font-semibold mb-4">Conceitos-chave</h3>
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-4"><div class="text-emerald-400 font-bold mb-1">Career Choice</div><p class="text-sm text-neutral-400">95% da mensalidade paga.</p></div>
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-4"><div class="text-emerald-400 font-bold mb-1">Apprenticeship</div><p class="text-sm text-neutral-400">Trilha interna de mecatronica e robotica.</p></div>
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-4"><div class="text-emerald-400 font-bold mb-1">AWS re/Start</div><p class="text-sm text-neutral-400">Requalificacao para cloud.</p></div>
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-4"><div class="text-emerald-400 font-bold mb-1">Metricas</div><p class="text-sm text-neutral-400">700k treinados, -25% turnover.</p></div>
+</div>
+</section>
+<!-- TOPICO 2 -->
+<section class="mb-16" id="topico-2">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-xl">2</span>
+<h2 class="text-2xl font-bold">🇩🇪 Ausbildung Alemao — O Padrao-Ouro</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed">
+        O <strong class="text-emerald-400">sistema dual alemao</strong> combina 4 anos de escola tecnica e pratica na
+        empresa. No 4o ano, o aprendiz recebe cerca de 3.800 EUR/mes. <strong class="text-emerald-400">60% dos jovens
+        alemaes</strong> passam por esse sistema — e o pais tem 397 robos por 10 mil trabalhadores com desemprego de 3%.
+        Nao e coincidencia.
+      </p>
+<div class="bg-gradient-to-br from-emerald-900/30 to-dark-800 rounded-xl border border-emerald-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-emerald-400 mb-4 flex items-center">
+<span class="mr-2">⚙️</span> A engrenagem do sistema dual
+        </h3>
+<ul class="space-y-2 text-neutral-300">
+<li class="flex items-start space-x-2"><span class="text-emerald-400 mt-1">•</span><span>3-4 dias na empresa + 1-2 dias na escola tecnica, por semana.</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400 mt-1">•</span><span><strong>Meister</strong> (mestre artesao) atua como mentor do aprendiz.</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400 mt-1">•</span><span>Certificacao reconhecida nacionalmente ao final.</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400 mt-1">•</span><span>Adaptacao pos-2020: robotica entrou como modulo obrigatorio.</span></li>
+</ul>
+</div>
+<!-- Grid faz/evita -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+<div class="bg-emerald-900/20 rounded-xl border border-emerald-500/30 p-6">
+<h4 class="font-bold text-emerald-400 mb-4">✓ Por que o modelo funciona</h4>
+<ul class="space-y-3 text-neutral-300">
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Empresa investe porque forma o profissional que vai contratar.</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Aprendiz e remunerado desde o inicio — sem barreira financeira.</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Pratica real na fabrica, nao so teoria.</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Certificacao com valor de mercado nacional.</span></li>
+</ul>
+</div>
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+<h4 class="font-bold text-red-400 mb-4">✗ Erros ao copiar mal o modelo</h4>
+<ul class="space-y-3 text-neutral-300">
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>So a parte escolar, sem pratica na empresa.</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Sem mentor experiente acompanhando o aprendiz.</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Certificado sem reconhecimento de mercado.</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Curriculo congelado, sem atualizar para robotica.</span></li>
+</ul>
+</div>
+</div>
+<h3 class="text-lg font-semibold mb-4">Conceitos-chave</h3>
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-4"><div class="text-emerald-400 font-bold mb-1">Dual system</div><p class="text-sm text-neutral-400">Empresa + escola na mesma semana.</p></div>
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-4"><div class="text-emerald-400 font-bold mb-1">Meister</div><p class="text-sm text-neutral-400">Mestre artesao como mentor.</p></div>
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-4"><div class="text-emerald-400 font-bold mb-1">4 anos</div><p class="text-sm text-neutral-400">~3.800 EUR/mes no ultimo ano.</p></div>
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-4"><div class="text-emerald-400 font-bold mb-1">397 robos/10k</div><p class="text-sm text-neutral-400">Desemprego de apenas 3%.</p></div>
+</div>
+</section>
+<!-- TOPICO 3 -->
+<section class="mb-16" id="topico-3">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-xl">3</span>
+<h2 class="text-2xl font-bold">🇺🇸 Apprenticeship 2000 — Charlotte, NC</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed">
+        Em Charlotte, Carolina do Norte, um consorcio de empresas adaptou o modelo alemao para o solo americano:
+        <strong class="text-emerald-400">8.000 horas de treinamento</strong> e <strong class="text-emerald-400">100% de
+        empregabilidade</strong> ao final. E a prova de que o sistema dual funciona fora da Alemanha.
+      </p>
+<!-- Timeline -->
+<div class="space-y-6 mb-6">
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-12 h-12 rounded-full bg-emerald-500/20 flex items-center justify-center"><span class="text-emerald-400 font-bold">1</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+<h4 class="font-semibold text-white mb-2">Consorcio de empresas</h4>
+<p class="text-sm text-neutral-400 mb-3">Blum, Daetwyler, Pfaff e outras dividem o custo</p>
+<p class="text-neutral-300 text-sm">Em vez de cada empresa criar seu programa, elas compartilham infraestrutura e instrutores. Isso barateia a formacao e padroniza a qualidade.</p>
+</div>
+</div>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-12 h-12 rounded-full bg-emerald-500/20 flex items-center justify-center"><span class="text-emerald-400 font-bold">2</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+<h4 class="font-semibold text-white mb-2">Modulos centrais</h4>
+<p class="text-sm text-neutral-400 mb-3">CNC, robotica e PLC</p>
+<p class="text-neutral-300 text-sm">O curriculo de 4 anos gira em torno de usinagem CNC, programacao de robos e controladores logicos programaveis — exatamente as competencias do chao de fabrica moderno.</p>
+</div>
+</div>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-12 h-12 rounded-full bg-emerald-500/20 flex items-center justify-center"><span class="text-emerald-400 font-bold">3</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+<h4 class="font-semibold text-white mb-2">Remuneracao + parceiro academico</h4>
+<p class="text-sm text-neutral-400 mb-3">USD 13-22/h + community college</p>
+<p class="text-neutral-300 text-sm">O aprendiz ganha de USD 13 a 22 por hora durante o programa, com o community college local como parceiro academico que valida a formacao teorica.</p>
+</div>
+</div>
+</div>
+<div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
+<span class="mr-2">💡</span> Dica Pratica
+        </h3>
+<p class="text-neutral-300">O segredo aqui e o consorcio: empresas que isoladas nao teriam escala para formar tecnicos, juntas conseguem. No Brasil, arranjos com SENAI ou polos industriais regionais podem reproduzir esse efeito.</p>
+</div>
+<h3 class="text-lg font-semibold mb-4">Conceitos-chave</h3>
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-4"><div class="text-emerald-400 font-bold mb-1">8.000 horas</div><p class="text-sm text-neutral-400">Programa de 4 anos.</p></div>
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-4"><div class="text-emerald-400 font-bold mb-1">Consorcio</div><p class="text-sm text-neutral-400">Custo compartilhado entre empresas.</p></div>
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-4"><div class="text-emerald-400 font-bold mb-1">CNC / robotica / PLC</div><p class="text-sm text-neutral-400">Modulos centrais.</p></div>
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-4"><div class="text-emerald-400 font-bold mb-1">100% empregados</div><p class="text-sm text-neutral-400">USD 13-22/h durante o curso.</p></div>
+</div>
+</section>
+<!-- TOPICO 4 -->
+<section class="mb-16" id="topico-4">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-xl">4</span>
+<h2 class="text-2xl font-bold">🏭 Academias de Fabricantes</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed">
+        Cada grande fabricante opera sua propria academia de treinamento, com
+        <strong class="text-emerald-400">certificacoes proprias de validade global</strong>. Essas certificacoes sao
+        o padrao de contratacao do mercado: um tecnico FANUC Certified ganha de 20% a 40% mais que um sem certificacao.
+      </p>
+<div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-blue-400 mb-4 flex items-center">
+<span class="mr-2">📊</span> Quem treina o que
+        </h3>
+<ul class="space-y-2 text-neutral-300">
+<li><strong>ABB Robotics Academy</strong> — IRB programming, niveis 1 a 3.</li>
+<li><strong>FANUC Authorized Training</strong> — Handling Pro, linguagem Karel.</li>
+<li><strong>KUKA College</strong> — fundamentos de KRL (KUKA Robot Language).</li>
+<li><strong>RoboDK University</strong> — simulacao offline multi-marca.</li>
+<li><strong>Custo:</strong> USD 2.000 a 5.000 por certificacao.</li>
+</ul>
+</div>
+<!-- Box conceito mono -->
+<div class="bg-gradient-to-br from-emerald-900/30 to-dark-800 rounded-xl border border-emerald-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-emerald-400 mb-4 flex items-center">
+<span class="mr-2">🧩</span> Linguagens de programacao por marca
+        </h3>
+<div class="bg-dark-900/60 rounded-lg p-4 font-mono text-sm text-neutral-300 space-y-1">
+<div><span class="text-emerald-400">ABB</span>   → RAPID</div>
+<div><span class="text-emerald-400">FANUC</span> → Karel / TP</div>
+<div><span class="text-emerald-400">KUKA</span>  → KRL</div>
+<div><span class="text-emerald-400">multi</span> → RoboDK (offline sim)</div>
+</div>
+</div>
+<!-- Grid faz/evita -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+<div class="bg-emerald-900/20 rounded-xl border border-emerald-500/30 p-6">
+<h4 class="font-bold text-emerald-400 mb-4">✓ Quando vale a certificacao</h4>
+<ul class="space-y-3 text-neutral-300">
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Sua empresa usa robos da mesma marca.</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Voce quer salto salarial comprovado (20-40%).</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Precisa de credencial reconhecida globalmente.</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Vai operar/programar a celula no dia a dia.</span></li>
+</ul>
+</div>
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+<h4 class="font-bold text-red-400 mb-4">✗ Armadilhas comuns</h4>
+<ul class="space-y-3 text-neutral-300">
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Certificar-se numa marca que a empresa nao usa.</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Pagar USD 5k sem plano de aplicacao pratica.</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Ignorar RoboDK quando o parque e multi-marca.</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Achar que certificado substitui horas de pratica.</span></li>
+</ul>
+</div>
+</div>
+<h3 class="text-lg font-semibold mb-4">Conceitos-chave</h3>
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-4"><div class="text-emerald-400 font-bold mb-1">ABB</div><p class="text-sm text-neutral-400">IRB programming, niveis 1-3.</p></div>
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-4"><div class="text-emerald-400 font-bold mb-1">FANUC</div><p class="text-sm text-neutral-400">Handling Pro, Karel.</p></div>
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-4"><div class="text-emerald-400 font-bold mb-1">KUKA</div><p class="text-sm text-neutral-400">Fundamentos de KRL.</p></div>
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-4"><div class="text-emerald-400 font-bold mb-1">RoboDK</div><p class="text-sm text-neutral-400">Simulacao offline multi-marca.</p></div>
+</div>
+</section>
+<!-- TOPICO 5 -->
+<section class="mb-16" id="topico-5">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-xl">5</span>
+<h2 class="text-2xl font-bold">🎓 CMU Robotics Academy</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed">
+        A Carnegie Mellon University Robotics Academy treina <strong class="text-emerald-400">educadores e empresas</strong>
+        em robotica aplicada. Seus curriculos STEM com robos reais sao usados em <strong class="text-emerald-400">35 mil
+        escolas e empresas</strong>. CMU e a meca da robotica academica — referencia para quem quer criar programas de
+        treinamento de qualidade internacional.
+      </p>
+<div class="bg-gradient-to-br from-emerald-900/30 to-dark-800 rounded-xl border border-emerald-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-emerald-400 mb-4 flex items-center">
+<span class="mr-2">🧠</span> O modelo train-the-trainer
+        </h3>
+<p class="text-neutral-300 mb-4">Em vez de treinar alunos diretamente, a CMU treina quem vai treinar — multiplicando o alcance.</p>
+<ul class="space-y-2 text-neutral-300">
+<li class="flex items-start space-x-2"><span class="text-emerald-400 mt-1">•</span><span><strong>CS2N</strong> (Computer Science Student Network) — plataforma de aprendizado.</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400 mt-1">•</span><span><strong>VEXcode VR</strong> — robotica virtual para quem nao tem hardware.</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400 mt-1">•</span><span>Curriculos STEM do K-12 ao nivel profissional.</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400 mt-1">•</span><span>Licenca de curriculo: USD 500 a 5.000 por ano.</span></li>
+</ul>
+</div>
+<div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
+<span class="mr-2">💡</span> Dica Pratica
+        </h3>
+<p class="text-neutral-300">O VEXcode VR derruba a barreira do hardware: e possivel ensinar logica de robotica sem comprar um robo. Para regioes com pouco orcamento, simulacao virtual primeiro e robo fisico depois e a sequencia mais barata e eficaz.</p>
+</div>
+<h3 class="text-lg font-semibold mb-4">Conceitos-chave</h3>
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-4"><div class="text-emerald-400 font-bold mb-1">CS2N</div><p class="text-sm text-neutral-400">Rede de estudantes de CS.</p></div>
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-4"><div class="text-emerald-400 font-bold mb-1">VEXcode VR</div><p class="text-sm text-neutral-400">Robotica virtual sem hardware.</p></div>
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-4"><div class="text-emerald-400 font-bold mb-1">K-12 a pro</div><p class="text-sm text-neutral-400">Curriculos STEM completos.</p></div>
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-4"><div class="text-emerald-400 font-bold mb-1">Train-the-trainer</div><p class="text-sm text-neutral-400">Licenca USD 500-5k/ano.</p></div>
+</div>
+</section>
+<!-- TOPICO 6 -->
+<section class="mb-16" id="topico-6">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-xl">6</span>
+<h2 class="text-2xl font-bold">🤖 Siemens Industrial Copilot — Transferencia de Conhecimento</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed">
+        O Siemens Industrial Copilot captura o conhecimento de tecnicos experientes — muitos proximos da aposentadoria —
+        e o transforma em <strong class="text-emerald-400">assistente de IA</strong> para novos operadores.
+        <strong class="text-emerald-400">2,5 milhoes</strong> de trabalhadores industriais se aposentam por ano na UE:
+        a IA vira a ponte entre a geracao que sai e a que entra.
+      </p>
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-red-400 mb-3 flex items-center">
+<span class="mr-2">⚠️</span> O "silver tsunami"
+        </h3>
+<p class="text-neutral-300">A crise demografica torna a transferencia de conhecimento urgente. Quando 2,5 milhoes de tecnicos se aposentam por ano, o conhecimento tacito — aquele que nao esta escrito em manual — vai embora junto. Sem captura, a fabrica perde decadas de experiencia de uma vez.</p>
+</div>
+<div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-blue-400 mb-4 flex items-center">
+<span class="mr-2">📊</span> Como a IA faz a ponte
+        </h3>
+<ul class="space-y-2 text-neutral-300">
+<li><strong>Knowledge capture</strong> — via video + NLP, registrando como o veterano resolve problemas.</li>
+<li><strong>Assistente contextual</strong> — embutido no PLC, responde duvidas no ponto de uso.</li>
+<li><strong>2,5M/ano</strong> — aposentadorias na industria da UE.</li>
+<li><strong>"Silver tsunami"</strong> — o driver demografico de adocao de IA.</li>
+</ul>
+</div>
+<div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
+<span class="mr-2">💡</span> Dica Pratica
+        </h3>
+<p class="text-neutral-300">Comece a capturar conhecimento antes da aposentadoria, nao depois. Gravar veteranos resolvendo falhas reais e a materia-prima do assistente. No Brasil, com forca de trabalho industrial envelhecendo, esse modelo e diretamente aplicavel.</p>
+</div>
+<h3 class="text-lg font-semibold mb-4">Conceitos-chave</h3>
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-4"><div class="text-emerald-400 font-bold mb-1">Knowledge capture</div><p class="text-sm text-neutral-400">Video + NLP.</p></div>
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-4"><div class="text-emerald-400 font-bold mb-1">Copilot no PLC</div><p class="text-sm text-neutral-400">Assistente contextual.</p></div>
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-4"><div class="text-emerald-400 font-bold mb-1">2,5M/ano</div><p class="text-sm text-neutral-400">Aposentadorias na UE.</p></div>
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-4"><div class="text-emerald-400 font-bold mb-1">Silver tsunami</div><p class="text-sm text-neutral-400">Driver de adocao de IA.</p></div>
+</div>
+</section>
+<!-- RESUMO FINAL -->
+<section class="mb-12">
+<div class="bg-gradient-to-br from-emerald-900/40 via-dark-800 to-dark-800 rounded-xl border border-emerald-500/30 p-8">
+<h2 class="text-2xl font-bold mb-6 flex items-center">
+<span class="mr-3">🏁</span> Resumo do Modulo
+        </h2>
+<div class="space-y-4 mb-8">
+<div class="flex items-start space-x-3"><span class="text-emerald-400 mt-1">✓</span><div><strong class="text-white">Amazon Career Choice</strong><span class="text-neutral-400"> — USD 1.2bi, 700k treinados, -25% de turnover. Escala corporativa replicavel.</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-emerald-400 mt-1">✓</span><div><strong class="text-white">Ausbildung alemao</strong><span class="text-neutral-400"> — sistema dual, Meister como mentor, robotica obrigatoria. O padrao-ouro.</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-emerald-400 mt-1">✓</span><div><strong class="text-white">Apprenticeship 2000</strong><span class="text-neutral-400"> — consorcio em Charlotte, 8.000h, 100% empregados. Modelo dual fora da Alemanha.</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-emerald-400 mt-1">✓</span><div><strong class="text-white">Academias de fabricante</strong><span class="text-neutral-400"> — ABB, FANUC, KUKA, RoboDK. Certificacao = +20-40% salarial.</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-emerald-400 mt-1">✓</span><div><strong class="text-white">CMU Robotics Academy</strong><span class="text-neutral-400"> — train-the-trainer, CS2N, VEXcode VR. Referencia academica global.</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-emerald-400 mt-1">✓</span><div><strong class="text-white">Siemens Copilot</strong><span class="text-neutral-400"> — IA captura conhecimento de aposentados. Resposta ao silver tsunami.</span></div></div>
+</div>
+<div class="bg-dark-800/50 rounded-lg p-4 mb-8">
+<h3 class="font-semibold text-emerald-400 mb-2">Proxima Trilha:</h3>
+<p class="text-neutral-300">Trilha 2 — Acao. Voce concluiu os Fundamentos. Agora e hora de colocar a mao na massa e aplicar os conceitos no chao de fabrica.</p>
+</div>
+<div class="flex flex-col sm:flex-row gap-4">
+<a class="flex-1 text-center px-6 py-3 bg-dark-700 text-neutral-300 rounded-lg font-semibold hover:bg-dark-600 transition-colors" href="index.html">
+            ← Voltar para Trilha
+          </a>
+<a class="flex-1 text-center px-6 py-3 bg-emerald-600 text-white rounded-lg font-semibold hover:bg-emerald-500 transition-colors" href="../trilha2/index.html">
+            Proxima Trilha: Trilha 2 — Acao →
+          </a>
+</div>
+</div>
+</section>
+</main>
+<!-- FOOTER -->
+<footer class="border-t border-dark-600 py-8 mt-16">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-neutral-500 text-sm">
+<p>segROBOT — INEMA.CLUB — 2026</p>
+</div>
+</footer>
+<!-- SCRIPTS -->
+<script>
+    const themeToggle = document.getElementById('theme-toggle');
+    const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
+    const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
+    const html = document.documentElement;
+    if (localStorage.getItem('theme') === 'light') {
+      themeToggleDarkIcon.classList.remove('hidden'); html.classList.remove('dark');
+    } else { themeToggleLightIcon.classList.remove('hidden'); }
+    themeToggle.addEventListener('click', () => {
+      themeToggleDarkIcon.classList.toggle('hidden'); themeToggleLightIcon.classList.toggle('hidden');
+      html.classList.toggle('dark');
+      localStorage.setItem('theme', html.classList.contains('dark') ? 'dark' : 'light');
+    });
+  </script>
+</body>
+</html>
